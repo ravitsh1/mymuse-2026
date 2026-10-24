@@ -6,7 +6,7 @@ legacy redirects and noindex-until-launch all work locally. Content is sample co
 Work top to bottom. Each step ends with tsc + build + a check in the browser (390×844 and ~1366 wide, plus reduced motion).
 
 ## 1. Repo and deploy
-- [ ] Private GitHub repo (suggested `ravitsh1/mymuse-2026`), push `main`.
+- [x] Private GitHub repo `ravitsh1/mymuse-2026`, `main` pushed (2026-10-24).
 - [ ] Vercel project (team `my-muse1`, like threebears-2026) → connect the Neon and Blob integrations → first deploy (`npm run ci` runs the migration).
 - [ ] Create Ravit's admin user on production; confirm the vercel.app URL is noindex (robots.txt `Disallow: /`, `X-Robots-Tag`).
 
