@@ -13,8 +13,10 @@ export function NextFrame({ project, index, label }: { project: Project; index: 
   return (
     <section className="next" data-next={href} aria-label={label}>
       <div className="next-sticky">
-        <div className="next-frame" data-nframe>
+        <div className="next-frame" data-nframe style={{ '--n-bg': p.bg } as React.CSSProperties}>
           <Visual project={project} index={index} />
+          {/* A band of the project colour behind the centred title, outside <Visual> so the hand-over stays identical. */}
+          <div className="next-tint" aria-hidden="true" />
         </div>
         <div className="next-ui" style={{ color: p.ink, '--n-acc': p.acc } as React.CSSProperties}>
           <div>
