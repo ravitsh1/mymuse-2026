@@ -14,10 +14,9 @@ import type { Media } from '@/payload-types'
 
 type Props = { params: Promise<{ slug: string }> }
 
-export async function generateStaticParams() {
-  const projects = await getProjects()
-  return projects.map((p) => ({ slug: p.slug }))
-}
+// No generateStaticParams: the layout reads headers() (noindex check), so every page renders per request.
+// With it, a build with no projects (a fresh database) marks the route static and every project page then
+// fails at runtime with DYNAMIC_SERVER_USAGE (500) until the next deploy.
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params

@@ -7,14 +7,16 @@ Work top to bottom. Each step ends with tsc + build + a check in the browser (39
 
 ## 1. Repo and deploy
 - [x] Private GitHub repo `ravitsh1/mymuse-2026`, `main` pushed (2026-10-24).
-- [ ] Vercel project (team `my-muse1`, like threebears-2026) → connect the Neon and Blob integrations → first deploy (`npm run ci` runs the migration).
-- [ ] Create Ravit's admin user on production; confirm the vercel.app URL is noindex (robots.txt `Disallow: /`, `X-Robots-Tag`).
+- [x] Vercel project → Neon + Blob → first deploy: `mymuse-2026.vercel.app` is up (checked 2026-10-24: home, `/admin`, `/api/globals/home` 200; legacy 301s work).
+- [x] vercel.app is noindex: robots.txt `Disallow: /` and `X-Robots-Tag: noindex, nofollow` on every response.
+- [x] Fixed: built with an empty database, `/portfolio/[slug]` was marked static and every project page returned 500 (`DYNAMIC_SERVER_USAGE`); `generateStaticParams` removed. Needs the fix on `main` + a redeploy.
+- [ ] Production database is empty: no projects, and no accessibility/privacy pages (the footer has no link to the accessibility statement — required before launch). Ravit adds them in `/admin` (the seed is local only).
 
 ## 2. Visual check against the prototype
 - [x] Compare each section with `docs/prototype.html` on desktop and mobile (2026-10-24, locally, Playwright 1366×768 + 390×844): matches. Left out on purpose: the index hint line ("רחפו מעל שם…") and the per-project glow position.
 - [x] Fly-in and next-project commit hand over with no jump (checked frame by frame from a screen recording). Fixed: the title flashed in place before its rise (arrival now runs before first paint); full prefetch of the next page and of the highlighted row's page + hero image (touch has no peek to pre-load it).
 - [x] Light palette (Mosessco): header and text readable. Small dimmed text raised to opacity .85 (Vinspiration labels were 4.1:1); sample Mosessco accent darkened to pass 4.5:1; the accent field now says it needs 4.5:1.
-- [ ] Repeat the motion check on production once the vercel.app address is reachable (first image request per size is slow until the optimizer caches it).
+- [ ] Repeat the motion check on production once it has projects (first image request per size is slow until the optimizer caches it).
 - [ ] Ask Ravit: header has no background, so on scroll it overlaps page text (most visible on light pages). Keep, or add a backdrop?
 - [ ] `npm run lint` crashes (ESLint config: circular structure in the react plugin config) — fix the flat config.
 
