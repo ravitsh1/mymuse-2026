@@ -11,6 +11,8 @@ import * as migration_20261024_193000_recanati_accent_brand from './20261024_193
 import * as migration_20261024_200000_3bears_new_screens from './20261024_200000_3bears_new_screens';
 import * as migration_20261024_210000_gderot_new_screens from './20261024_210000_gderot_new_screens';
 import * as migration_20261024_213000_gderot_mockup from './20261024_213000_gderot_mockup';
+import * as migration_20261024_214000_hero_fit_portrait from './20261024_214000_hero_fit_portrait';
+import * as migration_20261024_214500_3bears_mockup from './20261024_214500_3bears_mockup';
 
 export const migrations = [
   {
@@ -51,7 +53,7 @@ export const migrations = [
   {
     up: migration_20261024_185623_project_accent_brand.up,
     down: migration_20261024_185623_project_accent_brand.down,
-    name: '20261024_185623_project_accent_brand'
+    name: '20261024_185623_project_accent_brand',
   },
   {
     up: migration_20261024_190500_project_accent_brand_rest.up,
@@ -76,6 +78,16 @@ export const migrations = [
   {
     up: migration_20261024_213000_gderot_mockup.up,
     down: migration_20261024_213000_gderot_mockup.down,
-    name: '20261024_213000_gderot_mockup',
+    name: '20261024_213000_gderot_mockup'
+  },
+  {
+    up: migration_20261024_214000_hero_fit_portrait.up,
+    down: migration_20261024_214000_hero_fit_portrait.down,
+    name: '20261024_214000_hero_fit_portrait',
+  },
+  {
+    up: migration_20261024_214500_3bears_mockup.up,
+    down: migration_20261024_214500_3bears_mockup.down,
+    name: '20261024_214500_3bears_mockup',
   },
 ];
