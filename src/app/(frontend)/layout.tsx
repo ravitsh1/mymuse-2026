@@ -23,12 +23,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="he" dir="rtl">
       <head>
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          crossOrigin=""
+          href="https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/telaviv-modernist-regular.woff2"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&family=Assistant:wght@300;400;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&display=swap"
         />
       </head>
       <body>

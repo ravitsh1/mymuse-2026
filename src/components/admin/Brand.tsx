@@ -1,12 +1,11 @@
 import React from 'react'
-
-const word: React.CSSProperties = { fontFamily: 'Karantina, Assistant, sans-serif', fontWeight: 700, direction: 'ltr', lineHeight: 1 }
+import { LogoStacked } from '../Logo'
 
 /** Login-screen logo. */
 export const Logo = () => (
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, textAlign: 'center' }}>
-    <span style={{ ...word, fontSize: 64 }}>
-      My<span style={{ color: '#d6a05b' }}>Muse</span>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, textAlign: 'center' }}>
+    <span role="img" aria-label="MyMuse" style={{ display: 'block', lineHeight: 0 }}>
+      <LogoStacked style={{ width: 140, height: 140 }} />
     </span>
     <span style={{ fontSize: 15, opacity: 0.6 }}>ניהול האתר</span>
   </div>
@@ -14,7 +13,7 @@ export const Logo = () => (
 
 /** Small mark in the sidebar / breadcrumbs. */
 export const Icon = () => (
-  <span style={{ ...word, fontSize: 26 }}>
-    M<span style={{ color: '#d6a05b' }}>M</span>
+  <span role="img" aria-label="MyMuse" style={{ display: 'block', lineHeight: 0 }}>
+    <LogoStacked style={{ width: 30, height: 30 }} />
   </span>
 )

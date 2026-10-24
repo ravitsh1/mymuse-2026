@@ -1,10 +1,16 @@
 /* Layout: home + one page per project; every page ends in a frame that grows into the next page.
    Colours come from the CMS as --p-* on [data-site]; this file only defines structure and type. */
+/* Body text: Tel Aviv Modernist (Fontef, web licence #04791 for mymuse.co.il). The files live in the
+   project's Blob store, not in this public repo. Two weights only: 300/400 use regular, 600/700 bold. */
+@font-face { font-family: 'Tel Aviv Modernist'; font-weight: 100 499; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/telaviv-modernist-regular.woff2') format('woff2') }
+@font-face { font-family: 'Tel Aviv Modernist'; font-weight: 500 900; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/telaviv-modernist-bold.woff2') format('woff2') }
 :root {
   color-scheme: dark;
   --chrome-bg: #101011;
-  --f-display: 'Karantina', 'Assistant', 'Arial Narrow', sans-serif;
-  --f-body: 'Assistant', 'Arial', sans-serif;
+  --f-display: 'Karantina', 'Tel Aviv Modernist', 'Arial Narrow', sans-serif;
+  --f-body: 'Tel Aviv Modernist', 'Arial', sans-serif;
   --gutter-l: max(16px, env(safe-area-inset-left, 0px));
   --gutter-r: max(16px, env(safe-area-inset-right, 0px));
 }
@@ -25,8 +31,8 @@ a { color: inherit }
   padding-block: calc(14px + env(safe-area-inset-top, 0px)) 14px; padding-left: var(--gutter-l); padding-right: var(--gutter-r);
   color: var(--p-ink); pointer-events: none; transition: color .6s }
 .top > * { pointer-events: auto }
-.logo { font-family: var(--f-display); font-size: 30px; font-weight: 700; letter-spacing: .02em; direction: ltr; text-decoration: none }
-.logo span { color: var(--p-acc) }
+.logo { display: block; line-height: 0 }
+.logo svg { display: block; width: auto; height: 34px }
 .nav { display: flex; align-items: center; gap: 14px; font-variant-numeric: tabular-nums }
 .count { font-size: 14px; letter-spacing: .12em; direction: ltr }
 .dots { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0 }

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Project } from '@/payload-types'
+import { LogoWide } from './Logo'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
@@ -9,7 +10,7 @@ export function Header({ projects, current }: { projects: Project[]; current?: n
       <div className="bar" data-bar aria-hidden="true" />
       <header className="top">
         <Link className="logo" href="/" aria-label="MyMuse, עמוד הבית">
-          My<span>Muse</span>
+          <LogoWide />
         </Link>
         <nav className="nav" aria-label="פרויקטים">
           {current !== undefined && (

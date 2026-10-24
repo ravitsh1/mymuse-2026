@@ -71,5 +71,5 @@ Connect `mymuse.co.il` + `www` in Vercel → confirm `robots.txt` allows and `X-
 
 - Real images/videos and texts for the projects (sample texts are placeholders).
 - Accessibility statement and privacy policy: fill the `[להשלמה]` parts.
-- Brand fonts (today Karantina + Assistant from Google Fonts).
+- Display font: Karantina (Google Fonts). Body text is Tel Aviv Modernist (Fontef licence #04791, mymuse.co.il) served from the Blob store `fonts/` — keep font files out of this public repo. Logo: `components/Logo.tsx` (traced SVG, currentColor) + `app/icon.svg`.
 - Remaining old projects → new pages + `LEGACY_PROJECTS` slugs.
