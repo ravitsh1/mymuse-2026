@@ -17,7 +17,7 @@ export const getProjects = cache(async (): Promise<Project[]> => {
   return res.docs
 })
 
-export const getHome = cache(async (): Promise<Home> => (await payload()).findGlobal({ slug: 'home', depth: 0 }))
+export const getHome = cache(async (): Promise<Home> => (await payload()).findGlobal({ slug: 'home', depth: 1 }))
 export const getSettings = cache(async (): Promise<Setting> => (await payload()).findGlobal({ slug: 'settings', depth: 1 }))
 
 export const getFooterPages = cache(async () => {

@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 // No maximum-scale / user-scalable=no: visitors must be able to zoom.
-export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#16141a' }
+export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#111517' }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

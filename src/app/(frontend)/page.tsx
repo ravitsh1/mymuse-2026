@@ -6,7 +6,7 @@ import { Header } from '@/components/Header'
 import { CopyValue, Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
 import { NextFrame } from '@/components/NextFrame'
-import { Visual } from '@/components/Visual'
+import { MediaEl, Visual } from '@/components/Visual'
 import { getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
 
@@ -34,7 +34,18 @@ export default async function HomePage() {
           aria-labelledby="pt"
         >
           <div className="ph-sticky" data-phs>
-            <div className="ph-orb" aria-hidden="true" />
+            {/* One layer per word (empty when it has no image) so layer n always belongs to word n. */}
+            {words.some((w) => 'image' in w && w.image) ? (
+              <div className="ph-bgs" aria-hidden="true">
+                {words.map((w, k) => (
+                  <div key={w.id ?? k} className={k ? 'ph-bg' : 'ph-bg on'} data-phbg>
+                    {'image' in w && w.image && <MediaEl m={w.image} className="ph-media" fill decorative eager={k === 0} />}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="ph-orb" aria-hidden="true" />
+            )}
             <h1 className="sr-only" id="pt" tabIndex={-1}>
               MyMuse · בניית אתרים בהתאמה אישית
             </h1>

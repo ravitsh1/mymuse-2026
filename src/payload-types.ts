@@ -503,7 +503,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Home {
   id: number;
   /**
-   * המילה מתחלפת בגלילה, ואיתה הרקע וצבע ההדגשה.
+   * המילה מתחלפת בגלילה, ואיתה הרקע, תמונת הרקע וצבע ההדגשה.
    */
   words?:
     | {
@@ -516,6 +516,10 @@ export interface Home {
          * קוד צבע, למשל #1b2a24
          */
         accent?: string | null;
+        /**
+         * תמונה או וידאו מאחורי הסלוגן, מוחשכים כדי שהטקסט ייקרא. בלי תמונה: רקע בצבע שנבחר.
+         */
+        image?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -604,6 +608,7 @@ export interface HomeSelect<T extends boolean = true> {
         word?: T;
         bg?: T;
         accent?: T;
+        image?: T;
         id?: T;
       };
   subtitle?: T;

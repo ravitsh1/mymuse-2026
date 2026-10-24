@@ -161,6 +161,7 @@ export function Motion() {
     const phs = $('[data-phs]')
     const wcol = $('[data-wcol]')
     const ticks = $$('[data-tick]')
+    const phbgs = $$('[data-phbg]')
     const words: { bg: string; accent: string }[] = ph ? JSON.parse(ph.dataset.words || '[]') : []
     let wordIdx = -1
     const ix = $('[data-ix]')
@@ -192,6 +193,7 @@ export function Motion() {
           phs.style.setProperty('--h-bg', words[k].bg)
           phs.style.setProperty('--h-acc', words[k].accent)
           ticks.forEach((t, n) => t.classList.toggle('on', n <= k))
+          phbgs.forEach((b, n) => b.classList.toggle('on', n === k))
         }
       }
       if (ix && rows && !hoverable) {
