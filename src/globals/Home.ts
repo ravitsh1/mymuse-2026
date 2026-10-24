@@ -22,7 +22,7 @@ export const Home: GlobalConfig = {
               minRows: 1,
               maxRows: 6,
               labels: { singular: 'מילה', plural: 'מילים' },
-              admin: { description: 'המילה מתחלפת בגלילה, ואיתה הרקע וצבע ההדגשה.' },
+              admin: { description: 'המילה מתחלפת בגלילה, ואיתה הרקע, תמונת הרקע וצבע ההדגשה.' },
               defaultValue: [
                 { word: 'Expertise', bg: '#16141a', accent: '#d6a05b' },
                 { word: 'Culture', bg: '#14243a', accent: '#8fb7e0' },
@@ -37,6 +37,13 @@ export const Home: GlobalConfig = {
                     colorField('bg', 'רקע', '#16141a'),
                     colorField('accent', 'הדגשה', '#d6a05b'),
                   ],
+                },
+                {
+                  name: 'image',
+                  label: 'תמונת רקע',
+                  type: 'upload',
+                  relationTo: 'media',
+                  admin: { description: 'תמונה או וידאו מאחורי הסלוגן, מוחשכים כדי שהטקסט ייקרא. בלי תמונה: רקע בצבע שנבחר.' },
                 },
               ],
             },

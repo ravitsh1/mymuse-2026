@@ -110,6 +110,12 @@ a { color: inherit }
   display: grid; align-content: center; padding-left: var(--gutter-l); padding-right: var(--gutter-r) }
 .ph-orb { position: absolute; width: min(70vw, 620px); aspect-ratio: 1; border-radius: 50%; top: 50%; left: 62%; translate: -50% -50%;
   background: radial-gradient(circle at 40% 40%, var(--h-acc, var(--p-acc)), transparent 68%); opacity: .45; transition: background .7s; filter: blur(8px) }
+/* Background photos: cross-fade with the word; darkened enough (62%+) that white text keeps 6:1 even over a white pixel. */
+.ph-bgs, .ph-bg { position: absolute; inset: 0 }
+.ph-bg { opacity: 0; transition: opacity .9s ease }
+.ph-bg.on { opacity: 1 }
+.ph-media { object-fit: cover }
+.ph-bgs::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgb(0 0 0 / .78), rgb(0 0 0 / .62)) }
 .passion { position: relative; margin: 0; direction: ltr; text-align: left; font-family: var(--f-display); font-weight: 700; line-height: .86; font-size: clamp(84px, 19vw, 280px) }
 .passion .amp { color: var(--h-acc, var(--p-acc)); transition: color .7s }
 .words { display: inline-block; height: .86em; overflow: hidden; vertical-align: top }
@@ -214,6 +220,7 @@ a { color: inherit }
   .ring { display: none }
   .ph { height: auto }
   .ph-sticky { position: relative; height: auto; min-height: 0; padding-block: 140px 90px }
+  .ph-bg { transition: none }
   .ticks { display: none }
   .track { animation: none; flex-wrap: wrap; width: auto; gap: 12px 32px; padding-inline: var(--gutter-r) var(--gutter-l) }
   .track [aria-hidden] { display: none }
