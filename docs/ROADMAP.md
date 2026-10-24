@@ -7,13 +7,18 @@ Work top to bottom. Each step ends with tsc + build + a check in the browser (39
 
 ## 1. Repo and deploy
 - [x] Private GitHub repo `ravitsh1/mymuse-2026`, `main` pushed (2026-10-24).
-- [ ] Vercel project (team `my-muse1`, like threebears-2026) → connect the Neon and Blob integrations → first deploy (`npm run ci` runs the migration).
-- [ ] Create Ravit's admin user on production; confirm the vercel.app URL is noindex (robots.txt `Disallow: /`, `X-Robots-Tag`).
+- [x] Vercel project → Neon + Blob → first deploy: `mymuse-2026.vercel.app` is up (checked 2026-10-24: home, `/admin`, `/api/globals/home` 200; legacy 301s work).
+- [x] vercel.app is noindex: robots.txt `Disallow: /` and `X-Robots-Tag: noindex, nofollow` on every response.
+- [x] Fixed: built with an empty database, `/portfolio/[slug]` was marked static and every project page returned 500 (`DYNAMIC_SERVER_USAGE`); `generateStaticParams` removed. Needs the fix on `main` + a redeploy.
+- [ ] Production database is empty: no projects, and no accessibility/privacy pages (the footer has no link to the accessibility statement — required before launch). Ravit adds them in `/admin` (the seed is local only).
 
 ## 2. Visual check against the prototype
-- [ ] Compare each section with `docs/prototype.html` on desktop and mobile: Passion words, work index (hover peek on desktop, centre-highlight on touch), service cards, about reveal, clients marquee, contact, next-project frame.
-- [ ] The click-to-project fly-in and the next-project commit should hand over with no visible jump (same `<Visual>` on both sides). Fix any flash on arrival.
-- [ ] Check the admin-driven palette: a light project (Mosessco sample) must keep the header and text readable.
+- [x] Compare each section with `docs/prototype.html` on desktop and mobile (2026-10-24, locally, Playwright 1366×768 + 390×844): matches. Left out on purpose: the index hint line ("רחפו מעל שם…") and the per-project glow position.
+- [x] Fly-in and next-project commit hand over with no jump (checked frame by frame from a screen recording). Fixed: the title flashed in place before its rise (arrival now runs before first paint); full prefetch of the next page and of the highlighted row's page + hero image (touch has no peek to pre-load it).
+- [x] Light palette (Mosessco): header and text readable. Small dimmed text raised to opacity .85 (Vinspiration labels were 4.1:1); sample Mosessco accent darkened to pass 4.5:1; the accent field now says it needs 4.5:1.
+- [ ] Repeat the motion check on production once it has projects (first image request per size is slow until the optimizer caches it).
+- [ ] Ask Ravit: header has no background, so on scroll it overlaps page text (most visible on light pages). Keep, or add a backdrop?
+- [ ] `npm run lint` crashes (ESLint config: circular structure in the react plugin config) — fix the flat config.
 
 ## 3. Brand
 - [ ] Ravit's logo (SVG) in the header and admin (`components/admin/Brand.tsx`), favicon set in `public/`.
@@ -21,15 +26,17 @@ Work top to bottom. Each step ends with tsc + build + a check in the browser (39
 - [ ] Final colour palette for the home page (Settings → צבעי עמוד הבית) and the Passion words.
 
 ## 4. Real content
-- [ ] Projects: real hero images (2400px+), optional short video loop, two parallax screenshots + gallery, real texts. Start with the five sample slugs, then the rest of the old portfolio.
-- [ ] For each project added, put its new slug in `LEGACY_PROJECTS` in `src/proxy.ts`.
+- [x] All 23 projects of the old portfolio: `npm run import:wp` (`src/import/wordpress.ts`, see `docs/IMPORT.md`) — tested on an empty database: 23 projects, 72 screenshots, 80 s; re-run skips everything.
+- [ ] Run the import on production (Ravit, `docs/IMPORT.md`) after this PR is deployed.
+- [ ] In the admin: order, which projects are featured on the home page (all 23 now), "משפט מרכזי" per project, palettes. Heroes are 1920px (old site) — replace with 2400px+ where she has them.
+- [x] `LEGACY_PROJECTS` in `src/proxy.ts`: all 23 old URLs → new slugs (checked: 301 → 200 for every URL in the old sitemap).
 - [ ] Home texts: subtitle, services, about, clients list (Ravit to confirm the sample wording).
 - [ ] Accessibility statement and privacy policy: replace the `[להשלמה]` placeholders.
 - [ ] Settings: share image (1200×630), social links.
 
 ## 5. Nice to have (ask Ravit before starting)
 - [ ] Contact form with leads + email (threebears-2026 has a working Leads collection + Resend).
-- [ ] Bulk project import from the old WordPress site (threebears-2026 `src/import/wordpress.ts` is a starting point).
+- [x] Bulk project import from the old WordPress site (2026-10-24).
 - [ ] Hero video poster frames (`/poster.jpg` route as on threebears-2026).
 - [ ] WebGL image transition between projects (noise/dissolve) — only if it stays light and has a reduced-motion fallback.
 

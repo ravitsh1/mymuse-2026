@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 
 /**
  * All scroll-driven motion for a page. The server renders complete, readable HTML;
@@ -12,9 +12,22 @@ import { useEffect } from 'react'
 let navigatedByMotion = false
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v))
 const ease = (t: number) => 1 - Math.pow(1 - t, 3)
+// Project pages are dynamic, so a default prefetch fetches almost nothing and the hand-over waits on the server.
+const FULL = { kind: 'full' } as Parameters<ReturnType<typeof useRouter>['prefetch']>[1]
 
 export function Motion() {
   const router = useRouter()
+
+  /* ---------- arrival: before the first paint, or the title shows in place and then jumps into its rise ---------- */
+  useLayoutEffect(() => {
+    document.querySelectorAll('.fly').forEach((f) => {
+      f.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300 }).finished.then(() => f.remove())
+    })
+    if (!navigatedByMotion) return
+    navigatedByMotion = false
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.querySelector('[data-site]')?.classList.add('arrived')
+    document.querySelector<HTMLElement>('#pt')?.focus({ preventScroll: true })
+  }, [])
 
   useEffect(() => {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -28,15 +41,6 @@ export function Motion() {
     let timer: ReturnType<typeof setTimeout> | null = null
     let lastP = 0
 
-    /* ---------- arrival ---------- */
-    document.querySelectorAll('.fly').forEach((f) => {
-      f.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300 }).finished.then(() => f.remove())
-    })
-    if (navigatedByMotion) {
-      navigatedByMotion = false
-      if (!reduce) site.classList.add('arrived')
-      $<HTMLElement>('#pt')?.focus({ preventScroll: true })
-    }
     if (!reduce) $$<HTMLVideoElement>('video[data-autoplay]').forEach((v) => v.play().catch(() => {}))
 
     const go = (href: string) => {
@@ -58,13 +62,20 @@ export function Motion() {
       site.style.setProperty('--p-soft', c.ink + '26')
     }
     const rowEls = rows ? $$<HTMLAnchorElement>('[data-rows] .row') : []
+    const rowOf = (i: number) => rowEls.find((r) => Number(r.dataset.i) === i)!
+    /** A highlighted row is the likely next click: fetch its page and start its hero image (on touch there is no peek to load it). */
+    const warm = (i: number) => {
+      router.prefetch(rowOf(i).getAttribute('href')!, FULL)
+      $(`[data-visual-for="${i}"]`)?.querySelectorAll('img[loading="lazy"]').forEach((img) => img.setAttribute('loading', 'eager'))
+    }
     const setIx = (i: number | null) => {
       if (i === ixOn || !rows) return
       ixOn = i
       rows.classList.toggle('has-on', i !== null)
       rowEls.forEach((r) => r.classList.toggle('on', Number(r.dataset.i) === i))
       if (i === null) return paint(base)
-      const r = rowEls[i]
+      warm(i)
+      const r = rowOf(i)
       paint({ bg: r.dataset.bg!, ink: r.dataset.ink!, acc: r.dataset.acc! })
     }
     const visualFor = (i: number) => {
@@ -81,7 +92,6 @@ export function Motion() {
       document.body.appendChild(fly)
       peek?.classList.remove('show')
       const from = `inset(${rect.top}px ${innerWidth - rect.right}px ${innerHeight - rect.bottom}px ${rect.left}px round 14px)`
-      router.prefetch(href)
       fly
         .animate([{ clipPath: from }, { clipPath: 'inset(0px 0px 0px 0px round 0px)' }], {
           duration: 800,
@@ -163,7 +173,7 @@ export function Motion() {
     const nvis = nframe?.querySelector<HTMLElement>('.visual')
     const ring = $<SVGCircleElement>('[data-ring]')
     const pct = $('[data-pct]')
-    if (next) router.prefetch(next.dataset.next!)
+    if (next) router.prefetch(next.dataset.next!, FULL)
 
     const update = () => {
       const vh = innerHeight

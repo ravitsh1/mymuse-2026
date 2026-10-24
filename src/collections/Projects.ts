@@ -66,6 +66,15 @@ export const Projects: CollectionConfig = {
             },
             { name: 'siteUrl', label: 'קישור לאתר', type: 'text', admin: { placeholder: 'https://' } },
             {
+              name: 'credit',
+              label: 'קרדיט',
+              type: 'text',
+              admin: {
+                placeholder: 'עיצוב: סטודיו גור',
+                description: 'מוצג בפרטי הפרויקט: מה שלפני הנקודתיים הוא הכותרת. ריק = לא מוצג.',
+              },
+            },
+            {
               name: 'featured',
               label: 'להציג בעמוד הבית',
               type: 'checkbox',
@@ -117,7 +126,7 @@ export const Projects: CollectionConfig = {
               fields: [
                 colorField('bg', 'רקע', '#1b2a24'),
                 colorField('ink', 'טקסט', '#efe8de', 'ניגודיות של 4.5:1 לפחות מול הרקע'),
-                colorField('accent', 'הדגשה', '#d6a05b'),
+                colorField('accent', 'הדגשה', '#d6a05b', 'משמש גם לטקסט קטן (תחום, כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע'),
               ],
             },
           ],

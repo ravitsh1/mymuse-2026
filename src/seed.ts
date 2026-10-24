@@ -13,7 +13,7 @@ const projects = [
     statement: 'חנות שמרגישה כמו *המזקקה* עצמה.', siteUrl: 'https://jullius.com', bg: '#1b2a24', ink: '#e9dcc0', accent: '#c8953f' },
   { slug: 'mosessco', title: 'מוססקו', nameEn: 'MOSESSCO', field: 'משרד אדריכלים', scope: 'אתר תדמית ותיק עבודות', platform: 'WordPress · Elementor',
     lead: 'תיק עבודות לאדריכלים שבו התמונות מובילות, והטקסט נותן להן מקום.',
-    statement: 'קווים נקיים, *הרבה* אוויר.', siteUrl: 'https://mosessco.com', bg: '#e6e3dc', ink: '#1d1c1a', accent: '#b04a2e' },
+    statement: 'קווים נקיים, *הרבה* אוויר.', siteUrl: 'https://mosessco.com', bg: '#e6e3dc', ink: '#1d1c1a', accent: '#a3432a' },
   { slug: 'margalit', title: 'מרגלית', nameEn: 'MARGALIT', field: 'יקב', scope: 'אתר יקב וחנות יין', platform: 'WordPress · WooCommerce',
     lead: 'אתר יקב עם חנות מקוונת, שבנוי כדי להפוך ביקור באתר להזמנה.',
     statement: 'מהכרם *לסל* בשלוש גלילות.', bg: '#3a0f1c', ink: '#f3e6e0', accent: '#e0a96d' },

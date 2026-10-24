@@ -155,6 +155,10 @@ export interface Project {
   statement?: string | null;
   siteUrl?: string | null;
   /**
+   * מוצג בפרטי הפרויקט: מה שלפני הנקודתיים הוא הכותרת. ריק = לא מוצג.
+   */
+  credit?: string | null;
+  /**
    * ברשימת "עבודות נבחרות".
    */
   featured?: boolean | null;
@@ -183,7 +187,7 @@ export interface Project {
    */
   ink?: string | null;
   /**
-   * קוד צבע, למשל #1b2a24
+   * משמש גם לטקסט קטן (תחום, כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע
    */
   accent?: string | null;
   /**
@@ -381,6 +385,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   lead?: T;
   statement?: T;
   siteUrl?: T;
+  credit?: T;
   featured?: T;
   hidden?: T;
   hero?: T;
@@ -574,7 +579,7 @@ export interface Setting {
    */
   ink?: string | null;
   /**
-   * קוד צבע, למשל #1b2a24
+   * משמש גם לטקסט קטן (כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע
    */
   accent?: string | null;
   /**
