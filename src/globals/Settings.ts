@@ -46,6 +46,15 @@ export const Settings: GlobalConfig = {
       admin: { description: 'משמש בכל עמוד שאין לו תיאור משלו.' },
     },
     {
+      name: 'cookieText',
+      label: 'הודעת עוגיות',
+      type: 'textarea',
+      defaultValue: 'אנו משתמשים בקבצי Cookies לשיפור חוויית הגלישה, ניתוח ושיווק. המשך גלישה באתר מהווה הסכמה לכך.',
+      admin: {
+        description: 'מוצגת בתחתית המסך עד שהגולש לוחץ "אישור", עם קישור למדיניות הפרטיות (העמוד privacy-policy). ריק = בלי הודעה.',
+      },
+    },
+    {
       name: 'shareImage',
       label: 'תמונת שיתוף',
       type: 'upload',
