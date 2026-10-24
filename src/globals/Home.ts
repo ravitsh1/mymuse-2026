@@ -2,6 +2,21 @@ import type { GlobalConfig } from 'payload'
 import { colorField } from '../fields/color'
 import { refresh } from '../hooks/revalidate'
 
+// Default wording (kept out of the field list so the schema stays readable).
+const SERVICE_TEXTS = [
+  'לפני שמעצבים, מקשיבים: מי הקהל, מה הוא מחפש ומה אתם רוצים שיקרה באתר. משם נבנים מבנה העמודים, התוכן והדרך של הגולש עד לפנייה.',
+  'עיצוב שנולד מהאופי של העסק ולא מתבנית, ובנייה מקצועית: מהיר בנייד, מוכן לקידום בגוגל ופשוט לעדכון בעצמכם.',
+  'חנויות WooCommerce, חיבור למערכות שכבר עובדות אצלכם, תוספים ורכיבים שנכתבים במיוחד, כשמה שיש על המדף לא מספיק.',
+  'אחסון, גיבויים, עדכוני אבטחה ושיפורים שוטפים. האתר גדל יחד עם העסק, ויש לכם כתובת אחת לכל שאלה, גם שנים אחרי ההשקה.',
+]
+const ABOUT_HEADLINE = 'מאז 2010 בנינו מאות אתרים, וכל אחד מהם נראה כמו העסק שמאחוריו, לא כמו תבנית.'
+const ABOUT_BODY = [
+  'MyMuse הוקמה ב־2010 על ידי רוית שליוינסקי, מפתחת אתרים, בעשר אצבעות ועם שפע של מקורות השראה. מאז בנינו, בשיתוף פעולה מלא עם הלקוחות, מאות אתרים: ליקבים ולמותגי יין, לחברות טכנולוגיה וביטוח, למרכזי קהילה ותרבות ולמותגי לייף־סטייל.',
+  'אנחנו מאמינות שלכל עסק יש אופי משלו, ולכן אין אצלנו אתרים מתבנית: כל לקוח מקבל יחס אישי, תשובות ישירות ואתר שנבנה סביב המטרות שלו.',
+  'ההשראה שלנו היא ההצלחה שלכם.',
+].join('\n\n')
+const CONTACT_BODY = 'יש לכם עסק עם אופי ורעיון לאתר, או אתר קיים שצריך לחשוב עליו מחדש? ספרו לנו במה מדובר ונחזור אליכם.'
+
 export const Home: GlobalConfig = {
   slug: 'home',
   label: 'עמוד הבית',
@@ -51,7 +66,7 @@ export const Home: GlobalConfig = {
               name: 'subtitle',
               label: 'משפט מתחת',
               type: 'text',
-              defaultValue: 'אתרים בהתאמה אישית, מאפיון ועד ליווי, תחת קורת גג אחת.',
+              defaultValue: 'אתרים בהתאמה אישית, מהאפיון ועד הליווי שאחרי ההשקה.',
             },
           ],
         },
@@ -77,10 +92,10 @@ export const Home: GlobalConfig = {
               type: 'array',
               labels: { singular: 'שירות', plural: 'שירותים' },
               defaultValue: [
-                { title: 'אפיון', text: 'מבינים את העסק, את הקהל ואת המטרה, ובונים מבנה ותוכן לפני שמתחילים לעצב.', bg: '#f6f6f6', ink: '#111517' },
-                { title: 'הקמת האתר', text: 'עיצוב ובנייה מותאמים לנייד ונגישים מהיום הראשון.', bg: '#ff7777', ink: '#111517' },
-                { title: 'פיתוח ממשק', text: 'תוספים, אינטגרציות ורכיבים בהתאמה אישית, כשמה שקיים על המדף לא מספיק.', bg: '#32323a', ink: '#ffffff' },
-                { title: 'ליווי מתמשך', text: 'אחסון, עדכונים, אבטחה ושיפורים לאורך זמן, עם כתובת אחת לכל שאלה.', bg: '#a54d4d', ink: '#ffffff' },
+                { title: 'אפיון', text: SERVICE_TEXTS[0], bg: '#f6f6f6', ink: '#111517' },
+                { title: 'הקמת האתר', text: SERVICE_TEXTS[1], bg: '#ff7777', ink: '#111517' },
+                { title: 'פיתוח ממשק', text: SERVICE_TEXTS[2], bg: '#32323a', ink: '#ffffff' },
+                { title: 'ליווי מתמשך', text: SERVICE_TEXTS[3], bg: '#a54d4d', ink: '#ffffff' },
               ],
               fields: [
                 { name: 'title', label: 'שם', type: 'text', required: true },
@@ -97,15 +112,15 @@ export const Home: GlobalConfig = {
               name: 'aboutHeadline',
               label: 'משפט גדול',
               type: 'text',
-              defaultValue: 'מאז 2010 בנינו מאות אתרים, כל אחד עם האופי של העסק שמאחוריו.',
+              defaultValue: ABOUT_HEADLINE,
               admin: { description: 'נצבע מילה אחרי מילה בגלילה.' },
             },
             {
               name: 'aboutBody',
               label: 'פסקה',
               type: 'textarea',
-              defaultValue:
-                'MyMuse הוקמה על ידי רוית שליוינסקי. אנחנו מאמינות שלכל עסק יש אופי ייחודי, ולכן כל לקוח מקבל יחס אישי והתאמה מדויקת.',
+              defaultValue: ABOUT_BODY,
+              admin: { description: 'שורה ריקה מתחילה פסקה חדשה.' },
             },
           ],
         },
@@ -124,7 +139,16 @@ export const Home: GlobalConfig = {
         },
         {
           label: 'יצירת קשר',
-          fields: [{ name: 'contactTitle', label: 'כותרת', type: 'text', defaultValue: 'נדבר?' }],
+          fields: [
+            { name: 'contactTitle', label: 'כותרת', type: 'text', defaultValue: 'נדבר?' },
+            {
+              name: 'contactBody',
+              label: 'משפט מתחת לכותרת',
+              type: 'textarea',
+              defaultValue: CONTACT_BODY,
+              admin: { description: 'ריק: רק הכותרת, המייל והטלפון.' },
+            },
+          ],
         },
       ],
     },

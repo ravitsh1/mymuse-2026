@@ -30,7 +30,7 @@ Work top to bottom. Each step ends with tsc + build + a check in the browser (39
 - [ ] Run the import on production (Ravit, `docs/IMPORT.md`) after this PR is deployed.
 - [ ] In the admin: order, which projects are featured on the home page (all 23 now), "משפט מרכזי" per project, palettes. Heroes are 1920px (old site) — replace with 2400px+ where she has them.
 - [x] `LEGACY_PROJECTS` in `src/proxy.ts`: all 23 old URLs → new slugs (checked: 301 → 200 for every URL in the old sitemap).
-- [ ] Home texts: subtitle, services, about, clients list (Ravit to confirm the sample wording).
+- [ ] Home texts: fuller wording drafted (subtitle, 4 service cards, 3-paragraph about, line under "נדבר?", meta description); migrations `home_texts` + `home_texts_no_accessibility` swap in only texts still equal to the previous wording (no accessibility claims: Ravit is not an accessibility expert). Ravit to confirm the wording and the clients list.
 - [ ] Accessibility statement and privacy policy: replace the `[להשלמה]` placeholders.
 - [ ] Settings: share image (1200×630), social links.
 

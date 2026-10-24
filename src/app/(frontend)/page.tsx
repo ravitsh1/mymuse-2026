@@ -129,7 +129,16 @@ export default async function HomePage() {
                 <span key={k}>{w} </span>
               ))}
             </p>
-            {home.aboutBody && <p className="about-body">{home.aboutBody}</p>}
+            {home.aboutBody && (
+              <div className="about-body">
+                {home.aboutBody
+                  .split(/\n\s*\n/)
+                  .filter((t) => t.trim())
+                  .map((t, k) => (
+                    <p key={k}>{t.trim()}</p>
+                  ))}
+              </div>
+            )}
           </section>
         )}
 
@@ -137,6 +146,7 @@ export default async function HomePage() {
 
         <section className="contact wrap" aria-labelledby="cth">
           <h2 id="cth">{home.contactTitle || 'נדבר?'}</h2>
+          {home.contactBody && <p className="ct-body">{home.contactBody}</p>}
           <div className="ct">
             {settings.email && <CopyValue value={settings.email} />}
             {settings.phone && <CopyValue value={settings.phone} />}
