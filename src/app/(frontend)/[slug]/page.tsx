@@ -3,13 +3,17 @@ import { notFound } from 'next/navigation'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
+import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { getFooterPages, getPage, getProjects, getSettings, paletteVars, sitePalette } from '@/lib/data'
+import { pageMetadata } from '@/lib/seo'
 
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = await getPage((await params).slug)
-  return page ? { title: page.title, description: page.metaDescription ?? undefined } : {}
+  if (!page) return {}
+  const s = await getSettings()
+  return pageMetadata({ path: `/${page.slug}`, title: page.title, description: page.metaDescription || s.metaDescription })
 }
 
 export default async function TextPage({ params }: Props) {
@@ -25,6 +29,7 @@ export default async function TextPage({ params }: Props) {
         {page.content && <RichText data={page.content} />}
       </main>
       <Footer settings={settings} pages={pages} />
+      <LivePreviewRefresh />
     </div>
   )
 }

@@ -4,8 +4,12 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { Motion } from '@/components/Motion'
 import { NextFrame } from '@/components/NextFrame'
-import { MediaImg, Visual } from '@/components/Visual'
-import { asMedia, getFooterPages, getProjects, getSettings, nextProject, paletteVars, projectPalette } from '@/lib/data'
+import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
+import { JsonLd } from '@/components/JsonLd'
+import { MediaEl, Visual } from '@/components/Visual'
+import { getFooterPages, getProjects, getSettings, nextProject, paletteVars, projectPalette } from '@/lib/data'
+import { asMedia } from '@/lib/media'
+import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
 import type { Media } from '@/payload-types'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -19,13 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const p = (await getProjects()).find((x) => x.slug === slug)
   if (!p) return {}
-  const img = asMedia(p.hero)
-  return {
+  const settings = await getSettings()
+  return pageMetadata({
+    path: `/portfolio/${p.slug}`,
     title: p.metaTitle || p.title,
-    description: p.metaDescription || p.lead || undefined,
-    alternates: { canonical: `/portfolio/${p.slug}` },
-    openGraph: img?.url ? { images: [{ url: img.sizes?.large?.url || img.url }] } : undefined,
-  }
+    description: p.metaDescription || p.lead,
+    image: shareImageOf(p.hero) || shareImageOf(settings.shareImage),
+    type: 'article',
+  })
 }
 
 /** "*word*" in the CMS becomes the accent-coloured word. */
@@ -102,10 +107,10 @@ export default async function ProjectPage({ params }: Props) {
 
         <section className="band" aria-label={g1 ? 'מסכים מהאתר' : undefined} aria-hidden={g1 ? undefined : true}>
           <div className="par p1" data-speed="0.10">
-            {g1 ? <MediaImg media={g1} sizes="(max-width: 720px) 84vw, 720px" /> : <MockWindow />}
+            {g1 ? <MediaEl m={g1} sizes="(max-width: 720px) 84vw, 720px" /> : <MockWindow />}
           </div>
           <div className="par p2" data-speed="-0.14">
-            {g2 ? <MediaImg media={g2} sizes="(max-width: 720px) 44vw, 360px" /> : <MockWindow />}
+            {g2 ? <MediaEl m={g2} sizes="(max-width: 720px) 44vw, 360px" /> : <MockWindow />}
           </div>
         </section>
 
@@ -120,7 +125,7 @@ export default async function ProjectPage({ params }: Props) {
         {rest.length > 0 && (
           <section className="gallery wrap" aria-label="גלריה">
             {rest.map((m) => (
-              <MediaImg key={m.id} media={m} sizes="(max-width: 720px) 100vw, 540px" />
+              <MediaEl key={m.id} m={m} sizes="(max-width: 720px) 100vw, 540px" />
             ))}
           </section>
         )}
@@ -141,6 +146,28 @@ export default async function ProjectPage({ params }: Props) {
         <NextFrame project={nxt} index={projects.indexOf(nxt)} label="הפרויקט הבא" />
       </main>
       <Motion />
+      <LivePreviewRefresh />
+      <JsonLd
+        data={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'CreativeWork',
+            name: p.title,
+            description: p.lead || undefined,
+            url: abs(`/portfolio/${p.slug}`),
+            creator: { '@type': 'Organization', name: 'MyMuse', url: abs('/') },
+            ...(p.siteUrl ? { sameAs: p.siteUrl } : {}),
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'MyMuse', item: abs('/') },
+              { '@type': 'ListItem', position: 2, name: p.title, item: abs(`/portfolio/${p.slug}`) },
+            ],
+          },
+        ]}
+      />
     </div>
   )
 }

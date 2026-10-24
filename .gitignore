@@ -49,5 +49,7 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 
-*.db
-media/
+
+/.pgdata
+/media
+/.dev-credentials

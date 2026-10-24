@@ -1,13 +1,15 @@
 import type { Metadata, Viewport } from 'next'
 import React from 'react'
 import { getSettings } from '@/lib/data'
+import { indexable } from '@/lib/site'
+import { SITE_URL } from '@/lib/seo'
 import './styles.css'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const s = await getSettings()
-  const base = process.env.NEXT_PUBLIC_SERVER_URL
+  const [s, live] = await Promise.all([getSettings(), indexable()])
   return {
-    metadataBase: base ? new URL(base) : undefined,
+    metadataBase: new URL(SITE_URL),
+    robots: live ? { index: true, follow: true } : { index: false, follow: false },
     title: { default: 'MyMuse · בניית אתרים בהתאמה אישית', template: '%s · MyMuse' },
     description: s.metaDescription ?? undefined,
     openGraph: { siteName: 'MyMuse', locale: 'he_IL', type: 'website' },

@@ -5,6 +5,7 @@ import { refresh } from '../hooks/revalidate'
 export const Home: GlobalConfig = {
   slug: 'home',
   label: 'עמוד הבית',
+  admin: { group: 'תוכן', livePreview: { url: '/' } },
   access: { read: () => true },
   hooks: { afterChange: [() => refresh('/')] },
   fields: [

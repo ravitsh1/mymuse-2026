@@ -1,0 +1,77 @@
+// MyMuse look for the Payload admin: the site's night/gold palette and Assistant for Hebrew.
+// Payload's own styles live in @layer payload-default, so these unlayered rules win without !important.
+@import url('https://fonts.googleapis.com/css2?family=Karantina:wght@700&family=Assistant:wght@400;600;700&display=swap');
+
+:root {
+  --mm-night: #16141a;
+  --mm-gold: #d6a05b;
+  --mm-wine: #3a0f1c;
+  --mm-cream: #efe8de;
+  --font-body: 'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --style-radius-s: 6px;
+  --style-radius-m: 10px;
+  --style-radius-l: 16px;
+}
+
+.btn--style-primary {
+  --bg-color: var(--mm-night);
+  --color: var(--mm-gold);
+  --hover-bg: var(--mm-wine);
+  --hover-color: var(--mm-cream);
+}
+html[data-theme='dark'] .btn--style-primary {
+  --bg-color: var(--mm-gold);
+  --color: var(--mm-night);
+  --hover-bg: var(--mm-cream);
+  --hover-color: var(--mm-night);
+}
+.nav__link .nav__link-indicator { background: var(--mm-gold) }
+::selection { background: var(--mm-gold); color: var(--mm-night) }
+
+.template-minimal {
+  background: var(--mm-cream);
+  background-image: radial-gradient(circle at 85% 10%, rgba(214, 160, 91, 0.35), transparent 40%),
+    radial-gradient(circle at 10% 90%, rgba(58, 15, 28, 0.18), transparent 45%);
+}
+html[data-theme='dark'] .template-minimal {
+  background: var(--mm-night);
+  background-image: radial-gradient(circle at 85% 10%, rgba(214, 160, 91, 0.16), transparent 40%),
+    radial-gradient(circle at 10% 90%, rgba(58, 15, 28, 0.5), transparent 45%);
+}
+
+// ---- dashboard
+.mm-welcome {
+  position: relative;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  border-radius: var(--style-radius-l);
+  background: var(--mm-night);
+  color: var(--mm-cream);
+  h2 { margin: 0 0 6px; color: inherit }
+  p { margin: 0; opacity: 0.8 }
+}
+.mm-welcome__links { display: flex; gap: 18px; margin-top: 14px; a { color: var(--mm-gold); font-weight: 600 } }
+.mm-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-bottom: 32px }
+.mm-card {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  padding: 18px 20px 40px;
+  border-radius: var(--style-radius-l);
+  background: var(--theme-elevation-50);
+  color: var(--theme-text);
+  text-decoration: none;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  &:hover { transform: translateY(-2px); background: var(--theme-elevation-100) }
+  &:focus-visible { outline: 2px solid var(--mm-gold); outline-offset: 2px }
+}
+.mm-card__title { font-weight: 700; font-size: 17px }
+.mm-card__desc { font-size: 14px; opacity: 0.75 }
+.mm-card__arrow { position: absolute; bottom: 14px; left: 18px; font-size: 18px }
+.mm-card--gold { background: var(--mm-gold); color: var(--mm-night) }
+.mm-card--wine { background: var(--mm-wine); color: var(--mm-cream) }
+.mm-card--night { background: var(--mm-night); color: var(--mm-cream) }
+.mm-card--gold:hover { background: #e2b273 }
+.mm-card--wine:hover { background: #4a1526 }
+.mm-card--night:hover { background: #24202a }
+.mm-section-title { margin: 0 0 12px }

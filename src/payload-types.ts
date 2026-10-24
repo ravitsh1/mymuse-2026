@@ -154,7 +154,14 @@ export interface Project {
    */
   statement?: string | null;
   siteUrl?: string | null;
+  /**
+   * ברשימת "עבודות נבחרות".
+   */
   featured?: boolean | null;
+  /**
+   * לא מופיע באתר ולא ברצף "הפרויקט הבא". טוב לפרויקט שעוד בעבודה.
+   */
+  hidden?: boolean | null;
   /**
    * רוחב 2400px לפחות. בלי תמונה מוצגת גרפיקה בצבעי הפרויקט.
    */
@@ -179,11 +186,16 @@ export interface Project {
    * קוד צבע, למשל #1b2a24
    */
   accent?: string | null;
+  /**
+   * ריק = שם הפרויקט.
+   */
   metaTitle?: string | null;
+  /**
+   * מה שמופיע מתחת לקישור בגוגל ובשיתוף. 120–160 תווים: מה יש בעמוד ולמי. ריק = פסקת הפתיחה של הפרויקט.
+   */
   metaDescription?: string | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -192,9 +204,11 @@ export interface Project {
 export interface Media {
   id: number;
   /**
-   * מה רואים בתמונה, לקוראי מסך. השאירו ריק לתמונה דקורטיבית בלבד.
+   * מה רואים בתמונה, לקוראי מסך ולגוגל. ריק = תמונה דקורטיבית בלבד.
    */
   alt?: string | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -206,32 +220,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-  sizes?: {
-    card?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    large?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    hero?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * עמודי טקסט כמו הצהרת נגישות ומדיניות פרטיות.
@@ -262,10 +250,12 @@ export interface Page {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * מה שמופיע מתחת לקישור בגוגל ובשיתוף. 120–160 תווים: מה יש בעמוד ולמי. ריק = המשפט הכללי מהגדרות האתר.
+   */
   metaDescription?: string | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -392,6 +382,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   statement?: T;
   siteUrl?: T;
   featured?: T;
+  hidden?: T;
   hero?: T;
   heroVideo?: T;
   gallery?: T;
@@ -402,7 +393,6 @@ export interface ProjectsSelect<T extends boolean = true> {
   metaDescription?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -416,7 +406,6 @@ export interface PagesSelect<T extends boolean = true> {
   metaDescription?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -424,6 +413,8 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -435,40 +426,6 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-  sizes?:
-    | T
-    | {
-        card?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        large?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        hero?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -620,7 +577,14 @@ export interface Setting {
    * קוד צבע, למשל #1b2a24
    */
   accent?: string | null;
+  /**
+   * משמש בכל עמוד שאין לו תיאור משלו.
+   */
   metaDescription?: string | null;
+  /**
+   * מה שמופיע כששולחים קישור בוואטסאפ או בפייסבוק. 1200×630. בעמוד פרויקט משמשת התמונה הראשית שלו.
+   */
+  shareImage?: (number | null) | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -680,6 +644,7 @@ export interface SettingsSelect<T extends boolean = true> {
   ink?: T;
   accent?: T;
   metaDescription?: T;
+  shareImage?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

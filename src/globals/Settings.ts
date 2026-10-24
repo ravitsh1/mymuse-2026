@@ -5,6 +5,7 @@ import { refreshSite } from '../hooks/revalidate'
 export const Settings: GlobalConfig = {
   slug: 'settings',
   label: 'הגדרות האתר',
+  admin: { group: 'הגדרות' },
   access: { read: () => true },
   hooks: { afterChange: [() => refreshSite()] },
   fields: [
@@ -42,6 +43,14 @@ export const Settings: GlobalConfig = {
       type: 'textarea',
       maxLength: 170,
       defaultValue: 'MyMuse – בניית אתרים בהתאמה אישית: אפיון, הקמה, פיתוח ממשק וליווי מתמשך, תחת קורת גג אחת.',
+      admin: { description: 'משמש בכל עמוד שאין לו תיאור משלו.' },
+    },
+    {
+      name: 'shareImage',
+      label: 'תמונת שיתוף',
+      type: 'upload',
+      relationTo: 'media',
+      admin: { description: 'מה שמופיע כששולחים קישור בוואטסאפ או בפייסבוק. 1200×630. בעמוד פרויקט משמשת התמונה הראשית שלו.' },
     },
   ],
 }

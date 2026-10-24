@@ -1,41 +1,30 @@
-import 'server-only'
-import { draftMode } from 'next/headers'
-import { getPayload } from 'payload'
 import { cache } from 'react'
+import { getPayload } from 'payload'
 import config from '@payload-config'
-import type { Home, Media, Project, Setting } from '@/payload-types'
+import type { Home, Project, Setting } from '@/payload-types'
 
-export const payload = cache(async () => getPayload({ config }))
+export const payload = cache(() => getPayload({ config }))
 
-const isDraft = async () => {
-  try {
-    return (await draftMode()).isEnabled
-  } catch {
-    return false
-  }
-}
-
-/** All projects in the order set in the admin (drag-to-reorder). */
+/** Visible projects in the order set in the admin (drag-to-reorder). This order is the "next project" chain. */
 export const getProjects = cache(async (): Promise<Project[]> => {
-  const draft = await isDraft()
   const res = await (await payload()).find({
     collection: 'projects',
+    where: { hidden: { not_equals: true } },
     sort: '_order',
     depth: 1,
     limit: 200,
-    draft,
-    where: draft ? {} : { _status: { equals: 'published' } },
   })
   return res.docs
 })
 
 export const getHome = cache(async (): Promise<Home> => (await payload()).findGlobal({ slug: 'home', depth: 0 }))
-export const getSettings = cache(async (): Promise<Setting> => (await payload()).findGlobal({ slug: 'settings', depth: 0 }))
+export const getSettings = cache(async (): Promise<Setting> => (await payload()).findGlobal({ slug: 'settings', depth: 1 }))
 
 export const getFooterPages = cache(async () => {
   const res = await (await payload()).find({
     collection: 'pages',
-    where: { and: [{ inFooter: { equals: true } }, { _status: { equals: 'published' } }] },
+    where: { inFooter: { equals: true } },
+    sort: 'createdAt',
     select: { title: true, slug: true },
     limit: 20,
     depth: 0,
@@ -44,18 +33,11 @@ export const getFooterPages = cache(async () => {
 })
 
 export const getPage = cache(async (slug: string) => {
-  const draft = await isDraft()
-  const res = await (await payload()).find({
-    collection: 'pages',
-    where: draft ? { slug: { equals: slug } } : { and: [{ slug: { equals: slug } }, { _status: { equals: 'published' } }] },
-    draft,
-    limit: 1,
-    depth: 1,
-  })
+  const res = await (await payload()).find({ collection: 'pages', where: { slug: { equals: slug } }, limit: 1, depth: 1 })
   return res.docs[0] ?? null
 })
 
-/* ---------- helpers ---------- */
+/* ---------- palette ---------- */
 
 export type Palette = { bg: string; ink: string; acc: string }
 
@@ -81,5 +63,3 @@ export const nextProject = (list: Project[], current: Project | null) => {
   const i = list.findIndex((p) => p.id === current.id)
   return list[(i + 1) % list.length]
 }
-
-export const asMedia = (m: unknown): Media | null => (m && typeof m === 'object' && 'url' in m ? (m as Media) : null)

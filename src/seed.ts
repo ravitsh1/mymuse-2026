@@ -1,6 +1,7 @@
 /**
  * Sample content so the site has something to show on first run.
- * Run once:  npm run seed
+ * Run once (locally):  LOCAL_PGLITE=1 npm run seed
+ * Never on the live site: it only adds missing items, but the sample texts are placeholders.
  * Safe to re-run: existing projects/pages (by slug) are skipped.
  */
 import { getPayload } from 'payload'
@@ -34,27 +35,27 @@ const doc = (...texts: string[]) => ({
 
 const pages = [
   { slug: 'accessibility', title: 'הצהרת נגישות',
-    content: doc('טיוטה: יש להשלים את פרטי ההצהרה (רמת התאמה, תאריך בדיקה, דרכי פנייה) לפני פרסום.') },
+    content: doc('[להשלמה] פרטי ההצהרה: רמת ההתאמה, תאריך הבדיקה ודרכי פנייה לרכז/ת הנגישות.') },
   { slug: 'privacy-policy', title: 'מדיניות פרטיות',
-    content: doc('טיוטה: יש להשלים את מדיניות הפרטיות לפני פרסום.') },
+    content: doc('[להשלמה] מדיניות הפרטיות.') },
 ]
 
 async function seed() {
   const payload = await getPayload({ config })
 
   for (const p of projects) {
-    const exists = await payload.find({ collection: 'projects', where: { slug: { equals: p.slug } }, limit: 1, draft: true })
+    const exists = await payload.find({ collection: 'projects', where: { slug: { equals: p.slug } }, limit: 1 })
     if (exists.docs.length) continue
-    await payload.create({ collection: 'projects', data: { ...p, featured: true, _status: 'published' } })
+    await payload.create({ collection: 'projects', data: { ...p, featured: true } })
     payload.logger.info(`project: ${p.title}`)
   }
 
   for (const pg of pages) {
-    const exists = await payload.find({ collection: 'pages', where: { slug: { equals: pg.slug } }, limit: 1, draft: true })
+    const exists = await payload.find({ collection: 'pages', where: { slug: { equals: pg.slug } }, limit: 1 })
     if (exists.docs.length) continue
-    // Drafts on purpose: they need real text before going live.
-    await payload.create({ collection: 'pages', data: { ...pg, inFooter: true, _status: 'draft' }, draft: true })
-    payload.logger.info(`page (draft): ${pg.title}`)
+    // The texts are placeholders ("[להשלמה]") — fill them in before launch.
+    await payload.create({ collection: 'pages', data: { ...pg, inFooter: true } })
+    payload.logger.info(`page: ${pg.title}`)
   }
 
   // Save the globals once so their default values are stored.

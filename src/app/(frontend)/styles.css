@@ -37,7 +37,8 @@ a { color: inherit }
 
 /* ---------- project visual ---------- */
 .visual { position: absolute; inset: 0; overflow: hidden; background: var(--v-bg) }
-.visual .v-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform }
+.visual .v-img { position: absolute; inset: 0; width: 100%; height: 100%; will-change: transform }
+.visual .v-img img, .visual video.v-img { object-fit: cover }
 .visual .v-shade { position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in srgb, var(--v-bg) 75%, transparent), transparent 55%) }
 .visual .glow { position: absolute; inset: -20%; background: radial-gradient(60% 50% at 66% 40%, var(--v-acc) 0%, transparent 60%); opacity: .55 }
 .visual .word { position: absolute; bottom: -.12em; left: -.04em; right: -.04em; font-family: var(--f-display); font-weight: 700; line-height: .8;
@@ -72,7 +73,7 @@ a { color: inherit }
 .facts dd { margin: 0; font-weight: 600; min-width: 0; overflow-wrap: anywhere }
 .band { position: relative; height: clamp(420px, 80vw, 820px); overflow: hidden }
 .par { position: absolute; will-change: transform }
-.par img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.6) }
+.par img, .par video { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.6) }
 .win { border-radius: 10px; overflow: hidden; background: var(--p-ink); box-shadow: 0 30px 80px -30px rgba(0,0,0,.6) }
 .win .chrome { height: 26px; display: flex; align-items: center; gap: 6px; padding-inline: 12px; background: color-mix(in srgb, var(--p-ink) 85%, var(--p-bg)) }
 .win .chrome i { width: 8px; height: 8px; border-radius: 50%; background: color-mix(in srgb, var(--p-bg) 40%, transparent) }
@@ -90,7 +91,7 @@ a { color: inherit }
 .statement p { margin: 0; font-family: var(--f-display); font-size: clamp(54px, 9vw, 128px); line-height: .95; text-wrap: balance; max-width: 14ch }
 .statement em, .reveal em { font-style: normal; color: var(--p-acc) }
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: clamp(12px, 2vw, 24px); padding-block: 0 clamp(80px, 10vw, 120px) }
-.gallery img { width: 100%; height: auto; border-radius: 10px }
+.gallery img, .gallery video { width: 100%; height: auto; border-radius: 10px }
 .visit { display: inline-block; margin-top: 8px; font-weight: 600; text-underline-offset: 4px }
 .swatches { display: flex; gap: clamp(10px, 2vw, 22px); padding-block: 0 clamp(60px, 10vw, 110px); flex-wrap: wrap; list-style: none; margin: 0; padding-inline: 0 }
 .sw { flex: 1 1 120px; min-width: 0 }

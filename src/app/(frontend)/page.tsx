@@ -1,10 +1,19 @@
+import type { Metadata } from 'next'
 import { Footer } from '@/components/Footer'
+import { JsonLd } from '@/components/JsonLd'
+import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { Header } from '@/components/Header'
 import { CopyValue, Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
 import { NextFrame } from '@/components/NextFrame'
 import { Visual } from '@/components/Visual'
 import { getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
+import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const s = await getSettings()
+  return pageMetadata({ path: '/', description: s.metaDescription, image: shareImageOf(s.shareImage) })
+}
 
 export default async function HomePage() {
   const [projects, home, settings, pages] = await Promise.all([getProjects(), getHome(), getSettings(), getFooterPages()])
@@ -130,6 +139,20 @@ export default async function HomePage() {
 
       <div className="peek" data-peek aria-hidden="true" />
       <Motion />
+      <LivePreviewRefresh />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'Organization',
+          name: 'MyMuse',
+          url: abs('/'),
+          email: settings.email || undefined,
+          telephone: settings.phone || undefined,
+          founder: { '@type': 'Person', name: 'רוית שליוינסקי' },
+          foundingDate: '2010',
+          sameAs: (settings.social ?? []).map((x) => x.url),
+        }}
+      />
     </div>
   )
 }

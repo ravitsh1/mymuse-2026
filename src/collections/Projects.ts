@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { colorField } from '../fields/color'
+import { metaDescriptionField } from '../fields/seo'
 import { refreshSite } from '../hooks/revalidate'
 
 export const Projects: CollectionConfig = {
@@ -8,12 +9,12 @@ export const Projects: CollectionConfig = {
   orderable: true, // drag to reorder in the list; the order sets "the next project"
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'field', 'featured', '_status'],
+    group: 'תוכן',
+    defaultColumns: ['title', 'field', 'featured', 'hidden'],
     description: 'גררו כדי לשנות את הסדר. הסדר קובע לאיזה פרויקט עוברים בסוף כל פרויקט.',
-    preview: (doc) => `${process.env.NEXT_PUBLIC_SERVER_URL || ''}/preview?path=/portfolio/${doc?.slug ?? ''}`,
+    livePreview: { url: ({ data }) => `/portfolio/${data?.slug || ''}` },
   },
   access: { read: () => true },
-  versions: { drafts: true },
   hooks: {
     afterChange: [() => refreshSite()],
     afterDelete: [() => refreshSite()],
@@ -69,7 +70,14 @@ export const Projects: CollectionConfig = {
               label: 'להציג בעמוד הבית',
               type: 'checkbox',
               defaultValue: true,
-              admin: { position: 'sidebar' },
+              admin: { position: 'sidebar', description: 'ברשימת "עבודות נבחרות".' },
+            },
+            {
+              name: 'hidden',
+              label: 'מוסתר באתר',
+              type: 'checkbox',
+              defaultValue: false,
+              admin: { position: 'sidebar', description: 'לא מופיע באתר ולא ברצף "הפרויקט הבא". טוב לפרויקט שעוד בעבודה.' },
             },
           ],
         },
@@ -117,8 +125,8 @@ export const Projects: CollectionConfig = {
         {
           label: 'קידום',
           fields: [
-            { name: 'metaTitle', label: 'כותרת לגוגל', type: 'text' },
-            { name: 'metaDescription', label: 'תיאור לגוגל', type: 'textarea', maxLength: 170 },
+            { name: 'metaTitle', label: 'כותרת לגוגל', type: 'text', admin: { description: 'ריק = שם הפרויקט.' } },
+            metaDescriptionField('פסקת הפתיחה של הפרויקט'),
           ],
         },
       ],

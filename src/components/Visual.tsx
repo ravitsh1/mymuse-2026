@@ -1,35 +1,44 @@
-import type { Media, Project } from '@/payload-types'
-import { asMedia, projectPalette } from '@/lib/data'
+import Image from 'next/image'
+import type { Project } from '@/payload-types'
+import { projectPalette } from '@/lib/data'
+import { asMedia, mediaUrl } from '@/lib/media'
 
-/** Responsive <img> built from Payload's generated sizes. */
-export function MediaImg({
-  media,
+/**
+ * One media item, rendered by type (same rule as threebears-2026's MediaEl): video → <video>, GIF/SVG or
+ * unknown size → <img>, everything else → next/image. Never put mediaUrl() straight into a raw <img>.
+ * `fill` makes it cover its positioned parent; otherwise it keeps its own aspect ratio.
+ */
+export function MediaEl({
+  m,
   className,
   sizes = '100vw',
-  priority = false,
-  alt,
+  eager = false,
+  fill = false,
+  decorative = false,
   ...rest
-}: { media: Media; className?: string; sizes?: string; priority?: boolean; alt?: string } & Record<string, unknown>) {
-  const s = media.sizes
-  const set = [s?.card, s?.large, s?.hero]
-    .filter((x): x is NonNullable<typeof x> => !!x?.url && !!x?.width)
-    .map((x) => `${x.url} ${x.width}w`)
-  if (media.url && media.width) set.push(`${media.url} ${media.width}w`)
-  return (
+}: {
+  m: unknown
+  className?: string
+  sizes?: string
+  eager?: boolean
+  fill?: boolean
+  decorative?: boolean
+} & Record<`data-${string}`, string>) {
+  const media = asMedia(m)
+  const url = mediaUrl(m)
+  if (!media || !url) return null
+  const mime = media.mimeType || ''
+  const alt = decorative ? '' : media.alt || ''
+  if (mime.startsWith('video/'))
+    return <video className={className} src={url} muted loop playsInline preload={eager ? 'auto' : 'none'} data-autoplay aria-hidden="true" {...rest} />
+  if (mime === 'image/gif' || mime === 'image/svg+xml' || !media.width || !media.height)
     // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={s?.large?.url || media.url || ''}
-      srcSet={set.length ? set.join(', ') : undefined}
-      sizes={sizes}
-      width={media.width ?? undefined}
-      height={media.height ?? undefined}
-      alt={alt ?? media.alt ?? ''}
-      className={className}
-      loading={priority ? 'eager' : 'lazy'}
-      fetchPriority={priority ? 'high' : undefined}
-      decoding="async"
-      {...rest}
-    />
+    return <img className={className} src={url} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" {...rest} />
+  const focal = media.focalX != null && media.focalY != null ? { objectPosition: `${media.focalX}% ${media.focalY}%` } : undefined
+  return fill ? (
+    <Image className={className} src={url} alt={alt} fill sizes={sizes} priority={eager} style={focal} {...rest} />
+  ) : (
+    <Image className={className} src={url} alt={alt} width={media.width} height={media.height} sizes={sizes} priority={eager} {...rest} />
   )
 }
 
@@ -42,8 +51,8 @@ const POS = [
 ]
 
 /**
- * The project's visual. The same markup is the hero, the "next project" frame,
- * the home preview and the fly-in, so the hand-over between pages is seamless.
+ * The project's visual. The same markup is the hero, the "next project" frame, the home preview and the
+ * fly-in, so the hand-over between pages is seamless.
  */
 export function Visual({ project, index, priority = false }: { project: Project; index: number; priority?: boolean }) {
   const p = projectPalette(project)
@@ -58,10 +67,10 @@ export function Visual({ project, index, priority = false }: { project: Project;
     <div className={`visual${img ? ' has-img' : ''}`} style={style}>
       {img ? (
         <>
-          <MediaImg media={img} className="v-img" alt="" priority={priority} data-h="0.18" />
-          {video?.url && video.mimeType?.startsWith('video/') && (
-            <video className="v-img v-video" src={video.url} muted loop playsInline preload="none" data-autoplay aria-hidden="true" />
-          )}
+          <div className="v-img" data-h="0.18">
+            <MediaEl m={img} fill eager={priority} decorative sizes="100vw" />
+          </div>
+          {video?.mimeType?.startsWith('video/') && <MediaEl m={video} className="v-img v-video" />}
           <div className="v-shade" />
         </>
       ) : (

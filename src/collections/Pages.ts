@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { metaDescriptionField } from '../fields/seo'
 import { refresh } from '../hooks/revalidate'
 
 /** Plain text pages: accessibility statement, privacy policy and the like. */
@@ -9,10 +10,10 @@ export const Pages: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     description: 'עמודי טקסט כמו הצהרת נגישות ומדיניות פרטיות.',
-    preview: (doc) => `${process.env.NEXT_PUBLIC_SERVER_URL || ''}/preview?path=/${doc?.slug ?? ''}`,
+    group: 'תוכן',
+    livePreview: { url: ({ data }) => `/${data?.slug || ''}` },
   },
   access: { read: () => true },
-  versions: { drafts: true },
   hooks: {
     afterChange: [({ doc }) => refresh(`/${doc.slug}`)],
   },
@@ -37,6 +38,6 @@ export const Pages: CollectionConfig = {
       admin: { position: 'sidebar' },
     },
     { name: 'content', label: 'תוכן', type: 'richText' },
-    { name: 'metaDescription', label: 'תיאור לגוגל', type: 'textarea', maxLength: 170 },
+    metaDescriptionField('המשפט הכללי מהגדרות האתר'),
   ],
 }
