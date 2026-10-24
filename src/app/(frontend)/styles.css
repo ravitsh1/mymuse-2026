@@ -50,6 +50,11 @@ a { color: inherit }
 .visual .word { position: absolute; bottom: -.12em; left: -.04em; right: -.04em; font-family: var(--f-display); font-weight: 700; line-height: .8;
   font-size: clamp(110px, 31vw, 460px); color: transparent; -webkit-text-stroke: 1.5px var(--v-ink); opacity: .5; direction: ltr; white-space: nowrap; text-align: center }
 .visual.has-img .word { opacity: .35 }
+/* "show the whole image" (per project): on a portrait screen a wide hero would be cropped to a sliver, so it is
+   contained on the project colour instead. Same class everywhere the visual appears, so the hand-over still matches. */
+@media (orientation: portrait) {
+  .visual.fit-portrait .v-img img { object-fit: contain !important; object-position: 50% 42% !important }
+}
 .visual .shape { position: absolute; will-change: transform }
 .shape.disc { width: clamp(140px, 34vw, 420px); aspect-ratio: 1; border-radius: 50%; background: var(--v-acc) }
 .shape.arch { width: clamp(90px, 18vw, 240px); aspect-ratio: 1/1.7; border-radius: 999px 999px 0 0; border: 1.5px solid var(--v-ink) }

@@ -101,6 +101,16 @@ export const Projects: CollectionConfig = {
               admin: { description: 'רוחב 2400px לפחות. בלי תמונה מוצגת גרפיקה בצבעי הפרויקט.' },
             },
             {
+              name: 'heroFitPortrait',
+              label: 'בנייד: להציג את כל התמונה הראשית, בלי חיתוך',
+              type: 'checkbox',
+              defaultValue: false,
+              admin: {
+                description:
+                  'למסך לאורך (נייד, טאבלט לאורך): התמונה מוצגת במלואה על רקע בצבע הפרויקט, במקום למלא את המסך בחיתוך. מתאים למוקאפים שהרקע שלהם בצבע הפרויקט. לא מסומן = ממלאת את המסך.',
+              },
+            },
+            {
               name: 'heroVideo',
               label: 'וידאו ראשי (לא חובה)',
               type: 'upload',

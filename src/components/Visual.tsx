@@ -64,7 +64,7 @@ export function Visual({ project, index, priority = false }: { project: Project;
   const style = { '--v-bg': p.bg, '--v-ink': p.ink, '--v-acc': p.acc } as React.CSSProperties
 
   return (
-    <div className={`visual${img ? ' has-img' : ''}`} style={style}>
+    <div className={`visual${img ? ' has-img' : ''}${img && project.heroFitPortrait ? ' fit-portrait' : ''}`} style={style}>
       {img ? (
         <>
           <div className="v-img" data-h="0.18">

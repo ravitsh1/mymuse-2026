@@ -171,6 +171,10 @@ export interface Project {
    */
   hero?: (number | null) | Media;
   /**
+   * למסך לאורך (נייד, טאבלט לאורך): התמונה מוצגת במלואה על רקע בצבע הפרויקט, במקום למלא את המסך בחיתוך. מתאים למוקאפים שהרקע שלהם בצבע הפרויקט. לא מסומן = ממלאת את המסך.
+   */
+  heroFitPortrait?: boolean | null;
+  /**
    * לופ קצר ושקט (mp4). לא מתנגן כשהגולש ביקש להפחית תנועה.
    */
   heroVideo?: (number | null) | Media;
@@ -389,6 +393,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   featured?: T;
   hidden?: T;
   hero?: T;
+  heroFitPortrait?: T;
   heroVideo?: T;
   gallery?: T;
   bg?: T;
