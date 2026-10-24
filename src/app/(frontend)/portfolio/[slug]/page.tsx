@@ -32,6 +32,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   })
 }
 
+/** "עיצוב: סטודיו גור" → label "עיצוב", value "סטודיו גור"; without a colon the whole text is the value. */
+function splitCredit(text: string | null | undefined) {
+  const t = text?.trim()
+  if (!t) return null
+  const i = t.indexOf(':')
+  return i > 0 ? { label: t.slice(0, i).trim(), value: t.slice(i + 1).trim() } : { label: 'קרדיט', value: t }
+}
+
 /** "*word*" in the CMS becomes the accent-coloured word. */
 function Emph({ text }: { text: string }) {
   return (
@@ -53,6 +61,7 @@ export default async function ProjectPage({ params }: Props) {
   const nxt = nextProject(projects, p)!
   const gallery = (p.gallery ?? []).map(asMedia).filter((m): m is Media => !!m && !!m.url)
   const [g1, g2, ...rest] = gallery
+  const credit = splitCredit(p.credit)
 
   return (
     <div className="site" data-site data-bg={c.bg} data-ink={c.ink} data-acc={c.acc} style={paletteVars(c)}>
@@ -99,6 +108,12 @@ export default async function ProjectPage({ params }: Props) {
               <div>
                 <dt>פלטפורמה</dt>
                 <dd>{p.platform}</dd>
+              </div>
+            )}
+            {credit && (
+              <div>
+                <dt>{credit.label}</dt>
+                <dd>{credit.value}</dd>
               </div>
             )}
           </dl>

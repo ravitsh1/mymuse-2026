@@ -3,8 +3,8 @@ import { NextResponse, type NextRequest } from 'next/server'
 /**
  * Addresses of the old WordPress site at mymuse.co.il → their place on the new site, so links and Google results
  * keep working after the domain moves (same approach as threebears-2026). Old WordPress URLs end with "/" and
- * project slugs carry the Hebrew name. Projects not on the new site yet go to the home page's work list —
- * when one is added, put its new slug here.
+ * project slugs carry the Hebrew name. A project mapped to '' goes to the home page — use that
+ * for a project removed from the new site.
  */
 const LEGACY: Record<string, string> = {
   '/about-us': '/',
@@ -14,30 +14,30 @@ const LEGACY: Record<string, string> = {
   '/הצהרת-נגישות': '/accessibility',
 }
 const LEGACY_PROJECTS: Record<string, string> = {
+  // all imported by src/import/wordpress.ts (same slug rule: the Latin part of the old slug)
   'jullius-יוליוס': 'jullius',
   'mosessco-מוססקו': 'mosessco',
   'margalit-מרגלית': 'margalit',
   'recanati-רקנאטי': 'recanati',
   'vinspiration-וינספיריישן': 'vinspiration',
-  // not migrated yet → home page
-  'helios-הליוס': '',
-  'gurgroup-קבוצת-גור-ביטוח': '',
-  'meteor-center-מרכז-קהילתי-מטאור': '',
-  'teo-תאו': '',
-  'barantech-ברנטק': '',
-  'benny-goren-בני-גורן': '',
-  'enosh-אנוש': '',
-  'little-fences-גדרות-קטנות': '',
-  'samurai-סמוראי': '',
-  'ווין-קייס-winecase': '',
-  'netofa-נטופה': '',
-  '3-bears-שלושת-הדובים': '',
-  'studio-gur-סטודיו-גור': '',
-  'agur-עגור': '',
-  'boutiqe77-בוטיק': '',
-  'moa-winery-יקב-מואה': '',
-  'firon-פירון': '',
-  'gordon-pool-בריכת-גורדון': '',
+  'helios-הליוס': 'helios',
+  'gurgroup-קבוצת-גור-ביטוח': 'gurgroup',
+  'meteor-center-מרכז-קהילתי-מטאור': 'meteor-center',
+  'teo-תאו': 'teo',
+  'barantech-ברנטק': 'barantech',
+  'benny-goren-בני-גורן': 'benny-goren',
+  'enosh-אנוש': 'enosh',
+  'little-fences-גדרות-קטנות': 'little-fences',
+  'samurai-סמוראי': 'samurai',
+  'ווין-קייס-winecase': 'winecase',
+  'netofa-נטופה': 'netofa',
+  '3-bears-שלושת-הדובים': '3-bears',
+  'studio-gur-סטודיו-גור': 'studio-gur',
+  'agur-עגור': 'agur',
+  'boutiqe77-בוטיק': 'boutique77',
+  'moa-winery-יקב-מואה': 'moa-winery',
+  'firon-פירון': 'firon',
+  'gordon-pool-בריכת-גורדון': 'gordon-pool',
 }
 
 const legacyTarget = (path: string): string | null => {

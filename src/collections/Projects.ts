@@ -66,6 +66,15 @@ export const Projects: CollectionConfig = {
             },
             { name: 'siteUrl', label: 'קישור לאתר', type: 'text', admin: { placeholder: 'https://' } },
             {
+              name: 'credit',
+              label: 'קרדיט',
+              type: 'text',
+              admin: {
+                placeholder: 'עיצוב: סטודיו גור',
+                description: 'מוצג בפרטי הפרויקט: מה שלפני הנקודתיים הוא הכותרת. ריק = לא מוצג.',
+              },
+            },
+            {
               name: 'featured',
               label: 'להציג בעמוד הבית',
               type: 'checkbox',

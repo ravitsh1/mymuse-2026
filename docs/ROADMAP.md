@@ -26,15 +26,17 @@ Work top to bottom. Each step ends with tsc + build + a check in the browser (39
 - [ ] Final colour palette for the home page (Settings → צבעי עמוד הבית) and the Passion words.
 
 ## 4. Real content
-- [ ] Projects: real hero images (2400px+), optional short video loop, two parallax screenshots + gallery, real texts. Start with the five sample slugs, then the rest of the old portfolio.
-- [ ] For each project added, put its new slug in `LEGACY_PROJECTS` in `src/proxy.ts`.
+- [x] All 23 projects of the old portfolio: `npm run import:wp` (`src/import/wordpress.ts`, see `docs/IMPORT.md`) — tested on an empty database: 23 projects, 72 screenshots, 80 s; re-run skips everything.
+- [ ] Run the import on production (Ravit, `docs/IMPORT.md`) after this PR is deployed.
+- [ ] In the admin: order, which projects are featured on the home page (all 23 now), "משפט מרכזי" per project, palettes. Heroes are 1920px (old site) — replace with 2400px+ where she has them.
+- [x] `LEGACY_PROJECTS` in `src/proxy.ts`: all 23 old URLs → new slugs (checked: 301 → 200 for every URL in the old sitemap).
 - [ ] Home texts: subtitle, services, about, clients list (Ravit to confirm the sample wording).
 - [ ] Accessibility statement and privacy policy: replace the `[להשלמה]` placeholders.
 - [ ] Settings: share image (1200×630), social links.
 
 ## 5. Nice to have (ask Ravit before starting)
 - [ ] Contact form with leads + email (threebears-2026 has a working Leads collection + Resend).
-- [ ] Bulk project import from the old WordPress site (threebears-2026 `src/import/wordpress.ts` is a starting point).
+- [x] Bulk project import from the old WordPress site (2026-10-24).
 - [ ] Hero video poster frames (`/poster.jpg` route as on threebears-2026).
 - [ ] WebGL image transition between projects (noise/dissolve) — only if it stays light and has a reduced-motion fallback.
 

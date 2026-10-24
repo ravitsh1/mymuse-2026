@@ -222,6 +222,8 @@ a { color: inherit }
   .p1 { width: 84%; right: 4%; top: 8% }
   .p2 { width: 44%; left: 4%; bottom: 6% }
   .count { display: none }
+  /* past ~7 projects the row runs under the logo; the next-project frame and the home index still link them all */
+  .dots:has(li:nth-child(8)) { display: none }
   .row .rf { display: none }
   .mq-btn { top: auto; bottom: 4px; translate: none }
 }
