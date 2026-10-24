@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import React from 'react'
-import { getSettings } from '@/lib/data'
+import { CookieNotice } from '@/components/CookieNotice'
+import { getPage, getSettings, sitePalette } from '@/lib/data'
 import { indexable } from '@/lib/site'
 import { SITE_URL } from '@/lib/seo'
 import './styles.css'
@@ -19,7 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
 // No maximum-scale / user-scalable=no: visitors must be able to zoom.
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#111517' }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const [settings, privacy] = await Promise.all([getSettings(), getPage('privacy-policy')])
+  const site = sitePalette(settings)
   return (
     <html lang="he" dir="rtl">
       <head>
@@ -43,6 +46,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           דילוג לתוכן
         </a>
         {children}
+        {settings.cookieText && (
+          <CookieNotice text={settings.cookieText} privacyHref={privacy ? '/privacy-policy' : undefined} bg={site.bg} ink={site.ink} acc={site.acc} />
+        )}
       </body>
     </html>
   )

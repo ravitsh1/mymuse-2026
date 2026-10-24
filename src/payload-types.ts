@@ -598,6 +598,10 @@ export interface Setting {
    */
   metaDescription?: string | null;
   /**
+   * מוצגת בתחתית המסך עד שהגולש לוחץ "אישור", עם קישור למדיניות הפרטיות (העמוד privacy-policy). ריק = בלי הודעה.
+   */
+  cookieText?: string | null;
+  /**
    * מה שמופיע כששולחים קישור בוואטסאפ או בפייסבוק. 1200×630. בעמוד פרויקט משמשת התמונה הראשית שלו.
    */
   shareImage?: (number | null) | Media;
@@ -662,6 +666,7 @@ export interface SettingsSelect<T extends boolean = true> {
   ink?: T;
   accent?: T;
   metaDescription?: T;
+  cookieText?: T;
   shareImage?: T;
   updatedAt?: T;
   createdAt?: T;

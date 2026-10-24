@@ -4,6 +4,7 @@ import * as migration_20261024_134505_home_word_image from './20261024_134505_ho
 import * as migration_20261024_142607_home_texts from './20261024_142607_home_texts';
 import * as migration_20261024_144054_home_texts_no_accessibility from './20261024_144054_home_texts_no_accessibility';
 import * as migration_20261024_151500_project_texts from './20261024_151500_project_texts';
+import * as migration_20261024_184818_legal_pages_cookie_notice from './20261024_184818_legal_pages_cookie_notice';
 
 export const migrations = [
   {
@@ -29,11 +30,16 @@ export const migrations = [
   {
     up: migration_20261024_144054_home_texts_no_accessibility.up,
     down: migration_20261024_144054_home_texts_no_accessibility.down,
-    name: '20261024_144054_home_texts_no_accessibility'
+    name: '20261024_144054_home_texts_no_accessibility',
   },
   {
     up: migration_20261024_151500_project_texts.up,
     down: migration_20261024_151500_project_texts.down,
     name: '20261024_151500_project_texts',
+  },
+  {
+    up: migration_20261024_184818_legal_pages_cookie_notice.up,
+    down: migration_20261024_184818_legal_pages_cookie_notice.down,
+    name: '20261024_184818_legal_pages_cookie_notice'
   },
 ];

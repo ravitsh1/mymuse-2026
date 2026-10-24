@@ -183,6 +183,18 @@ a { color: inherit }
 .ci .val { user-select: all; font-variant-numeric: tabular-nums }
 .cp { font: 600 13px var(--f-body); color: inherit; background: transparent; border: 1px solid var(--p-soft); border-radius: 999px; padding: 5px 12px; cursor: pointer; direction: rtl }
 
+/* ---------- cookie notice ---------- */
+/* Its own colour vars: it sits outside the page wrapper that sets --p-*. */
+.cookie { position: fixed; z-index: 40; inset-inline: var(--gutter-r) var(--gutter-l); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); max-width: 640px; margin-inline: auto;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 16px 20px; border-radius: 14px; font-size: 16px; line-height: 1.5;
+  background: var(--k-bg); color: var(--k-ink); border: 1px solid color-mix(in srgb, var(--k-ink) 25%, transparent); box-shadow: 0 10px 40px rgb(0 0 0 / .35) }
+.cookie p { margin: 0; flex: 1 1 260px }
+.cookie a { color: inherit; text-decoration: underline; text-underline-offset: 3px }
+.cookie button { font: 700 16px var(--f-body); color: var(--k-bg); background: var(--k-acc); border: 0; border-radius: 999px; padding: 10px 26px; min-height: 44px; cursor: pointer }
+.cookie button:focus-visible, .cookie a:focus-visible { outline: 3px solid var(--k-acc); outline-offset: 3px }
+/* focus parked on <main> after the notice closes: a container, no ring */
+main[tabindex="-1"]:focus { outline: none }
+
 /* ---------- footer ---------- */
 .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-block: 28px; font-size: 15px; border-top: 1px solid var(--p-soft) }
 .foot ul { display: flex; flex-wrap: wrap; gap: 8px 22px; list-style: none; margin: 0; padding: 0 }
