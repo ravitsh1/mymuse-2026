@@ -17,7 +17,8 @@ Ravit's own studio site. **She edits all content in the admin.** Replies to Ravi
 | Admin | `/admin` (Hebrew UI, dashboard cards in `components/admin/Dashboard.tsx`) |
 | DB | Postgres (`DATABASE_URL`). Local: PGlite on port 5433 (`npm run db:local`, scripts need `LOCAL_PGLITE=1`) |
 | Media | Vercel Blob in production (`BLOB_READ_WRITE_TOKEN`), `/media` on disk locally |
-| Prototype | the scroll/motion prototype artifact this site was ported from |
+| Prototype | `docs/prototype.html` — the approved scroll/motion prototype this site was ported from |
+| Roadmap | `docs/ROADMAP.md` — open work, in order |
 
 ## Stack in one paragraph
 

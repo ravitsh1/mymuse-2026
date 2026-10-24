@@ -1,7 +1,7 @@
 # MyMuse – האתר החדש
 
 Next.js 16 + Payload CMS 3, באותו מבנה של threebears-2026. אפליקציה אחת: האתר בכתובת `/`, ממשק הניהול בעברית בכתובת `/admin`.
-מדריך העבודה המלא לקוד: `.claude/skills/mymuse-site/SKILL.md`.
+לעבודה עם Claude Code: `CLAUDE.md` (כללים והפעלה), `.claude/skills/mymuse-site/SKILL.md` (מפת הקוד) ו־`docs/ROADMAP.md` (מה הלאה).
 
 ## הפעלה מקומית
 

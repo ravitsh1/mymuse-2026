@@ -1,0 +1,539 @@
+<title>MyMuse Next Project</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&family=Assistant:wght@300;400;600&display=swap">
+<style>
+/* Layout: home + one project per "page"; every exit is a frame that grows into the next page. */
+:root{
+  color-scheme: dark;
+  --p-bg:#16141a; --p-ink:#efe8de; --p-acc:#d6a05b; --p-soft:rgba(239,232,222,.15);
+  --chrome-bg:#101011;
+  --f-display:"Karantina","Assistant","Arial Narrow",sans-serif;
+  --f-body:"Assistant","Arial",sans-serif;
+  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+}
+*{box-sizing:border-box}
+html{background:var(--chrome-bg)}
+body{background:var(--p-bg);color:var(--p-ink);font-family:var(--f-body);font-size:18px;line-height:1.6;direction:rtl;transition:background-color .6s ease,color .6s ease;overflow-x:hidden}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--p-acc);outline-offset:3px}
+a{color:inherit}
+
+/* ---------- header ---------- */
+.top{position:fixed;inset:0 0 auto;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding-block:calc(14px + env(safe-area-inset-top,0px)) 14px;padding-left:var(--gutter-l);padding-right:var(--gutter-r);
+  color:var(--p-ink);pointer-events:none;transition:color .6s}
+.top > *{pointer-events:auto}
+.logo{font-family:var(--f-display);font-size:30px;font-weight:700;letter-spacing:.02em;direction:ltr;text-decoration:none}
+.logo span{color:var(--p-acc)}
+.nav{display:flex;align-items:center;gap:14px;font-variant-numeric:tabular-nums}
+.count{font-size:14px;letter-spacing:.12em;direction:ltr}
+.dots{display:flex;gap:6px}
+.dots button{width:22px;height:22px;border:0;padding:0;background:none;cursor:pointer;display:grid;place-items:center;color:inherit}
+.dots button::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.35;transition:all .3s}
+.dots button[aria-current="true"]::before{opacity:1;width:18px;border-radius:4px;background:var(--p-acc)}
+.bar{position:fixed;top:0;right:0;left:0;height:3px;z-index:21;transform-origin:right;transform:scaleX(0);background:var(--p-acc)}
+
+/* ---------- project visual (shared by hero, previews, fly-in) ---------- */
+.visual{position:absolute;inset:0;overflow:hidden;background:var(--v-bg)}
+.visual .glow{position:absolute;inset:-20%;background:radial-gradient(60% 50% at var(--gx) var(--gy), var(--v-acc) 0%, transparent 60%);opacity:.55}
+.visual .word{position:absolute;bottom:-.12em;left:-.04em;right:-.04em;font-family:var(--f-display);font-weight:700;line-height:.8;
+  font-size:clamp(110px, 31vw, 460px);color:transparent;-webkit-text-stroke:1.5px var(--v-ink);opacity:.5;direction:ltr;white-space:nowrap;text-align:center}
+.visual .shape{position:absolute;will-change:transform}
+.shape.disc{width:clamp(140px,34vw,420px);aspect-ratio:1;border-radius:50%;background:var(--v-acc)}
+.shape.arch{width:clamp(90px,18vw,240px);aspect-ratio:1/1.7;border-radius:999px 999px 0 0;border:1.5px solid var(--v-ink)}
+.shape.lines{width:clamp(120px,26vw,320px);aspect-ratio:1;background:repeating-linear-gradient(90deg,var(--v-ink) 0 1px,transparent 1px 14px);opacity:.35}
+
+/* ---------- project hero ---------- */
+.hero{position:relative;height:100vh;min-height:520px}
+.hero-copy{position:absolute;inset:auto 0 0;padding-block:0 clamp(90px,16vh,160px);padding-left:var(--gutter-l);padding-right:var(--gutter-r);z-index:2}
+.hero h1{margin:0;font-family:var(--f-display);font-weight:700;font-size:clamp(76px,17vw,210px);line-height:.85;text-wrap:balance;color:var(--p-ink)}
+.kicker{margin:0 0 10px;font-size:15px;letter-spacing:.14em;color:var(--p-acc);font-weight:600}
+.hint{position:absolute;bottom:calc(22px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:.2em;opacity:.7;z-index:2}
+.hint::after{content:"";display:block;width:1px;height:28px;margin:8px auto 0;background:currentColor;animation:drip 1.8s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+body.arrived .hero h1, body.arrived .hero .kicker{animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+body.arrived .hero .kicker{animation-delay:.08s}
+@keyframes rise{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+
+/* ---------- project content ---------- */
+.wrap{max-width:1100px;margin-inline:auto;padding-left:var(--gutter-l);padding-right:var(--gutter-r)}
+.intro{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(28px,6vw,90px);padding-block:clamp(70px,12vw,150px)}
+.intro > *{min-width:0}
+.lead{margin:0;font-size:clamp(22px,2.6vw,32px);line-height:1.45;font-weight:300;max-width:30ch;text-wrap:pretty}
+.facts{margin:0;display:grid;gap:18px;align-content:start}
+.facts div{display:grid;grid-template-columns:90px 1fr;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--p-soft)}
+.facts dt{font-size:13px;letter-spacing:.14em;opacity:.65;padding-top:4px}
+.facts dd{margin:0;font-weight:600}
+.band{position:relative;height:clamp(420px,80vw,820px);overflow:hidden}
+.par{position:absolute;will-change:transform}
+.win{border-radius:10px;overflow:hidden;background:var(--p-ink);box-shadow:0 30px 80px -30px rgba(0,0,0,.6)}
+.win .chrome{height:26px;display:flex;align-items:center;gap:6px;padding-inline:12px;background:color-mix(in srgb,var(--p-ink) 85%, var(--p-bg))}
+.win .chrome i{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--p-bg) 40%, transparent)}
+.win .screen{position:relative;aspect-ratio:16/10;background:var(--p-bg);overflow:hidden}
+.win .screen::before{content:"";position:absolute;inset:12% 8% auto auto;width:42%;aspect-ratio:1;border-radius:50%;background:var(--p-acc);opacity:.85}
+.win .screen b{position:absolute;inset:auto 8% 14% 40%;height:10%;background:var(--p-ink);opacity:.9;border-radius:2px}
+.win .screen u{position:absolute;inset:auto 8% 30% 55%;height:4%;background:var(--p-ink);opacity:.4;border-radius:2px}
+.p1{width:min(68%,720px);top:12%;right:6%}
+.p2{width:min(36%,360px);bottom:8%;left:6%}
+.p2 .screen{aspect-ratio:9/16}
+.p2 .screen::before{inset:10% 15% auto auto;width:70%}
+.p2 .screen b{inset:auto 12% 18% 12%;height:6%}
+.p2 .screen u{inset:auto 12% 28% 30%;height:3%}
+.statement{padding-block:clamp(90px,14vw,180px)}
+.statement p{margin:0;font-family:var(--f-display);font-size:clamp(54px,9vw,128px);line-height:.95;text-wrap:balance;max-width:14ch}
+.statement p em{font-style:normal;color:var(--p-acc)}
+.swatches{display:flex;gap:clamp(10px,2vw,22px);padding-block:0 clamp(80px,12vw,140px);flex-wrap:wrap}
+.sw{flex:1 1 120px;min-width:0}
+.sw span{display:block;aspect-ratio:1/1.25;border-radius:6px;border:1px solid var(--p-soft)}
+.sw small{display:block;margin-top:8px;font-size:13px;letter-spacing:.08em;opacity:.7;direction:ltr;text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---------- home: Passion & ---------- */
+.ph{position:relative;height:340vh}
+.ph-sticky{position:sticky;top:0;height:100vh;min-height:520px;overflow:hidden;background:var(--h-bg,#16141a);transition:background-color .7s ease;
+  display:grid;align-content:center;padding-left:var(--gutter-l);padding-right:var(--gutter-r)}
+.ph-orb{position:absolute;width:min(70vw,620px);aspect-ratio:1;border-radius:50%;top:50%;left:62%;translate:-50% -50%;
+  background:radial-gradient(circle at 40% 40%, var(--h-acc,#d6a05b), transparent 68%);opacity:.45;transition:background .7s;filter:blur(8px)}
+.passion{position:relative;margin:0;direction:ltr;text-align:left;font-family:var(--f-display);font-weight:700;line-height:.86;font-size:clamp(84px,19vw,280px);color:var(--p-ink)}
+.passion .amp{color:var(--h-acc,#d6a05b);transition:color .7s}
+.words{display:inline-block;height:.86em;overflow:hidden;vertical-align:top}
+.words span{display:block;transition:transform .7s cubic-bezier(.7,0,.2,1)}
+.ph-sub{position:relative;margin:28px 0 0;font-size:clamp(18px,2vw,24px);font-weight:300;max-width:32ch}
+.ticks{position:absolute;bottom:calc(28px + env(safe-area-inset-bottom,0px));right:var(--gutter-r);display:flex;gap:8px}
+.ticks i{width:28px;height:2px;background:var(--p-ink);opacity:.25;transition:opacity .4s}
+.ticks i.on{opacity:1}
+
+/* ---------- home: project index ---------- */
+.ix{padding-block:clamp(90px,12vw,150px)}
+.ix-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.ix-head h2{margin:0;font-size:15px;letter-spacing:.2em;font-weight:600;color:var(--p-acc)}
+.ix-head p{margin:0;font-size:15px;opacity:.7}
+.rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--p-soft)}
+.row{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding-block:10px 4px;border-bottom:1px solid var(--p-soft);text-decoration:none;transition:opacity .35s}
+.row .rn{font-family:var(--f-display);font-weight:700;font-size:clamp(60px,11vw,150px);line-height:.95;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.row .rf{font-size:15px;opacity:.75;white-space:nowrap}
+.rows.has-on .row{opacity:.28}
+.rows.has-on .row.on{opacity:1}
+.row.on .rn{transform:translateX(-14px)}
+.peek{position:fixed;top:0;left:0;width:240px;height:320px;border-radius:14px;overflow:hidden;pointer-events:none;z-index:15;
+  opacity:0;scale:.6;transition:opacity .3s, scale .4s cubic-bezier(.2,.8,.2,1)}
+.peek.show{opacity:1;scale:1}
+.peek .visual .word{font-size:120px}
+.peek .visual .disc{width:150px}.peek .visual .arch{width:70px}.peek .visual .lines{width:90px}
+.fly{position:fixed;inset:0;z-index:30}
+
+/* ---------- home: services (a real sequence) ---------- */
+.svc{padding-block:clamp(40px,8vw,90px) clamp(60px,10vw,120px)}
+.svc h2{margin:0 0 24px;font-size:15px;letter-spacing:.2em;font-weight:600;color:var(--p-acc)}
+.cards{display:grid;gap:24px}
+.card{position:sticky;min-height:min(62vh,520px);border-radius:22px;padding:clamp(24px,4vw,48px);display:grid;align-content:space-between;gap:24px;
+  background:var(--c-bg);color:var(--c-ink);box-shadow:0 -20px 60px -30px rgba(0,0,0,.6)}
+.card .n{font-family:var(--f-display);font-size:clamp(90px,14vw,190px);line-height:.8;opacity:.9;font-variant-numeric:tabular-nums}
+.card h3{margin:0;font-family:var(--f-display);font-weight:700;font-size:clamp(48px,7vw,96px);line-height:.9}
+.card p{margin:10px 0 0;max-width:40ch;font-size:clamp(17px,1.6vw,20px)}
+
+/* ---------- home: about ---------- */
+.about{padding-block:clamp(100px,14vw,190px)}
+.about .kicker{margin-bottom:20px}
+.reveal{margin:0;font-family:var(--f-display);font-size:clamp(48px,7.4vw,108px);line-height:1;max-width:16ch;text-wrap:balance}
+.reveal span{transition:opacity .25s}
+.reveal .dim{opacity:.2}
+.about-body{margin:36px 0 0;max-width:46ch;font-size:clamp(18px,1.6vw,21px);opacity:.85}
+
+/* ---------- home: clients ---------- */
+.clients{border-block:1px solid var(--p-soft);padding-block:26px;overflow:hidden;position:relative}
+.track{display:flex;gap:56px;width:max-content;direction:ltr;animation:marq 55s linear infinite;font-family:var(--f-display);font-size:clamp(34px,4.4vw,56px);white-space:nowrap}
+.track span{opacity:.75}
+.track span:nth-child(3n+1){color:var(--p-acc);opacity:1}
+.clients.paused .track{animation-play-state:paused}
+@keyframes marq{to{transform:translateX(-50%)}}
+.mq-btn{position:absolute;top:50%;left:var(--gutter-l);translate:0 -50%;z-index:2;font:600 13px var(--f-body);color:inherit;background:var(--p-bg);border:1px solid var(--p-soft);border-radius:999px;padding:6px 14px;cursor:pointer}
+
+/* ---------- home: contact ---------- */
+.contact{padding-block:clamp(90px,12vw,150px);display:grid;gap:22px}
+.contact h2{margin:0;font-family:var(--f-display);font-weight:700;font-size:clamp(64px,11vw,150px);line-height:.88}
+.ct{display:flex;flex-wrap:wrap;gap:12px 28px}
+.ci{display:flex;align-items:center;gap:12px;font-size:clamp(20px,2.4vw,28px);direction:ltr}
+.ci .val{user-select:all;font-variant-numeric:tabular-nums}
+.cp{font:600 13px var(--f-body);color:inherit;background:transparent;border:1px solid var(--p-soft);border-radius:999px;padding:5px 12px;cursor:pointer;direction:rtl}
+
+/* ---------- next frame ---------- */
+.next{position:relative;height:260vh}
+.next-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+.next-frame{position:absolute;inset:0;will-change:clip-path}
+.next-frame .visual{transform-origin:center;will-change:transform}
+.next-ui{position:absolute;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none;z-index:2}
+.next-ui > div{display:grid;justify-items:center;gap:6px}
+.next-ui .lbl{font-size:14px;letter-spacing:.24em;opacity:.8}
+.next-ui .nm{font-family:var(--f-display);font-weight:700;font-size:clamp(64px,13vw,170px);line-height:.9}
+.ring{position:relative;width:76px;height:76px;margin-top:10px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:2}
+.ring .trk{stroke:currentColor;opacity:.2}
+.ring .val{stroke:var(--n-acc);stroke-linecap:round}
+.ring output{position:absolute;inset:0;display:grid;place-items:center;font-size:15px;font-variant-numeric:tabular-nums;direction:ltr}
+.go{pointer-events:auto;margin-top:14px;font:600 15px var(--f-body);color:inherit;background:transparent;border:1px solid currentColor;border-radius:999px;padding:10px 22px;cursor:pointer}
+.go:hover{background:color-mix(in srgb,currentColor 12%,transparent)}
+.note{position:absolute;bottom:calc(14px + env(safe-area-inset-bottom,0px));inset-inline:0;text-align:center;font-size:12px;opacity:.55;z-index:2;padding-left:var(--gutter-l);padding-right:var(--gutter-r)}
+
+/* reduced motion: static layout, no scroll-scrubbing, no auto-advance */
+.rm .next{height:auto}
+.rm .next-sticky{position:relative;height:auto;padding-block:80px}
+.rm .next-frame{position:relative;height:70vh;margin-inline:max(16px,6vw);border-radius:20px;overflow:hidden}
+.rm .next-ui{position:absolute;inset:80px max(16px,6vw)}
+.rm .ring{display:none}
+.rm .ph{height:auto}
+.rm .ph-sticky{position:relative;height:auto;min-height:0;padding-block:140px 90px}
+.rm .ticks{display:none}
+.rm .track{animation:none;flex-wrap:wrap;width:auto;gap:12px 32px;padding-inline:var(--gutter-r) var(--gutter-l)}
+.rm .track [aria-hidden]{display:none}
+.rm .mq-btn{display:none}
+.rm .card{position:relative}
+
+@media (max-width:720px){
+  body{font-size:17px}
+  .intro{grid-template-columns:1fr}
+  .p1{width:84%;right:4%;top:8%}
+  .p2{width:44%;left:4%;bottom:6%}
+  .count{display:none}
+  .row .rf{display:none}
+  .mq-btn{top:auto;bottom:4px;translate:none}
+}
+</style>
+
+<div class="bar" id="bar" aria-hidden="true"></div>
+<header class="top">
+  <a class="logo" href="#home" id="logo" aria-label="MyMuse, עמוד הבית">My<span>Muse</span></a>
+  <nav class="nav" aria-label="פרויקטים">
+    <span class="count" id="count"></span>
+    <div class="dots" id="dots"></div>
+  </nav>
+</header>
+<main id="stage"></main>
+<div class="peek" id="peek" aria-hidden="true"></div>
+<div class="sr-only" aria-live="polite" id="live"></div>
+
+<script>
+const P = [
+  {id:'jullius', he:'יוליוס', en:'JULLIUS', field:'מזקקה', type:'אתר תדמית וחנות מקוונת', platform:'WordPress · WooCommerce',
+   lead:'אתר דו־לשוני למזקקה, עם חנות שמחוברת לקטלוג המוצרים ומעבר חלק בין עברית לאנגלית.',
+   st:'חנות שמרגישה כמו <em>המזקקה</em> עצמה.', bg:'#1b2a24', ink:'#e9dcc0', acc:'#c8953f', gx:'72%', gy:'34%'},
+  {id:'mosessco', he:'מוססקו', en:'MOSESSCO', field:'משרד אדריכלים', type:'אתר תדמית ותיק עבודות', platform:'WordPress · Elementor',
+   lead:'תיק עבודות לאדריכלים שבו התמונות מובילות, והטקסט נותן להן מקום.',
+   st:'קווים נקיים, <em>הרבה</em> אוויר.', bg:'#e6e3dc', ink:'#1d1c1a', acc:'#b04a2e', gx:'28%', gy:'30%'},
+  {id:'margalit', he:'מרגלית', en:'MARGALIT', field:'יקב', type:'אתר יקב וחנות יין', platform:'WordPress · WooCommerce',
+   lead:'אתר יקב עם חנות מקוונת, שבנוי כדי להפוך ביקור באתר להזמנה.',
+   st:'מהכרם <em>לסל</em> בשלוש גלילות.', bg:'#3a0f1c', ink:'#f3e6e0', acc:'#e0a96d', gx:'60%', gy:'62%'},
+  {id:'recanati', he:'רקנאטי', en:'RECANATI', field:'יקב', type:'אתר תדמית', platform:'WordPress',
+   lead:'אתר תדמית ליקב, עם מבנה תוכן ברור לסדרות היין ולסיפור היקב.',
+   st:'כל סדרה מקבלת <em>במה</em> משלה.', bg:'#0f2a3a', ink:'#e7eef0', acc:'#7fc4c9', gx:'30%', gy:'66%'},
+  {id:'vinspiration', he:'וינספיריישן', en:'VINSPIRATION', field:'תיירות יין וקולינריה', type:'אתר תדמית וטפסי הרשמה', platform:'WordPress · Elementor',
+   lead:'אתר למסעות יין וקולינריה, עם עמודי טיולים וטפסים שמובילים לשיחה.',
+   st:'מסע שמתחיל <em>בגלילה</em>.', bg:'#4b5a2a', ink:'#f1efe2', acc:'#e7c75a', gx:'66%', gy:'40%'}
+];
+const HOME = {bg:'#16141a', ink:'#efe8de', acc:'#d6a05b'};
+const WORDS = [
+  {w:'Expertise', bg:'#16141a', acc:'#d6a05b'},
+  {w:'Culture',   bg:'#14243a', acc:'#8fb7e0'},
+  {w:'Flavor',    bg:'#3a0f1c', acc:'#e0a96d'},
+  {w:'Lifestyle', bg:'#26331d', acc:'#e2c65e'}
+];
+const SERVICES = [
+  {t:'אפיון', d:'מבינים את העסק, את הקהל ואת המטרה, ובונים מבנה ותוכן לפני שמתחילים לעצב.', bg:'#efe8de', ink:'#16141a'},
+  {t:'הקמת האתר', d:'עיצוב ובנייה ב־WordPress, Elementor ו־WooCommerce, מותאם לנייד ונגיש מהיום הראשון.', bg:'#d6a05b', ink:'#16141a'},
+  {t:'פיתוח ממשק', d:'תוספים, אינטגרציות ורכיבים בהתאמה אישית, כשמה שקיים על המדף לא מספיק.', bg:'#2a2530', ink:'#efe8de'},
+  {t:'ליווי מתמשך', d:'אחסון, עדכונים, אבטחה ושיפורים לאורך זמן, עם כתובת אחת לכל שאלה.', bg:'#3a0f1c', ink:'#f3e6e0'}
+];
+const CLIENTS = ['HELIOS','GurGroup','Meteor Center','TEO','Jullius','Mosessco','Barantech','Benny Goren','Enosh','Little Fences','Samurai','Recanati','Margalit','WINECASE','Netofa','3 Bears','Studio Gur','Agur','MOA Winery','Vinspiration','Firon','Gordon Pool'];
+
+const N = P.length, pad = n => String(n).padStart(2,'0');
+const $ = id => document.getElementById(id);
+const stage = $('stage'), bar = $('bar'), live = $('live'), peek = $('peek');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const hoverable = matchMedia('(hover: hover) and (pointer: fine)').matches;
+if (reduce) document.body.classList.add('rm');
+
+function paint(c){ const s = document.body.style;
+  s.setProperty('--p-bg', c.bg); s.setProperty('--p-ink', c.ink); s.setProperty('--p-acc', c.acc); s.setProperty('--p-soft', c.ink + '26'); }
+
+const visual = (p, i) => `
+  <div class="visual" style="--v-bg:${p.bg};--v-ink:${p.ink};--v-acc:${p.acc};--gx:${p.gx};--gy:${p.gy}">
+    <div class="glow"></div>
+    <div class="shape disc" data-h="0.35" style="top:${[14,22,10,30,18][i]}%;${i%2?'right':'left'}:${[8,12,18,6,14][i]}%"></div>
+    <div class="shape arch" data-h="-0.2" style="top:${[30,12,36,16,28][i]}%;${i%2?'left':'right'}:${[16,10,8,20,12][i]}%"></div>
+    <div class="shape lines" data-h="0.12" style="top:${[52,46,58,50,44][i]}%;${i%2?'right':'left'}:${[38,34,42,30,40][i]}%"></div>
+    <div class="word">${p.en}</div>
+  </div>`;
+
+/* ---------- views ---------- */
+function homeHTML(){
+  const about = 'מאז 2010 בנינו מאות אתרים, כל אחד עם האופי של העסק שמאחוריו.';
+  return `
+  <section class="ph" id="ph" aria-labelledby="pt">
+    <div class="ph-sticky" id="phs">
+      <div class="ph-orb" aria-hidden="true"></div>
+      <h1 class="sr-only" id="pt" tabindex="-1">MyMuse · בניית אתרים בהתאמה אישית</h1>
+      <p class="passion" aria-label="Passion & Expertise, Culture, Flavor, Lifestyle">
+        <span aria-hidden="true">Passion<br><span class="amp">&amp;</span> <span class="words"><span id="wcol">${WORDS.map(w=>w.w).join('<br>')}</span></span></span>
+      </p>
+      <p class="ph-sub">אתרים בהתאמה אישית, מאפיון ועד ליווי, תחת קורת גג אחת.</p>
+      <div class="ticks" aria-hidden="true">${WORDS.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join('')}</div>
+    </div>
+  </section>
+
+  <section class="ix wrap" id="ix" aria-labelledby="ixh">
+    <div class="ix-head"><h2 id="ixh">עבודות נבחרות</h2><p>${hoverable ? 'רחפו מעל שם, לחצו לפתיחה' : 'גללו ולחצו על פרויקט'}</p></div>
+    <ul class="rows" id="rows">
+      ${P.map((p,i)=>`<li><a class="row" href="#${p.id}" data-i="${i}"><span class="rn">${p.he}</span><span class="rf">${p.field}</span></a></li>`).join('')}
+    </ul>
+  </section>
+
+  <section class="svc wrap" aria-labelledby="svch">
+    <h2 id="svch">הכל תחת קורת גג אחת</h2>
+    <div class="cards">
+      ${SERVICES.map((s,k)=>`<article class="card" style="top:calc(84px + ${k*22}px);--c-bg:${s.bg};--c-ink:${s.ink}">
+        <span class="n" aria-hidden="true">${k+1}</span>
+        <div><h3>${s.t}</h3><p>${s.d}</p></div></article>`).join('')}
+    </div>
+  </section>
+
+  <section class="about wrap" id="about" aria-labelledby="abh">
+    <p class="kicker" id="abh">MyMuse</p>
+    <p class="reveal" id="reveal">${about.split(' ').map(w=>`<span>${w}</span>`).join(' ')}</p>
+    <p class="about-body">MyMuse הוקמה על ידי רוית שליוינסקי. אנחנו מאמינות שלכל עסק יש אופי ייחודי, ולכן כל לקוח מקבל יחס אישי והתאמה מדויקת.</p>
+  </section>
+
+  <section class="clients" id="clients" aria-label="לקוחות">
+    <button class="mq-btn" id="mq" type="button" aria-pressed="false">עצירה</button>
+    <div class="track">
+      ${CLIENTS.map(c=>`<span>${c}</span>`).join('')}
+      ${CLIENTS.map(c=>`<span aria-hidden="true">${c}</span>`).join('')}
+    </div>
+  </section>
+
+  <section class="contact wrap" aria-labelledby="cth">
+    <h2 id="cth">נדבר?</h2>
+    <div class="ct">
+      <div class="ci"><span class="val">ravit@mymuse.co.il</span><button class="cp" type="button" data-copy="ravit@mymuse.co.il">העתקה</button></div>
+      <div class="ci"><span class="val">054-6454404</span><button class="cp" type="button" data-copy="054-6454404">העתקה</button></div>
+    </div>
+  </section>`;
+}
+
+function projectHTML(p, i){
+  return `
+  <section class="hero" aria-labelledby="pt">
+    ${visual(p, i)}
+    <div class="hero-copy"><p class="kicker">${p.field}</p><h1 id="pt" tabindex="-1">${p.he}</h1></div>
+    <div class="hint" aria-hidden="true">גללו</div>
+  </section>
+  <section class="intro wrap">
+    <p class="lead">${p.lead}</p>
+    <dl class="facts">
+      <div><dt>תחום</dt><dd>${p.field}</dd></div>
+      <div><dt>היקף</dt><dd>${p.type}</dd></div>
+      <div><dt>פלטפורמה</dt><dd>${p.platform}</dd></div>
+    </dl>
+  </section>
+  <section class="band" aria-hidden="true">
+    <div class="par p1" data-speed="0.10"><div class="win"><div class="chrome"><i></i><i></i><i></i></div><div class="screen"><b></b><u></u></div></div></div>
+    <div class="par p2" data-speed="-0.14"><div class="win"><div class="chrome"><i></i><i></i><i></i></div><div class="screen"><b></b><u></u></div></div></div>
+  </section>
+  <section class="statement wrap"><p>${p.st}</p></section>
+  <section class="wrap"><div class="swatches" aria-label="פלטת הצבעים של הפרויקט">
+    ${[p.bg,p.ink,p.acc].map(c=>`<div class="sw"><span style="background:${c}"></span><small>${c.toUpperCase()}</small></div>`).join('')}
+  </div></section>`;
+}
+
+function nextHTML(n, j, label){
+  return `
+  <section class="next" id="next" aria-label="${label}">
+    <div class="next-sticky">
+      <div class="next-frame" id="nframe">${visual(n, j)}</div>
+      <div class="next-ui" style="color:${n.ink};--n-acc:${n.acc}">
+        <div>
+          <span class="lbl">${label}</span>
+          <span class="nm">${n.he}</span>
+          <div class="ring" aria-hidden="true">
+            <svg viewBox="0 0 76 76"><circle class="trk" cx="38" cy="38" r="34"/><circle class="val" id="ring" cx="38" cy="38" r="34" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg>
+            <output id="pct">0%</output>
+          </div>
+          <button class="go" id="go" type="button">מעבר ל${n.he}</button>
+        </div>
+      </div>
+      <p class="note" style="color:${n.ink}">אב־טיפוס · תוכן וגרפיקה לדוגמה, יוחלפו בתמונות הפרויקטים</p>
+    </div>
+  </section>`;
+}
+
+/* ---------- state ---------- */
+const dots = $('dots');
+dots.innerHTML = P.map((p,i)=>`<button type="button" aria-label="${p.he}" data-i="${i}"></button>`).join('');
+dots.addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(+b.dataset.i); });
+$('logo').addEventListener('click', e => { e.preventDefault(); show('home'); });
+
+let view = 'home', E = {}, timer = null, lastP = 0, busy = false, wordIdx = 0, ixOn = null;
+
+function render(v){
+  view = v;
+  const home = v === 'home', j = home ? 0 : (v + 1) % N;
+  paint(home ? HOME : P[v]);
+  stage.innerHTML = (home ? homeHTML() : projectHTML(P[v], v)) + nextHTML(P[j], j, home ? 'הפרויקט הראשון' : 'הפרויקט הבא');
+  $('count').textContent = home ? '' : `${pad(v+1)} / ${pad(N)}`;
+  [...dots.children].forEach((b,k)=>b.setAttribute('aria-current', k===v ? 'true':'false'));
+  E = {
+    par: [...stage.querySelectorAll('.par')],
+    heroShapes: [...stage.querySelectorAll('.hero .shape')],
+    next: $('next'), nframe: $('nframe'), ring: $('ring'), pct: $('pct'),
+    ph: $('ph'), phs: $('phs'), wcol: $('wcol'), ticks: [...stage.querySelectorAll('.ticks i')],
+    ix: $('ix'), rows: $('rows'), reveal: $('reveal')
+  };
+  E.nvis = E.nframe.querySelector('.visual');
+  E.words = E.reveal ? [...E.reveal.children] : [];
+  $('go').addEventListener('click', () => show(j));
+  wordIdx = -1; ixOn = null;
+  if (home) wireHome();
+  try { history.replaceState(null, '', '#' + (home ? 'home' : P[v].id)); } catch(e) {}
+}
+
+function show(v){
+  if (busy) return; busy = true;
+  clearTimeout(timer); timer = null;
+  peek.classList.remove('show');
+  render(v);
+  window.scrollTo({top:0, behavior:'instant'});
+  document.body.classList.remove('arrived'); void document.body.offsetWidth;
+  if (!reduce) document.body.classList.add('arrived');
+  live.textContent = v === 'home' ? 'עמוד הבית' : `פרויקט ${v+1} מתוך ${N}: ${P[v].he}`;
+  $('pt').focus({preventScroll:true});
+  update();
+  setTimeout(()=>{ busy = false; }, 400);
+}
+
+/* expand a rectangle on screen into the full project page */
+function expandFrom(i, rect){
+  if (reduce || busy || !rect) return show(i);
+  const fly = document.createElement('div');
+  fly.className = 'fly'; fly.innerHTML = visual(P[i], i);
+  document.body.appendChild(fly);
+  const from = `inset(${rect.top}px ${innerWidth - rect.right}px ${innerHeight - rect.bottom}px ${rect.left}px round 14px)`;
+  peek.classList.remove('show');
+  fly.animate([{clipPath: from}, {clipPath: 'inset(0px 0px 0px 0px round 0px)'}], {duration: 800, easing: 'cubic-bezier(.75,0,.2,1)'})
+    .finished.then(() => {
+      show(i);
+      fly.animate([{opacity:1},{opacity:0}], {duration:300}).finished.then(() => fly.remove());
+    });
+}
+
+/* ---------- home wiring ---------- */
+function setIx(i){
+  if (i === ixOn) return; ixOn = i;
+  E.rows.classList.toggle('has-on', i !== null);
+  [...E.rows.querySelectorAll('.row')].forEach(r => r.classList.toggle('on', +r.dataset.i === i));
+  paint(i === null ? HOME : P[i]);
+}
+
+let mx = 0, my = 0, px = 0, py = 0, peekRaf = null;
+function peekLoop(){
+  px += (mx - px) * .18; py += (my - py) * .18;
+  peek.style.transform = `translate3d(${px - 120}px, ${py - 160}px, 0)`;
+  peekRaf = peek.classList.contains('show') ? requestAnimationFrame(peekLoop) : null;
+}
+
+function wireHome(){
+  E.rows.addEventListener('click', e => {
+    const a = e.target.closest('.row'); if (!a) return;
+    e.preventDefault();
+    const i = +a.dataset.i;
+    const rect = (hoverable && peek.classList.contains('show')) ? peek.getBoundingClientRect() : a.getBoundingClientRect();
+    expandFrom(i, rect);
+  });
+  if (hoverable && !reduce) {
+    E.rows.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    E.rows.addEventListener('mouseover', e => {
+      const a = e.target.closest('.row'); if (!a) return;
+      const i = +a.dataset.i;
+      if (ixOn !== i) { peek.innerHTML = visual(P[i], i); }
+      setIx(i);
+      if (!peek.classList.contains('show')) { px = mx = e.clientX; py = my = e.clientY; peek.classList.add('show'); }
+      if (!peekRaf) peekRaf = requestAnimationFrame(peekLoop);
+    });
+    E.rows.addEventListener('mouseleave', () => { peek.classList.remove('show'); setIx(null); });
+  }
+  E.rows.addEventListener('focusin', e => { const a = e.target.closest('.row'); if (a) setIx(+a.dataset.i); });
+  E.rows.addEventListener('focusout', () => setIx(null));
+
+  const mq = $('mq'), cl = $('clients');
+  mq.addEventListener('click', () => {
+    const p = cl.classList.toggle('paused');
+    mq.setAttribute('aria-pressed', p); mq.textContent = p ? 'המשך' : 'עצירה';
+  });
+  stage.querySelectorAll('.cp').forEach(b => b.addEventListener('click', () => {
+    const t = b.dataset.copy, done = () => { b.textContent = 'הועתק'; setTimeout(()=>b.textContent='העתקה', 1600); };
+    const sel = () => { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    try { navigator.clipboard.writeText(t).then(done, sel); } catch(e) { sel(); }
+  }));
+}
+
+/* ---------- scroll ---------- */
+const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
+const ease = t => 1 - Math.pow(1 - t, 3);
+
+function update(){
+  const vh = innerHeight, y = scrollY, max = document.documentElement.scrollHeight - vh;
+  bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+  if (reduce) return;
+
+  if (view === 'home') {
+    // Passion & … : word follows hero progress
+    const r = E.ph.getBoundingClientRect(), hp = clamp(-r.top / (r.height - vh), 0, .999);
+    const k = Math.floor(hp * WORDS.length);
+    if (k !== wordIdx) {
+      wordIdx = k; const w = WORDS[k];
+      E.wcol.style.transform = `translateY(${-k * 0.86}em)`;
+      E.phs.style.setProperty('--h-bg', w.bg); E.phs.style.setProperty('--h-acc', w.acc);
+      E.ticks.forEach((t,n)=>t.classList.toggle('on', n <= k));
+    }
+    // index: on touch screens the row at the centre lights up
+    if (!hoverable) {
+      const ir = E.ix.getBoundingClientRect();
+      if (ir.top < vh*.5 && ir.bottom > vh*.5) {
+        let best = null, bd = Infinity;
+        E.rows.querySelectorAll('.row').forEach(a => { const rr = a.getBoundingClientRect(), d = Math.abs(rr.top + rr.height/2 - vh/2); if (d < bd) { bd = d; best = +a.dataset.i; } });
+        setIx(best);
+      } else setIx(null);
+    }
+    // about: words light up as you read
+    const ar = E.reveal.getBoundingClientRect(), rp = clamp((vh * .8 - ar.top) / (ar.height + vh * .3), 0, 1);
+    const lit = Math.round(rp * E.words.length);
+    E.words.forEach((s, n) => s.classList.toggle('dim', n >= lit));
+  } else {
+    E.heroShapes.forEach(el => { el.style.transform = `translate3d(0,${y * +el.dataset.h}px,0)`; });
+    E.par.forEach(el => {
+      const r = el.parentElement.getBoundingClientRect(), off = (r.top + r.height/2) - vh/2;
+      el.style.transform = `translate3d(0,${(off * +el.dataset.speed).toFixed(1)}px,0)`;
+    });
+  }
+
+  // next frame (both views)
+  const r = E.next.getBoundingClientRect(), total = r.height - vh;
+  const p = clamp(-r.top / total, 0, 1), k = 1 - ease(p);
+  lastP = p;
+  E.nframe.style.clipPath = `inset(${(26*k).toFixed(2)}% ${(24*k).toFixed(2)}% ${(26*k).toFixed(2)}% ${(24*k).toFixed(2)}% round ${(28*k).toFixed(1)}px)`;
+  E.nvis.style.transform = `scale(${(1 + .35*k).toFixed(3)})`;
+  E.ring.style.strokeDashoffset = (213.6 * (1 - p)).toFixed(1);
+  E.pct.textContent = Math.round(p*100) + '%';
+  if (p >= 0.995 && !timer && !busy) {
+    timer = setTimeout(() => { timer = null; if (lastP >= 0.995) show(view === 'home' ? 0 : (view + 1) % N); }, 250);
+  } else if (p < 0.995 && timer) { clearTimeout(timer); timer = null; }
+}
+
+let ticking = false;
+addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; update(); }); } }, {passive:true});
+addEventListener('resize', update);
+
+const startIdx = P.findIndex(p => '#' + p.id === location.hash);
+render(startIdx < 0 ? 'home' : startIdx); update();
+</script>
