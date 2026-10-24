@@ -162,6 +162,8 @@ a { color: inherit }
 .reveal span { transition: opacity .25s }
 .reveal .dim { opacity: .2 }
 .about-body { margin: 36px 0 0; max-width: 46ch; font-size: clamp(18px, 1.6vw, 21px); opacity: .9 }
+.about-body p { margin: 0 0 1em }
+.about-body p:last-child { margin-bottom: 0 }
 
 /* ---------- home: clients ---------- */
 .clients { border-block: 1px solid var(--p-soft); padding-block: 26px; overflow: hidden; position: relative }
@@ -175,6 +177,7 @@ a { color: inherit }
 /* ---------- home: contact ---------- */
 .contact { padding-block: clamp(90px, 12vw, 150px) clamp(40px, 6vw, 60px); display: grid; gap: 22px }
 .contact h2 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 11vw, 150px); line-height: .88 }
+.ct-body { margin: 0; max-width: 46ch; font-size: clamp(18px, 1.6vw, 21px); opacity: .9 }
 .ct { display: flex; flex-wrap: wrap; gap: 12px 28px }
 .ci { display: flex; align-items: center; gap: 12px; font-size: clamp(20px, 2.4vw, 28px); direction: ltr }
 .ci .val { user-select: all; font-variant-numeric: tabular-nums }

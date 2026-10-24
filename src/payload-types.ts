@@ -548,6 +548,9 @@ export interface Home {
    * נצבע מילה אחרי מילה בגלילה.
    */
   aboutHeadline?: string | null;
+  /**
+   * שורה ריקה מתחילה פסקה חדשה.
+   */
   aboutBody?: string | null;
   clients?:
     | {
@@ -556,6 +559,10 @@ export interface Home {
       }[]
     | null;
   contactTitle?: string | null;
+  /**
+   * ריק: רק הכותרת, המייל והטלפון.
+   */
+  contactBody?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -632,6 +639,7 @@ export interface HomeSelect<T extends boolean = true> {
         id?: T;
       };
   contactTitle?: T;
+  contactBody?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
