@@ -172,8 +172,9 @@ async function paletteFrom(image: Buffer) {
   let bg = base
   // 7:1 for body text; small text at opacity .85 then still clears 4.5:1
   for (let t = 0.1; contrast(bg, ink) < 7 && t <= 1; t += 0.1) bg = mix(base, [12, 11, 14], t)
-  let acc = rgb('#d6a05b')
-  for (let t = 0.1; contrast(acc, bg) < 4.5 && t <= 1; t += 0.1) acc = mix(rgb('#d6a05b'), [255, 255, 255], t)
+  // the brand pink-red, lightened just enough for 4.5:1 on this background
+  let acc = rgb('#ff7777')
+  for (let t = 0.1; contrast(acc, bg) < 4.5 && t <= 1; t += 0.1) acc = mix(rgb('#ff7777'), [255, 255, 255], t)
   return { bg: hex(bg), ink: hex(ink), accent: hex(acc) }
 }
 

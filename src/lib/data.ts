@@ -44,7 +44,7 @@ export type Palette = { bg: string; ink: string; acc: string }
 export const projectPalette = (p: Project): Palette => ({
   bg: p.bg || '#1b2a24',
   ink: p.ink || '#efe8de',
-  acc: p.accent || '#d6a05b',
+  acc: p.accent || '#ff7777',
 })
 
 export const sitePalette = (s: Setting): Palette => ({
