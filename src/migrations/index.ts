@@ -6,6 +6,7 @@ import * as migration_20261024_144054_home_texts_no_accessibility from './202610
 import * as migration_20261024_151500_project_texts from './20261024_151500_project_texts';
 import * as migration_20261024_184818_legal_pages_cookie_notice from './20261024_184818_legal_pages_cookie_notice';
 import * as migration_20261024_185623_project_accent_brand from './20261024_185623_project_accent_brand';
+import * as migration_20261024_190500_project_accent_brand_rest from './20261024_190500_project_accent_brand_rest';
 
 export const migrations = [
   {
@@ -47,5 +48,10 @@ export const migrations = [
     up: migration_20261024_185623_project_accent_brand.up,
     down: migration_20261024_185623_project_accent_brand.down,
     name: '20261024_185623_project_accent_brand'
+  },
+  {
+    up: migration_20261024_190500_project_accent_brand_rest.up,
+    down: migration_20261024_190500_project_accent_brand_rest.down,
+    name: '20261024_190500_project_accent_brand_rest',
   },
 ];
