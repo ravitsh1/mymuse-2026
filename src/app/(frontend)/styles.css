@@ -55,7 +55,7 @@ a { color: inherit }
 .hero h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(76px, 17vw, 210px); line-height: .85; text-wrap: balance }
 .hero h1:focus { outline: none }
 .kicker { margin: 0 0 10px; font-size: 15px; letter-spacing: .14em; color: var(--p-acc); font-weight: 600 }
-.hint { position: absolute; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); font-size: 13px; letter-spacing: .2em; opacity: .7; z-index: 2 }
+.hint { position: absolute; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); font-size: 13px; letter-spacing: .2em; opacity: .85; z-index: 2 }
 .hint::after { content: ""; display: block; width: 1px; height: 28px; margin: 8px auto 0; background: currentColor; animation: drip 1.8s ease-in-out infinite }
 @keyframes drip { 0% { transform: scaleY(0); transform-origin: top } 50% { transform: scaleY(1); transform-origin: top } 51% { transform-origin: bottom } 100% { transform: scaleY(0); transform-origin: bottom } }
 .arrived .hero h1, .arrived .hero .kicker { animation: rise .9s cubic-bezier(.2,.8,.2,1) both }
@@ -69,7 +69,7 @@ a { color: inherit }
 .lead { margin: 0; font-size: clamp(22px, 2.6vw, 32px); line-height: 1.45; font-weight: 300; max-width: 30ch; text-wrap: pretty }
 .facts { margin: 0; display: grid; gap: 18px; align-content: start }
 .facts div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--p-soft) }
-.facts dt { font-size: 13px; letter-spacing: .14em; opacity: .7; padding-top: 4px }
+.facts dt { font-size: 13px; letter-spacing: .14em; opacity: .85; padding-top: 4px }
 .facts dd { margin: 0; font-weight: 600; min-width: 0; overflow-wrap: anywhere }
 .band { position: relative; height: clamp(420px, 80vw, 820px); overflow: hidden }
 .par { position: absolute; will-change: transform }
@@ -96,7 +96,7 @@ a { color: inherit }
 .swatches { display: flex; gap: clamp(10px, 2vw, 22px); padding-block: 0 clamp(60px, 10vw, 110px); flex-wrap: wrap; list-style: none; margin: 0; padding-inline: 0 }
 .sw { flex: 1 1 120px; min-width: 0 }
 .sw span { display: block; aspect-ratio: 1/1.25; border-radius: 6px; border: 1px solid var(--p-soft) }
-.sw small { display: block; margin-top: 8px; font-size: 13px; letter-spacing: .08em; opacity: .75; direction: ltr; text-align: right; font-variant-numeric: tabular-nums }
+.sw small { display: block; margin-top: 8px; font-size: 13px; letter-spacing: .08em; opacity: .85; direction: ltr; text-align: right; font-variant-numeric: tabular-nums }
 
 /* ---------- home: Passion & ---------- */
 .ph { position: relative; height: 340vh }
@@ -118,11 +118,11 @@ a { color: inherit }
 .ix { padding-block: clamp(90px, 12vw, 150px) }
 .ix-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 28px; flex-wrap: wrap }
 .ix-head h2, .svc h2 { margin: 0; font-size: 15px; letter-spacing: .2em; font-weight: 600; color: var(--p-acc) }
-.ix-head p { margin: 0; font-size: 15px; opacity: .75 }
+.ix-head p { margin: 0; font-size: 15px; opacity: .85 }
 .rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--p-soft) }
 .row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding-block: 10px 4px; border-bottom: 1px solid var(--p-soft); text-decoration: none; transition: opacity .35s }
 .row .rn { font-family: var(--f-display); font-weight: 700; font-size: clamp(60px, 11vw, 150px); line-height: .95; transition: transform .45s cubic-bezier(.2,.8,.2,1); min-width: 0 }
-.row .rf { font-size: 15px; opacity: .8; white-space: nowrap }
+.row .rf { font-size: 15px; opacity: .85; white-space: nowrap }
 .rows.has-on .row { opacity: .28 }
 .rows.has-on .row.on { opacity: 1 }
 .row.on .rn { transform: translateX(-14px) }

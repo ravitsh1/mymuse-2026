@@ -11,9 +11,12 @@ Work top to bottom. Each step ends with tsc + build + a check in the browser (39
 - [ ] Create Ravit's admin user on production; confirm the vercel.app URL is noindex (robots.txt `Disallow: /`, `X-Robots-Tag`).
 
 ## 2. Visual check against the prototype
-- [ ] Compare each section with `docs/prototype.html` on desktop and mobile: Passion words, work index (hover peek on desktop, centre-highlight on touch), service cards, about reveal, clients marquee, contact, next-project frame.
-- [ ] The click-to-project fly-in and the next-project commit should hand over with no visible jump (same `<Visual>` on both sides). Fix any flash on arrival.
-- [ ] Check the admin-driven palette: a light project (Mosessco sample) must keep the header and text readable.
+- [x] Compare each section with `docs/prototype.html` on desktop and mobile (2026-10-24, locally, Playwright 1366×768 + 390×844): matches. Left out on purpose: the index hint line ("רחפו מעל שם…") and the per-project glow position.
+- [x] Fly-in and next-project commit hand over with no jump (checked frame by frame from a screen recording). Fixed: the title flashed in place before its rise (arrival now runs before first paint); full prefetch of the next page and of the highlighted row's page + hero image (touch has no peek to pre-load it).
+- [x] Light palette (Mosessco): header and text readable. Small dimmed text raised to opacity .85 (Vinspiration labels were 4.1:1); sample Mosessco accent darkened to pass 4.5:1; the accent field now says it needs 4.5:1.
+- [ ] Repeat the motion check on production once the vercel.app address is reachable (first image request per size is slow until the optimizer caches it).
+- [ ] Ask Ravit: header has no background, so on scroll it overlaps page text (most visible on light pages). Keep, or add a backdrop?
+- [ ] `npm run lint` crashes (ESLint config: circular structure in the react plugin config) — fix the flat config.
 
 ## 3. Brand
 - [ ] Ravit's logo (SVG) in the header and admin (`components/admin/Brand.tsx`), favicon set in `public/`.
