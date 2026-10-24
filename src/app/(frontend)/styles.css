@@ -166,13 +166,15 @@ a { color: inherit }
 .about-body p:last-child { margin-bottom: 0 }
 
 /* ---------- home: clients ---------- */
-.clients { border-block: 1px solid var(--p-soft); padding-block: 26px; overflow: hidden; position: relative }
-.track { display: flex; gap: 56px; width: max-content; direction: ltr; animation: marq 55s linear infinite; font-family: var(--f-display); font-size: clamp(34px, 4.4vw, 56px); white-space: nowrap }
+/* ltr box: in the rtl page the wide track would hang off the right edge and slide out of view, leaving a gap */
+.clients { border-block: 1px solid var(--p-soft); padding-block: 26px; overflow: hidden; position: relative; direction: ltr }
+/* the end padding equals the gap, so -50% lands exactly on the second copy: no jump at the loop */
+.track { display: flex; gap: 56px; padding-right: 56px; width: max-content; direction: ltr; animation: marq 55s linear infinite; font-family: var(--f-display); font-size: clamp(34px, 4.4vw, 56px); white-space: nowrap }
 .track span { opacity: .8 }
 .track span:nth-child(3n+1) { color: var(--p-acc); opacity: 1 }
 .clients.paused .track { animation-play-state: paused }
 @keyframes marq { to { transform: translateX(-50%) } }
-.mq-btn { position: absolute; top: 50%; left: var(--gutter-l); translate: 0 -50%; z-index: 2; font: 600 13px var(--f-body); color: inherit; background: var(--p-bg); border: 1px solid var(--p-soft); border-radius: 999px; padding: 6px 14px; cursor: pointer }
+.mq-btn { position: absolute; top: 50%; left: var(--gutter-l); translate: 0 -50%; z-index: 2; font: 600 13px var(--f-body); color: inherit; background: var(--p-bg); border: 1px solid var(--p-soft); border-radius: 999px; padding: 6px 14px; cursor: pointer; direction: rtl }
 
 /* ---------- home: contact ---------- */
 .contact { padding-block: clamp(90px, 12vw, 150px) clamp(40px, 6vw, 60px); display: grid; gap: 22px }
@@ -211,6 +213,9 @@ main[tabindex="-1"]:focus { outline: none }
 .next-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden }
 .next-frame { position: absolute; inset: 0; will-change: clip-path; clip-path: inset(26% 24% 26% 24% round 28px) }
 .next-frame .visual { transform-origin: center; will-change: transform }
+/* 85% at its core keeps the ink at 4.5:1 for the small label even over a white screenshot */
+.next-tint { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, transparent 16%, color-mix(in srgb, var(--n-bg) 85%, transparent) 26%, color-mix(in srgb, var(--n-bg) 85%, transparent) 74%, transparent 84%) }
 .next-ui { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; pointer-events: none; z-index: 2 }
 .next-ui > div { display: grid; justify-items: center; gap: 6px }
 .next-ui .lbl { font-size: 14px; letter-spacing: .24em; opacity: .85 }
