@@ -1,67 +1,66 @@
-# Payload Blank Template
+# MyMuse – האתר החדש
 
-This template comes configured with the bare minimum to get started on anything you need.
+Next.js 16 + Payload CMS 3. אפליקציה אחת: האתר בכתובת `/`, ממשק הניהול בעברית בכתובת `/admin`.
 
-## Quick start
+## הפעלה ראשונה (במחשב)
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+```bash
+npm install
+cp .env.example .env        # ולשנות את PAYLOAD_SECRET למחרוזת אקראית ארוכה
+npm run seed                # 5 פרויקטים לדוגמה + טיוטות להצהרת נגישות ולמדיניות פרטיות
+npm run dev                 # http://localhost:3000  ·  ניהול: http://localhost:3000/admin
+```
 
-## Quick Start - local setup
+בכניסה הראשונה ל-`/admin` יוצרים משתמש מנהל.
 
-To spin up this template locally, follow these steps:
+## מה מנהלים בממשק
 
-### Clone
+| בממשק | מה זה משנה באתר |
+|---|---|
+| **פרויקטים** | כל פרויקט הוא עמוד ב-`/portfolio/<כתובת>`. גוררים ברשימה כדי לשנות סדר. הסדר קובע את "הפרויקט הבא". לשוניות: תוכן, מדיה (תמונה ראשית, וידאו, גלריה), צבעים, קידום. |
+| **עמוד הבית** | מילות ה-Passion וצבעיהן, כותרת העבודות, כרטיסי השירותים, טקסט "עלינו", שמות הלקוחות, כותרת יצירת הקשר. |
+| **הגדרות האתר** | מייל, טלפון, רשתות חברתיות, צבעי עמוד הבית, תיאור ברירת מחדל לגוגל. |
+| **עמודים** | עמודי טקסט (הצהרת נגישות, פרטיות). מסומנים "קישור בתחתית" מופיעים בפוטר. |
+| **מדיה** | תמונות ווידאו. נוצרות אוטומטית גרסאות WebP ב-900/1600/2400px. |
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+* פרויקט מוצג בעמוד הבית רק אם מסומן **להציג בעמוד הבית**.
+* במשפט המרכזי, מילה בין `*כוכביות*` נצבעת בצבע ההדגשה.
+* כפתור **תצוגה מקדימה** מציג טיוטות למשתמש מחובר בלבד (`/preview?off=1` ליציאה).
+* כל שמירה מרעננת את העמודים באתר מיד.
 
-### Development
+## מבנה הקוד
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+```
+src/
+  payload.config.ts        הגדרות Payload: עברית, מסד נתונים, אוספים
+  collections/             Projects, Pages, Media, Users
+  globals/                 Home (עמוד הבית), Settings (הגדרות האתר)
+  fields/color.ts          שדה צבע עם בדיקת #RRGGBB
+  hooks/revalidate.ts      ריענון האתר אחרי שמירה
+  seed.ts                  תוכן לדוגמה
+  lib/data.ts              שליפת נתונים לאתר
+  components/
+    Visual.tsx             הוויז'ואל של פרויקט (משותף לכותרת, למסגרת "הבא" ולתצוגה המקדימה)
+    NextFrame.tsx          מסגרת "הפרויקט הבא"
+    Motion.tsx             כל התנועה בגלילה (צד לקוח)
+    Header.tsx, Footer.tsx, Interactive.tsx (פס לקוחות, כפתורי העתקה)
+  app/(frontend)/          עמודי האתר + styles.css
+  app/(payload)/           ממשק הניהול (נוצר אוטומטית, לא לערוך)
+```
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+## נגישות
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+* `prefers-reduced-motion`: בלי פרלקסה, בלי מעבר אוטומטי לפרויקט הבא, בלי וידאו אוטומטי. רק קישור "מעבר ל...".
+* קישור דילוג לתוכן, הגדלה לא חסומה, פוקוס עובר לכותרת הפרויקט אחרי מעבר.
+* פס הלקוחות עם כפתור עצירה (WCAG 2.2.2), כפתורי העתקה למייל ולטלפון.
+* בצבעי פרויקט: לבדוק ניגודיות 4.5:1 בין טקסט לרקע.
 
-#### Docker (Optional)
+## לפני העלייה לאוויר
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
-
-To do so, follow these steps:
-
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
-
-## How it works
-
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
-
-### Collections
-
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
-
-- #### Users (Authentication)
-
-  Users are auth-enabled collections that have access to the admin panel.
-
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/3.x/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
-
-- #### Media
-
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
-
-### Docker
-
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
-
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
-
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+1. **מסד נתונים:** בייצור להשתמש ב-Postgres. `DATABASE_URL=postgres://...` מפעיל אותו אוטומטית.
+   בפעם הראשונה: `npx payload migrate:create` ואז `npx payload migrate`.
+2. **קבצי מדיה:** בשרת קבוע (VPS) נשמרים בתיקייה `media/`. ב-Vercel צריך אחסון חיצוני (למשל `@payloadcms/storage-s3` או Vercel Blob).
+3. **משתני סביבה:** `PAYLOAD_SECRET`, `DATABASE_URL`, `NEXT_PUBLIC_SERVER_URL=https://mymuse.co.il`.
+4. **הפניות 301** מהכתובות הישנות (`/portfolio/helios-הליוס/` וכו') לכתובות החדשות, ב-`next.config.ts` → `redirects()`.
+5. **הצהרת נגישות ומדיניות פרטיות:** להשלים את הטיוטות ולפרסם.
+6. **פונטים:** כרגע Karantina + Assistant מ-Google Fonts. אפשר להחליף לפונטי המותג (קבצי woff2 בתיקיית `public/fonts`).

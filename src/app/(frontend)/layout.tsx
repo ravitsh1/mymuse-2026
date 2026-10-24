@@ -1,18 +1,39 @@
+import type { Metadata, Viewport } from 'next'
 import React from 'react'
+import { getSettings } from '@/lib/data'
 import './styles.css'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+export async function generateMetadata(): Promise<Metadata> {
+  const s = await getSettings()
+  const base = process.env.NEXT_PUBLIC_SERVER_URL
+  return {
+    metadataBase: base ? new URL(base) : undefined,
+    title: { default: 'MyMuse · בניית אתרים בהתאמה אישית', template: '%s · MyMuse' },
+    description: s.metaDescription ?? undefined,
+    openGraph: { siteName: 'MyMuse', locale: 'he_IL', type: 'website' },
+  }
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
+// No maximum-scale / user-scalable=no: visitors must be able to zoom.
+export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#16141a' }
 
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="he" dir="rtl">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&family=Assistant:wght@300;400;600&display=swap"
+        />
+      </head>
       <body>
-        <main>{children}</main>
+        <a className="skip" href="#content">
+          דילוג לתוכן
+        </a>
+        {children}
       </body>
     </html>
   )

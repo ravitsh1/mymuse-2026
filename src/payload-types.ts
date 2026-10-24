@@ -67,8 +67,10 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
+    projects: Project;
+    pages: Page;
     media: Media;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -76,19 +78,27 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    home: Home;
+    settings: Setting;
+  };
+  globalsSelect: {
+    home: HomeSelect<false> | HomeSelect<true>;
+    settings: SettingsSelect<false> | SettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -118,11 +128,152 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * גררו כדי לשנות את הסדר. הסדר קובע לאיזה פרויקט עוברים בסוף כל פרויקט.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: number;
+  _order?: string | null;
+  title: string;
+  /**
+   * באנגלית, בלי רווחים. למשל jullius → /portfolio/jullius
+   */
+  slug: string;
+  /**
+   * מופיע כאותיות קו־מתאר בוויז׳ואל
+   */
+  nameEn?: string | null;
+  field?: string | null;
+  scope?: string | null;
+  platform?: string | null;
+  lead?: string | null;
+  /**
+   * מילה בין כוכביות מקבלת את צבע ההדגשה: חנות שמרגישה כמו *המזקקה* עצמה.
+   */
+  statement?: string | null;
+  siteUrl?: string | null;
+  featured?: boolean | null;
+  /**
+   * רוחב 2400px לפחות. בלי תמונה מוצגת גרפיקה בצבעי הפרויקט.
+   */
+  hero?: (number | null) | Media;
+  /**
+   * לופ קצר ושקט (mp4). לא מתנגן כשהגולש ביקש להפחית תנועה.
+   */
+  heroVideo?: (number | null) | Media;
+  /**
+   * שתי הראשונות מוצגות בפרלקסה, השאר בגלריה מתחתיהן.
+   */
+  gallery?: (number | Media)[] | null;
+  /**
+   * קוד צבע, למשל #1b2a24
+   */
+  bg?: string | null;
+  /**
+   * ניגודיות של 4.5:1 לפחות מול הרקע
+   */
+  ink?: string | null;
+  /**
+   * קוד צבע, למשל #1b2a24
+   */
+  accent?: string | null;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * מה רואים בתמונה, לקוראי מסך. השאירו ריק לתמונה דקורטיבית בלבד.
+   */
+  alt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    large?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * עמודי טקסט כמו הצהרת נגישות ומדיניות פרטיות.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * למשל accessibility
+   */
+  slug: string;
+  inFooter?: boolean | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  metaDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
+  name?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -145,29 +296,10 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: string;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -184,20 +316,28 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: string | User;
+        relationTo: 'projects';
+        value: number | Project;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -207,10 +347,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -230,7 +370,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -238,26 +378,45 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "projects_select".
  */
-export interface UsersSelect<T extends boolean = true> {
+export interface ProjectsSelect<T extends boolean = true> {
+  _order?: T;
+  title?: T;
+  slug?: T;
+  nameEn?: T;
+  field?: T;
+  scope?: T;
+  platform?: T;
+  lead?: T;
+  statement?: T;
+  siteUrl?: T;
+  featured?: T;
+  hero?: T;
+  heroVideo?: T;
+  gallery?: T;
+  bg?: T;
+  ink?: T;
+  accent?: T;
+  metaTitle?: T;
+  metaDescription?: T;
   updatedAt?: T;
   createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  inFooter?: T;
+  content?: T;
+  metaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -276,6 +435,64 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        large?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  resetPasswordRequestedAt?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -316,6 +533,156 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  /**
+   * המילה מתחלפת בגלילה, ואיתה הרקע וצבע ההדגשה.
+   */
+  words?:
+    | {
+        word: string;
+        /**
+         * קוד צבע, למשל #1b2a24
+         */
+        bg?: string | null;
+        /**
+         * קוד צבע, למשל #1b2a24
+         */
+        accent?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  subtitle?: string | null;
+  /**
+   * הפרויקטים שמסומנים "להציג בעמוד הבית" מוצגים כאן לפי הסדר ברשימת הפרויקטים.
+   */
+  workTitle?: string | null;
+  servicesTitle?: string | null;
+  services?:
+    | {
+        title: string;
+        text?: string | null;
+        /**
+         * קוד צבע, למשל #1b2a24
+         */
+        bg?: string | null;
+        /**
+         * קוד צבע, למשל #1b2a24
+         */
+        ink?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * נצבע מילה אחרי מילה בגלילה.
+   */
+  aboutHeadline?: string | null;
+  aboutBody?: string | null;
+  clients?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  contactTitle?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: number;
+  email?: string | null;
+  phone?: string | null;
+  social?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * קוד צבע, למשל #1b2a24
+   */
+  bg?: string | null;
+  /**
+   * קוד צבע, למשל #1b2a24
+   */
+  ink?: string | null;
+  /**
+   * קוד צבע, למשל #1b2a24
+   */
+  accent?: string | null;
+  metaDescription?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  words?:
+    | T
+    | {
+        word?: T;
+        bg?: T;
+        accent?: T;
+        id?: T;
+      };
+  subtitle?: T;
+  workTitle?: T;
+  servicesTitle?: T;
+  services?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        bg?: T;
+        ink?: T;
+        id?: T;
+      };
+  aboutHeadline?: T;
+  aboutBody?: T;
+  clients?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  contactTitle?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  email?: T;
+  phone?: T;
+  social?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  bg?: T;
+  ink?: T;
+  accent?: T;
+  metaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
