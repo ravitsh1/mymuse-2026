@@ -11,7 +11,7 @@ Open work, in order: `docs/ROADMAP.md`. Motion reference: `docs/prototype.html` 
 
 - Reply in Hebrew, short: what changed, what was checked and how.
 - One question at a time, only when the decision is really hers (design taste, content, anything irreversible).
-- She is a web developer and accessibility professional: accessibility is a requirement, not a nice-to-have (WCAG 2.2 AA, Israeli IS 5568).
+- She is a web developer (not an accessibility expert — don't present her as one in site texts). The site itself must still be accessible: WCAG 2.2 AA, Israeli IS 5568.
 
 ## Local setup (Windows, Git Bash)
 

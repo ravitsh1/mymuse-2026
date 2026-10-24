@@ -61,6 +61,7 @@ Stopping a test server: `fuser -k <port>/tcp`. **Never `pkill -f "next start"`**
 3. Data migrations touch only rows still in the exact wrong state — never overwrite Ravit's edits.
 4. New admin fields: Hebrew label + a description that says what an empty value does; defaults keep today's look.
 5. `npx tsc --noEmit`, then `npm run build` (Next refuses to build on a version with a known vulnerability — bump `next` when that happens).
+   **Vercel preview builds of a PR run `payload migrate` against the production database** (it is shared): a migration is live in the data as soon as the PR is pushed, before merge. Data migrations must be safe for the old code on `main` too.
 6. Commit (Co-Authored-By line from the system reminder), push, wait for the Vercel deploy, verify on production (curl the page, `/api/projects`, `/api/globals/home`; browser at 390×844 and ~1366 wide).
 
 ## Launch day
