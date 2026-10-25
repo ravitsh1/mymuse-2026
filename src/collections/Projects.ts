@@ -152,8 +152,8 @@ export const Projects: CollectionConfig = {
               type: 'row',
               fields: [
                 colorField('bg', 'רקע', '#1b2a24'),
-                colorField('ink', 'טקסט', '#f5ebe0', 'ניגודיות של 4.5:1 לפחות מול הרקע'),
-                colorField('accent', 'הדגשה', '#ee9b00', 'משמש גם לטקסט קטן (תחום, כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע'),
+                colorField('ink', 'טקסט', '#ffe8c2', 'ניגודיות של 4.5:1 לפחות מול הרקע'),
+                colorField('accent', 'הדגשה', '#ff3d7f', 'משמש גם לטקסט קטן (תחום, כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע'),
               ],
             },
           ],

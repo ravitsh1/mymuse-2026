@@ -49,14 +49,14 @@ export type Palette = { bg: string; ink: string; acc: string }
 
 export const projectPalette = (p: Project): Palette => ({
   bg: p.bg || '#1b2a24',
-  ink: p.ink || '#f5ebe0',
-  acc: p.accent || '#ee9b00',
+  ink: p.ink || '#ffe8c2',
+  acc: p.accent || '#ff3d7f',
 })
 
 export const sitePalette = (s: Setting): Palette => ({
-  bg: s.bg || '#001219',
-  ink: s.ink || '#f5ebe0',
-  acc: s.accent || '#ee9b00',
+  bg: s.bg || '#1b1030',
+  ink: s.ink || '#ffe8c2',
+  acc: s.accent || '#ff3d7f',
 })
 
 const rgb = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) || 0)
