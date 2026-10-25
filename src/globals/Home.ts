@@ -39,18 +39,18 @@ export const Home: GlobalConfig = {
               labels: { singular: 'מילה', plural: 'מילים' },
               admin: { description: 'המילה מתחלפת בגלילה, ואיתה הרקע, תמונת הרקע וצבע ההדגשה.' },
               defaultValue: [
-                { word: 'Expertise', bg: '#16141a', accent: '#d6a05b' },
-                { word: 'Culture', bg: '#14243a', accent: '#8fb7e0' },
-                { word: 'Flavor', bg: '#3a0f1c', accent: '#e0a96d' },
-                { word: 'Lifestyle', bg: '#26331d', accent: '#e2c65e' },
+                { word: 'Expertise', bg: '#001219', accent: '#ee9b00' },
+                { word: 'Culture', bg: '#005f73', accent: '#e9d8a6' },
+                { word: 'Flavor', bg: '#9b2226', accent: '#ee9b00' },
+                { word: 'Lifestyle', bg: '#bb3e03', accent: '#e9d8a6' },
               ],
               fields: [
                 {
                   type: 'row',
                   fields: [
                     { name: 'word', label: 'מילה', type: 'text', required: true },
-                    colorField('bg', 'רקע', '#16141a'),
-                    colorField('accent', 'הדגשה', '#d6a05b'),
+                    colorField('bg', 'רקע', '#001219'),
+                    colorField('accent', 'הדגשה', '#ee9b00'),
                   ],
                 },
                 {
@@ -92,15 +92,15 @@ export const Home: GlobalConfig = {
               type: 'array',
               labels: { singular: 'שירות', plural: 'שירותים' },
               defaultValue: [
-                { title: 'אפיון', text: SERVICE_TEXTS[0], bg: '#f6f6f6', ink: '#111517' },
-                { title: 'הקמת האתר', text: SERVICE_TEXTS[1], bg: '#ff7777', ink: '#111517' },
-                { title: 'פיתוח ממשק', text: SERVICE_TEXTS[2], bg: '#32323a', ink: '#ffffff' },
-                { title: 'ליווי מתמשך', text: SERVICE_TEXTS[3], bg: '#a54d4d', ink: '#ffffff' },
+                { title: 'אפיון', text: SERVICE_TEXTS[0], bg: '#e9d8a6', ink: '#001219' },
+                { title: 'הקמת האתר', text: SERVICE_TEXTS[1], bg: '#0a9396', ink: '#001219' },
+                { title: 'פיתוח ממשק', text: SERVICE_TEXTS[2], bg: '#bb3e03', ink: '#f5ebe0' },
+                { title: 'ליווי מתמשך', text: SERVICE_TEXTS[3], bg: '#005f73', ink: '#f5ebe0' },
               ],
               fields: [
                 { name: 'title', label: 'שם', type: 'text', required: true },
                 { name: 'text', label: 'תיאור', type: 'textarea' },
-                { type: 'row', fields: [colorField('bg', 'רקע הכרטיס', '#efe8de'), colorField('ink', 'טקסט הכרטיס', '#16141a')] },
+                { type: 'row', fields: [colorField('bg', 'רקע הכרטיס', '#e9d8a6'), colorField('ink', 'טקסט הכרטיס', '#001219')] },
               ],
             },
           ],

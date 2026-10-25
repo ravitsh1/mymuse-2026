@@ -33,7 +33,7 @@ export const Settings: GlobalConfig = {
       fields: [
         {
           type: 'row',
-          fields: [colorField('bg', 'רקע', '#111517'), colorField('ink', 'טקסט', '#ffffff'), colorField('accent', 'הדגשה', '#ff7777', 'משמש גם לטקסט קטן (כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע')],
+          fields: [colorField('bg', 'רקע', '#001219'), colorField('ink', 'טקסט', '#f5ebe0'), colorField('accent', 'הדגשה', '#ee9b00', 'משמש גם לטקסט קטן (כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע')],
         },
       ],
     },

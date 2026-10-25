@@ -13,6 +13,7 @@ import * as migration_20261024_210000_gderot_new_screens from './20261024_210000
 import * as migration_20261024_213000_gderot_mockup from './20261024_213000_gderot_mockup';
 import * as migration_20261024_214000_hero_fit_portrait from './20261024_214000_hero_fit_portrait';
 import * as migration_20261024_214500_3bears_mockup from './20261024_214500_3bears_mockup';
+import * as migration_20261025_072114_ocean_sunset_palette from './20261025_072114_ocean_sunset_palette';
 
 export const migrations = [
   {
@@ -78,7 +79,7 @@ export const migrations = [
   {
     up: migration_20261024_213000_gderot_mockup.up,
     down: migration_20261024_213000_gderot_mockup.down,
-    name: '20261024_213000_gderot_mockup'
+    name: '20261024_213000_gderot_mockup',
   },
   {
     up: migration_20261024_214000_hero_fit_portrait.up,
@@ -89,5 +90,10 @@ export const migrations = [
     up: migration_20261024_214500_3bears_mockup.up,
     down: migration_20261024_214500_3bears_mockup.down,
     name: '20261024_214500_3bears_mockup',
+  },
+  {
+    up: migration_20261025_072114_ocean_sunset_palette.up,
+    down: migration_20261025_072114_ocean_sunset_palette.down,
+    name: '20261025_072114_ocean_sunset_palette'
   },
 ];
