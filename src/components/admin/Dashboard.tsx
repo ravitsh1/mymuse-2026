@@ -24,6 +24,7 @@ export async function Welcome({ payload, user }: Props) {
   const cards: Card[] = [
     { href: '/admin/collections/projects/create', title: 'פרויקט חדש', desc: 'עמוד פרויקט עם צבעים ותמונות משלו', tone: 'gold' },
     { href: '/admin/collections/projects', title: 'כל הפרויקטים', desc: `${count} פרויקטים · הסדר בגרירה קובע את "הפרויקט הבא"` },
+    { href: '/admin/collections/categories', title: 'קטגוריות', desc: 'כפתורי הסינון מעל רשימת העבודות' },
     { href: '/admin/globals/home', title: 'עמוד הבית', desc: 'מילות ה־Passion, שירותים, עלינו ולקוחות', tone: 'wine' },
     { href: '/admin/collections/pages', title: 'עמודים', desc: 'הצהרת נגישות ומדיניות פרטיות' },
     { href: '/admin/collections/media', title: 'מדיה', desc: 'תמונות וסרטונים. לא לשכוח טקסט חלופי' },
