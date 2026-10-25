@@ -8,7 +8,7 @@
   src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/telaviv-modernist-bold.woff2') format('woff2') }
 :root {
   color-scheme: dark;
-  --chrome-bg: #101011;
+  --chrome-bg: #001219;
   --f-display: 'Karantina', 'Tel Aviv Modernist', 'Arial Narrow', sans-serif;
   --f-body: 'Tel Aviv Modernist', 'Arial', sans-serif;
   --gutter-l: max(16px, env(safe-area-inset-left, 0px));

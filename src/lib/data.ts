@@ -43,14 +43,14 @@ export type Palette = { bg: string; ink: string; acc: string }
 
 export const projectPalette = (p: Project): Palette => ({
   bg: p.bg || '#1b2a24',
-  ink: p.ink || '#efe8de',
-  acc: p.accent || '#ff7777',
+  ink: p.ink || '#f5ebe0',
+  acc: p.accent || '#ee9b00',
 })
 
 export const sitePalette = (s: Setting): Palette => ({
-  bg: s.bg || '#16141a',
-  ink: s.ink || '#efe8de',
-  acc: s.accent || '#d6a05b',
+  bg: s.bg || '#001219',
+  ink: s.ink || '#f5ebe0',
+  acc: s.accent || '#ee9b00',
 })
 
 /** CSS custom properties for a palette, applied on the page wrapper. */
