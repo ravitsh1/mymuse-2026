@@ -22,6 +22,9 @@ import * as migration_20261025_120000_remake_project_images from './20261025_120
 import * as migration_20261025_121000_app_projects from './20261025_121000_app_projects';
 import * as migration_20261025_124939_services_apps_texts from './20261025_124939_services_apps_texts';
 import * as migration_20261025_133000_remake_blocked_sites from './20261025_133000_remake_blocked_sites';
+import * as migration_20261025_153000_remake_meteor_gurgroup from './20261025_153000_remake_meteor_gurgroup';
+import * as migration_20261025_154520_project_hero_mobile from './20261025_154520_project_hero_mobile';
+import * as migration_20261025_155000_project_mobile_heroes from './20261025_155000_project_mobile_heroes';
 
 export const migrations = [
   {
@@ -137,11 +140,26 @@ export const migrations = [
   {
     up: migration_20261025_124939_services_apps_texts.up,
     down: migration_20261025_124939_services_apps_texts.down,
-    name: '20261025_124939_services_apps_texts'
+    name: '20261025_124939_services_apps_texts',
   },
   {
     up: migration_20261025_133000_remake_blocked_sites.up,
     down: migration_20261025_133000_remake_blocked_sites.down,
     name: '20261025_133000_remake_blocked_sites',
+  },
+  {
+    up: migration_20261025_153000_remake_meteor_gurgroup.up,
+    down: migration_20261025_153000_remake_meteor_gurgroup.down,
+    name: '20261025_153000_remake_meteor_gurgroup',
+  },
+  {
+    up: migration_20261025_154520_project_hero_mobile.up,
+    down: migration_20261025_154520_project_hero_mobile.down,
+    name: '20261025_154520_project_hero_mobile'
+  },
+  {
+    up: migration_20261025_155000_project_mobile_heroes.up,
+    down: migration_20261025_155000_project_mobile_heroes.down,
+    name: '20261025_155000_project_mobile_heroes',
   },
 ];

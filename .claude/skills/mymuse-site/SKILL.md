@@ -77,6 +77,9 @@ Generator for site projects: `media-import/mockup/remake/` (capture → frames �
 README). Vary the layout between projects (Ravit does not want them all to look the same), keep the phone content
 below the camera island, never show staff portraits where a project frame fits, and send Ravit a review page before
 anything is uploaded. Apps use Ravit's own screenshots (demo data); she may supply a finished mockup herself.
+Every project also gets a **portrait mobile hero** (`heroMobile`, 1080×1920, `PORTRAIT=1` in the generator): `Visual`
+renders a `<picture>` (getImageProps, so still next/image) that switches to it under `(orientation: portrait)`, and
+`heroFitPortrait` is ignored while it is set. Keep the device clear of the bottom ~30% (the title sits there).
 Upload through a migration (`media-import/<project>/` + `payload.create({ filePath })`, Blob-token guard, guarded on the current state)
 — there are no production admin credentials here.
 
