@@ -15,6 +15,7 @@ export function MediaEl({
   eager = false,
   fill = false,
   decorative = false,
+  quality,
   ...rest
 }: {
   m: unknown
@@ -23,6 +24,8 @@ export function MediaEl({
   eager?: boolean
   fill?: boolean
   decorative?: boolean
+  /** 90 for full-screen and large images (heroes, screens with small text); next.config allows 75, 80 and 90 */
+  quality?: 75 | 80 | 90
 } & Record<`data-${string}`, string>) {
   const media = asMedia(m)
   const url = mediaUrl(m)
@@ -36,9 +39,9 @@ export function MediaEl({
     return <img className={className} src={url} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" {...rest} />
   const focal = media.focalX != null && media.focalY != null ? { objectPosition: `${media.focalX}% ${media.focalY}%` } : undefined
   return fill ? (
-    <Image className={className} src={url} alt={alt} fill sizes={sizes} priority={eager} style={focal} {...rest} />
+    <Image className={className} src={url} alt={alt} fill sizes={sizes} priority={eager} quality={quality} style={focal} {...rest} />
   ) : (
-    <Image className={className} src={url} alt={alt} width={media.width} height={media.height} sizes={sizes} priority={eager} {...rest} />
+    <Image className={className} src={url} alt={alt} width={media.width} height={media.height} sizes={sizes} priority={eager} quality={quality} {...rest} />
   )
 }
 
@@ -68,7 +71,7 @@ export function Visual({ project, index, priority = false }: { project: Project;
       {img ? (
         <>
           <div className="v-img" data-h="0.18">
-            <MediaEl m={img} fill eager={priority} decorative sizes="100vw" />
+            <MediaEl m={img} fill eager={priority} decorative sizes="100vw" quality={90} />
           </div>
           {video?.mimeType?.startsWith('video/') && <MediaEl m={video} className="v-img v-video" />}
           <div className="v-shade" />

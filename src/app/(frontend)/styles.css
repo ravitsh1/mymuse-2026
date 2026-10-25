@@ -83,7 +83,7 @@ a { color: inherit }
 .facts div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--p-soft) }
 .facts dt { font-size: 13px; letter-spacing: .14em; opacity: .85; padding-top: 4px }
 .facts dd { margin: 0; font-weight: 600; min-width: 0; overflow-wrap: anywhere }
-.band { position: relative; height: clamp(420px, 80vw, 820px); overflow: hidden }
+.band { position: relative; height: clamp(460px, 82vw, 1000px); overflow: hidden }
 .par { position: absolute; will-change: transform }
 .par img, .par video { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.6) }
 .win { border-radius: 10px; overflow: hidden; background: var(--p-ink); box-shadow: 0 30px 80px -30px rgba(0,0,0,.6) }
@@ -93,8 +93,8 @@ a { color: inherit }
 .win .screen::before { content: ""; position: absolute; inset: 12% 8% auto auto; width: 42%; aspect-ratio: 1; border-radius: 50%; background: var(--p-acc); opacity: .85 }
 .win .screen b { position: absolute; inset: auto 8% 14% 40%; height: 10%; background: var(--p-ink); opacity: .9; border-radius: 2px }
 .win .screen u { position: absolute; inset: auto 8% 30% 55%; height: 4%; background: var(--p-ink); opacity: .4; border-radius: 2px }
-.p1 { width: min(68%, 720px); top: 12%; right: 6% }
-.p2 { width: min(36%, 360px); bottom: 8%; left: 6% }
+.p1 { width: min(74%, 1040px); top: 9%; right: 5% }
+.p2 { width: min(38%, 480px); bottom: 6%; left: 5% }
 .p2 .screen { aspect-ratio: 9/16 }
 .p2 .screen::before { inset: 10% 15% auto auto; width: 70% }
 .p2 .screen b { inset: auto 12% 18% 12%; height: 6% }
@@ -124,13 +124,23 @@ a { color: inherit }
 .ph-bgs::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgb(0 0 0 / .78), rgb(0 0 0 / .62)) }
 .passion { position: relative; margin: 0; direction: ltr; text-align: left; font-family: var(--f-display); font-weight: 700; line-height: .86; font-size: clamp(84px, 19vw, 180px) }
 .passion .amp { color: var(--h-acc, var(--p-acc)); transition: color .7s }
-.words { display: inline-block; height: .86em; overflow: hidden; vertical-align: top }
+/* each word gets .24em below its line for descenders (the y of Lifestyle); the negative margin keeps the line where it was.
+   Motion steps the column by the same 1.1em. */
+.words { display: inline-block; height: 1.1em; margin-bottom: -.24em; overflow: hidden; vertical-align: top }
 .words > span { display: block; transition: transform .7s cubic-bezier(.7,0,.2,1) }
-.words > span > span { display: block }
-.ph-sub { position: relative; margin: 28px 0 0; font-size: clamp(18px, 2vw, 24px); font-weight: 300; max-width: 32ch }
+.words > span > span { display: block; padding-bottom: .24em }
 .ticks { position: absolute; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); right: var(--edge-r); display: flex; gap: 8px }
 .ticks i { width: 28px; height: 2px; background: currentColor; opacity: .25; transition: opacity .4s }
 .ticks i.on { opacity: 1 }
+
+/* ---------- home: after Passion ---------- */
+.after-ph { position: relative; z-index: 1; background: var(--p-bg); transition: background-color .6s }
+/* desktop: it starts one screen early and slides over the still-pinned Passion section (which drifts up slower, see Motion) */
+@media (min-width: 721px) and (prefers-reduced-motion: no-preference) {
+  .after-ph { margin-top: -100vh; box-shadow: 0 -40px 80px rgb(0 0 0 / .35) }
+}
+.lede { margin-block: 0; padding-block: clamp(80px, 10vw, 140px) 0; font-size: clamp(22px, 2.6vw, 34px); font-weight: 300; line-height: 1.4; text-wrap: balance }
+.lede + .ix { padding-top: clamp(50px, 6vw, 80px) }
 
 /* ---------- home: project index ---------- */
 .ix { padding-block: clamp(90px, 12vw, 150px) }
@@ -144,12 +154,12 @@ a { color: inherit }
 .rows.has-on .row { opacity: .28 }
 .rows.has-on .row.on { opacity: 1 }
 .row.on .rn { transform: translateX(-14px) }
-/* landscape, like the heroes and mockups it previews; Motion centres it on the pointer from these sizes */
-.peek { position: fixed; top: 0; left: 0; width: 400px; height: 250px; border-radius: 14px; overflow: hidden; pointer-events: none; z-index: 15;
+/* the hovered project's English name in a frame, following the pointer (no picture: that is the 3 Bears look) */
+.peek { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 15; padding: .28em .55em .18em; border: 2px solid var(--p-acc); border-radius: 999px;
+  font-family: var(--f-display); font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: .02em; white-space: nowrap; direction: ltr;
+  color: var(--p-ink); background: color-mix(in srgb, var(--p-bg) 88%, transparent);
   opacity: 0; scale: .6; transition: opacity .3s, scale .4s cubic-bezier(.2,.8,.2,1) }
 .peek.show { opacity: 1; scale: 1 }
-.peek .visual .word { font-size: 130px }
-.peek .shape.disc { width: 170px } .peek .shape.arch { width: 70px } .peek .shape.lines { width: 110px }
 .fly { position: fixed; inset: 0; z-index: 30 }
 
 /* ---------- home: services (a real sequence, so numbered) ---------- */

@@ -121,10 +121,10 @@ export default async function ProjectPage({ params }: Props) {
 
         <section className="band" aria-label={g1 ? 'מסכים מהאתר' : undefined} aria-hidden={g1 ? undefined : true}>
           <div className="par p1" data-speed="0.10">
-            {g1 ? <MediaEl m={g1} sizes="(max-width: 720px) 84vw, 720px" /> : <MockWindow />}
+            {g1 ? <MediaEl m={g1} sizes="(max-width: 720px) 84vw, min(74vw, 1040px)" quality={90} /> : <MockWindow />}
           </div>
           <div className="par p2" data-speed="-0.14">
-            {g2 ? <MediaEl m={g2} sizes="(max-width: 720px) 44vw, 360px" /> : <MockWindow />}
+            {g2 ? <MediaEl m={g2} sizes="(max-width: 720px) 44vw, min(38vw, 480px)" quality={90} /> : <MockWindow />}
           </div>
         </section>
 
