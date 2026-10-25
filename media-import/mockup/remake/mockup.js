@@ -23,7 +23,8 @@ const theme = over.theme || (bodyDark ? 'dark' : 'light')
 const bg = theme === 'dark' ? dark : light
 const band = over.band || (theme === 'dark' ? accent : dark)
 const cards = fs.readdirSync(dir).filter((f) => /^card-\d\.(jpg|png)$/.test(f)).slice(0, 2)
-const layout = over.layout || 'desk'
+const PORTRAIT = process.env.PORTRAIT === '1'
+const layout = PORTRAIT ? 'portrait' : over.layout || 'desk'
 const names = (() => { try { return Object.fromEntries(JSON.parse(fs.readFileSync(__dirname + '/projects.json', 'utf8')).docs.map((p) => [p.slug, p.nameEn])) } catch { return {} } })()
 const nameEn = over.name || names[slug] || slug.toUpperCase()
 const domain = over.domain || (brand.url ? new URL(brand.url).hostname.replace(/^www\./, '') : '')
@@ -48,7 +49,25 @@ const BASE = `*{box-sizing:border-box;margin:0}html,body{width:1200px;height:675
 const bandLight = lum(rgb(band.replace(/^#(..)(..)(..)$/, (m, a, b, c) => `rgb(${parseInt(a, 16)},${parseInt(b, 16)},${parseInt(c, 16)})`))) > 0.35
 const strokeOn = () => bandLight ? 'rgba(0,0,0,.42)' : 'rgba(255,255,255,.34)'
 let css = '', body = ''
-if (layout === 'trio') {
+if (layout === 'portrait') {
+  const p2 = has('phone2.png'), p3 = has('phone3.png')
+  const side = p2 || p3
+  css = `html,body{width:540px;height:960px}
+body{background:radial-gradient(90% 60% at 50% 30%, color-mix(in srgb, ${bg} 90%, #fff) 0%, ${bg} 70%)}
+.band{position:absolute;left:0;right:0;bottom:0;height:34%;background:${band}}
+.name{left:50%;top:41%;transform:translate(-50%,-50%) rotate(-90deg);font-size:${Math.min(150, 1350 / Math.max(5, nameEn.length))}px;-webkit-text-stroke:1.6px ${theme === 'dark' ? 'rgba(255,255,255,.28)' : 'rgba(0,0,0,.2)'}}
+.pm{left:139px;top:96px;width:262px;height:562px;padding:11px;border-radius:46px;z-index:3}.pm .screen{border-radius:36px}.pm .island{top:20px;width:76px;height:21px;border-radius:12px}
+.ps{width:186px;height:398px;top:190px;z-index:2}.ps1{left:18px;transform:rotate(-9deg)}.ps2{right:18px;transform:rotate(9deg)}
+.card{position:absolute;z-index:1;background:${theme === 'dark' ? 'color-mix(in srgb,' + bg + ' 80%, #fff)' : '#fff'};padding:8px;border-radius:8px;box-shadow:0 18px 40px -12px rgba(0,0,0,.45)}
+.card img{display:block;width:100%;height:100%;object-fit:cover;border-radius:4px}
+.card::before{content:"";position:absolute;top:-9px;left:50%;width:64px;height:18px;margin-left:-32px;background:${accent};opacity:.9;transform:rotate(-3deg);border-radius:2px}
+.c1{width:196px;height:158px;left:14px;top:120px;transform:rotate(-8deg)}.c2{width:172px;height:206px;right:14px;top:400px;transform:rotate(7deg)}`
+  const cards = fs.readdirSync(dir).filter((f) => /^card-\d\.(jpg|png)$/.test(f)).slice(0, 2)
+  body = `<div class="band"></div>
+${side ? phone(p2 ? 'phone2.png' : 'phone3.png', 'ps ps1') + phone(p3 ? 'phone3.png' : 'phone2.png', 'ps ps2') : (cards[0] ? `<div class="card c1"><img src="${cards[0]}" alt=""></div>` : '') + (cards[1] ? `<div class="card c2"><img src="${cards[1]}" alt=""></div>` : '')}
+${phone('phone.png', 'pm')}
+<span class="dot" style="width:18px;height:18px;left:420px;top:70px;background:${accent}"></span><span class="dot" style="width:12px;height:12px;left:96px;top:600px;background:${accent2}"></span>`
+} else if (layout === 'trio') {
   const P = [has('phone2.png') ? 'phone2.png' : 'phone.png', 'phone.png', has('phone3.png') ? 'phone3.png' : 'phone.png']
   css = `body{background:radial-gradient(70% 80% at 50% 40%, color-mix(in srgb, ${band} 86%, #fff) 0%, ${band} 70%)}
 .name{left:50%;top:50%;transform:translate(-50%,-52%);-webkit-text-stroke:2px ${strokeOn(band)};font-size:${Math.min(230, 1900 / Math.max(4, nameEn.length))}px}
@@ -104,12 +123,13 @@ ${cards[1] ? `<div class="card cb"><img src="${cards[1]}" alt=""></div>` : ''}
 <div class="laptop"><div class="lid"><span class="cam"></span><div class="screen"><img src="laptop.png" alt=""><div class="glare"></div></div></div><div class="base"></div></div>
 ${phone('phone.png')}
 </div></body></html>`
-fs.writeFileSync(`${dir}/mockup.html`, html)
+const OUT = PORTRAIT ? 'mockup-m' : 'mockup'
+fs.writeFileSync(`${dir}/${OUT}.html`, html)
 ;(async () => {
   const b = await chromium.launch()
-  const p = await b.newPage({ viewport: { width: 1200, height: 675 }, deviceScaleFactor: 2 })
-  await p.goto('file://' + dir + '/mockup.html'); await p.waitForTimeout(500)
-  await sharp(await p.screenshot()).jpeg({ quality: 88, mozjpeg: true }).toFile(`${dir}/mockup.jpg`)
+  const p = await b.newPage({ viewport: PORTRAIT ? { width: 540, height: 960 } : { width: 1200, height: 675 }, deviceScaleFactor: 2 })
+  await p.goto('file://' + dir + '/' + OUT + '.html'); await p.waitForTimeout(500)
+  await sharp(await p.screenshot()).jpeg({ quality: 88, mozjpeg: true }).toFile(`${dir}/${OUT}.jpg`)
   await b.close()
   console.log(slug, JSON.stringify({ theme, bg, band, accent, accent2, cards: cards.length }))
 })()

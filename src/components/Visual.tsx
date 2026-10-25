@@ -1,5 +1,5 @@
-import Image from 'next/image'
-import type { Project } from '@/payload-types'
+import Image, { getImageProps } from 'next/image'
+import type { Media, Project } from '@/payload-types'
 import { projectPalette } from '@/lib/data'
 import { asMedia, mediaUrl } from '@/lib/media'
 
@@ -45,6 +45,29 @@ export function MediaEl({
   )
 }
 
+/**
+ * Art direction for the hero: the wide image, and on a portrait screen the tall one (<picture>, so only one of them
+ * downloads). Both go through next/image's optimizer via getImageProps — the same rule as MediaEl, never a raw URL.
+ * Covers its positioned parent like MediaEl's `fill`.
+ */
+function ArtDirected({ wide, tall, eager }: { wide: Media; tall: Media; eager: boolean }) {
+  const common = { alt: '', fill: true, sizes: '100vw', quality: 90, priority: eager } as const
+  const tallProps = getImageProps({ ...common, src: mediaUrl(tall)! }).props
+  const { props } = getImageProps({ ...common, src: mediaUrl(wide)! })
+  const focal = wide.focalX != null && wide.focalY != null ? { objectPosition: `${wide.focalX}% ${wide.focalY}%` } : undefined
+  return (
+    <picture>
+      <source media="(orientation: portrait)" srcSet={tallProps.srcSet} sizes={tallProps.sizes} />
+      {/* eslint-disable-next-line @next/next/no-img-element -- next/image's own props (getImageProps) */}
+      <img {...props} alt="" style={{ ...props.style, ...focal }} />
+    </picture>
+  )
+}
+
+/** A raster image next/image can size (not video, GIF or SVG). */
+const raster = (m: Media | null): m is Media =>
+  !!m && !!m.width && !!m.height && !(m.mimeType || '').match(/^video\/|^image\/(gif|svg\+xml)$/)
+
 const POS = [
   [14, 8, 30, 16, 52, 38],
   [22, 12, 12, 10, 46, 34],
@@ -60,6 +83,8 @@ const POS = [
 export function Visual({ project, index, priority = false }: { project: Project; index: number; priority?: boolean }) {
   const p = projectPalette(project)
   const img = asMedia(project.hero)
+  const tall = asMedia(project.heroMobile)
+  const art = raster(img) && raster(tall)
   const video = asMedia(project.heroVideo)
   const pos = POS[index % POS.length]
   const a = index % 2 ? 'right' : 'left'
@@ -67,11 +92,15 @@ export function Visual({ project, index, priority = false }: { project: Project;
   const style = { '--v-bg': p.bg, '--v-ink': p.ink, '--v-acc': p.acc } as React.CSSProperties
 
   return (
-    <div className={`visual${img ? ' has-img' : ''}${img && project.heroFitPortrait ? ' fit-portrait' : ''}`} style={style}>
+    <div className={`visual${img ? ' has-img' : ''}${img && !art && project.heroFitPortrait ? ' fit-portrait' : ''}`} style={style}>
       {img ? (
         <>
           <div className="v-img" data-h="0.18">
-            <MediaEl m={img} fill eager={priority} decorative sizes="100vw" quality={90} />
+            {art ? (
+              <ArtDirected wide={img} tall={tall} eager={priority} />
+            ) : (
+              <MediaEl m={img} fill eager={priority} decorative sizes="100vw" quality={90} />
+            )}
           </div>
           {video?.mimeType?.startsWith('video/') && <MediaEl m={video} className="v-img v-video" />}
           <div className="v-shade" />

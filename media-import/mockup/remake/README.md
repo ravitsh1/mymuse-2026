@@ -15,3 +15,6 @@ folder `<slug>/` (not committed).
    `browser` (angled browser + phone), `iso` (laptop, g1, g2 stacked isometric). Vary the layouts between projects.
 4. `node tc.js <slug>` (status-bar colour under the camera island), then `node mockup.js <slug>` → `mockup.jpg`
    (2400×1350). `node msheet.js out.jpg <slug>…` makes a contact sheet for review.
+5. `PORTRAIT=1 node mockup.js <slug>` → `mockup-m.jpg` (1080×1920) for the project's mobile hero (`heroMobile`): the
+   phone centred and above the title zone (bottom ~30%), flanked by `phone2`/`phone3` or the two cards. Check it cropped
+   to 390×844 (cover) before uploading.

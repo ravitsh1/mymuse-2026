@@ -108,8 +108,18 @@ export const Projects: CollectionConfig = {
               admin: { description: 'רוחב 2400px לפחות. בלי תמונה מוצגת גרפיקה בצבעי הפרויקט.' },
             },
             {
+              name: 'heroMobile',
+              label: 'תמונה ראשית לנייד (לאורך)',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description:
+                  'למסך לאורך (נייד, טאבלט לאורך): תמונה אנכית, 1080×1920 לפחות, עם העיקר במרכז ובלי פרטים חשובים ברבע התחתון (שם יושבת הכותרת). ריק = התמונה הראשית.',
+              },
+            },
+            {
               name: 'heroFitPortrait',
-              label: 'בנייד: להציג את כל התמונה הראשית, בלי חיתוך',
+              label: 'בנייד: להציג את כל התמונה הראשית, בלי חיתוך (כשאין תמונה לנייד)',
               type: 'checkbox',
               defaultValue: false,
               admin: {

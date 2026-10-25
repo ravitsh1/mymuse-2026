@@ -177,6 +177,10 @@ export interface Project {
    */
   hero?: (number | null) | Media;
   /**
+   * למסך לאורך (נייד, טאבלט לאורך): תמונה אנכית, 1080×1920 לפחות, עם העיקר במרכז ובלי פרטים חשובים ברבע התחתון (שם יושבת הכותרת). ריק = התמונה הראשית.
+   */
+  heroMobile?: (number | null) | Media;
+  /**
    * למסך לאורך (נייד, טאבלט לאורך): התמונה מוצגת במלואה על רקע בצבע הפרויקט, במקום למלא את המסך בחיתוך. מתאים למוקאפים שהרקע שלהם בצבע הפרויקט. לא מסומן = ממלאת את המסך.
    */
   heroFitPortrait?: boolean | null;
@@ -189,7 +193,7 @@ export interface Project {
    */
   gallery?: (number | Media)[] | null;
   /**
-   * קוד צבע, למשל #1b2a24
+   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
    */
   bg?: string | null;
   /**
@@ -417,6 +421,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   featured?: T;
   hidden?: T;
   hero?: T;
+  heroMobile?: T;
   heroFitPortrait?: T;
   heroVideo?: T;
   gallery?: T;
@@ -548,11 +553,11 @@ export interface Home {
     | {
         word: string;
         /**
-         * קוד צבע, למשל #1b2a24
+         * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
          */
         bg?: string | null;
         /**
-         * קוד צבע, למשל #1b2a24
+         * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
          */
         accent?: string | null;
         /**
@@ -573,11 +578,11 @@ export interface Home {
         title: string;
         text?: string | null;
         /**
-         * קוד צבע, למשל #1b2a24
+         * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
          */
         bg?: string | null;
         /**
-         * קוד צבע, למשל #1b2a24
+         * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
          */
         ink?: string | null;
         id?: string | null;
@@ -621,11 +626,11 @@ export interface Setting {
       }[]
     | null;
   /**
-   * קוד צבע, למשל #1b2a24
+   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
    */
   bg?: string | null;
   /**
-   * קוד צבע, למשל #1b2a24
+   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
    */
   ink?: string | null;
   /**
