@@ -63,7 +63,6 @@ export default async function HomePage() {
                 </span>
               </span>
             </p>
-            {home.subtitle && <p className="ph-sub">{home.subtitle}</p>}
             <div className="ticks" aria-hidden="true">
               {words.map((w, k) => (
                 <i key={w.id ?? k} data-tick className={k ? '' : 'on'} />
@@ -72,29 +71,33 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {shown.length > 0 && (
-          <section className="ix wrap" id="work" data-ix aria-labelledby="ixh">
-            <div className="ix-head">
-              <h2 id="ixh">{home.workTitle || 'עבודות נבחרות'}</h2>
-            </div>
-            <ul className="rows" data-rows>
-              {shown.map(({ p, i }) => {
-                const c = projectPalette(p)
-                return (
-                  <li key={p.id}>
-                    <a className="row" href={`/portfolio/${p.slug}`} data-i={i} data-bg={c.bg} data-ink={c.ink} data-acc={c.acc}>
-                      <span className="rn">{p.title}</span>
-                      {p.field && <span className="rf">{p.field}</span>}
-                    </a>
-                    <div hidden data-visual-for={i}>
-                      <Visual project={p} index={i} />
-                    </div>
-                  </li>
-                )
-              })}
-            </ul>
-          </section>
-        )}
+        {/* Slides over the pinned Passion section on desktop (see .after-ph): needs a full-width background. */}
+        <div className="after-ph">
+          {home.subtitle && <p className="lede wrap">{home.subtitle}</p>}
+          {shown.length > 0 && (
+            <section className="ix wrap" id="work" data-ix aria-labelledby="ixh">
+              <div className="ix-head">
+                <h2 id="ixh">{home.workTitle || 'עבודות נבחרות'}</h2>
+              </div>
+              <ul className="rows" data-rows>
+                {shown.map(({ p, i }) => {
+                  const c = projectPalette(p)
+                  return (
+                    <li key={p.id}>
+                      <a className="row" href={`/portfolio/${p.slug}`} data-i={i} data-name={p.nameEn || p.title} data-bg={c.bg} data-ink={c.ink} data-acc={c.acc}>
+                        <span className="rn">{p.title}</span>
+                        {p.field && <span className="rf">{p.field}</span>}
+                      </a>
+                      <div hidden data-visual-for={i}>
+                        <Visual project={p} index={i} />
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </section>
+          )}
+        </div>
 
         {!!home.services?.length && (
           <section className="svc wrap" aria-labelledby="svch">

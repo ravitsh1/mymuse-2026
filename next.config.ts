@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
     // production media live on the Vercel Blob CDN
     remotePatterns: [{ protocol: 'https', hostname: '*.public.blob.vercel-storage.com' }],
     formats: ['image/avif', 'image/webp'],
-    qualities: [75, 80],
+    qualities: [75, 80, 90], // 90: heroes and the large project screens (small text in screenshots)
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   webpack: (webpackConfig) => {

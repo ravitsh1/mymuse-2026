@@ -124,10 +124,8 @@ export function Motion() {
       const a = (e.target as Element).closest<HTMLAnchorElement>('.row')
       if (!a || !peek) return
       const i = Number(a.dataset.i)
-      if (ixOn !== i) {
-        const v = visualFor(i)
-        peek.replaceChildren(...(v ? [v] : []))
-      }
+      // only the English name in a frame: the picture is kept for the fly-in on click
+      if (ixOn !== i) peek.textContent = a.dataset.name || ''
       setIx(i)
       if (!peek.classList.contains('show')) {
         px = mx = e.clientX
@@ -172,6 +170,9 @@ export function Motion() {
     const next = $('[data-next]')
     const nframe = $('[data-nframe]')
     const nvis = nframe?.querySelector<HTMLElement>('.visual')
+    const ntint = nframe?.querySelector<HTMLElement>('.next-tint')
+    // desktop: the section after Passion slides over it (.after-ph), so the words finish one screen earlier
+    const coverMQ = matchMedia('(min-width: 721px)')
     const ring = $<SVGCircleElement>('[data-ring]')
     const pct = $('[data-pct]')
     if (next) router.prefetch(next.dataset.next!, FULL)
@@ -185,11 +186,15 @@ export function Motion() {
 
       if (ph && phs && wcol && words.length) {
         const r = ph.getBoundingClientRect()
-        const hp = clamp(-r.top / (r.height - vh), 0, 0.999)
+        const cover = coverMQ.matches
+        const hp = clamp(-r.top / (r.height - vh * (cover ? 2 : 1)), 0, 0.999)
+        // while covered, the pinned section drifts up at a third of the scroll speed: the parallax hand-over
+        const c = cover ? clamp((2 * vh - r.bottom) / vh, 0, 1) : 0
+        phs.style.transform = c ? `translate3d(0,${(-c * vh * 0.3).toFixed(1)}px,0)` : ''
         const k = Math.floor(hp * words.length)
         if (k !== wordIdx) {
           wordIdx = k
-          wcol.style.transform = `translateY(${-k * 0.86}em)`
+          wcol.style.transform = `translateY(${-k * 1.1}em)`
           phs.style.setProperty('--h-bg', words[k].bg)
           phs.style.setProperty('--h-acc', words[k].accent)
           ticks.forEach((t, n) => t.classList.toggle('on', n <= k))
@@ -234,6 +239,8 @@ export function Motion() {
         lastP = p
         nframe.style.clipPath = `inset(${(26 * k).toFixed(2)}% ${(24 * k).toFixed(2)}% ${(26 * k).toFixed(2)}% ${(24 * k).toFixed(2)}% round ${(28 * k).toFixed(1)}px)`
         nvis.style.transform = `scale(${(1 + 0.35 * k).toFixed(3)})`
+        // the colour band keeps the title readable, then clears over the last 20% so the hero arrives as it is
+        if (ntint) ntint.style.opacity = p < 0.8 ? '1' : Math.max(0, (1 - p) / 0.2).toFixed(3)
         if (ring) ring.style.strokeDashoffset = (213.6 * (1 - p)).toFixed(1)
         if (pct) pct.textContent = Math.round(p * 100) + '%'
         if (p >= 0.995 && !timer && !busy) {
