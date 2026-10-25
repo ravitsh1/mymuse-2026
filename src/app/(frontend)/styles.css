@@ -13,6 +13,12 @@
   --f-body: 'Tel Aviv Modernist', 'Arial', sans-serif;
   --gutter-l: max(16px, env(safe-area-inset-left, 0px));
   --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  /* header and the two heroes: wider side margin on desktop (images stay full width) */
+  --edge-l: var(--gutter-l);
+  --edge-r: var(--gutter-r);
+}
+@media (min-width: 721px) {
+  :root { --edge-l: max(5vw, env(safe-area-inset-left, 0px)); --edge-r: max(5vw, env(safe-area-inset-right, 0px)) }
 }
 *, *::before, *::after { box-sizing: border-box }
 html { background: var(--chrome-bg) }
@@ -28,17 +34,12 @@ a { color: inherit }
 
 /* ---------- header ---------- */
 .top { position: fixed; inset: 0 0 auto; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding-block: calc(14px + env(safe-area-inset-top, 0px)) 14px; padding-left: var(--gutter-l); padding-right: var(--gutter-r);
+  padding-block: calc(14px + env(safe-area-inset-top, 0px)) 14px; padding-left: var(--edge-l); padding-right: var(--edge-r);
   color: var(--p-ink); pointer-events: none; transition: color .6s }
 .top > * { pointer-events: auto }
 .logo { display: block; line-height: 0 }
 .logo svg { display: block; width: auto; height: 34px }
-.nav { display: flex; align-items: center; gap: 14px; font-variant-numeric: tabular-nums }
-.count { font-size: 14px; letter-spacing: .12em; direction: ltr }
-.dots { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0 }
-.dots a { width: 24px; height: 24px; display: grid; place-items: center }
-.dots a::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .35; transition: all .3s }
-.dots a[aria-current="page"]::before { opacity: 1; width: 18px; border-radius: 4px; background: var(--p-acc) }
+.count { font-size: 14px; letter-spacing: .12em; direction: ltr; font-variant-numeric: tabular-nums }
 .bar { position: fixed; top: 0; right: 0; left: 0; height: 3px; z-index: 21; transform-origin: right; transform: scaleX(0); background: var(--p-acc) }
 
 /* ---------- project visual ---------- */
@@ -62,7 +63,7 @@ a { color: inherit }
 
 /* ---------- project hero ---------- */
 .hero { position: relative; height: 100vh; min-height: 520px }
-.hero-copy { position: absolute; inset: auto 0 0; padding-block: 0 clamp(90px, 16vh, 160px); padding-left: var(--gutter-l); padding-right: var(--gutter-r); z-index: 2 }
+.hero-copy { position: absolute; inset: auto 0 0; padding-block: 0 clamp(90px, 16vh, 160px); padding-left: var(--edge-l); padding-right: var(--edge-r); z-index: 2 }
 .hero h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(76px, 17vw, 210px); line-height: .85; text-wrap: balance }
 .hero h1:focus { outline: none }
 .kicker { margin: 0 0 10px; font-size: 15px; letter-spacing: .14em; color: var(--p-acc); font-weight: 600 }
@@ -112,7 +113,7 @@ a { color: inherit }
 /* ---------- home: Passion & ---------- */
 .ph { position: relative; height: 340vh }
 .ph-sticky { position: sticky; top: 0; height: 100vh; min-height: 520px; overflow: hidden; background: var(--h-bg, var(--p-bg)); transition: background-color .7s ease;
-  display: grid; align-content: center; padding-left: var(--gutter-l); padding-right: var(--gutter-r) }
+  display: grid; align-content: center; padding-left: var(--edge-l); padding-right: var(--edge-r) }
 .ph-orb { position: absolute; width: min(70vw, 620px); aspect-ratio: 1; border-radius: 50%; top: 50%; left: 62%; translate: -50% -50%;
   background: radial-gradient(circle at 40% 40%, var(--h-acc, var(--p-acc)), transparent 68%); opacity: .45; transition: background .7s; filter: blur(8px) }
 /* Background photos: cross-fade with the word; darkened enough (62%+) that white text keeps 6:1 even over a white pixel. */
@@ -121,13 +122,13 @@ a { color: inherit }
 .ph-bg.on { opacity: 1 }
 .ph-media { object-fit: cover }
 .ph-bgs::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgb(0 0 0 / .78), rgb(0 0 0 / .62)) }
-.passion { position: relative; margin: 0; direction: ltr; text-align: left; font-family: var(--f-display); font-weight: 700; line-height: .86; font-size: clamp(84px, 19vw, 280px) }
+.passion { position: relative; margin: 0; direction: ltr; text-align: left; font-family: var(--f-display); font-weight: 700; line-height: .86; font-size: clamp(84px, 19vw, 180px) }
 .passion .amp { color: var(--h-acc, var(--p-acc)); transition: color .7s }
 .words { display: inline-block; height: .86em; overflow: hidden; vertical-align: top }
 .words > span { display: block; transition: transform .7s cubic-bezier(.7,0,.2,1) }
 .words > span > span { display: block }
 .ph-sub { position: relative; margin: 28px 0 0; font-size: clamp(18px, 2vw, 24px); font-weight: 300; max-width: 32ch }
-.ticks { position: absolute; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); right: var(--gutter-r); display: flex; gap: 8px }
+.ticks { position: absolute; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); right: var(--edge-r); display: flex; gap: 8px }
 .ticks i { width: 28px; height: 2px; background: currentColor; opacity: .25; transition: opacity .4s }
 .ticks i.on { opacity: 1 }
 
@@ -143,11 +144,12 @@ a { color: inherit }
 .rows.has-on .row { opacity: .28 }
 .rows.has-on .row.on { opacity: 1 }
 .row.on .rn { transform: translateX(-14px) }
-.peek { position: fixed; top: 0; left: 0; width: 240px; height: 320px; border-radius: 14px; overflow: hidden; pointer-events: none; z-index: 15;
+/* landscape, like the heroes and mockups it previews; Motion centres it on the pointer from these sizes */
+.peek { position: fixed; top: 0; left: 0; width: 400px; height: 250px; border-radius: 14px; overflow: hidden; pointer-events: none; z-index: 15;
   opacity: 0; scale: .6; transition: opacity .3s, scale .4s cubic-bezier(.2,.8,.2,1) }
 .peek.show { opacity: 1; scale: 1 }
-.peek .visual .word { font-size: 120px }
-.peek .shape.disc { width: 150px } .peek .shape.arch { width: 70px } .peek .shape.lines { width: 90px }
+.peek .visual .word { font-size: 130px }
+.peek .shape.disc { width: 170px } .peek .shape.arch { width: 70px } .peek .shape.lines { width: 110px }
 .fly { position: fixed; inset: 0; z-index: 30 }
 
 /* ---------- home: services (a real sequence, so numbered) ---------- */
@@ -260,8 +262,6 @@ main[tabindex="-1"]:focus { outline: none }
   .p1 { width: 84%; right: 4%; top: 8% }
   .p2 { width: 44%; left: 4%; bottom: 6% }
   .count { display: none }
-  /* past ~7 projects the row runs under the logo; the next-project frame and the home index still link them all */
-  .dots:has(li:nth-child(8)) { display: none }
   .row .rf { display: none }
   .mq-btn { top: auto; bottom: 4px; translate: none }
 }

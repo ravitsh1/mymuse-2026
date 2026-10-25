@@ -12,20 +12,16 @@ export function Header({ projects, current }: { projects: Project[]; current?: n
         <Link className="logo" href="/" aria-label="MyMuse, עמוד הבית">
           <LogoWide />
         </Link>
-        <nav className="nav" aria-label="פרויקטים">
-          {current !== undefined && (
-            <span className="count">
+        {current !== undefined && (
+          <span className="count">
+            <span aria-hidden="true">
               {pad(current + 1)} / {pad(projects.length)}
             </span>
-          )}
-          <ul className="dots">
-            {projects.map((p, i) => (
-              <li key={p.id}>
-                <Link href={`/portfolio/${p.slug}`} aria-label={p.title} aria-current={i === current ? 'page' : undefined} />
-              </li>
-            ))}
-          </ul>
-        </nav>
+            <span className="sr-only">
+              פרויקט {current + 1} מתוך {projects.length}
+            </span>
+          </span>
+        )}
       </header>
     </>
   )
