@@ -56,12 +56,12 @@ if (layout === 'portrait') {
 body{background:radial-gradient(90% 60% at 50% 30%, color-mix(in srgb, ${bg} 90%, #fff) 0%, ${bg} 70%)}
 .band{position:absolute;left:0;right:0;bottom:0;height:34%;background:${band}}
 .name{left:50%;top:41%;transform:translate(-50%,-50%) rotate(-90deg);font-size:${Math.min(150, 1350 / Math.max(5, nameEn.length))}px;-webkit-text-stroke:1.6px ${theme === 'dark' ? 'rgba(255,255,255,.28)' : 'rgba(0,0,0,.2)'}}
-.pm{left:139px;top:96px;width:262px;height:562px;padding:11px;border-radius:46px;z-index:3}.pm .screen{border-radius:36px}.pm .island{top:20px;width:76px;height:21px;border-radius:12px}
-.ps{width:186px;height:398px;top:190px;z-index:2}.ps1{left:18px;transform:rotate(-9deg)}.ps2{right:18px;transform:rotate(9deg)}
+.pm{left:157px;top:112px;width:226px;height:484px;padding:10px;border-radius:40px;z-index:3}.pm .screen{border-radius:31px}.pm .island{top:18px;width:66px;height:18px;border-radius:10px}
+.ps{width:162px;height:347px;top:190px;z-index:2}.ps1{left:44px;transform:rotate(-9deg)}.ps2{right:44px;transform:rotate(9deg)}
 .card{position:absolute;z-index:1;background:${theme === 'dark' ? 'color-mix(in srgb,' + bg + ' 80%, #fff)' : '#fff'};padding:8px;border-radius:8px;box-shadow:0 18px 40px -12px rgba(0,0,0,.45)}
 .card img{display:block;width:100%;height:100%;object-fit:cover;border-radius:4px}
 .card::before{content:"";position:absolute;top:-9px;left:50%;width:64px;height:18px;margin-left:-32px;background:${accent};opacity:.9;transform:rotate(-3deg);border-radius:2px}
-.c1{width:196px;height:158px;left:14px;top:120px;transform:rotate(-8deg)}.c2{width:172px;height:206px;right:14px;top:400px;transform:rotate(7deg)}`
+.c1{width:176px;height:142px;left:36px;top:138px;transform:rotate(-8deg)}.c2{width:154px;height:185px;right:36px;top:380px;transform:rotate(7deg)}`
   const cards = fs.readdirSync(dir).filter((f) => /^card-\d\.(jpg|png)$/.test(f)).slice(0, 2)
   body = `<div class="band"></div>
 ${side ? phone(p2 ? 'phone2.png' : 'phone3.png', 'ps ps1') + phone(p3 ? 'phone3.png' : 'phone2.png', 'ps ps2') : (cards[0] ? `<div class="card c1"><img src="${cards[0]}" alt=""></div>` : '') + (cards[1] ? `<div class="card c2"><img src="${cards[1]}" alt=""></div>` : '')}
