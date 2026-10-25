@@ -26,7 +26,7 @@ Same base as threebears-2026, minus localization and leads: `payload.config.ts` 
 
 ## Code map
 
-- `src/collections/` Categories (orderable; the home index filter buttons, `components/CategoryFilter.tsx` hides rows by `data-cat`), Projects (tabs: תוכן / מדיה / צבעים / קידום; sidebar: category, featured, hidden; `orderable` → drag order = "next project" chain), Pages (`/<slug>`: accessibility, privacy), Media (alt, focal point, **0-byte Blob upload fix**), Users.
+- `src/collections/` Categories (orderable; the home index filter buttons — יין ואוכל, עסקים וטכנולוגיה, תרבות וקהילה, עיצוב ספרים ואופנה, אפליקציות ומערכות; `components/CategoryFilter.tsx` hides rows by `data-cat`), Projects (tabs: תוכן / מדיה / צבעים / קידום; sidebar: category, featured, hidden; `orderable` → drag order = "next project" chain), Pages (`/<slug>`: accessibility, privacy), Media (alt, focal point, **0-byte Blob upload fix**), Users.
 - `src/globals/` Home (Passion words + colours, work title, service cards, about, clients, contact title), Settings (email, phone, social, site colours, meta description, share image).
 - `src/fields/` color.ts (hex text + validation), seo.ts (`metaDescriptionField`).
 - `src/components/` Visual (+ `MediaEl`: video / img for GIF-SVG / next/image), NextFrame, Motion (all client motion), Header, Footer, Interactive (marquee with pause, copy buttons), JsonLd, LivePreviewRefresh, admin/ (Dashboard, Brand).
@@ -73,6 +73,10 @@ Every project gets:
    Sources live in `media-import/mockup/` (HTML device frames + `render.js`, 1200×675 at 2x → 2400×1350 JPG).
 2. **Two more images from the live site**, preferably **landscape** (desktop at 1440×900, deviceScaleFactor 1.5 → 2160×1350).
    Dismiss cookie bars, hide custom cursors/floating widgets, and reach sections through the site's own scroller if it has one.
+Generator for site projects: `media-import/mockup/remake/` (capture → frames → `mockup.js` with four layouts; see its
+README). Vary the layout between projects (Ravit does not want them all to look the same), keep the phone content
+below the camera island, never show staff portraits where a project frame fits, and send Ravit a review page before
+anything is uploaded. Apps use Ravit's own screenshots (demo data); she may supply a finished mockup herself.
 Upload through a migration (`media-import/<project>/` + `payload.create({ filePath })`, Blob-token guard, guarded on the current state)
 — there are no production admin credentials here.
 
