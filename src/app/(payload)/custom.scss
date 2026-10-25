@@ -75,3 +75,14 @@ html[data-theme='dark'] .template-minimal {
 .mm-card--wine:hover { background: #4a1526 }
 .mm-card--night:hover { background: #24202a }
 .mm-section-title { margin: 0 0 12px }
+
+// Colour fields (components/admin/ColorField): a chip of the current value and the palette swatches under the input
+.mm-color-chip { display: inline-block; flex: 0 0 auto; width: 26px; height: 26px; margin-inline-end: 8px; border-radius: 50%;
+  border: 1px solid var(--theme-elevation-250); vertical-align: middle }
+.field-type__wrap:has(.mm-color-chip) { display: flex; flex-wrap: wrap; align-items: center }
+.field-type__wrap:has(.mm-color-chip) > input { flex: 1 1 0; min-width: 0; direction: ltr; text-align: right }
+.mm-swatches { display: flex; flex-wrap: wrap; gap: 6px; flex-basis: 100%; margin-top: 8px }
+.mm-swatch { width: 26px; height: 26px; padding: 0; border-radius: 6px; border: 1px solid var(--theme-elevation-250); cursor: pointer }
+.mm-swatch:hover { transform: scale(1.12) }
+.mm-swatch[aria-pressed='true'] { outline: 2px solid var(--theme-text); outline-offset: 2px }
+.mm-swatch:focus-visible { outline: 3px solid var(--mm-gold); outline-offset: 2px }

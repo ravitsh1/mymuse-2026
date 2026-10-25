@@ -151,7 +151,7 @@ a { color: inherit }
 
 /* ---------- home: project index ---------- */
 .ix { padding-block: clamp(90px, 12vw, 150px) }
-.ix-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 28px; flex-wrap: wrap }
+.ix-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: clamp(40px, 5vw, 72px); flex-wrap: wrap }
 .ix-head h2, .svc h2 { margin: 0; font-size: 15px; letter-spacing: .2em; font-weight: 600; color: var(--p-acc-sm, var(--p-acc)) }
 .ix-head p { margin: 0; font-size: 15px; opacity: .85 }
 .ix-filter { display: flex; flex-wrap: wrap; gap: 8px }
@@ -168,7 +168,7 @@ a { color: inherit }
 .row.on .rn { transform: translateX(-14px) }
 /* the hovered project's English name, large and outlined like the name behind each hero (no picture: that is the 3 Bears look) */
 .peek { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 15;
-  font-family: var(--f-display); font-weight: 700; font-size: clamp(110px, 12vw, 200px); line-height: .8; white-space: nowrap; direction: ltr;
+  font-family: var(--f-display); font-weight: 700; font-size: clamp(80px, 8vw, 140px); line-height: .8; white-space: nowrap; direction: ltr;
   color: transparent; -webkit-text-stroke: 1.5px var(--p-ink);
   opacity: 0; scale: .6; transition: opacity .3s, scale .4s cubic-bezier(.2,.8,.2,1) }
 .peek.show { opacity: 1; scale: 1 }
