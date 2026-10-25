@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0 }
+  html, body { width: 1200px; height: 675px; overflow: hidden }
+  body { background: #efe5dc; position: relative; perspective: 1800px }
+  /* playful shapes in the 3 Bears palette */
+  .blob-lime { position: absolute; width: 520px; height: 520px; border-radius: 50%; background: #e2ff26; right: 120px; top: 40px }
+  .blob-lilac { position: absolute; width: 300px; height: 380px; border-radius: 150px; background: #d6aed1; left: 110px; top: 190px; transform: rotate(-12deg) }
+  .dot { position: absolute; border-radius: 50%; background: #154734 }
+  /* the hero crops a wide screen top and bottom and drifts on scroll: keep the whole composition well inside */
+  .stage { position: absolute; inset: 0; transform: scale(.72); transform-origin: 50% 46% }
+  .grain { position: absolute; inset: 0; background: radial-gradient(70% 60% at 50% 40%, transparent 60%, rgba(60,40,20,.10)) }
+
+  /* ---------- laptop, tilted ---------- */
+  .laptop { position: absolute; left: 330px; top: 110px; width: 700px; transform-style: preserve-3d; transform: rotateY(-20deg) rotateX(6deg) rotateZ(1deg) }
+  .lid { position: relative; width: 700px; height: 438px; padding: 14px 14px 20px; border-radius: 20px 20px 6px 6px;
+    background: linear-gradient(180deg, #2c2a30, #1a191d); box-shadow: inset 0 0 0 1.5px #3b3940, inset 0 0 0 3px #111 }
+  .lid .cam { position: absolute; top: 5px; left: 50%; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: #0b0b0d }
+  .screen { position: relative; width: 100%; height: 100%; border-radius: 6px; overflow: hidden; background: #000 }
+  .screen img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block }
+  .glare { position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 40%) }
+  .base { position: relative; width: 810px; height: 18px; margin-left: -55px; border-radius: 3px 3px 16px 16px;
+    background: linear-gradient(180deg, #4a484f 0%, #2d2c31 45%, #1b1a1e 100%) }
+  .base::before { content: ""; position: absolute; top: 0; left: 50%; width: 120px; height: 7px; margin-left: -60px; border-radius: 0 0 8px 8px; background: #1f1e22 }
+  .laptop-shadow { position: absolute; left: 300px; top: 560px; width: 820px; height: 50px; border-radius: 50%; background: rgba(40,25,10,.28); filter: blur(18px); transform: rotate(-2deg) }
+
+  /* ---------- phone, floating ---------- */
+  .phone { position: absolute; left: 200px; top: 150px; width: 200px; height: 426px; padding: 8px; border-radius: 38px; transform: rotate(-8deg);
+    background: linear-gradient(145deg, #3a383f, #141317); box-shadow: inset 0 0 0 1.5px #4a4850, inset 0 0 0 3px #0c0c0e, 24px 34px 50px -14px rgba(40,25,10,.45) }
+  .phone .screen { border-radius: 31px }
+  .island { position: absolute; top: 16px; left: 50%; width: 58px; height: 17px; margin-left: -29px; border-radius: 10px; background: #050506; z-index: 2 }
+  .btn { position: absolute; width: 3px; border-radius: 2px; background: #2b2a2f }
+</style></head>
+<body>
+  <div class="grain"></div>
+  <div class="stage">
+  <div class="blob-lime"></div>
+  <div class="blob-lilac"></div>
+  <span class="dot" style="width:34px;height:34px;right:70px;top:60px"></span>
+  <span class="dot" style="width:14px;height:14px;left:470px;top:70px;background:#ff7777"></span>
+  <span class="dot" style="width:22px;height:22px;left:90px;bottom:110px;background:#0d2cf0"></span>
+  <div class="laptop-shadow"></div>
+  <div class="laptop">
+    <div class="lid"><span class="cam"></span><div class="screen"><img src="laptop.jpg" alt=""><div class="glare"></div></div></div>
+    <div class="base"></div>
+  </div>
+  <div class="phone">
+    <span class="btn" style="left:-3px;top:92px;height:26px"></span>
+    <span class="btn" style="left:-3px;top:130px;height:44px"></span>
+    <span class="btn" style="right:-3px;top:114px;height:62px"></span>
+    <span class="island"></span>
+    <div class="screen"><img src="phone.jpg" alt=""><div class="glare"></div></div>
+  </div>
+  </div>
+</body></html>
