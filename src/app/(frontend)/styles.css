@@ -154,6 +154,11 @@ a { color: inherit }
 .ix-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 28px; flex-wrap: wrap }
 .ix-head h2, .svc h2 { margin: 0; font-size: 15px; letter-spacing: .2em; font-weight: 600; color: var(--p-acc-sm, var(--p-acc)) }
 .ix-head p { margin: 0; font-size: 15px; opacity: .85 }
+.ix-filter { display: flex; flex-wrap: wrap; gap: 8px }
+.ix-filter button { font: 600 15px var(--f-body); color: inherit; background: transparent; border: 1px solid var(--p-soft); border-radius: 999px;
+  padding: 7px 16px; min-height: 40px; cursor: pointer; transition: background-color .25s, color .25s, border-color .25s }
+.ix-filter button:hover { border-color: currentColor }
+.ix-filter button[aria-pressed="true"] { background: var(--p-ink); color: var(--p-bg); border-color: var(--p-ink) }
 .rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--p-soft) }
 .row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding-block: 10px 4px; border-bottom: 1px solid var(--p-soft); text-decoration: none; transition: opacity .35s }
 .row .rn { font-family: var(--f-display); font-weight: 700; font-size: clamp(60px, 11vw, 150px); line-height: .95; transition: transform .45s cubic-bezier(.2,.8,.2,1); min-width: 0 }

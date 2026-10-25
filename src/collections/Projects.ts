@@ -10,7 +10,7 @@ export const Projects: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'תוכן',
-    defaultColumns: ['title', 'field', 'featured', 'hidden'],
+    defaultColumns: ['title', 'field', 'category', 'featured', 'hidden'],
     description: 'גררו כדי לשנות את הסדר. הסדר קובע לאיזה פרויקט עוברים בסוף כל פרויקט.',
     livePreview: { url: ({ data }) => `/portfolio/${data?.slug || ''}` },
   },
@@ -73,6 +73,13 @@ export const Projects: CollectionConfig = {
                 placeholder: 'עיצוב: סטודיו גור',
                 description: 'מוצג בפרטי הפרויקט: מה שלפני הנקודתיים הוא הכותרת. ריק = לא מוצג.',
               },
+            },
+            {
+              name: 'category',
+              label: 'קטגוריה',
+              type: 'relationship',
+              relationTo: 'categories',
+              admin: { position: 'sidebar', description: 'לסינון בעמוד הבית. ריק = מופיע רק תחת "הכל".' },
             },
             {
               name: 'featured',

@@ -11,6 +11,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Projects } from './collections/Projects'
+import { Categories } from './collections/Categories'
 import { Pages } from './collections/Pages'
 import { Home } from './globals/Home'
 import { Settings } from './globals/Settings'
@@ -60,7 +61,7 @@ export default buildConfig({
     supportedLanguages: { he },
     fallbackLanguage: 'he',
   },
-  collections: [Projects, Pages, Media, Users],
+  collections: [Projects, Categories, Pages, Media, Users],
   globals: [Home, Settings],
   editor: lexicalEditor(),
   secret: SECRET,

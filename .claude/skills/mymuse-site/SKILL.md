@@ -26,7 +26,7 @@ Same base as threebears-2026, minus localization and leads: `payload.config.ts` 
 
 ## Code map
 
-- `src/collections/` Projects (tabs: תוכן / מדיה / צבעים / קידום; sidebar: featured, hidden; `orderable` → drag order = "next project" chain), Pages (`/<slug>`: accessibility, privacy), Media (alt, focal point, **0-byte Blob upload fix**), Users.
+- `src/collections/` Categories (orderable; the home index filter buttons, `components/CategoryFilter.tsx` hides rows by `data-cat`), Projects (tabs: תוכן / מדיה / צבעים / קידום; sidebar: category, featured, hidden; `orderable` → drag order = "next project" chain), Pages (`/<slug>`: accessibility, privacy), Media (alt, focal point, **0-byte Blob upload fix**), Users.
 - `src/globals/` Home (Passion words + colours, work title, service cards, about, clients, contact title), Settings (email, phone, social, site colours, meta description, share image).
 - `src/fields/` color.ts (hex text + validation), seo.ts (`metaDescriptionField`).
 - `src/components/` Visual (+ `MediaEl`: video / img for GIF-SVG / next/image), NextFrame, Motion (all client motion), Header, Footer, Interactive (marquee with pause, copy buttons), JsonLd, LivePreviewRefresh, admin/ (Dashboard, Brand).

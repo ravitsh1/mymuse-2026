@@ -17,6 +17,12 @@ export const getProjects = cache(async (): Promise<Project[]> => {
   return res.docs
 })
 
+/** Categories in their admin (drag) order: the filter buttons on the home page. */
+export const getCategories = cache(async () => {
+  const res = await (await payload()).find({ collection: 'categories', sort: '_order', depth: 0, limit: 50 })
+  return res.docs
+})
+
 export const getHome = cache(async (): Promise<Home> => (await payload()).findGlobal({ slug: 'home', depth: 1 }))
 export const getSettings = cache(async (): Promise<Setting> => (await payload()).findGlobal({ slug: 'settings', depth: 1 }))
 

@@ -3,11 +3,12 @@ import { Footer } from '@/components/Footer'
 import { JsonLd } from '@/components/JsonLd'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { Header } from '@/components/Header'
+import { CategoryFilter } from '@/components/CategoryFilter'
 import { CopyValue, Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
 import { NextFrame } from '@/components/NextFrame'
 import { MediaEl, Visual } from '@/components/Visual'
-import { accentTones, getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
+import { accentTones, getCategories, getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,11 +17,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [projects, home, settings, pages] = await Promise.all([getProjects(), getHome(), getSettings(), getFooterPages()])
+  const [projects, home, settings, pages, allCategories] = await Promise.all([getProjects(), getHome(), getSettings(), getFooterPages(), getCategories()])
   const site = sitePalette(settings)
   const words = home.words?.length ? home.words : [{ word: 'Expertise', bg: site.bg, accent: site.acc }]
   const featured = projects.map((p, i) => ({ p, i })).filter(({ p }) => p.featured)
   const shown = featured.length ? featured : projects.map((p, i) => ({ p, i }))
+  const catOf = (p: (typeof projects)[number]) => (p.category && typeof p.category === 'object' ? String(p.category.id) : p.category ? String(p.category) : '')
+  // only categories that have a project in the list
+  const categories = allCategories.filter((c) => shown.some(({ p }) => catOf(p) === String(c.id)))
 
   return (
     <div className="site" data-site data-bg={site.bg} data-ink={site.ink} data-acc={site.acc} data-acc-sm={accentTones(site).sm} data-acc-lg={accentTones(site).lg} style={paletteVars(site)}>
@@ -78,12 +82,13 @@ export default async function HomePage() {
             <section className="ix wrap" id="work" data-ix aria-labelledby="ixh">
               <div className="ix-head">
                 <h2 id="ixh">{home.workTitle || 'עבודות נבחרות'}</h2>
+                {categories.length > 1 && <CategoryFilter categories={categories.map((c) => ({ id: c.id, title: c.title }))} />}
               </div>
               <ul className="rows" data-rows>
                 {shown.map(({ p, i }) => {
                   const c = projectPalette(p)
                   return (
-                    <li key={p.id}>
+                    <li key={p.id} data-cat={catOf(p)}>
                       <a className="row" href={`/portfolio/${p.slug}`} data-i={i} data-name={p.nameEn || p.title} data-bg={c.bg} data-ink={c.ink} data-acc={c.acc} data-acc-sm={accentTones(c).sm} data-acc-lg={accentTones(c).lg}>
                         <span className="rn">{p.title}</span>
                         {p.field && <span className="rf">{p.field}</span>}

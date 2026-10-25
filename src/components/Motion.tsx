@@ -209,6 +209,7 @@ export function Motion() {
           let best: number | null = null
           let bd = Infinity
           rowEls.forEach((a) => {
+            if (!a.offsetParent) return // filtered out
             const rr = a.getBoundingClientRect()
             const d = Math.abs(rr.top + rr.height / 2 - vh / 2)
             if (d < bd) {

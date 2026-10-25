@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     projects: Project;
+    categories: Category;
     pages: Page;
     media: Media;
     users: User;
@@ -79,6 +80,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -159,6 +161,10 @@ export interface Project {
    */
   credit?: string | null;
   /**
+   * לסינון בעמוד הבית. ריק = מופיע רק תחת "הכל".
+   */
+  category?: (number | null) | Category;
+  /**
    * ברשימת "עבודות נבחרות".
    */
   featured?: boolean | null;
@@ -202,6 +208,19 @@ export interface Project {
    * מה שמופיע מתחת לקישור בגוגל ובשיתוף. 120–160 תווים: מה יש בעמוד ולמי. ריק = פסקת הפתיחה של הפרויקט.
    */
   metaDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * כפתורי הסינון מעל רשימת העבודות בעמוד הבית, לפי הסדר כאן. קטגוריה בלי פרויקטים לא מוצגת.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  _order?: string | null;
+  title: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -321,6 +340,10 @@ export interface PayloadLockedDocument {
         value: number | Project;
       } | null)
     | ({
+        relationTo: 'categories';
+        value: number | Category;
+      } | null)
+    | ({
         relationTo: 'pages';
         value: number | Page;
       } | null)
@@ -390,6 +413,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   statement?: T;
   siteUrl?: T;
   credit?: T;
+  category?: T;
   featured?: T;
   hidden?: T;
   hero?: T;
@@ -401,6 +425,16 @@ export interface ProjectsSelect<T extends boolean = true> {
   accent?: T;
   metaTitle?: T;
   metaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  _order?: T;
+  title?: T;
   updatedAt?: T;
   createdAt?: T;
 }
