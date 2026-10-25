@@ -160,7 +160,7 @@ const mix = (a: number[], b: number[], t: number) => a.map((v, i) => v + (b[i] -
  * white or black device frame.
  */
 async function paletteFrom(image: Buffer) {
-  const ink = rgb('#f5ebe0')
+  const ink = rgb('#ffe8c2')
   const { data } = await sharp(image).resize(48, 48, { fit: 'fill' }).removeAlpha().raw().toBuffer({ resolveWithObject: true })
   const px: number[][] = []
   for (let i = 0; i < data.length; i += 3) px.push([data[i], data[i + 1], data[i + 2]])
@@ -168,13 +168,13 @@ async function paletteFrom(image: Buffer) {
   px.sort((a, b) => sat(b) - sat(a))
   const top = px.slice(0, Math.ceil(px.length * 0.15))
   // a black-and-white image keeps the site's own background
-  const base = sat(top[0]) < 40 ? rgb('#001219') : [0, 1, 2].map((k) => top.reduce((s, c) => s + c[k], 0) / top.length)
+  const base = sat(top[0]) < 40 ? rgb('#1b1030') : [0, 1, 2].map((k) => top.reduce((s, c) => s + c[k], 0) / top.length)
   let bg = base
   // 7:1 for body text; small text at opacity .85 then still clears 4.5:1
   for (let t = 0.1; contrast(bg, ink) < 7 && t <= 1; t += 0.1) bg = mix(base, [12, 11, 14], t)
-  // the brand amber (Ocean Sunset palette), lightened just enough for 4.5:1 on this background
-  let acc = rgb('#ee9b00')
-  for (let t = 0.1; contrast(acc, bg) < 4.5 && t <= 1; t += 0.1) acc = mix(rgb('#ee9b00'), [255, 255, 255], t)
+  // the brand magenta (Neon Sunset palette), lightened just enough for 4.5:1 on this background
+  let acc = rgb('#ff3d7f')
+  for (let t = 0.1; contrast(acc, bg) < 4.5 && t <= 1; t += 0.1) acc = mix(rgb('#ff3d7f'), [255, 255, 255], t)
   return { bg: hex(bg), ink: hex(ink), accent: hex(acc) }
 }
 

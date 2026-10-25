@@ -11,7 +11,7 @@
   src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-600.woff2') format('woff2') }
 :root {
   color-scheme: dark;
-  --chrome-bg: #001219;
+  --chrome-bg: #1b1030;
   --f-display: 'Karantina', 'Aran', 'Arial Narrow', sans-serif;
   --f-body: 'Aran', 'Arial', sans-serif;
   --gutter-l: max(16px, env(safe-area-inset-left, 0px));
@@ -25,7 +25,7 @@
 }
 *, *::before, *::after { box-sizing: border-box }
 html { background: var(--chrome-bg) }
-body { margin: 0; font-family: var(--f-body); font-size: 18px; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased }
+body { margin: 0; font-family: var(--f-body); font-size: 18px; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; font-synthesis: none }
 img, video { max-width: 100%; display: block }
 a { color: inherit }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }

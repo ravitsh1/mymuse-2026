@@ -92,5 +92,6 @@ Connect `mymuse.co.il` + `www` in Vercel → confirm `robots.txt` allows and `X-
 
 - Real images/videos and texts for the projects (sample texts are placeholders).
 - Accessibility statement and privacy policy: fill the `[להשלמה]` parts.
+- Palette: **Neon Sunset** (brand book handoff 2026-10-25): night #1b1030, text #ffe8c2, magenta #ff3d7f, orange #ff9f1c, turquoise #2ec4b6, deep #235c68, wine #a42b5f, plum #7b2351, surface #241640, muted #b6a393. Light text needs 4.5:1 (orange tiles take dark #1b1030 text). The admin colour swatches (`components/admin/ColorField.tsx`) list it.
 - Display font: Karantina (Google Fonts). Body text is OS Aran (Ofir Shavit, free for commercial use; embedding allowed, publishing the files not; 400/500/600, Latin only in 400) served from the Blob store `fonts/aran-*.woff2` — keep font files out of this public repo. (Tel Aviv Modernist, licence #04791, is still in the Blob store if she goes back.) Logo: `components/Logo.tsx` (traced SVG, currentColor) + `app/icon.svg`.
 - Remaining old projects → new pages + `LEGACY_PROJECTS` slugs.

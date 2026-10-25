@@ -40,18 +40,18 @@ export const Home: GlobalConfig = {
               labels: { singular: 'מילה', plural: 'מילים' },
               admin: { description: 'המילה מתחלפת בגלילה, ואיתה הרקע, תמונת הרקע וצבע ההדגשה.' },
               defaultValue: [
-                { word: 'Expertise', bg: '#001219', accent: '#ee9b00' },
-                { word: 'Culture', bg: '#005f73', accent: '#e9d8a6' },
-                { word: 'Flavor', bg: '#9b2226', accent: '#ee9b00' },
-                { word: 'Lifestyle', bg: '#bb3e03', accent: '#e9d8a6' },
+                { word: 'Expertise', bg: '#1b1030', accent: '#ff3d7f' },
+                { word: 'Culture', bg: '#235c68', accent: '#ffe8c2' },
+                { word: 'Flavor', bg: '#a42b5f', accent: '#ff9f1c' },
+                { word: 'Lifestyle', bg: '#7b2351', accent: '#ff9f1c' },
               ],
               fields: [
                 {
                   type: 'row',
                   fields: [
                     { name: 'word', label: 'מילה', type: 'text', required: true },
-                    colorField('bg', 'רקע', '#001219'),
-                    colorField('accent', 'הדגשה', '#ee9b00'),
+                    colorField('bg', 'רקע', '#1b1030'),
+                    colorField('accent', 'הדגשה', '#ff3d7f'),
                   ],
                 },
                 {
@@ -93,16 +93,16 @@ export const Home: GlobalConfig = {
               type: 'array',
               labels: { singular: 'שירות', plural: 'שירותים' },
               defaultValue: [
-                { title: 'אפיון', text: SERVICE_TEXTS[0], bg: '#e9d8a6', ink: '#001219' },
-                { title: 'הקמת האתר', text: SERVICE_TEXTS[1], bg: '#0a9396', ink: '#001219' },
-                { title: 'פיתוח, API ואינטגרציות', text: SERVICE_TEXTS[2], bg: '#bb3e03', ink: '#f5ebe0' },
-                { title: 'אפליקציות ומערכות', text: SERVICE_TEXTS[3], bg: '#9b2226', ink: '#f5ebe0' },
-                { title: 'ליווי מתמשך', text: SERVICE_TEXTS[4], bg: '#005f73', ink: '#f5ebe0' },
+                { title: 'אפיון', text: SERVICE_TEXTS[0], bg: '#ffe8c2', ink: '#1b1030' },
+                { title: 'הקמת האתר', text: SERVICE_TEXTS[1], bg: '#2ec4b6', ink: '#1b1030' },
+                { title: 'פיתוח, API ואינטגרציות', text: SERVICE_TEXTS[2], bg: '#ff9f1c', ink: '#1b1030' },
+                { title: 'אפליקציות ומערכות', text: SERVICE_TEXTS[3], bg: '#a42b5f', ink: '#ffe8c2' },
+                { title: 'ליווי מתמשך', text: SERVICE_TEXTS[4], bg: '#235c68', ink: '#ffe8c2' },
               ],
               fields: [
                 { name: 'title', label: 'שם', type: 'text', required: true },
                 { name: 'text', label: 'תיאור', type: 'textarea' },
-                { type: 'row', fields: [colorField('bg', 'רקע הכרטיס', '#e9d8a6'), colorField('ink', 'טקסט הכרטיס', '#001219')] },
+                { type: 'row', fields: [colorField('bg', 'רקע הכרטיס', '#ffe8c2'), colorField('ink', 'טקסט הכרטיס', '#1b1030')] },
               ],
             },
           ],

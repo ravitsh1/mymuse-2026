@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 // No maximum-scale / user-scalable=no: visitors must be able to zoom.
-export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#001219' }
+export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#1b1030' }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [settings, privacy] = await Promise.all([getSettings(), getPage('privacy-policy')])

@@ -4,19 +4,19 @@ import type { ChangeEvent } from 'react'
 import type { TextFieldClientComponent } from 'payload'
 import { TextInput, useField } from '@payloadcms/ui'
 
-/** The site palette (Ocean Sunset + the light text colour), offered as swatches next to every colour field. */
+/** The site palette (Neon Sunset), offered as swatches next to every colour field. */
 const PALETTE: [string, string][] = [
-  ['#001219', 'כחול לילה'],
-  ['#005f73', 'פטרול'],
-  ['#0a9396', 'טורקיז'],
-  ['#94d2bd', 'מנטה'],
-  ['#e9d8a6', 'חול'],
-  ['#f5ebe0', 'טקסט בהיר'],
-  ['#ee9b00', 'ענבר'],
-  ['#ca6702', 'כתום'],
-  ['#bb3e03', 'חלודה'],
-  ['#ae2012', 'אדום'],
-  ['#9b2226', 'יין'],
+  ['#1b1030', 'לילה'],
+  ['#241640', 'משטח'],
+  ['#235c68', 'עומק'],
+  ['#2ec4b6', 'טורקיז'],
+  ['#ffe8c2', 'חול (טקסט)'],
+  ['#b6a393', 'טקסט משני'],
+  ['#ff3d7f', 'מגנטה'],
+  ['#ff9f1c', 'כתום'],
+  ['#d1346f', 'פטל'],
+  ['#a42b5f', 'יין'],
+  ['#7b2351', 'שזיף'],
 ]
 
 /**
