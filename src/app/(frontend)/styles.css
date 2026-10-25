@@ -1,16 +1,19 @@
 /* Layout: home + one page per project; every page ends in a frame that grows into the next page.
    Colours come from the CMS as --p-* on [data-site]; this file only defines structure and type. */
-/* Body text: Tel Aviv Modernist (Fontef, web licence #04791 for mymuse.co.il). The files live in the
-   project's Blob store, not in this public repo. Two weights only: 300/400 use regular, 600/700 bold. */
-@font-face { font-family: 'Tel Aviv Modernist'; font-weight: 100 499; font-display: swap;
-  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/telaviv-modernist-regular.woff2') format('woff2') }
-@font-face { font-family: 'Tel Aviv Modernist'; font-weight: 500 900; font-display: swap;
-  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/telaviv-modernist-bold.woff2') format('woff2') }
+/* Body text: OS Aran by Ofir Shavit (free for commercial use; the licence allows embedding but not publishing the files,
+   so they live in the project's Blob store, not in this public repo). Three weights: 400, 500 and 600 (also used for
+   700). Only the 400 has Latin letters; Latin in the heavier weights falls back to Arial. */
+@font-face { font-family: 'Aran'; font-weight: 100 449; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-400.woff2') format('woff2') }
+@font-face { font-family: 'Aran'; font-weight: 450 549; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-500.woff2') format('woff2') }
+@font-face { font-family: 'Aran'; font-weight: 550 900; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-600.woff2') format('woff2') }
 :root {
   color-scheme: dark;
   --chrome-bg: #001219;
-  --f-display: 'Karantina', 'Tel Aviv Modernist', 'Arial Narrow', sans-serif;
-  --f-body: 'Tel Aviv Modernist', 'Arial', sans-serif;
+  --f-display: 'Karantina', 'Aran', 'Arial Narrow', sans-serif;
+  --f-body: 'Aran', 'Arial', sans-serif;
   --gutter-l: max(16px, env(safe-area-inset-left, 0px));
   --gutter-r: max(16px, env(safe-area-inset-right, 0px));
   /* header and the two heroes: wider side margin on desktop (images stay full width) */
