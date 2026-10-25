@@ -1,16 +1,19 @@
 /* Layout: home + one page per project; every page ends in a frame that grows into the next page.
    Colours come from the CMS as --p-* on [data-site]; this file only defines structure and type. */
-/* Body text: Tel Aviv Modernist (Fontef, web licence #04791 for mymuse.co.il). The files live in the
-   project's Blob store, not in this public repo. Two weights only: 300/400 use regular, 600/700 bold. */
-@font-face { font-family: 'Tel Aviv Modernist'; font-weight: 100 499; font-display: swap;
-  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/telaviv-modernist-regular.woff2') format('woff2') }
-@font-face { font-family: 'Tel Aviv Modernist'; font-weight: 500 900; font-display: swap;
-  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/telaviv-modernist-bold.woff2') format('woff2') }
+/* Body text: OS Aran by Ofir Shavit (free for commercial use; the licence allows embedding but not publishing the files,
+   so they live in the project's Blob store, not in this public repo). Three weights: 400, 500 and 600 (also used for
+   700). Only the 400 has Latin letters; Latin in the heavier weights falls back to Arial. */
+@font-face { font-family: 'Aran'; font-weight: 100 449; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-400.woff2') format('woff2') }
+@font-face { font-family: 'Aran'; font-weight: 450 549; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-500.woff2') format('woff2') }
+@font-face { font-family: 'Aran'; font-weight: 550 900; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-600.woff2') format('woff2') }
 :root {
   color-scheme: dark;
   --chrome-bg: #001219;
-  --f-display: 'Karantina', 'Tel Aviv Modernist', 'Arial Narrow', sans-serif;
-  --f-body: 'Tel Aviv Modernist', 'Arial', sans-serif;
+  --f-display: 'Karantina', 'Aran', 'Arial Narrow', sans-serif;
+  --f-body: 'Aran', 'Arial', sans-serif;
   --gutter-l: max(16px, env(safe-area-inset-left, 0px));
   --gutter-r: max(16px, env(safe-area-inset-right, 0px));
   /* header and the two heroes: wider side margin on desktop (images stay full width) */
@@ -185,7 +188,7 @@ a { color: inherit }
   background: var(--c-bg); color: var(--c-ink); box-shadow: 0 -20px 60px -30px rgba(0,0,0,.6) }
 .card .n { font-family: var(--f-display); font-size: clamp(90px, 14vw, 190px); line-height: .8; font-variant-numeric: tabular-nums }
 .card h3 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(48px, 7vw, 96px); line-height: .9 }
-.card p { margin: 10px 0 0; max-width: 40ch; font-size: clamp(17px, 1.6vw, 20px) }
+.card p { margin: 10px 0 0; max-width: 40ch; font-size: clamp(19px, 2vw, 25px) }
 
 /* ---------- home: about ---------- */
 .about { padding-block: clamp(100px, 14vw, 190px) }
@@ -193,7 +196,7 @@ a { color: inherit }
 .reveal { margin: 0; font-family: var(--f-display); font-size: clamp(48px, 7.4vw, 108px); line-height: 1; max-width: 16ch; text-wrap: balance }
 .reveal span { transition: opacity .25s }
 .reveal .dim { opacity: .2 }
-.about-body { margin: 36px 0 0; max-width: 46ch; font-size: clamp(18px, 1.6vw, 21px); opacity: .9 }
+.about-body { margin: 36px 0 0; max-width: 46ch; font-size: clamp(20px, 2vw, 25px); opacity: .9 }
 .about-body p { margin: 0 0 1em }
 .about-body p:last-child { margin-bottom: 0 }
 
@@ -211,7 +214,7 @@ a { color: inherit }
 /* ---------- home: contact ---------- */
 .contact { padding-block: clamp(90px, 12vw, 150px) clamp(40px, 6vw, 60px); display: grid; gap: 22px }
 .contact h2 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 11vw, 150px); line-height: .88 }
-.ct-body { margin: 0; max-width: 46ch; font-size: clamp(18px, 1.6vw, 21px); opacity: .9 }
+.ct-body { margin: 0; max-width: 46ch; font-size: clamp(20px, 2vw, 25px); opacity: .9 }
 .ct { display: flex; flex-wrap: wrap; gap: 12px 28px }
 .ci { display: flex; align-items: center; gap: 12px; font-size: clamp(20px, 2.4vw, 28px); direction: ltr }
 .ci .val { user-select: all; font-variant-numeric: tabular-nums }
@@ -286,6 +289,7 @@ main[tabindex="-1"]:focus { outline: none }
   .intro { grid-template-columns: 1fr }
   .p1 { width: 84%; right: 4%; top: 8% }
   .p2 { width: 44%; left: 4%; bottom: 6% }
+  .p2.wide { width: 80%; bottom: 4% }
   .count { display: none }
   .row .rf { display: none }
   .mq-btn { top: auto; bottom: 4px; translate: none }

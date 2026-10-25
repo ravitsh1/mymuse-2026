@@ -92,5 +92,5 @@ Connect `mymuse.co.il` + `www` in Vercel → confirm `robots.txt` allows and `X-
 
 - Real images/videos and texts for the projects (sample texts are placeholders).
 - Accessibility statement and privacy policy: fill the `[להשלמה]` parts.
-- Display font: Karantina (Google Fonts). Body text is Tel Aviv Modernist (Fontef licence #04791, mymuse.co.il) served from the Blob store `fonts/` — keep font files out of this public repo. Logo: `components/Logo.tsx` (traced SVG, currentColor) + `app/icon.svg`.
+- Display font: Karantina (Google Fonts). Body text is OS Aran (Ofir Shavit, free for commercial use; embedding allowed, publishing the files not; 400/500/600, Latin only in 400) served from the Blob store `fonts/aran-*.woff2` — keep font files out of this public repo. (Tel Aviv Modernist, licence #04791, is still in the Blob store if she goes back.) Logo: `components/Logo.tsx` (traced SVG, currentColor) + `app/icon.svg`.
 - Remaining old projects → new pages + `LEGACY_PROJECTS` slugs.
