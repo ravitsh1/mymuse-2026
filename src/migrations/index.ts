@@ -17,6 +17,7 @@ import * as migration_20261025_072114_ocean_sunset_palette from './20261025_0721
 import * as migration_20261025_075928_project_categories from './20261025_075928_project_categories';
 import * as migration_20261025_080000_project_accent_rotation from './20261025_080000_project_accent_rotation';
 import * as migration_20261025_090000_3bears_mockup_inset from './20261025_090000_3bears_mockup_inset';
+import * as migration_20261025_100000_project_ourkitchen from './20261025_100000_project_ourkitchen';
 
 export const migrations = [
   {
@@ -113,5 +114,10 @@ export const migrations = [
     up: migration_20261025_090000_3bears_mockup_inset.up,
     down: migration_20261025_090000_3bears_mockup_inset.down,
     name: '20261025_090000_3bears_mockup_inset',
+  },
+  {
+    up: migration_20261025_100000_project_ourkitchen.up,
+    down: migration_20261025_100000_project_ourkitchen.down,
+    name: '20261025_100000_project_ourkitchen',
   },
 ];

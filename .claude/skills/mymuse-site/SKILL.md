@@ -64,6 +64,18 @@ Stopping a test server: `fuser -k <port>/tcp`. **Never `pkill -f "next start"`**
    **Vercel preview builds of a PR run `payload migrate` against the production database** (it is shared): a migration is live in the data as soon as the PR is pushed, before merge. Data migrations must be safe for the old code on `main` too.
 6. Commit (Co-Authored-By line from the system reminder), push, wait for the Vercel deploy, verify on production (curl the page, `/api/projects`, `/api/globals/home`; browser at 390×844 and ~1366 wide).
 
+## Project images (Ravit's rule, 2026-10-25)
+
+Every project gets:
+1. **A main mockup** (the hero): the site inside a screen or screens (laptop + phone), designed in **the project's own brand
+   language** — its colours, textures and motifs (e.g. Our Kitchen: paper cream, dark-brown band, polaroids with honey tape, red dot).
+   Keep the composition well inside the frame (scale ~72–74%, centred): the hero crops wide screens top/bottom and moves on scroll.
+   Sources live in `media-import/mockup/` (HTML device frames + `render.js`, 1200×675 at 2x → 2400×1350 JPG).
+2. **Two more images from the live site**, preferably **landscape** (desktop at 1440×900, deviceScaleFactor 1.5 → 2160×1350).
+   Dismiss cookie bars, hide custom cursors/floating widgets, and reach sections through the site's own scroller if it has one.
+Upload through a migration (`media-import/<project>/` + `payload.create({ filePath })`, Blob-token guard, guarded on the current state)
+— there are no production admin credentials here.
+
 ## Launch day
 
 Connect `mymuse.co.il` + `www` in Vercel → confirm `robots.txt` allows and `X-Robots-Tag` is gone → spot-check the legacy 301s (`/portfolio/<old-hebrew-slug>/`, `/about-us/`, `/הצהרת-נגישות/`) → submit the sitemap. Projects not migrated yet redirect to `/#work`; when one is added, put its new slug in `LEGACY_PROJECTS`.
