@@ -59,6 +59,7 @@ Stopping a test server: `fuser -k <port>/tcp`. **Never `pkill -f "next start"`**
 1. Read the relevant file(s) first; match the surrounding style (English comments explain *why*).
 2. Schema change → `npm run generate:types` → `yes '' | LOCAL_PGLITE=1 npm run payload -- migrate:create <name>` → for production tables with data, first statement prod-only: `SET LOCAL lock_timeout='30s'; LOCK TABLE "<every table it touches>" IN ACCESS EXCLUSIVE MODE;` → `LOCAL_PGLITE=1 npm run payload -- migrate`.
 3. Data migrations touch only rows still in the exact wrong state — never overwrite Ravit's edits.
+   A data migration that goes through the Payload API (`payload.find/update`) must sort **after** the schema migration of any field added in the same PR: Payload selects every configured column, so an earlier one fails with `column … does not exist` on production (locally it may pass if the schema already ran).
 4. New admin fields: Hebrew label + a description that says what an empty value does; defaults keep today's look.
 5. `npx tsc --noEmit`, then `npm run build` (Next refuses to build on a version with a known vulnerability — bump `next` when that happens).
    **Vercel preview builds of a PR run `payload migrate` against the production database** (it is shared): a migration is live in the data as soon as the PR is pushed, before merge. Data migrations must be safe for the old code on `main` too.
