@@ -286,6 +286,7 @@ main[tabindex="-1"]:focus { outline: none }
   .intro { grid-template-columns: 1fr }
   .p1 { width: 84%; right: 4%; top: 8% }
   .p2 { width: 44%; left: 4%; bottom: 6% }
+  .p2.wide { width: 80%; bottom: 4% }
   .count { display: none }
   .row .rf { display: none }
   .mq-btn { top: auto; bottom: 4px; translate: none }

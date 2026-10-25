@@ -61,6 +61,8 @@ export default async function ProjectPage({ params }: Props) {
   const nxt = nextProject(projects, p)!
   const gallery = (p.gallery ?? []).map(asMedia).filter((m): m is Media => !!m && !!m.url)
   const [g1, g2, ...rest] = gallery
+  // a wide second screen gets a wider frame on mobile; a phone screenshot keeps the narrow one
+  const g2Wide = !!g2?.width && !!g2?.height && g2.width > g2.height
   const credit = splitCredit(p.credit)
 
   return (
@@ -123,8 +125,8 @@ export default async function ProjectPage({ params }: Props) {
           <div className="par p1" data-speed="0.10">
             {g1 ? <MediaEl m={g1} sizes="(max-width: 720px) 84vw, min(74vw, 1040px)" quality={90} /> : <MockWindow />}
           </div>
-          <div className="par p2" data-speed="-0.14">
-            {g2 ? <MediaEl m={g2} sizes="(max-width: 720px) 44vw, min(38vw, 480px)" quality={90} /> : <MockWindow />}
+          <div className={`par p2${g2Wide ? ' wide' : ''}`} data-speed="-0.14">
+            {g2 ? <MediaEl m={g2} sizes={`(max-width: 720px) ${g2Wide ? 80 : 44}vw, min(38vw, 480px)`} quality={90} /> : <MockWindow />}
           </div>
         </section>
 
