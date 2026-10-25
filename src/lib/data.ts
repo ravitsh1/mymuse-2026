@@ -53,9 +53,42 @@ export const sitePalette = (s: Setting): Palette => ({
   acc: s.accent || '#ee9b00',
 })
 
+const rgb = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) || 0)
+const hex = (c: number[]) => '#' + c.map((v) => Math.round(v).toString(16).padStart(2, '0')).join('')
+const lum = (c: number[]) => {
+  const [r, g, b] = c.map((v) => {
+    const s = v / 255
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4
+  })
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b
+}
+const contrast = (a: number[], b: number[]) => {
+  const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m)
+  return (x + 0.05) / (y + 0.05)
+}
+
+/**
+ * The accent as text: the palette colour itself where it reads on the background, otherwise moved toward the text
+ * colour just far enough. Ravit picks accents from the palette for their look (swatch, bar, ring, shapes use them
+ * as they are); text needs 4.5:1 (small) or 3:1 (large) whatever she picks.
+ */
+export const accentText = (p: Palette, min: number) => {
+  const [acc, bg, ink] = [rgb(p.acc), rgb(p.bg), rgb(p.ink)]
+  for (let t = 0; t <= 1; t += 0.05) {
+    const c = acc.map((v, i) => v + (ink[i] - v) * t)
+    if (contrast(c, bg) >= min) return hex(c)
+  }
+  return p.ink
+}
+
+/** --p-acc-sm: accent for small text (4.5:1); --p-acc-lg: for large text (3:1). */
+export const accentTones = (p: Palette) => ({ sm: accentText(p, 4.5), lg: accentText(p, 3) })
+
 /** CSS custom properties for a palette, applied on the page wrapper. */
-export const paletteVars = (p: Palette): React.CSSProperties =>
-  ({ '--p-bg': p.bg, '--p-ink': p.ink, '--p-acc': p.acc, '--p-soft': p.ink + '26' }) as React.CSSProperties
+export const paletteVars = (p: Palette): React.CSSProperties => {
+  const t = accentTones(p)
+  return { '--p-bg': p.bg, '--p-ink': p.ink, '--p-acc': p.acc, '--p-acc-sm': t.sm, '--p-acc-lg': t.lg, '--p-soft': p.ink + '26' } as React.CSSProperties
+}
 
 export const nextProject = (list: Project[], current: Project | null) => {
   if (!list.length) return null

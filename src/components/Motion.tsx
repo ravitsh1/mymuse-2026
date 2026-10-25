@@ -53,12 +53,14 @@ export function Motion() {
     /* ---------- home: index rows ---------- */
     const rows = $('[data-rows]')
     const peek = $('[data-peek]')
-    const base = { bg: site.dataset.bg!, ink: site.dataset.ink!, acc: site.dataset.acc! }
+    const base = { bg: site.dataset.bg!, ink: site.dataset.ink!, acc: site.dataset.acc!, accSm: site.dataset.accSm!, accLg: site.dataset.accLg! }
     let ixOn: number | null = null
-    const paint = (c: { bg: string; ink: string; acc: string }) => {
+    const paint = (c: { bg: string; ink: string; acc: string; accSm?: string; accLg?: string }) => {
       site.style.setProperty('--p-bg', c.bg)
       site.style.setProperty('--p-ink', c.ink)
       site.style.setProperty('--p-acc', c.acc)
+      site.style.setProperty('--p-acc-sm', c.accSm || c.acc)
+      site.style.setProperty('--p-acc-lg', c.accLg || c.acc)
       site.style.setProperty('--p-soft', c.ink + '26')
     }
     const rowEls = rows ? $$<HTMLAnchorElement>('[data-rows] .row') : []
@@ -76,7 +78,7 @@ export function Motion() {
       if (i === null) return paint(base)
       warm(i)
       const r = rowOf(i)
-      paint({ bg: r.dataset.bg!, ink: r.dataset.ink!, acc: r.dataset.acc! })
+      paint({ bg: r.dataset.bg!, ink: r.dataset.ink!, acc: r.dataset.acc!, accSm: r.dataset.accSm, accLg: r.dataset.accLg })
     }
     const visualFor = (i: number) => {
       const src = $(`[data-visual-for="${i}"]`)

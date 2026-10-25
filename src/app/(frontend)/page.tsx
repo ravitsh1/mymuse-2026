@@ -7,7 +7,7 @@ import { CopyValue, Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
 import { NextFrame } from '@/components/NextFrame'
 import { MediaEl, Visual } from '@/components/Visual'
-import { getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
+import { accentTones, getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -23,7 +23,7 @@ export default async function HomePage() {
   const shown = featured.length ? featured : projects.map((p, i) => ({ p, i }))
 
   return (
-    <div className="site" data-site data-bg={site.bg} data-ink={site.ink} data-acc={site.acc} style={paletteVars(site)}>
+    <div className="site" data-site data-bg={site.bg} data-ink={site.ink} data-acc={site.acc} data-acc-sm={accentTones(site).sm} data-acc-lg={accentTones(site).lg} style={paletteVars(site)}>
       <Header projects={projects} />
 
       <main id="content">
@@ -84,7 +84,7 @@ export default async function HomePage() {
                   const c = projectPalette(p)
                   return (
                     <li key={p.id}>
-                      <a className="row" href={`/portfolio/${p.slug}`} data-i={i} data-name={p.nameEn || p.title} data-bg={c.bg} data-ink={c.ink} data-acc={c.acc}>
+                      <a className="row" href={`/portfolio/${p.slug}`} data-i={i} data-name={p.nameEn || p.title} data-bg={c.bg} data-ink={c.ink} data-acc={c.acc} data-acc-sm={accentTones(c).sm} data-acc-lg={accentTones(c).lg}>
                         <span className="rn">{p.title}</span>
                         {p.field && <span className="rf">{p.field}</span>}
                       </a>
