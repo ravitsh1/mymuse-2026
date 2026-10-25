@@ -154,10 +154,10 @@ a { color: inherit }
 .rows.has-on .row { opacity: .28 }
 .rows.has-on .row.on { opacity: 1 }
 .row.on .rn { transform: translateX(-14px) }
-/* the hovered project's English name in a frame, following the pointer (no picture: that is the 3 Bears look) */
-.peek { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 15; padding: .28em .55em .18em; border: 2px solid var(--p-acc); border-radius: 999px;
-  font-family: var(--f-display); font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: .02em; white-space: nowrap; direction: ltr;
-  color: var(--p-ink); background: color-mix(in srgb, var(--p-bg) 88%, transparent);
+/* the hovered project's English name, large and outlined like the name behind each hero (no picture: that is the 3 Bears look) */
+.peek { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 15;
+  font-family: var(--f-display); font-weight: 700; font-size: clamp(110px, 12vw, 200px); line-height: .8; white-space: nowrap; direction: ltr;
+  color: transparent; -webkit-text-stroke: 1.5px var(--p-ink);
   opacity: 0; scale: .6; transition: opacity .3s, scale .4s cubic-bezier(.2,.8,.2,1) }
 .peek.show { opacity: 1; scale: 1 }
 .fly { position: fixed; inset: 0; z-index: 30 }
