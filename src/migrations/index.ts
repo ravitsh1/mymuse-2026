@@ -18,6 +18,9 @@ import * as migration_20261025_075928_project_categories from './20261025_075928
 import * as migration_20261025_080000_project_accent_rotation from './20261025_080000_project_accent_rotation';
 import * as migration_20261025_090000_3bears_mockup_inset from './20261025_090000_3bears_mockup_inset';
 import * as migration_20261025_100000_project_ourkitchen from './20261025_100000_project_ourkitchen';
+import * as migration_20261025_120000_remake_project_images from './20261025_120000_remake_project_images';
+import * as migration_20261025_121000_app_projects from './20261025_121000_app_projects';
+import * as migration_20261025_124939_services_apps_texts from './20261025_124939_services_apps_texts';
 
 export const migrations = [
   {
@@ -108,7 +111,7 @@ export const migrations = [
   {
     up: migration_20261025_080000_project_accent_rotation.up,
     down: migration_20261025_080000_project_accent_rotation.down,
-    name: '20261025_080000_project_accent_rotation'
+    name: '20261025_080000_project_accent_rotation',
   },
   {
     up: migration_20261025_090000_3bears_mockup_inset.up,
@@ -119,5 +122,20 @@ export const migrations = [
     up: migration_20261025_100000_project_ourkitchen.up,
     down: migration_20261025_100000_project_ourkitchen.down,
     name: '20261025_100000_project_ourkitchen',
+  },
+  {
+    up: migration_20261025_120000_remake_project_images.up,
+    down: migration_20261025_120000_remake_project_images.down,
+    name: '20261025_120000_remake_project_images',
+  },
+  {
+    up: migration_20261025_121000_app_projects.up,
+    down: migration_20261025_121000_app_projects.down,
+    name: '20261025_121000_app_projects',
+  },
+  {
+    up: migration_20261025_124939_services_apps_texts.up,
+    down: migration_20261025_124939_services_apps_texts.down,
+    name: '20261025_124939_services_apps_texts'
   },
 ];
