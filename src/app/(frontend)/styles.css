@@ -46,7 +46,10 @@ a { color: inherit }
 .visual { position: absolute; inset: 0; overflow: hidden; background: var(--v-bg) }
 .visual .v-img { position: absolute; inset: 0; width: 100%; height: 100%; will-change: transform }
 .visual .v-img img, .visual video.v-img { object-fit: cover }
-.visual .v-shade { position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in srgb, var(--v-bg) 75%, transparent), transparent 55%) }
+/* bottom: the title; top: the logo and counter, which would vanish over a light image (e.g. a cream mockup) */
+.visual .v-shade { position: absolute; inset: 0; background:
+  linear-gradient(to bottom, color-mix(in srgb, var(--v-bg) 70%, transparent), transparent 18%),
+  linear-gradient(to top, color-mix(in srgb, var(--v-bg) 75%, transparent), transparent 55%) }
 .visual .glow { position: absolute; inset: -20%; background: radial-gradient(60% 50% at 66% 40%, var(--v-acc) 0%, transparent 60%); opacity: .55 }
 .visual .word { position: absolute; bottom: -.12em; left: -.04em; right: -.04em; font-family: var(--f-display); font-weight: 700; line-height: .8;
   font-size: clamp(110px, 31vw, 460px); color: transparent; -webkit-text-stroke: 1.5px var(--v-ink); opacity: .5; direction: ltr; white-space: nowrap; text-align: center }
