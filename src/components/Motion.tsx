@@ -106,7 +106,7 @@ export function Motion() {
       if (!peek) return
       px += (mx - px) * 0.18
       py += (my - py) * 0.18
-      peek.style.transform = `translate3d(${px - 120}px, ${py - 160}px, 0)`
+      peek.style.transform = `translate3d(${px - peek.offsetWidth / 2}px, ${py - peek.offsetHeight / 2}px, 0)`
       raf = peek.classList.contains('show') ? requestAnimationFrame(peekLoop) : 0
     }
     const onRowClick = (e: MouseEvent) => {

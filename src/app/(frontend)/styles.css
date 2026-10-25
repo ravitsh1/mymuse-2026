@@ -33,12 +33,7 @@ a { color: inherit }
 .top > * { pointer-events: auto }
 .logo { display: block; line-height: 0 }
 .logo svg { display: block; width: auto; height: 34px }
-.nav { display: flex; align-items: center; gap: 14px; font-variant-numeric: tabular-nums }
-.count { font-size: 14px; letter-spacing: .12em; direction: ltr }
-.dots { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0 }
-.dots a { width: 24px; height: 24px; display: grid; place-items: center }
-.dots a::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .35; transition: all .3s }
-.dots a[aria-current="page"]::before { opacity: 1; width: 18px; border-radius: 4px; background: var(--p-acc) }
+.count { font-size: 14px; letter-spacing: .12em; direction: ltr; font-variant-numeric: tabular-nums }
 .bar { position: fixed; top: 0; right: 0; left: 0; height: 3px; z-index: 21; transform-origin: right; transform: scaleX(0); background: var(--p-acc) }
 
 /* ---------- project visual ---------- */
@@ -121,7 +116,7 @@ a { color: inherit }
 .ph-bg.on { opacity: 1 }
 .ph-media { object-fit: cover }
 .ph-bgs::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgb(0 0 0 / .78), rgb(0 0 0 / .62)) }
-.passion { position: relative; margin: 0; direction: ltr; text-align: left; font-family: var(--f-display); font-weight: 700; line-height: .86; font-size: clamp(84px, 19vw, 280px) }
+.passion { position: relative; margin: 0; direction: ltr; text-align: left; font-family: var(--f-display); font-weight: 700; line-height: .86; font-size: clamp(84px, 19vw, 180px) }
 .passion .amp { color: var(--h-acc, var(--p-acc)); transition: color .7s }
 .words { display: inline-block; height: .86em; overflow: hidden; vertical-align: top }
 .words > span { display: block; transition: transform .7s cubic-bezier(.7,0,.2,1) }
@@ -143,11 +138,12 @@ a { color: inherit }
 .rows.has-on .row { opacity: .28 }
 .rows.has-on .row.on { opacity: 1 }
 .row.on .rn { transform: translateX(-14px) }
-.peek { position: fixed; top: 0; left: 0; width: 240px; height: 320px; border-radius: 14px; overflow: hidden; pointer-events: none; z-index: 15;
+/* landscape, like the heroes and mockups it previews; Motion centres it on the pointer from these sizes */
+.peek { position: fixed; top: 0; left: 0; width: 400px; height: 250px; border-radius: 14px; overflow: hidden; pointer-events: none; z-index: 15;
   opacity: 0; scale: .6; transition: opacity .3s, scale .4s cubic-bezier(.2,.8,.2,1) }
 .peek.show { opacity: 1; scale: 1 }
-.peek .visual .word { font-size: 120px }
-.peek .shape.disc { width: 150px } .peek .shape.arch { width: 70px } .peek .shape.lines { width: 90px }
+.peek .visual .word { font-size: 130px }
+.peek .shape.disc { width: 170px } .peek .shape.arch { width: 70px } .peek .shape.lines { width: 110px }
 .fly { position: fixed; inset: 0; z-index: 30 }
 
 /* ---------- home: services (a real sequence, so numbered) ---------- */
@@ -260,8 +256,6 @@ main[tabindex="-1"]:focus { outline: none }
   .p1 { width: 84%; right: 4%; top: 8% }
   .p2 { width: 44%; left: 4%; bottom: 6% }
   .count { display: none }
-  /* past ~7 projects the row runs under the logo; the next-project frame and the home index still link them all */
-  .dots:has(li:nth-child(8)) { display: none }
   .row .rf { display: none }
   .mq-btn { top: auto; bottom: 4px; translate: none }
 }

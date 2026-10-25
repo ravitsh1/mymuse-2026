@@ -10,5 +10,5 @@ export function refresh(path: string, type?: 'page' | 'layout') {
   }
 }
 
-/** Every page lists the projects (header dots, "next project"), so refresh the whole site. */
+/** Every page lists the projects (header count, "next project"), so refresh the whole site. */
 export const refreshSite = () => refresh('/', 'layout')
