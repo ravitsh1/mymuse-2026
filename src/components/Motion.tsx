@@ -124,7 +124,7 @@ export function Motion() {
       const a = (e.target as Element).closest<HTMLAnchorElement>('.row')
       if (!a || !peek) return
       const i = Number(a.dataset.i)
-      // only the English name in a frame: the picture is kept for the fly-in on click
+      // only the English name, outlined: the picture is kept for the fly-in on click
       if (ixOn !== i) peek.textContent = a.dataset.name || ''
       setIx(i)
       if (!peek.classList.contains('show')) {
