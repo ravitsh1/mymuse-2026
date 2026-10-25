@@ -55,7 +55,13 @@ export function Motion() {
     const peek = $('[data-peek]')
     const base = { bg: site.dataset.bg!, ink: site.dataset.ink!, acc: site.dataset.acc!, accSm: site.dataset.accSm!, accLg: site.dataset.accLg! }
     let ixOn: number | null = null
-    const paint = (c: { bg: string; ink: string; acc: string; accSm?: string; accLg?: string }) => {
+    type Pal = { bg: string; ink: string; acc: string; accSm?: string; accLg?: string }
+    /** Resting colours of the index: the site's, or (after a category filter) the first shown project's. */
+    let rest: Pal = base
+    let painted: Pal | null = null
+    const paint = (c: Pal) => {
+      if (c === painted) return
+      painted = c
       site.style.setProperty('--p-bg', c.bg)
       site.style.setProperty('--p-ink', c.ink)
       site.style.setProperty('--p-acc', c.acc)
@@ -65,6 +71,24 @@ export function Motion() {
     }
     const rowEls = rows ? $$<HTMLAnchorElement>('[data-rows] .row') : []
     const rowOf = (i: number) => rowEls.find((r) => Number(r.dataset.i) === i)!
+    const palOf = (r: HTMLAnchorElement): Pal => ({ bg: r.dataset.bg!, ink: r.dataset.ink!, acc: r.dataset.acc!, accSm: r.dataset.accSm, accLg: r.dataset.accLg })
+    const ixEl = $('[data-ix]')
+    const ixInView = () => {
+      if (!ixEl) return false
+      const r = ixEl.getBoundingClientRect()
+      return r.top < innerHeight * 0.5 && r.bottom > innerHeight * 0.5
+    }
+    /** CategoryFilter announces a new filter: the index takes the colours of the first project it now shows. */
+    const onFilter = (e: Event) => {
+      const id = (e as CustomEvent<string>).detail
+      const first = id === 'all' ? undefined : rowEls.find((a) => a.offsetParent)
+      rest = first ? palOf(first) : base
+      // a highlighted row may now be hidden: drop it, and on touch let the scroll logic pick the nearest shown row again
+      if (ixOn !== null && !rowOf(ixOn).offsetParent) setIx(null)
+      if (ixOn === null) paint(ixInView() ? rest : base)
+      if (!hoverable) requestAnimationFrame(() => update())
+    }
+    addEventListener('mm:filter', onFilter)
     /** A highlighted row is the likely next click: fetch its page and start its hero image (on touch there is no peek to load it). */
     const warm = (i: number) => {
       router.prefetch(rowOf(i).getAttribute('href')!, FULL)
@@ -75,10 +99,9 @@ export function Motion() {
       ixOn = i
       rows.classList.toggle('has-on', i !== null)
       rowEls.forEach((r) => r.classList.toggle('on', Number(r.dataset.i) === i))
-      if (i === null) return paint(base)
+      if (i === null) return paint(ixInView() ? rest : base)
       warm(i)
-      const r = rowOf(i)
-      paint({ bg: r.dataset.bg!, ink: r.dataset.ink!, acc: r.dataset.acc!, accSm: r.dataset.accSm, accLg: r.dataset.accLg })
+      paint(palOf(rowOf(i)))
     }
     const visualFor = (i: number) => {
       const src = $(`[data-visual-for="${i}"]`)
@@ -203,6 +226,7 @@ export function Motion() {
           phbgs.forEach((b, n) => b.classList.toggle('on', n === k))
         }
       }
+      if (ixOn === null && rest !== base) paint(ixInView() ? rest : base)
       if (ix && rows && !hoverable) {
         const ir = ix.getBoundingClientRect()
         if (ir.top < vh * 0.5 && ir.bottom > vh * 0.5) {
@@ -274,6 +298,7 @@ export function Motion() {
     return () => {
       removeEventListener('scroll', onScroll)
       removeEventListener('resize', update)
+      removeEventListener('mm:filter', onFilter)
       if (timer) clearTimeout(timer)
       if (raf) cancelAnimationFrame(raf)
       peek?.classList.remove('show')
