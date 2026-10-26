@@ -90,6 +90,8 @@ a { color: inherit }
 .facts dt { font-size: 13px; letter-spacing: .14em; opacity: .85; padding-top: 4px }
 .facts dd { margin: 0; font-weight: 600; min-width: 0; overflow-wrap: anywhere }
 .band { position: relative; height: clamp(460px, 82vw, 1000px); overflow: hidden }
+/* parallax moves the screens past the band's top and bottom edges; clip only sideways so they are never cut off */
+@supports (overflow: clip) { .band { overflow: visible; overflow-x: clip } }
 .par { position: absolute; will-change: transform }
 .par img, .par video { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.6) }
 .win { border-radius: 10px; overflow: hidden; background: var(--p-ink); box-shadow: 0 30px 80px -30px rgba(0,0,0,.6) }
