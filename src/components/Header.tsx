@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { Project } from '@/payload-types'
 import { LogoWide } from './Logo'
+import { Menu } from './Menu'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
@@ -22,6 +23,7 @@ export function Header({ projects, current }: { projects: Project[]; current?: n
             </span>
           </span>
         )}
+        <Menu />
       </header>
     </>
   )
