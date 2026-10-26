@@ -23,6 +23,8 @@ export function CategoryFilter({ categories }: { categories: { id: number | stri
       if (show) n++
     })
     setCount(n)
+    // Motion repaints the index in the colours of the first project shown
+    dispatchEvent(new CustomEvent('mm:filter', { detail: id }))
   }
 
   if (!ready) return null
