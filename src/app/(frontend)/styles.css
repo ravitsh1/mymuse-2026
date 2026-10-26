@@ -40,9 +40,35 @@ a { color: inherit }
   padding-block: calc(14px + env(safe-area-inset-top, 0px)) 14px; padding-left: var(--edge-l); padding-right: var(--edge-r);
   color: var(--p-ink); pointer-events: none; transition: color .6s }
 .top > * { pointer-events: auto }
+/* the menu panel lives inside the header: keep the logo, counter and button above it */
+.top > .logo, .top > .count, .top > .burger { position: relative; z-index: 20 }
 .logo { display: block; line-height: 0 }
 .logo svg { display: block; width: auto; height: 34px }
 .count { font-size: 14px; letter-spacing: .12em; direction: ltr; font-variant-numeric: tabular-nums }
+/* hamburger: two lines that cross into an X; the panel covers the page under the header */
+.burger { position: relative; width: 44px; height: 44px; margin-right: auto; padding: 0; border: 0; background: none; color: inherit; cursor: pointer }
+.burger span, .burger span::before { position: absolute; left: 10px; right: 10px; height: 2px; background: currentColor; border-radius: 2px; transition: transform .35s cubic-bezier(.7,0,.2,1) }
+.burger span { top: 17px }
+.burger span::before { content: ""; left: 0; right: 0; top: 8px }
+.burger[aria-expanded="true"] span { transform: translateY(4px) rotate(45deg) }
+.burger[aria-expanded="true"] span::before { transform: translateY(-8px) rotate(-90deg) }
+.burger:focus-visible { outline: 2px solid var(--p-acc); outline-offset: 2px; border-radius: 6px }
+.count { margin-right: auto } /* RTL: counter and button together on the left, logo alone on the right */
+.count + .burger { margin-right: 0 }
+.menu { position: fixed; inset: 0; z-index: 19; display: grid; align-content: center; background: var(--p-bg); color: var(--p-ink);
+  padding: 90px var(--edge-r) 40px var(--edge-l); animation: menu-in .45s cubic-bezier(.2,.8,.2,1) both }
+.menu[hidden] { display: none }
+.menu ul { list-style: none; margin: 0; padding: 0 }
+.menu li { animation: rise .7s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(.06s * var(--k) + .1s) }
+.menu a { display: inline-block; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 13vw, 150px); line-height: .95; color: inherit; text-decoration: none; transition: color .3s }
+.menu a:hover, .menu a:focus-visible { color: var(--p-acc-lg, var(--p-acc)) }
+.menu a:focus-visible { outline: 2px solid var(--p-acc); outline-offset: 4px }
+html.menu-open { overflow: hidden }
+@keyframes menu-in { from { clip-path: circle(0 at 30px 30px) } to { clip-path: circle(150% at 30px 30px) } }
+@media (prefers-reduced-motion: reduce) {
+  .menu, .menu li { animation: none }
+  .burger span, .burger span::before { transition: none }
+}
 .bar { position: fixed; top: 0; right: 0; left: 0; height: 3px; z-index: 21; transform-origin: right; transform: scaleX(0); background: var(--p-acc) }
 
 /* ---------- project visual ---------- */

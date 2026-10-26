@@ -105,7 +105,7 @@ export default async function HomePage() {
         </div>
 
         {!!home.services?.length && (
-          <section className="svc wrap" aria-labelledby="svch">
+          <section className="svc wrap" id="services" aria-labelledby="svch">
             <h2 id="svch">{home.servicesTitle}</h2>
             <ol className="cards">
               {home.services.map((s, k) => (
@@ -128,7 +128,7 @@ export default async function HomePage() {
         )}
 
         {home.aboutHeadline && (
-          <section className="about wrap" aria-labelledby="abh">
+          <section className="about wrap" id="about" aria-labelledby="abh">
             <h2 className="kicker" id="abh">
               MyMuse
             </h2>
@@ -152,7 +152,7 @@ export default async function HomePage() {
 
         {!!home.clients?.length && <Marquee names={home.clients.map((c) => c.name)} />}
 
-        <section className="contact wrap" aria-labelledby="cth">
+        <section className="contact wrap" id="contact" aria-labelledby="cth">
           <h2 id="cth">{home.contactTitle || 'נדבר?'}</h2>
           {home.contactBody && <p className="ct-body">{home.contactBody}</p>}
           <div className="ct">
