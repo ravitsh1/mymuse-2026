@@ -23,6 +23,10 @@
 html { background: var(--chrome-bg) }
 /* palette trial (lib/trial.ts) */
 html[data-trial="mist"] { --chrome-bg: #f1f7f7; color-scheme: light }
+/* slate text over a hero: the brand band at the foot of the mockups is often dark, so the veil is near-solid there */
+html[data-trial="mist"] .visual .v-shade { background:
+  linear-gradient(to bottom, color-mix(in srgb, var(--v-bg) 70%, transparent), transparent 18%),
+  linear-gradient(to top, color-mix(in srgb, var(--v-bg) 97%, transparent), color-mix(in srgb, var(--v-bg) 93%, transparent) 44%, transparent 74%) }
 html[data-trial="mist"] .ph-orb { background: radial-gradient(circle at 40% 40%, #f7cbca, transparent 68%); opacity: .8 }
 body { margin: 0; font-family: var(--f-body); font-size: 18px; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; font-synthesis: none }
 img, video { max-width: 100%; display: block }

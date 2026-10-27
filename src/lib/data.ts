@@ -2,7 +2,7 @@ import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Home, Project, Setting } from '@/payload-types'
-import { mistHome, mistSettings } from '@/lib/trial'
+import { mistHome, mistProject, mistSettings } from '@/lib/trial'
 
 export const payload = cache(() => getPayload({ config }))
 
@@ -15,7 +15,7 @@ export const getProjects = cache(async (): Promise<Project[]> => {
     depth: 1,
     limit: 200,
   })
-  return res.docs
+  return res.docs.map(mistProject)
 })
 
 /** Categories in their admin (drag) order: the filter buttons on the home page. */

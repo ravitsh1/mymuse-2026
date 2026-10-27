@@ -1,4 +1,4 @@
-import type { Home, Setting } from '@/payload-types'
+import type { Home, Project, Setting } from '@/payload-types'
 
 /**
  * Palette trial "Mist" (brand book, 2026-10-27): light background, slate text, coral accent. It replaces the colours
@@ -35,3 +35,10 @@ export const mistHome = (h: Home): Home =>
         services: h.services?.map((c, i) => ({ ...c, ...CARDS[i % CARDS.length] })),
       }
     : h
+
+/** Project pages take the four light Mist pairs in turn (by id, so a project keeps its pair), all with slate text. */
+export const mistProject = (p: Project): Project => {
+  if (!MIST) return p
+  const w = WORDS[Number(p.id) % WORDS.length]
+  return { ...p, bg: w.bg, ink: SITE.ink, accent: w.accent }
+}
