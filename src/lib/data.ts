@@ -2,6 +2,7 @@ import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Home, Project, Setting } from '@/payload-types'
+import { isMist, mistHome, mistProject, mistSettings } from '@/lib/trial'
 
 export const payload = cache(() => getPayload({ config }))
 
@@ -14,7 +15,8 @@ export const getProjects = cache(async (): Promise<Project[]> => {
     depth: 1,
     limit: 200,
   })
-  return res.docs
+  const mist = await isMist()
+  return res.docs.map((p) => mistProject(p, mist))
 })
 
 /** Categories in their admin (drag) order: the filter buttons on the home page. */
@@ -23,8 +25,10 @@ export const getCategories = cache(async () => {
   return res.docs
 })
 
-export const getHome = cache(async (): Promise<Home> => (await payload()).findGlobal({ slug: 'home', depth: 1 }))
-export const getSettings = cache(async (): Promise<Setting> => (await payload()).findGlobal({ slug: 'settings', depth: 1 }))
+export const getHome = cache(async (): Promise<Home> => mistHome(await (await payload()).findGlobal({ slug: 'home', depth: 1 }), await isMist()))
+export const getSettings = cache(async (): Promise<Setting> =>
+  mistSettings(await (await payload()).findGlobal({ slug: 'settings', depth: 1 }), await isMist()),
+)
 
 export const getFooterPages = cache(async () => {
   const res = await (await payload()).find({
