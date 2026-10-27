@@ -18,3 +18,8 @@ folder `<slug>/` (not committed).
 5. `PORTRAIT=1 node mockup.js <slug>` → `mockup-m.jpg` (1080×1920) for the project's mobile hero (`heroMobile`): the
    phone centred and above the title zone (bottom ~30%), flanked by `phone2`/`phone3` or the two cards. Check it cropped
    to 390×844 (cover) before uploading.
+6. `TRANSPARENT=1 node mockup.js <slug>` (and with `PORTRAIT=1`) → `mockup-t.webp` / `mockup-m-t.webp`: everything painted in
+   the band colour is left transparent (the `browser` blob becomes a window, `trio`/`iso` keep only a white glow), so the
+   site's colour shows through. These are what the projects use since 2026-10-27 (`media-import/transparent/`). In Neon
+   the project colour equals the band, so they look like the opaque version.
+

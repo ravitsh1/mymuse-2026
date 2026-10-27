@@ -90,9 +90,12 @@ export function Visual({ project, index, priority = false }: { project: Project;
   const a = index % 2 ? 'right' : 'left'
   const b = index % 2 ? 'left' : 'right'
   const style = { '--v-bg': p.bg, '--v-ink': p.ink, '--v-acc': p.acc } as React.CSSProperties
+  // Mockups rendered with a transparent brand-colour area are WebP; the others are opaque (lib/trial.ts covers those)
+  const solid = (m: Media | null) => !!m && m.mimeType !== 'image/webp'
+  const opaque = [solid(img) && 'wide', solid(art ? tall : img) && 'tall'].filter(Boolean).join(' ')
 
   return (
-    <div className={`visual${img ? ' has-img' : ''}${img && !art && project.heroFitPortrait ? ' fit-portrait' : ''}`} style={style}>
+    <div className={`visual${img ? ' has-img' : ''}${img && !art && project.heroFitPortrait ? ' fit-portrait' : ''}`} style={style} data-opaque={opaque || undefined}>
       {img ? (
         <>
           <div className="v-img" data-h="0.18">
