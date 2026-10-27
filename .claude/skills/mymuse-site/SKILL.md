@@ -38,6 +38,7 @@ Same base as threebears-2026, minus localization and leads: `payload.config.ts` 
 
 - Server renders complete, readable HTML; `Motion.tsx` only enhances it via `data-*` hooks: `data-site` (palette vars + base colours), `data-ph`/`data-wcol`/`data-tick` (Passion words), `data-rows` + `data-visual-for` (home index, hover peek, fly-in), `data-reveal`, `data-speed` / `data-h` (parallax), `data-next` + `data-nframe` + `data-ring`/`data-pct` (next-project frame).
 - The same `<Visual>` markup is the hero, the next frame, the peek and the fly-in — that is what makes the hand-over seamless. Change it in one place.
+- Next frame: the centred name/ring/button sink and fade out between 80% and 95% of the scroll (the colour band clears from 80%), so the hero arrives with its title at the bottom and nothing jumps. Keep that hand-off if you touch either.
 - Next-project commit: progress ≥ 99.5% held 250 ms → `router.push`; scrolling back cancels. The `מעבר ל…` link is the keyboard/reduced-motion path.
 - `prefers-reduced-motion`: CSS turns sticky/scrubbed sections static, JS skips everything except the progress bar. Never put content behind an animation.
 - Colours come only from the CMS as `--p-*` / `--v-*` / `--c-*` custom properties.
