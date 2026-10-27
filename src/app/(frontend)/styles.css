@@ -22,9 +22,16 @@
 *, *::before, *::after { box-sizing: border-box }
 html { background: var(--chrome-bg) }
 /* palette trial (lib/trial.ts) */
-.pal-toggle { position: fixed; z-index: 45; left: var(--gutter-l); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 2px; padding: 3px;
+.pal-toggles { position: fixed; z-index: 45; left: var(--gutter-l); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: grid; justify-items: start; gap: 6px }
+.pal-toggles summary { list-style: none; padding: 7px 14px; border: 1px solid #3f4d4d; border-radius: 999px; background: #f1f7f7; color: #3f4d4d;
+  font: 14px var(--f-body); cursor: pointer; box-shadow: 0 6px 24px rgb(0 0 0 / .25) }
+.pal-toggles summary::-webkit-details-marker { display: none }
+.pal-toggles summary:focus-visible { outline: 3px solid #b4585c; outline-offset: 2px }
+.pal-toggles[open] { display: flex; flex-direction: column-reverse; align-items: flex-end }
+.pal-toggles[open] > .pal-toggle { margin-bottom: 6px }
+.pal-toggle { display: flex; gap: 2px; padding: 3px;
   border: 1px solid #3f4d4d; border-radius: 999px; background: #f1f7f7; box-shadow: 0 6px 24px rgb(0 0 0 / .25) }
-.pal-toggle button { padding: 6px 14px; border: 0; border-radius: 999px; background: transparent; color: #3f4d4d; font: 15px var(--f-body); cursor: pointer }
+.pal-toggle button { padding: 6px 12px; border: 0; border-radius: 999px; background: transparent; color: #3f4d4d; font: 15px var(--f-body); cursor: pointer }
 .pal-toggle button[aria-pressed="true"] { background: #3f4d4d; color: #f1f7f7 }
 .pal-toggle button:focus-visible { outline: 3px solid #b4585c; outline-offset: 2px }
 html[data-trial] { color-scheme: light }
@@ -189,6 +196,34 @@ html.menu-open { overflow: hidden }
 .ticks i.on { opacity: 1 }
 
 /* ---------- home: after Passion ---------- */
+/* Home hero trial (lib/trial.ts). "work": a project card per word, cross-faded by Motion like the photos. */
+.ph[data-hero="work"] .passion, .ph[data-hero="both"] .passion { font-size: clamp(64px, 10vw, 150px) }
+.ph-work { position: absolute; inset: 0; pointer-events: none }
+.ph-card { margin: 0; inset: 50% auto auto var(--edge-r, 16px); left: auto; right: var(--edge-r); width: min(46vw, 680px); height: auto;
+  translate: 0 -50%; transform: translateY(24px) scale(.97); transition: opacity .7s ease, transform .9s cubic-bezier(.2,.8,.2,1) }
+.ph-card.on { transform: none }
+.ph-shot { position: relative; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; box-shadow: 0 24px 60px rgb(0 0 0 / .28) }
+.ph-shot img { object-fit: cover }
+.ph-card figcaption { margin-top: 12px; font-size: 16px; text-align: right }
+.ph-card figcaption span { opacity: .8 }
+/* "statement": a Hebrew headline above the words, which become its signature */
+.ph-title { position: relative; margin: 0 0 clamp(18px, 3vh, 36px); direction: ltr; text-align: left; font-family: var(--f-display); font-weight: 700;
+  font-size: clamp(56px, 8.4vw, 132px); line-height: .9; text-wrap: balance }
+.ph-title em { font-style: normal; color: var(--h-acc, var(--p-acc)); transition: color .7s }
+.ph[data-hero="statement"] .passion { font-size: clamp(54px, 8vw, 120px) }
+.ph[data-hero="both"] .ph-title { font-size: clamp(48px, 6.4vw, 104px) }
+.ph[data-hero="both"] .passion { font-size: clamp(48px, 6.4vw, 104px) }
+@media (min-width: 721px) {
+  /* headline across the top, the card under it on the right, the words on the left */
+  .ph[data-hero="both"] .ph-title { position: absolute; top: clamp(96px, 14vh, 140px); left: var(--edge-l); margin: 0 }
+  .ph[data-hero="both"] .ph-sticky { align-content: end; padding-bottom: clamp(60px, 10vh, 110px) }
+  .ph[data-hero="both"] .ph-card { inset: auto var(--edge-r) clamp(50px, 8vh, 90px) auto; translate: none; width: min(40vw, 580px) }
+}
+@media (max-width: 720px) {
+  .ph[data-hero="work"] .ph-sticky, .ph[data-hero="both"] .ph-sticky { align-content: end; padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)) }
+  .ph-card { top: calc(76px + env(safe-area-inset-top, 0px)); right: var(--gutter-r); left: var(--gutter-l); width: auto; translate: none }
+  .ph[data-hero="both"] .ph-card { width: 72%; left: auto }
+}
 .after-ph { position: relative; z-index: 1; background: var(--p-bg); transition: background-color .6s }
 /* desktop: it starts one screen early and slides over the still-pinned Passion section (which drifts up slower, see Motion) */
 @media (min-width: 721px) and (prefers-reduced-motion: no-preference) {
