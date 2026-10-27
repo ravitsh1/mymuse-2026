@@ -30,12 +30,11 @@ const CARDS = [
 
 export const mistSettings = (s: Setting, on: boolean): Setting => (on ? { ...s, ...SITE } : s)
 
-/** Words lose their photos: the slate text needs a light background. */
 export const mistHome = (h: Home, on: boolean): Home =>
   on
     ? {
         ...h,
-        words: h.words?.map((w, i) => ({ ...w, ...WORDS[i % WORDS.length], image: null })),
+        words: h.words?.map((w, i) => ({ ...w, ...WORDS[i % WORDS.length] })),
         services: h.services?.map((c, i) => ({ ...c, ...CARDS[i % CARDS.length] })),
       }
     : h
