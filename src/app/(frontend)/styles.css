@@ -37,12 +37,15 @@ html { background: var(--chrome-bg) }
 html[data-trial] { color-scheme: light }
 html[data-trial="mist"] { --chrome-bg: #f1f7f7; --trial-orb: #f7cbca }
 html[data-trial="viola"] { --chrome-bg: #fff6e8; --trial-orb: #c64fc0 }
-/* Slate text over a hero: the mockups end in a band of the client's brand colour (often dark) about a third up from the
-   foot. A trial palette covers that band with a solid block of the project colour, cut straight (no fade), and the title sits on it. */
-html[data-trial] .visual .v-shade { background:
-  linear-gradient(to bottom, color-mix(in srgb, var(--v-bg) 70%, transparent), transparent 18%),
-  linear-gradient(to top, var(--v-bg) var(--mist-cut, 35%), transparent var(--mist-cut, 35%)) }
-@media (orientation: landscape) { html[data-trial] .visual .v-shade { --mist-cut: 43% } }
+/* A trial palette under a hero: the transparent mockups (WebP) let it show through, under the usual shade. An opaque one
+   still ends in a band of the client's brand colour (often dark) about a third up from the foot, so that band gets a
+   solid block of the project colour, cut straight, and the title sits on it. */
+html[data-trial] .visual .v-shade { --cut: linear-gradient(to top, var(--v-bg) var(--mist-cut, 35%), transparent var(--mist-cut, 35%)) }
+@media (orientation: portrait) { html[data-trial] .visual[data-opaque~="tall"] .v-shade { background: linear-gradient(to bottom, color-mix(in srgb, var(--v-bg) 70%, transparent), transparent 18%), var(--cut) } }
+@media (orientation: landscape) {
+  html[data-trial] .visual .v-shade { --mist-cut: 43% }
+  html[data-trial] .visual[data-opaque~="wide"] .v-shade { background: linear-gradient(to bottom, color-mix(in srgb, var(--v-bg) 70%, transparent), transparent 18%), var(--cut) }
+}
 /* Passion photos under a light veil of the word's colour instead of the dark one: slate text keeps 4.5:1 over a black pixel */
 html[data-trial] .ph-bgs::after { background: linear-gradient(to right, color-mix(in srgb, var(--h-bg, var(--p-bg)) 88%, transparent), color-mix(in srgb, var(--h-bg, var(--p-bg)) 78%, transparent)) }
 html[data-trial] .ph-orb { background: radial-gradient(circle at 40% 40%, var(--trial-orb), transparent 68%); opacity: .8 }
