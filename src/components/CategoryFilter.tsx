@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 /** Under "all" the index starts with this many rows; "more" adds the same again. */
@@ -9,7 +9,8 @@ const STEP = 10
 /**
  * Filter buttons for the home page index, and the "more projects" button under it. The list is complete in the HTML;
  * this only hides rows (rows carry data-cat): other categories, and under "all" the rows past the current limit.
- * Rendered after mount, so without JS there are no dead buttons — just every project.
+ * "All" shows the projects in a random order, new on every visit; a category keeps the admin order (the HTML order).
+ * Rendered after mount, so without JS there are no dead buttons — just every project, in the admin order.
  */
 export function CategoryFilter({ categories }: { categories: { id: number | string; title: string }[] }) {
   const [on, setOn] = useState<string>('all')
@@ -18,10 +19,17 @@ export function CategoryFilter({ categories }: { categories: { id: number | stri
   const [slot, setSlot] = useState<HTMLElement | null>(null)
   const [count, setCount] = useState<number | null>(null)
 
+  const order = useRef<{ admin: HTMLLIElement[]; shuffled: HTMLLIElement[] } | null>(null)
+
   const rows = () => [...document.querySelectorAll<HTMLLIElement>('[data-rows] > li')]
 
-  // shows the rows for a category (and limit); returns how many are shown
+  // shows the rows for a category (and limit) in that view's order; returns how many are shown
   const apply = (id: string, max: number) => {
+    if (order.current) {
+      const ul = document.querySelector('[data-rows]')!
+      // moving the <li>s (not a CSS order) keeps the reading and tab order the same as what is seen
+      for (const li of id === 'all' ? order.current.shuffled : order.current.admin) ul.appendChild(li)
+    }
     let n = 0
     let left = 0
     rows().forEach((li) => {
@@ -36,6 +44,13 @@ export function CategoryFilter({ categories }: { categories: { id: number | stri
   }
 
   useEffect(() => {
+    const admin = rows()
+    const shuffled = [...admin]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+    order.current = { admin, shuffled }
     setSlot(document.querySelector<HTMLElement>('[data-more]'))
     apply('all', STEP)
   }, [])
