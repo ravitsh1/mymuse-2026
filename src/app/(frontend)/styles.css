@@ -48,7 +48,7 @@ a { color: inherit }
 .burger span::before { content: ""; left: 0; right: 0; top: 8px }
 .burger[aria-expanded="true"] span { transform: translateY(4px) rotate(45deg) }
 .burger[aria-expanded="true"] span::before { transform: translateY(-8px) rotate(-90deg) }
-.burger:focus-visible { outline: 2px solid var(--p-acc); outline-offset: 2px; border-radius: 6px }
+.burger:focus-visible { outline: 2px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 2px; border-radius: 6px }
 .count { margin-right: auto } /* RTL: counter and button together on the left, logo alone on the right */
 .count + .burger { margin-right: 0 }
 .menu { position: fixed; inset: 0; z-index: 19; display: grid; align-content: center; background: var(--p-bg); color: var(--p-ink);
@@ -58,7 +58,7 @@ a { color: inherit }
 .menu li { animation: rise .7s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(.06s * var(--k) + .1s) }
 .menu a { display: inline-block; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 13vw, 150px); line-height: .95; color: inherit; text-decoration: none; transition: color .3s }
 .menu a:hover, .menu a:focus-visible { color: var(--p-acc-lg, var(--p-acc)) }
-.menu a:focus-visible { outline: 2px solid var(--p-acc); outline-offset: 4px }
+.menu a:focus-visible { outline: 2px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 4px }
 html.menu-open { overflow: hidden }
 @keyframes menu-in { from { clip-path: circle(0 at 30px 30px) } to { clip-path: circle(150% at 30px 30px) } }
 @media (prefers-reduced-motion: reduce) {
@@ -106,11 +106,11 @@ html.menu-open { overflow: hidden }
 .wrap { max-width: 1100px; margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r) }
 .intro { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px, 6vw, 90px); padding-block: clamp(70px, 12vw, 150px) }
 .intro > * { min-width: 0 }
-.lead { margin: 0; font-size: clamp(22px, 2.6vw, 32px); line-height: 1.45; font-weight: 300; max-width: 30ch; text-wrap: pretty }
+.lead { margin: 0; font-size: clamp(19px, 2.1vw, 26px); line-height: 1.5; font-weight: 300; max-width: 34ch; text-wrap: pretty }
 .facts { margin: 0; display: grid; gap: 18px; align-content: start }
 .facts div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--p-soft) }
 .facts dt { font-size: 13px; letter-spacing: .14em; opacity: .85; padding-top: 4px }
-.facts dd { margin: 0; font-weight: 600; min-width: 0; overflow-wrap: anywhere }
+.facts dd { margin: 0; font-size: 17px; font-weight: 600; min-width: 0; overflow-wrap: anywhere }
 .band { position: relative; height: clamp(460px, 82vw, 1000px); overflow: hidden }
 /* parallax moves the screens past the band's top and bottom edges; clip only sideways so they are never cut off */
 @supports (overflow: clip) { .band { overflow: visible; overflow-x: clip } }
@@ -279,7 +279,7 @@ main[tabindex="-1"]:focus { outline: none }
 .nf-picks a { display: grid; gap: 6px; min-height: 150px; align-content: end; padding: 22px; border-radius: 22px; background: var(--c-bg); color: var(--c-ink); text-decoration: none;
   transition: transform .4s cubic-bezier(.2,.8,.2,1) }
 .nf-picks a:hover, .nf-picks a:focus-visible { transform: translateY(-6px) }
-.nf-picks a:focus-visible { outline: 2px solid var(--p-acc); outline-offset: 3px }
+.nf-picks a:focus-visible { outline: 2px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 3px }
 .nf-name { font-family: var(--f-display); font-weight: 700; font-size: clamp(40px, 5vw, 60px); line-height: .9 }
 .nf-field { font-size: 15px; opacity: .85 }
 @media (prefers-reduced-motion: reduce) { .nf-code { animation: none } .nf-picks a { transition: none } }
