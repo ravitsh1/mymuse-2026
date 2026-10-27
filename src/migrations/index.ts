@@ -29,6 +29,7 @@ import * as migration_20261025_163000_mobile_heroes_smaller_phone from './202610
 import * as migration_20261025_164500_3bears_mobile_new_site from './20261025_164500_3bears_mobile_new_site';
 import * as migration_20261025_212022_neon_sunset_palette from './20261025_212022_neon_sunset_palette';
 import * as migration_20261026_190000_restore_dark_site from './20261026_190000_restore_dark_site';
+import * as migration_20261027_100000_project_bg_from_images from './20261027_100000_project_bg_from_images';
 
 export const migrations = [
   {
@@ -185,5 +186,10 @@ export const migrations = [
     up: migration_20261026_190000_restore_dark_site.up,
     down: migration_20261026_190000_restore_dark_site.down,
     name: '20261026_190000_restore_dark_site',
+  },
+  {
+    up: migration_20261027_100000_project_bg_from_images.up,
+    down: migration_20261027_100000_project_bg_from_images.down,
+    name: '20261027_100000_project_bg_from_images',
   },
 ];
