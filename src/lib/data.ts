@@ -2,6 +2,7 @@ import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Home, Project, Setting } from '@/payload-types'
+import { mistHome, mistSettings } from '@/lib/trial'
 
 export const payload = cache(() => getPayload({ config }))
 
@@ -23,8 +24,8 @@ export const getCategories = cache(async () => {
   return res.docs
 })
 
-export const getHome = cache(async (): Promise<Home> => (await payload()).findGlobal({ slug: 'home', depth: 1 }))
-export const getSettings = cache(async (): Promise<Setting> => (await payload()).findGlobal({ slug: 'settings', depth: 1 }))
+export const getHome = cache(async (): Promise<Home> => mistHome(await (await payload()).findGlobal({ slug: 'home', depth: 1 })))
+export const getSettings = cache(async (): Promise<Setting> => mistSettings(await (await payload()).findGlobal({ slug: 'settings', depth: 1 })))
 
 export const getFooterPages = cache(async () => {
   const res = await (await payload()).find({

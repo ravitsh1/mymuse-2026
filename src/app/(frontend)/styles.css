@@ -21,6 +21,9 @@
 }
 *, *::before, *::after { box-sizing: border-box }
 html { background: var(--chrome-bg) }
+/* palette trial (lib/trial.ts) */
+html[data-trial="mist"] { --chrome-bg: #f1f7f7; color-scheme: light }
+html[data-trial="mist"] .ph-orb { background: radial-gradient(circle at 40% 40%, #f7cbca, transparent 68%); opacity: .8 }
 body { margin: 0; font-family: var(--f-body); font-size: 18px; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; font-synthesis: none }
 img, video { max-width: 100%; display: block }
 a { color: inherit }
