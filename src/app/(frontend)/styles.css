@@ -297,7 +297,9 @@ main[tabindex="-1"]:focus { outline: none }
 .next-tint { position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to bottom, transparent 16%, color-mix(in srgb, var(--n-bg) 85%, transparent) 26%, color-mix(in srgb, var(--n-bg) 85%, transparent) 74%, transparent 84%) }
 .next-ui { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; pointer-events: none; z-index: 2 }
-.next-ui > div { display: grid; justify-items: center; gap: 6px }
+.next-ui > div { display: grid; justify-items: center; gap: 6px; will-change: opacity, transform }
+/* keyboard users keep the link they are on, even while the name fades out at the end of the scroll */
+.next-ui > div:focus-within { opacity: 1 !important; transform: none !important }
 .next-ui .lbl { font-size: 14px; letter-spacing: .24em; opacity: .85 }
 .next-ui .nm { font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 13vw, 170px); line-height: .9 }
 .ring { position: relative; width: 76px; height: 76px; margin-top: 10px }

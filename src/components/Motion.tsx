@@ -196,6 +196,7 @@ export function Motion() {
     const nframe = $('[data-nframe]')
     const nvis = nframe?.querySelector<HTMLElement>('.visual')
     const ntint = nframe?.querySelector<HTMLElement>('.next-tint')
+    const nui = next?.querySelector<HTMLElement>('.next-ui > div')
     // desktop: the section after Passion slides over it (.after-ph), so the words finish one screen earlier
     const coverMQ = matchMedia('(min-width: 721px)')
     const ring = $<SVGCircleElement>('[data-ring]')
@@ -268,6 +269,12 @@ export function Motion() {
         nvis.style.transform = `scale(${(1 + 0.35 * k).toFixed(3)})`
         // the colour band keeps the title readable, then clears over the last 20% so the hero arrives as it is
         if (ntint) ntint.style.opacity = p < 0.8 ? '1' : Math.max(0, (1 - p) / 0.2).toFixed(3)
+        // the name sinks toward where the project page puts its title and is gone by 95%, so arriving is not a jump
+        if (nui) {
+          const d = clamp((p - 0.8) / 0.15, 0, 1)
+          nui.style.opacity = d ? (1 - d).toFixed(3) : ''
+          nui.style.transform = d ? `translate3d(0,${(d * d * vh * 0.18).toFixed(1)}px,0)` : ''
+        }
         if (ring) ring.style.strokeDashoffset = (213.6 * (1 - p)).toFixed(1)
         if (pct) pct.textContent = Math.round(p * 100) + '%'
         if (p >= 0.995 && !timer && !busy) {
