@@ -2,7 +2,7 @@ import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Home, Project, Setting } from '@/payload-types'
-import { isMist, mistHome, mistProject, mistSettings } from '@/lib/trial'
+import { trialHome, trialPalette, trialProject, trialSettings } from '@/lib/trial'
 
 export const payload = cache(() => getPayload({ config }))
 
@@ -15,8 +15,8 @@ export const getProjects = cache(async (): Promise<Project[]> => {
     depth: 1,
     limit: 200,
   })
-  const mist = await isMist()
-  return res.docs.map((p) => mistProject(p, mist))
+  const trial = await trialPalette()
+  return res.docs.map((p) => trialProject(p, trial))
 })
 
 /** Categories in their admin (drag) order: the filter buttons on the home page. */
@@ -25,9 +25,9 @@ export const getCategories = cache(async () => {
   return res.docs
 })
 
-export const getHome = cache(async (): Promise<Home> => mistHome(await (await payload()).findGlobal({ slug: 'home', depth: 1 }), await isMist()))
+export const getHome = cache(async (): Promise<Home> => trialHome(await (await payload()).findGlobal({ slug: 'home', depth: 1 }), await trialPalette()))
 export const getSettings = cache(async (): Promise<Setting> =>
-  mistSettings(await (await payload()).findGlobal({ slug: 'settings', depth: 1 }), await isMist()),
+  trialSettings(await (await payload()).findGlobal({ slug: 'settings', depth: 1 }), await trialPalette()),
 )
 
 export const getFooterPages = cache(async () => {
