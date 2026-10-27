@@ -100,6 +100,7 @@ export default async function HomePage() {
                   )
                 })}
               </ul>
+              <div className="ix-more" data-more />
             </section>
           )}
         </div>
