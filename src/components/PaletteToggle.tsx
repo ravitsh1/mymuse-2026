@@ -1,28 +1,64 @@
 'use client'
 
-const OPTIONS = [
-  ['neon', 'Neon'],
-  ['mist', 'Mist'],
-  ['viola', 'Viola'],
+import type React from 'react'
+
+const GROUPS = [
+  {
+    cookie: 'palette',
+    label: 'פלטת צבעים',
+    options: [
+      ['neon', 'Neon'],
+      ['mist', 'Mist'],
+      ['viola', 'Viola'],
+    ],
+  },
+  {
+    cookie: 'hero',
+    label: 'פתיחת דף הבית',
+    options: [
+      ['classic', 'מקורי'],
+      ['work', 'עבודות'],
+      ['statement', 'כותרת'],
+      ['both', 'שניהם'],
+    ],
+  },
 ] as const
 
 /**
- * Palette trial switch (lib/trial.ts): sets the "palette" cookie and reloads, since the colours are chosen on the
- * server.
+ * Trial switches (lib/trial.ts): palette and home hero. Each sets its cookie and reloads, since both are chosen on
+ * the server.
  */
-export function PaletteToggle({ current }: { current: string }) {
-  const pick = (id: string) => {
-    if (id === current) return
-    document.cookie = `palette=${id}; path=/; max-age=31536000; samesite=lax`
+export function PaletteToggle({ current }: { current: { palette: string; hero: string } }) {
+  const pick = (cookie: 'palette' | 'hero', id: string) => {
+    if (id === current[cookie]) return
+    document.cookie = `${cookie}=${id}; path=/; max-age=31536000; samesite=lax`
     location.reload()
   }
+  // the panel stays open across the reload a pick causes (per tab)
+  const remember = (e: React.SyntheticEvent<HTMLDetailsElement>) => {
+    try {
+      sessionStorage.setItem('trial-open', e.currentTarget.open ? '1' : '')
+    } catch {}
+  }
+  const opened = () => {
+    try {
+      return sessionStorage.getItem('trial-open') === '1'
+    } catch {
+      return false
+    }
+  }
   return (
-    <div className="pal-toggle" role="group" aria-label="פלטת צבעים">
-      {OPTIONS.map(([id, label]) => (
-        <button key={id} type="button" aria-pressed={id === current} onClick={() => pick(id)}>
-          {label}
-        </button>
+    <details className="pal-toggles" ref={(d) => void (d && opened() && (d.open = true))} onToggle={remember}>
+      <summary>ניסיונות עיצוב</summary>
+      {GROUPS.map((g) => (
+        <div key={g.cookie} className="pal-toggle" role="group" aria-label={g.label}>
+          {g.options.map(([id, label]) => (
+            <button key={id} type="button" aria-pressed={id === current[g.cookie]} onClick={() => pick(g.cookie, id)}>
+              {label}
+            </button>
+          ))}
+        </div>
       ))}
-    </div>
+    </details>
   )
 }

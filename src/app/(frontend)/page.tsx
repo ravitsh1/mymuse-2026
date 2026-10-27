@@ -10,6 +10,7 @@ import { NextFrame } from '@/components/NextFrame'
 import { MediaEl, Visual } from '@/components/Visual'
 import { accentTones, getCategories, getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
+import { HERO_WORK, trialHero } from '@/lib/trial'
 
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings()
@@ -17,7 +18,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [projects, home, settings, pages, allCategories] = await Promise.all([getProjects(), getHome(), getSettings(), getFooterPages(), getCategories()])
+  const [projects, home, settings, pages, allCategories, hero] = await Promise.all([
+    getProjects(),
+    getHome(),
+    getSettings(),
+    getFooterPages(),
+    getCategories(),
+    trialHero(),
+  ])
+  const showWork = hero === 'work' || hero === 'both'
+  const showStatement = hero === 'statement' || hero === 'both'
+  // "work" hero: the project shown with each word (falls back to the projects in order)
+  const workOf = (w: { word: string }, k: number) => projects.find((p) => p.slug === HERO_WORK[w.word]) ?? projects[k % projects.length]
   const site = sitePalette(settings)
   const words = home.words?.length ? home.words : [{ word: 'Expertise', bg: site.bg, accent: site.acc }]
   const featured = projects.map((p, i) => ({ p, i })).filter(({ p }) => p.featured)
@@ -33,13 +45,32 @@ export default async function HomePage() {
       <main id="content">
         <section
           className="ph"
+          data-hero={hero}
           data-ph
           data-words={JSON.stringify(words.map((w) => ({ bg: w.bg || site.bg, accent: w.accent || site.acc })))}
           aria-labelledby="pt"
         >
           <div className="ph-sticky" data-phs>
-            {/* One layer per word (empty when it has no image) so layer n always belongs to word n. */}
-            {words.some((w) => 'image' in w && w.image) ? (
+            {showWork ? (
+              /* One project per word, in the same layers Motion cross-fades (data-phbg); the index below lists them all. */
+              <div className="ph-work" aria-hidden="true">
+                {words.map((w, k) => {
+                  const p = workOf(w, k)
+                  return (
+                    <figure key={w.id ?? k} className={k ? 'ph-bg ph-card' : 'ph-bg ph-card on'} data-phbg>
+                      <div className="ph-shot">{p?.hero && <MediaEl m={p.hero} fill decorative sizes="(max-width: 720px) 92vw, 46vw" eager={k === 0} />}</div>
+                      {p && (
+                        <figcaption>
+                          {p.title}
+                          {p.field && <span> · {p.field}</span>}
+                        </figcaption>
+                      )}
+                    </figure>
+                  )
+                })}
+              </div>
+            ) : words.some((w) => 'image' in w && w.image) ? (
+              /* One layer per word (empty when it has no image) so layer n always belongs to word n. */
               <div className="ph-bgs" aria-hidden="true">
                 {words.map((w, k) => (
                   <div key={w.id ?? k} className={k ? 'ph-bg' : 'ph-bg on'} data-phbg>
@@ -50,9 +81,15 @@ export default async function HomePage() {
             ) : (
               <div className="ph-orb" aria-hidden="true" />
             )}
-            <h1 className="sr-only" id="pt" tabIndex={-1}>
-              MyMuse · בניית אתרים בהתאמה אישית
-            </h1>
+            {showStatement ? (
+              <h1 className="ph-title" id="pt" tabIndex={-1}>
+                אתרים שנראים כמו <em>העסק</em> שמאחוריהם
+              </h1>
+            ) : (
+              <h1 className="sr-only" id="pt" tabIndex={-1}>
+                MyMuse · בניית אתרים בהתאמה אישית
+              </h1>
+            )}
             <p className="passion" aria-label={`Passion & ${words.map((w) => w.word).join(', ')}`}>
               <span aria-hidden="true">
                 Passion
