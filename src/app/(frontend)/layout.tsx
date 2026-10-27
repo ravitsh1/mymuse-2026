@@ -31,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           as="font"
           type="font/woff2"
           crossOrigin=""
-          href="https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-400.woff2"
+          href="https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/talent-regular.woff2"
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />

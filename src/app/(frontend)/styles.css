@@ -1,19 +1,15 @@
 /* Layout: home + one page per project; every page ends in a frame that grows into the next page.
    Colours come from the CMS as --p-* on [data-site]; this file only defines structure and type. */
-/* Body text: OS Aran by Ofir Shavit (free for commercial use; the licence allows embedding but not publishing the files,
-   so they live in the project's Blob store, not in this public repo). Three weights: 400, 500 and 600 (also used for
-   700). Only the 400 has Latin letters; Latin in the heavier weights falls back to Arial. */
-@font-face { font-family: 'Aran'; font-weight: 100 449; font-display: swap;
-  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-400.woff2') format('woff2') }
-@font-face { font-family: 'Aran'; font-weight: 450 549; font-display: swap;
-  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-500.woff2') format('woff2') }
-@font-face { font-family: 'Aran'; font-weight: 550 900; font-display: swap;
-  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/aran-600.woff2') format('woff2') }
+/* Body text: Talent FS (purchased licence; it allows embedding but not publishing the files, so the file lives in the
+   project's Blob store, not in this public repo). Only the Regular was bought, so it covers every weight; text set to
+   600 renders regular (font-synthesis: none on body keeps the browser from faking bold). */
+@font-face { font-family: 'Talent'; font-weight: 100 900; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/talent-regular.woff2') format('woff2') }
 :root {
   color-scheme: dark;
   --chrome-bg: #1b1030;
-  --f-display: 'Karantina', 'Aran', 'Arial Narrow', sans-serif;
-  --f-body: 'Aran', 'Arial', sans-serif;
+  --f-display: 'Karantina', 'Talent', 'Arial Narrow', sans-serif;
+  --f-body: 'Talent', 'Arial', sans-serif;
   --gutter-l: max(16px, env(safe-area-inset-left, 0px));
   --gutter-r: max(16px, env(safe-area-inset-right, 0px));
   /* header and the two heroes: wider side margin on desktop (images stay full width) */
