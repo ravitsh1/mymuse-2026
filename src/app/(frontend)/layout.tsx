@@ -5,7 +5,7 @@ import { getPage, getSettings, sitePalette } from '@/lib/data'
 import { indexable } from '@/lib/site'
 import { SITE_URL } from '@/lib/seo'
 import { PaletteToggle } from '@/components/PaletteToggle'
-import { TRIAL, isMist } from '@/lib/trial'
+import { isMist } from '@/lib/trial'
 import './styles.css'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -53,7 +53,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {settings.cookieText && (
           <CookieNotice text={settings.cookieText} privacyHref={privacy ? '/privacy-policy' : undefined} bg={site.bg} ink={site.ink} acc={site.acc} />
         )}
-        {TRIAL && <PaletteToggle mist={mist} />}
+        <PaletteToggle mist={mist} />
       </body>
     </html>
   )

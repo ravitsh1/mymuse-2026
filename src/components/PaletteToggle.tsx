@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * Palette trial switch (lib/trial.ts), shown on previews only: flips the "palette" cookie between Mist and Neon and
+ * Palette trial switch (lib/trial.ts): flips the "palette" cookie between Mist and Neon and
  * reloads, since the colours are chosen on the server.
  */
 export function PaletteToggle({ mist }: { mist: boolean }) {

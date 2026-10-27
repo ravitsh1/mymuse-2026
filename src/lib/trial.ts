@@ -2,14 +2,18 @@ import { cookies } from 'next/headers'
 import type { Home, Project, Setting } from '@/payload-types'
 
 /**
- * Palette trial "Mist" (brand book, 2026-10-27): light background, slate text, coral accent. It replaces the colours
- * read from the CMS instead of changing them, because preview builds share the production database (the light test
- * of 2026-10-26 went live that way). Never on production: if this branch were merged as is, the live site would not change.
+ * Palette trial "Mist" (brand book, 2026-10-27): light background, slate text, coral accent, for comparing with Neon
+ * in the meeting with the designer. It replaces the colours read from the CMS instead of changing them, because
+ * preview builds share the production database (the light test of 2026-10-26 went live that way).
+ * The switch (PaletteToggle) sets the "palette" cookie; without it production shows Neon and previews show Mist.
+ * Remove the switch, or move the chosen palette into the CMS, before launch.
  */
-export const TRIAL = process.env.VERCEL_ENV !== 'production'
+const DEFAULT_MIST = process.env.VERCEL_ENV !== 'production'
 
-/** Mist unless the toggle (PaletteToggle) set the "palette" cookie to neon. Production never reads the cookie. */
-export const isMist = async () => TRIAL && (await cookies()).get('palette')?.value !== 'neon'
+export const isMist = async () => {
+  const c = (await cookies()).get('palette')?.value
+  return c ? c === 'mist' : DEFAULT_MIST
+}
 
 const SITE = { bg: '#f1f7f7', ink: '#3f4d4d', accent: '#b4585c' }
 // Passion words: background + "&" colour, each "&" at least 3:1 (large text) on its background
