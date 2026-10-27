@@ -207,15 +207,15 @@ html.menu-open { overflow: hidden }
 .ph-card figcaption { margin-top: 12px; font-size: 16px; text-align: right }
 .ph-card figcaption span { opacity: .8 }
 /* "statement": a Hebrew headline above the words, which become its signature */
-.ph-title { position: relative; margin: 0 0 clamp(18px, 3vh, 36px); font-family: var(--f-display); font-weight: 700; font-size: clamp(52px, 7.4vw, 118px);
-  line-height: .9; max-width: 11ch; text-wrap: balance }
+.ph-title { position: relative; margin: 0 0 clamp(18px, 3vh, 36px); direction: ltr; text-align: left; font-family: var(--f-display); font-weight: 700;
+  font-size: clamp(56px, 8.4vw, 132px); line-height: .9; text-wrap: balance }
 .ph-title em { font-style: normal; color: var(--h-acc, var(--p-acc)); transition: color .7s }
 .ph[data-hero="statement"] .passion { font-size: clamp(54px, 8vw, 120px) }
-.ph[data-hero="both"] .ph-title { font-size: clamp(44px, 5.6vw, 92px); max-width: 16ch }
+.ph[data-hero="both"] .ph-title { font-size: clamp(48px, 6.4vw, 104px) }
 .ph[data-hero="both"] .passion { font-size: clamp(48px, 6.4vw, 104px) }
 @media (min-width: 721px) {
   /* headline across the top, the card under it on the right, the words on the left */
-  .ph[data-hero="both"] .ph-title { position: absolute; top: clamp(96px, 14vh, 140px); right: var(--edge-r); margin: 0 }
+  .ph[data-hero="both"] .ph-title { position: absolute; top: clamp(96px, 14vh, 140px); left: var(--edge-l); margin: 0 }
   .ph[data-hero="both"] .ph-sticky { align-content: end; padding-bottom: clamp(60px, 10vh, 110px) }
   .ph[data-hero="both"] .ph-card { inset: auto var(--edge-r) clamp(50px, 8vh, 90px) auto; translate: none; width: min(40vw, 580px) }
 }

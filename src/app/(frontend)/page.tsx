@@ -83,7 +83,10 @@ export default async function HomePage() {
             )}
             {showStatement ? (
               <h1 className="ph-title" id="pt" tabIndex={-1}>
-                אתרים שנראים כמו <em>העסק</em> שמאחוריהם
+                <span lang="en">
+                  Inspired by <em>success</em>
+                </span>
+                <span className="sr-only"> · MyMuse, בניית אתרים בהתאמה אישית</span>
               </h1>
             ) : (
               <h1 className="sr-only" id="pt" tabIndex={-1}>
