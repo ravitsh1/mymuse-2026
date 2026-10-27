@@ -4,7 +4,8 @@ import { CookieNotice } from '@/components/CookieNotice'
 import { getPage, getSettings, sitePalette } from '@/lib/data'
 import { indexable } from '@/lib/site'
 import { SITE_URL } from '@/lib/seo'
-import { MIST } from '@/lib/trial'
+import { PaletteToggle } from '@/components/PaletteToggle'
+import { TRIAL, isMist } from '@/lib/trial'
 import './styles.css'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,13 +20,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 // No maximum-scale / user-scalable=no: visitors must be able to zoom.
-export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: MIST ? '#f1f7f7' : '#1b1030' }
+export async function generateViewport(): Promise<Viewport> {
+  return { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: (await isMist()) ? '#f1f7f7' : '#1b1030' }
+}
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [settings, privacy] = await Promise.all([getSettings(), getPage('privacy-policy')])
+  const [settings, privacy, mist] = await Promise.all([getSettings(), getPage('privacy-policy'), isMist()])
   const site = sitePalette(settings)
   return (
-    <html lang="he" dir="rtl" data-trial={MIST ? 'mist' : undefined}>
+    <html lang="he" dir="rtl" data-trial={mist ? 'mist' : undefined}>
       <head>
         <link
           rel="preload"
@@ -50,6 +53,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {settings.cookieText && (
           <CookieNotice text={settings.cookieText} privacyHref={privacy ? '/privacy-policy' : undefined} bg={site.bg} ink={site.ink} acc={site.acc} />
         )}
+        {TRIAL && <PaletteToggle mist={mist} />}
       </body>
     </html>
   )

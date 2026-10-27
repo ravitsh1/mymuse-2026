@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers'
 import type { Home, Project, Setting } from '@/payload-types'
 
 /**
@@ -5,7 +6,10 @@ import type { Home, Project, Setting } from '@/payload-types'
  * read from the CMS instead of changing them, because preview builds share the production database (the light test
  * of 2026-10-26 went live that way). Never on production: if this branch were merged as is, the live site would not change.
  */
-export const MIST = process.env.VERCEL_ENV !== 'production'
+export const TRIAL = process.env.VERCEL_ENV !== 'production'
+
+/** Mist unless the toggle (PaletteToggle) set the "palette" cookie to neon. Production never reads the cookie. */
+export const isMist = async () => TRIAL && (await cookies()).get('palette')?.value !== 'neon'
 
 const SITE = { bg: '#f1f7f7', ink: '#3f4d4d', accent: '#b4585c' }
 // Passion words: background + "&" colour, each "&" at least 3:1 (large text) on its background
@@ -24,11 +28,11 @@ const CARDS = [
   { bg: '#5d6b6b', ink: '#f1f7f7' },
 ]
 
-export const mistSettings = (s: Setting): Setting => (MIST ? { ...s, ...SITE } : s)
+export const mistSettings = (s: Setting, on: boolean): Setting => (on ? { ...s, ...SITE } : s)
 
 /** Words lose their photos: the slate text needs a light background. */
-export const mistHome = (h: Home): Home =>
-  MIST
+export const mistHome = (h: Home, on: boolean): Home =>
+  on
     ? {
         ...h,
         words: h.words?.map((w, i) => ({ ...w, ...WORDS[i % WORDS.length], image: null })),
@@ -37,8 +41,8 @@ export const mistHome = (h: Home): Home =>
     : h
 
 /** Project pages take the four light Mist pairs in turn (by id, so a project keeps its pair), all with slate text. */
-export const mistProject = (p: Project): Project => {
-  if (!MIST) return p
+export const mistProject = (p: Project, on: boolean): Project => {
+  if (!on) return p
   const w = WORDS[Number(p.id) % WORDS.length]
   return { ...p, bg: w.bg, ink: SITE.ink, accent: w.accent }
 }

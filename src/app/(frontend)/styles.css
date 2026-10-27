@@ -22,6 +22,11 @@
 *, *::before, *::after { box-sizing: border-box }
 html { background: var(--chrome-bg) }
 /* palette trial (lib/trial.ts) */
+.pal-toggle { position: fixed; z-index: 45; left: var(--gutter-l); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 2px; padding: 3px;
+  border: 1px solid #3f4d4d; border-radius: 999px; background: #f1f7f7; color: #3f4d4d; font: 15px var(--f-body); cursor: pointer; box-shadow: 0 6px 24px rgb(0 0 0 / .25) }
+.pal-toggle span { padding: 6px 14px; border-radius: 999px }
+.pal-toggle span.on { background: #3f4d4d; color: #f1f7f7 }
+.pal-toggle:focus-visible { outline: 3px solid #b4585c; outline-offset: 3px }
 html[data-trial="mist"] { --chrome-bg: #f1f7f7; color-scheme: light }
 /* slate text over a hero: the brand band at the foot of the mockups is often dark, so the veil is near-solid there */
 html[data-trial="mist"] .visual .v-shade { background:
