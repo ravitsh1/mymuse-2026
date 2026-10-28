@@ -230,15 +230,24 @@ html.menu-open { overflow: hidden }
 /* "single": one sentence over photos that change on their own (HeroCycle); pinned for one screen only.
    A soft glow in the word's colour keeps the text readable over the lighter veil. */
 .ph[data-hero="single"] { height: 200vh }
-.ph-one { font-size: clamp(60px, 9.4vw, 156px); margin: 0; text-shadow: 0 0 .3em color-mix(in srgb, var(--h-bg, var(--p-bg)) 90%, transparent), 0 0 .12em color-mix(in srgb, var(--h-bg, var(--p-bg)) 80%, transparent) }
+.ph-one { font-size: clamp(60px, 9.4vw, 156px); margin: 0 }
 .ph-one > span > span { display: block }
-.ph-one > span > span:first-child { font-size: .42em; letter-spacing: .02em; margin-bottom: .3em }
+/* the logo stands for "MyMuse": beside the two lines on desktop, above them on mobile */
+.ph-one > span { display: grid; grid-template-columns: auto 1fr; column-gap: .28em; align-items: center }
+.ph-logo { grid-row: 1 / 3; height: 1.72em; width: auto }
+/* the veil is 55% where the sentence sits and fades out beyond it */
+.ph[data-hero="single"] .ph-bgs::after { background: linear-gradient(to right, color-mix(in srgb, var(--h-bg, var(--p-bg)) 55%, transparent) 62%, color-mix(in srgb, var(--h-bg, var(--p-bg)) 10%, transparent) 86%) }
 @media (prefers-reduced-motion: no-preference) {
   .ph[data-hero="single"] .ph-media { transition: transform 4.5s linear }
   .ph[data-hero="single"] .ph-bg.on .ph-media { transform: scale(1.07) }
 }
 .ph-cbtn { position: absolute; z-index: 1; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); right: var(--edge-r); padding: 8px 14px; border-radius: 99px;
   border: 1px solid currentColor; background: var(--h-bg, var(--p-bg)); color: inherit; font: inherit; font-size: 14px; cursor: pointer; transition: background-color .7s }
+@media (max-width: 720px) {
+  .ph-one > span { display: block }
+  .ph-logo { display: block; height: 1.5em; margin-bottom: .22em }
+  .ph[data-hero="single"] .ph-bgs::after { background: linear-gradient(to top, color-mix(in srgb, var(--h-bg, var(--p-bg)) 55%, transparent) 45%, color-mix(in srgb, var(--h-bg, var(--p-bg)) 10%, transparent) 70%) }
+}
 @media (max-width: 720px) { .ph[data-hero="single"] .ph-sticky { align-content: end; padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px)) } }
 .after-ph { position: relative; z-index: 1; background: var(--p-bg); transition: background-color .6s }
 /* desktop: it starts one screen early and slides over the still-pinned Passion section (which drifts up slower, see Motion) */

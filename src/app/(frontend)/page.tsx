@@ -7,6 +7,7 @@ import { HeroCycle } from '@/components/HeroCycle'
 import { CategoryFilter } from '@/components/CategoryFilter'
 import { CopyValue, Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
+import { LogoStacked } from '@/components/Logo'
 import { NextFrame } from '@/components/NextFrame'
 import { MediaEl, Visual } from '@/components/Visual'
 import { accentTones, getCategories, getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
@@ -85,7 +86,9 @@ export default async function HomePage() {
             {hero === 'single' ? (
               <h1 className="ph-title ph-one" id="pt" tabIndex={-1}>
                 <span lang="en">
-                  <span>MyMuse</span> <span>inspired by</span>{' '}
+                  <LogoStacked className="ph-logo" tight />
+                  <span className="sr-only">MyMuse </span>
+                  <span>inspired by</span>{' '}
                   <span>
                     your <em>passion</em>
                   </span>
