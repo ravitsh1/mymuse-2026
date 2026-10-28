@@ -646,6 +646,10 @@ export interface Setting {
    */
   cookieText?: string | null;
   /**
+   * הכפתור בפינת האתר שמחליף פלטה ופתיחת דף הבית. כשהוא מוסתר, האתר מוצג בברירת המחדל (בדפדפן שכבר בחר, הבחירה נשמרת).
+   */
+  showTrials?: boolean | null;
+  /**
    * מה שמופיע כששולחים קישור בוואטסאפ או בפייסבוק. 1200×630. בעמוד פרויקט משמשת התמונה הראשית שלו.
    */
   shareImage?: (number | null) | Media;
@@ -711,6 +715,7 @@ export interface SettingsSelect<T extends boolean = true> {
   accent?: T;
   metaDescription?: T;
   cookieText?: T;
+  showTrials?: T;
   shareImage?: T;
   updatedAt?: T;
   createdAt?: T;

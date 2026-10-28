@@ -53,7 +53,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {settings.cookieText && (
           <CookieNotice text={settings.cookieText} privacyHref={privacy ? '/privacy-policy' : undefined} bg={site.bg} ink={site.ink} acc={site.acc} />
         )}
-        <PaletteToggle current={{ palette: trial ?? 'neon', hero }} />
+        {settings.showTrials && <PaletteToggle current={{ palette: trial ?? 'neon', hero }} />}
       </body>
     </html>
   )
