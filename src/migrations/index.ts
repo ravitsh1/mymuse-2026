@@ -32,6 +32,7 @@ import * as migration_20261026_190000_restore_dark_site from './20261026_190000_
 import * as migration_20261027_100000_project_bg_from_images from './20261027_100000_project_bg_from_images';
 import * as migration_20261027_120000_project_accents_on_new_bg from './20261027_120000_project_accents_on_new_bg';
 import * as migration_20261027_220000_transparent_project_heroes from './20261027_220000_transparent_project_heroes';
+import * as migration_20261028_090000_project_photo_mockups from './20261028_090000_project_photo_mockups';
 
 export const migrations = [
   {
@@ -203,5 +204,10 @@ export const migrations = [
     up: migration_20261027_220000_transparent_project_heroes.up,
     down: migration_20261027_220000_transparent_project_heroes.down,
     name: '20261027_220000_transparent_project_heroes',
+  },
+  {
+    up: migration_20261028_090000_project_photo_mockups.up,
+    down: migration_20261028_090000_project_photo_mockups.down,
+    name: '20261028_090000_project_photo_mockups',
   },
 ];

@@ -1,0 +1,27 @@
+our-kitchen p1.jpg 0=tab-p
+jullius p1.jpg 0=tab-p
+moa-winery p1.jpg 0=tab-p
+gurgroup p5.jpg 0=tab-p
+winecase p12.jpg 0=tab-l
+teo p8.jpg 0=tab-p
+3-bears p8.jpg 0=tab-p
+helios p4.webp 0=tab-p 1=phone
+gordon-pool p4.webp 0=tab-p 1=phone
+little-fences p4.webp 0=tab-p 1=phone
+firon p7.jpg 0=phone@5067,2196,6118,2189,6074,4467,5074,4467
+boutique77 p7.jpg 0=phone@5067,2196,6118,2189,6074,4467,5074,4467
+mybase p3.jpg 0=laptop 1=phone
+meteor-center p3.jpg 0=tab-l 1=phone
+delivery-app p3.jpg 0=laptop 1=phone
+agur p2.jpg 0=tab-l
+margalit p2.jpg 0=tab-l
+recanati p6.jpg 2=tab-l
+client-portal p6.jpg 2=laptop
+studio-gur p9.jpg 1=laptop
+barantech p9.jpg 1=laptop
+enosh p10.jpg 0=tab-l
+vinspiration p10.jpg 0=tab-l
+netofa p11.jpg 1=tab-l
+benny-goren p11.jpg 1=laptop
+mosessco p12.jpg 0=tab-l
+samurai p12.jpg 0=g2
