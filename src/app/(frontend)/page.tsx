@@ -41,7 +41,7 @@ export default async function HomePage() {
   const categories = allCategories.filter((c) => shown.some(({ p }) => catOf(p) === String(c.id)))
 
   return (
-    <div className="site" data-site data-bg={site.bg} data-ink={site.ink} data-acc={site.acc} data-acc-sm={accentTones(site).sm} data-acc-lg={accentTones(site).lg} style={paletteVars(site)}>
+    <div className={hero === 'single' ? 'site top-light' : 'site'} data-site data-bg={site.bg} data-ink={site.ink} data-acc={site.acc} data-acc-sm={accentTones(site).sm} data-acc-lg={accentTones(site).lg} style={paletteVars(site)}>
       <Header projects={projects} />
 
       <main id="content">

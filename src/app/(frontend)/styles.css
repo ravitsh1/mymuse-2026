@@ -228,25 +228,31 @@ html.menu-open { overflow: hidden }
   .ph[data-hero="both"] .ph-card { width: 72%; left: auto }
 }
 /* "single": one sentence over photos that change on their own (HeroCycle); pinned for one screen only.
-   A soft glow in the word's colour keeps the text readable over the lighter veil. */
+   The photos sit under an even dark veil (66% of --ph-dark) and the sentence is light: 3.5:1 or more over any pixel. */
+.site { --ph-dark: #1b1030; --ph-light: #ffe8c2; --ph-em: #ffb3cb }
+html[data-trial="viola"] .site { --ph-dark: #2a0f3a; --ph-light: #fff6e8; --ph-em: #ffc27a }
+html[data-trial="mist"] .site { --ph-dark: #3f4d4d; --ph-light: #f1f7f7; --ph-em: #f1f7f7 }
 .ph[data-hero="single"] { height: 200vh }
+.ph[data-hero="single"] .ph-sticky { color: var(--ph-light) }
+.ph[data-hero="single"] .ph-one em { color: var(--ph-em) }
+/* the header is light while it sits on the hero (HeroCycle drops .top-light once the page below reaches it) */
+html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
+.ph[data-hero="single"] :focus-visible, html:not(.menu-open) .site.top-light .top :focus-visible { outline-color: var(--ph-light) }
 .ph-one { font-size: clamp(60px, 9.4vw, 156px); margin: 0 }
 .ph-one > span > span { display: block }
 /* the logo stands for "MyMuse": beside the two lines on desktop, above them on mobile */
 .ph-one > span { display: grid; grid-template-columns: auto 1fr; column-gap: .28em; align-items: center }
 .ph-logo { grid-row: 1 / 3; height: 1.72em; width: auto }
-/* the veil is 55% where the sentence sits and fades out beyond it */
-.ph[data-hero="single"] .ph-bgs::after { background: linear-gradient(to right, color-mix(in srgb, var(--h-bg, var(--p-bg)) 55%, transparent) 62%, color-mix(in srgb, var(--h-bg, var(--p-bg)) 10%, transparent) 86%) }
+.ph[data-hero="single"] .ph-bgs::after { background: color-mix(in srgb, var(--ph-dark) 66%, transparent) }
 @media (prefers-reduced-motion: no-preference) {
   .ph[data-hero="single"] .ph-media { transition: transform 4.5s linear }
   .ph[data-hero="single"] .ph-bg.on .ph-media { transform: scale(1.07) }
 }
 .ph-cbtn { position: absolute; z-index: 1; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); right: var(--edge-r); padding: 8px 14px; border-radius: 99px;
-  border: 1px solid currentColor; background: var(--h-bg, var(--p-bg)); color: inherit; font: inherit; font-size: 14px; cursor: pointer; transition: background-color .7s }
+  border: 1px solid var(--ph-light); background: var(--ph-light); color: var(--ph-dark); font: inherit; font-size: 14px; cursor: pointer }
 @media (max-width: 720px) {
   .ph-one > span { display: block }
   .ph-logo { display: block; height: 1.5em; margin-bottom: .22em }
-  .ph[data-hero="single"] .ph-bgs::after { background: linear-gradient(to top, color-mix(in srgb, var(--h-bg, var(--p-bg)) 55%, transparent) 45%, color-mix(in srgb, var(--h-bg, var(--p-bg)) 10%, transparent) 70%) }
 }
 @media (max-width: 720px) { .ph[data-hero="single"] .ph-sticky { align-content: end; padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px)) } }
 .after-ph { position: relative; z-index: 1; background: var(--p-bg); transition: background-color .6s }

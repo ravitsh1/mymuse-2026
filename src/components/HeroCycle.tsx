@@ -6,7 +6,8 @@ const STEP = 3200
 
 /**
  * Home hero trial "single" (lib/trial.ts): the background photos change on their own, each with its word's colours,
- * instead of with the scroll. Not under prefers-reduced-motion; the button stops it (WCAG 2.2.2).
+ * instead of with the scroll. Not under prefers-reduced-motion; the button stops it (WCAG 2.2.2). Also keeps the
+ * header light while it sits on the hero.
  */
 export function HeroCycle() {
   const ref = useRef<HTMLButtonElement>(null)
@@ -17,6 +18,21 @@ export function HeroCycle() {
     const r = matchMedia('(prefers-reduced-motion: reduce)').matches
     setReduce(r)
     setOn(!r)
+  }, [])
+
+  // the header is light (.top-light, rendered on) while it sits on the hero, until the page below reaches it
+  useEffect(() => {
+    const site = document.querySelector('[data-site]')
+    const after = document.querySelector('.after-ph')
+    if (!site || !after) return
+    const check = () => site.classList.toggle('top-light', after.getBoundingClientRect().top > 40)
+    check()
+    addEventListener('scroll', check, { passive: true })
+    addEventListener('resize', check)
+    return () => {
+      removeEventListener('scroll', check)
+      removeEventListener('resize', check)
+    }
   }, [])
 
   useEffect(() => {
