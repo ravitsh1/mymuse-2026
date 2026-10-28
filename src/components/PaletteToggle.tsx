@@ -20,7 +20,6 @@ const GROUPS = [
       ['work', 'עבודות'],
       ['statement', 'כותרת'],
       ['both', 'שניהם'],
-      ['video', 'וידאו'],
     ],
   },
 ] as const
