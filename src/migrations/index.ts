@@ -33,6 +33,7 @@ import * as migration_20261027_100000_project_bg_from_images from './20261027_10
 import * as migration_20261027_120000_project_accents_on_new_bg from './20261027_120000_project_accents_on_new_bg';
 import * as migration_20261027_220000_transparent_project_heroes from './20261027_220000_transparent_project_heroes';
 import * as migration_20261028_090000_project_photo_mockups from './20261028_090000_project_photo_mockups';
+import * as migration_20261028_183412_design_trials_switch from './20261028_183412_design_trials_switch';
 
 export const migrations = [
   {
@@ -183,7 +184,7 @@ export const migrations = [
   {
     up: migration_20261025_212022_neon_sunset_palette.up,
     down: migration_20261025_212022_neon_sunset_palette.down,
-    name: '20261025_212022_neon_sunset_palette'
+    name: '20261025_212022_neon_sunset_palette',
   },
   {
     up: migration_20261026_190000_restore_dark_site.up,
@@ -210,4 +211,9 @@ export const migrations = [
     down: migration_20261028_090000_project_photo_mockups.down,
     name: '20261028_090000_project_photo_mockups',
   },
-];
+  {
+    up: migration_20261028_183412_design_trials_switch.up,
+    down: migration_20261028_183412_design_trials_switch.down,
+    name: '20261028_183412_design_trials_switch',
+  },
+]

@@ -47,7 +47,7 @@ html[data-trial] .visual .v-shade { --cut: linear-gradient(to top, var(--v-bg) v
   html[data-trial] .visual[data-opaque~="wide"] .v-shade { background: linear-gradient(to bottom, color-mix(in srgb, var(--v-bg) 70%, transparent), transparent 18%), var(--cut) }
 }
 /* Passion photos under a light veil of the word's colour instead of the dark one: slate text keeps 4.5:1 over a black pixel */
-html[data-trial] .ph-bgs::after { background: linear-gradient(to right, color-mix(in srgb, var(--h-bg, var(--p-bg)) 55%, transparent), color-mix(in srgb, var(--h-bg, var(--p-bg)) 28%, transparent)) }
+html[data-trial] .ph-bgs::after { background: linear-gradient(to right, color-mix(in srgb, var(--h-bg, var(--p-bg)) 36%, transparent), color-mix(in srgb, var(--h-bg, var(--p-bg)) 10%, transparent)) }
 html[data-trial] .ph-orb { background: radial-gradient(circle at 40% 40%, var(--trial-orb), transparent 68%); opacity: .8 }
 body { margin: 0; font-family: var(--f-body); font-size: 18px; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; font-synthesis: none }
 img, video { max-width: 100%; display: block }
@@ -230,7 +230,7 @@ html.menu-open { overflow: hidden }
 /* "single": one sentence over photos that change on their own (HeroCycle); pinned for one screen only.
    A soft glow in the word's colour keeps the text readable over the lighter veil. */
 .ph[data-hero="single"] { height: 200vh }
-.ph-one { font-size: clamp(60px, 9.4vw, 156px); margin: 0; text-shadow: 0 0 .35em color-mix(in srgb, var(--h-bg, var(--p-bg)) 85%, transparent) }
+.ph-one { font-size: clamp(60px, 9.4vw, 156px); margin: 0; text-shadow: 0 0 .3em color-mix(in srgb, var(--h-bg, var(--p-bg)) 90%, transparent), 0 0 .12em color-mix(in srgb, var(--h-bg, var(--p-bg)) 80%, transparent) }
 .ph-one > span > span { display: block }
 .ph-one > span > span:first-child { font-size: .42em; letter-spacing: .02em; margin-bottom: .3em }
 @media (prefers-reduced-motion: no-preference) {
