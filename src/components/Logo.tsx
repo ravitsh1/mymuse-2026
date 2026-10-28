@@ -13,8 +13,9 @@ export const LogoWide = ({ className }: { className?: string }) => (
 )
 
 /** "MY / MUSE" stacked in a square — admin login, small marks. */
-export const LogoStacked = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
-  <svg className={className} style={style} viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+/** `tight` crops the square's margins (home hero, where it sits in a line of text). */
+export const LogoStacked = ({ className, style, tight }: { className?: string; style?: React.CSSProperties; tight?: boolean }) => (
+  <svg className={className} style={style} viewBox={tight ? '42 89 428 334' : '0 0 512 512'} aria-hidden="true" focusable="false">
     <path fill="currentColor" fillRule="evenodd" d={STACKED} />
   </svg>
 )
