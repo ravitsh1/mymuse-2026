@@ -95,7 +95,7 @@ Connect `mymuse.co.il` + `www` in Vercel → confirm `robots.txt` allows and `X-
 
 ## Open items
 
-- **Design trials (`lib/trial.ts`, `PaletteToggle`, the "ניסיונות עיצוב" pill)** are on the live site for the designer meeting: palette Neon/Mist/Viola (cookie `palette`) and home hero מקורי/עבודות/כותרת/שניהם (cookie `hero`, word→project in `HERO_WORK`; a video hero was tried on 2026-10-28 and dropped). Default palette is Viola (no cookie). Colours swap in code, nothing in the CMS. Before launch either remove it or move the chosen palette into the CMS with a migration and delete the trial code.
+- **Design trials (`lib/trial.ts`, `PaletteToggle`, the "ניסיונות עיצוב" pill)** are on the live site for the designer meeting: palette Neon/Mist/Viola (cookie `palette`) and home hero משפט אחד (default: "MyMuse inspired by your passion", photos change on a timer in `HeroCycle`, pause button)/מקורי/עבודות/כותרת/שניהם (cookie `hero`, word→project in `HERO_WORK`; a video hero was tried on 2026-10-28 and dropped). Default palette is Viola (no cookie). Colours swap in code, nothing in the CMS. Before launch either remove it or move the chosen palette into the CMS with a migration and delete the trial code.
 - Real images/videos and texts for the projects (sample texts are placeholders).
 - Accessibility statement and privacy policy: fill the `[להשלמה]` parts.
 - Palette: **Neon Sunset** (brand book handoff 2026-10-25): night #1b1030, text #ffe8c2, magenta #ff3d7f, orange #ff9f1c, turquoise #2ec4b6, deep #235c68, wine #a42b5f, plum #7b2351, surface #241640, muted #b6a393. Light text needs 4.5:1 (orange tiles take dark #1b1030 text). The admin colour swatches (`components/admin/ColorField.tsx`) list it.

@@ -89,14 +89,15 @@ export const trialChrome = (t: TrialName | null) => (t ? TRIALS[t].site.bg : '#1
 
 /**
  * Home hero trial (same meeting): "work" shows a real project next to each Passion word, "statement" puts a Hebrew
- * headline above the words, "both" does both. Set by the "hero" cookie; without it, the hero as it is.
+ * headline above the words, "both" does both, "single" (the default since 2026-10-28) replaces the words with one
+ * sentence over the photos, which change on their own (HeroCycle). Set by the "hero" cookie.
  */
-export const HERO_LAYOUTS = ['classic', 'work', 'statement', 'both'] as const
+export const HERO_LAYOUTS = ['single', 'classic', 'work', 'statement', 'both'] as const
 export type HeroLayout = (typeof HERO_LAYOUTS)[number]
 
 export const trialHero = async (): Promise<HeroLayout> => {
   const c = (await cookies()).get('hero')?.value
-  return (HERO_LAYOUTS as readonly string[]).includes(c ?? '') ? (c as HeroLayout) : 'classic'
+  return (HERO_LAYOUTS as readonly string[]).includes(c ?? '') ? (c as HeroLayout) : 'single'
 }
 
 /** The project shown with each Passion word in the "work" hero, by word. */

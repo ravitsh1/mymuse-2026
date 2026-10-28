@@ -3,6 +3,7 @@ import { Footer } from '@/components/Footer'
 import { JsonLd } from '@/components/JsonLd'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { Header } from '@/components/Header'
+import { HeroCycle } from '@/components/HeroCycle'
 import { CategoryFilter } from '@/components/CategoryFilter'
 import { CopyValue, Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
@@ -81,7 +82,17 @@ export default async function HomePage() {
             ) : (
               <div className="ph-orb" aria-hidden="true" />
             )}
-            {showStatement ? (
+            {hero === 'single' ? (
+              <h1 className="ph-title ph-one" id="pt" tabIndex={-1}>
+                <span lang="en">
+                  <span>MyMuse</span> <span>inspired by</span>{' '}
+                  <span>
+                    your <em>passion</em>
+                  </span>
+                </span>
+                <span className="sr-only"> · בניית אתרים בהתאמה אישית</span>
+              </h1>
+            ) : showStatement ? (
               <h1 className="ph-title" id="pt" tabIndex={-1}>
                 <span lang="en">
                   Inspired by <em>success</em>
@@ -93,25 +104,31 @@ export default async function HomePage() {
                 MyMuse · בניית אתרים בהתאמה אישית
               </h1>
             )}
-            <p className="passion" aria-label={`Passion & ${words.map((w) => w.word).join(', ')}`}>
-              <span aria-hidden="true">
-                Passion
-                <br />
-                <span className="amp">&amp;</span>{' '}
-                <span className="words">
-                  <span data-wcol>
-                    {words.map((w) => (
-                      <span key={w.id ?? w.word}>{w.word}</span>
-                    ))}
+            {hero === 'single' ? (
+              <HeroCycle />
+            ) : (
+              <>
+                <p className="passion" aria-label={`Passion & ${words.map((w) => w.word).join(', ')}`}>
+                  <span aria-hidden="true">
+                    Passion
+                    <br />
+                    <span className="amp">&amp;</span>{' '}
+                    <span className="words">
+                      <span data-wcol>
+                        {words.map((w) => (
+                          <span key={w.id ?? w.word}>{w.word}</span>
+                        ))}
+                      </span>
+                    </span>
                   </span>
-                </span>
-              </span>
-            </p>
-            <div className="ticks" aria-hidden="true">
-              {words.map((w, k) => (
-                <i key={w.id ?? k} data-tick className={k ? '' : 'on'} />
-              ))}
-            </div>
+                </p>
+                <div className="ticks" aria-hidden="true">
+                  {words.map((w, k) => (
+                    <i key={w.id ?? k} data-tick className={k ? '' : 'on'} />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </section>
 

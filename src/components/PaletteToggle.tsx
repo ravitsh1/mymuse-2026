@@ -16,6 +16,7 @@ const GROUPS = [
     cookie: 'hero',
     label: 'פתיחת דף הבית',
     options: [
+      ['single', 'משפט אחד'],
       ['classic', 'מקורי'],
       ['work', 'עבודות'],
       ['statement', 'כותרת'],
