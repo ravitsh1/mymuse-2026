@@ -3,6 +3,7 @@ import { Footer } from '@/components/Footer'
 import { JsonLd } from '@/components/JsonLd'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { Header } from '@/components/Header'
+import { HeroVideo } from '@/components/HeroVideo'
 import { CategoryFilter } from '@/components/CategoryFilter'
 import { CopyValue, Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
@@ -51,7 +52,9 @@ export default async function HomePage() {
           aria-labelledby="pt"
         >
           <div className="ph-sticky" data-phs>
-            {showWork ? (
+            {hero === 'video' ? (
+              <HeroVideo />
+            ) : showWork ? (
               /* One project per word, in the same layers Motion cross-fades (data-phbg); the index below lists them all. */
               <div className="ph-work" aria-hidden="true">
                 {words.map((w, k) => {
