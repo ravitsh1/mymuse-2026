@@ -5,7 +5,7 @@ import type { Home, Project, Setting } from '@/payload-types'
  * Palette trial (brand book, 2026-10-27): Mist and Viola next to the CMS colours (Neon), for the meeting with the
  * designer. A trial palette replaces the colours read from the CMS instead of changing them, because preview builds
  * share the production database (the light test of 2026-10-26 went live that way).
- * The switch (PaletteToggle) sets the "palette" cookie; without it production shows Neon and previews show Mist.
+ * The switch (PaletteToggle) sets the "palette" cookie; without it the site shows Viola.
  * Remove the switch, or move the chosen palette into the CMS, before launch.
  */
 type Trial = {
@@ -54,7 +54,8 @@ const TRIALS = {
 export type TrialName = keyof typeof TRIALS
 export const TRIAL_NAMES = Object.keys(TRIALS) as TrialName[]
 
-const DEFAULT: TrialName | null = process.env.VERCEL_ENV !== 'production' ? 'mist' : null
+// Viola everywhere since 2026-10-28 (Ravit's pick for now); the switch still shows Neon and Mist
+const DEFAULT: TrialName | null = 'viola'
 
 /** The trial palette in use, or null for the CMS colours (Neon). */
 export const trialPalette = async (): Promise<TrialName | null> => {
@@ -88,9 +89,10 @@ export const trialChrome = (t: TrialName | null) => (t ? TRIALS[t].site.bg : '#1
 
 /**
  * Home hero trial (same meeting): "work" shows a real project next to each Passion word, "statement" puts a Hebrew
- * headline above the words, "both" does both. Set by the "hero" cookie; without it, the hero as it is.
+ * headline above the words, "both" does both, "video" plays a montage of the photo mockups (public/hero) behind the
+ * words. Set by the "hero" cookie; without it, the hero as it is.
  */
-export const HERO_LAYOUTS = ['classic', 'work', 'statement', 'both'] as const
+export const HERO_LAYOUTS = ['classic', 'work', 'statement', 'both', 'video'] as const
 export type HeroLayout = (typeof HERO_LAYOUTS)[number]
 
 export const trialHero = async (): Promise<HeroLayout> => {
