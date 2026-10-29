@@ -94,7 +94,7 @@ export const Home: GlobalConfig = {
               labels: { singular: 'שירות', plural: 'שירותים' },
               defaultValue: [
                 { title: 'אפיון', text: SERVICE_TEXTS[0], bg: '#ffe8c2', ink: '#1b1030' },
-                { title: 'הקמת האתר', text: SERVICE_TEXTS[1], bg: '#2ec4b6', ink: '#1b1030' },
+                { title: 'הקמת האתר', text: SERVICE_TEXTS[1], bg: '#c6f432', ink: '#1b1030' },
                 { title: 'פיתוח, API ואינטגרציות', text: SERVICE_TEXTS[2], bg: '#ff9f1c', ink: '#1b1030' },
                 { title: 'אפליקציות ומערכות', text: SERVICE_TEXTS[3], bg: '#a42b5f', ink: '#ffe8c2' },
                 { title: 'ליווי מתמשך', text: SERVICE_TEXTS[4], bg: '#235c68', ink: '#ffe8c2' },
