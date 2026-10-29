@@ -34,6 +34,7 @@ import * as migration_20261027_120000_project_accents_on_new_bg from './20261027
 import * as migration_20261027_220000_transparent_project_heroes from './20261027_220000_transparent_project_heroes';
 import * as migration_20261028_090000_project_photo_mockups from './20261028_090000_project_photo_mockups';
 import * as migration_20261028_183412_design_trials_switch from './20261028_183412_design_trials_switch';
+import * as migration_20261029_090000_neon_lime from './20261029_090000_neon_lime';
 
 export const migrations = [
   {
@@ -215,5 +216,10 @@ export const migrations = [
     up: migration_20261028_183412_design_trials_switch.up,
     down: migration_20261028_183412_design_trials_switch.down,
     name: '20261028_183412_design_trials_switch',
+  },
+  {
+    up: migration_20261029_090000_neon_lime.up,
+    down: migration_20261029_090000_neon_lime.down,
+    name: '20261029_090000_neon_lime',
   },
 ]
