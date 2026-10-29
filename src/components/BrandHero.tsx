@@ -8,7 +8,7 @@ export function BrandHero() {
     <section className="bh" aria-labelledby="pt">
       <div className="bh-art" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element -- a static file in public/, not CMS media */}
-        <img src="/brand/hero-letters.webp" alt="" width={787} height={733} fetchPriority="high" />
+        <img src="/brand/hero-letters.webp" alt="" width={787} height={733} fetchPriority="high" data-speed="-0.25" />
       </div>
       <div className="bh-copy">
         <p className="bh-tag">סטודיו לעיצוב ופיתוח אתרים</p>

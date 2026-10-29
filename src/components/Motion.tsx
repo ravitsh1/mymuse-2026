@@ -208,6 +208,8 @@ export function Motion() {
       const y = scrollY
       const max = document.documentElement.scrollHeight - vh
       if (bar) bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`
+      // the header is see-through at the top of the page and takes a background once the page moves under it
+      site.classList.toggle('scrolled', y > 24)
       if (reduce) return
 
       if (ph && phs && wcol && words.length) {
