@@ -71,7 +71,12 @@ export const TRIAL_NAMES = Object.keys(TRIALS) as TrialName[]
 const DEFAULT: TrialName | null = process.env.VERCEL_ENV === 'production' ? 'viola' : 'b26'
 
 /** The trial palette in use, or null for the CMS colours (Neon). */
+// 2026-10-29: Ravit settled on the brand book (b26); the other designs are hidden, whatever the visitor's cookie says.
+// The code for them stays until the switch is removed for good.
+const SETTLED: TrialName | null = 'b26'
+
 export const trialPalette = async (): Promise<TrialName | null> => {
+  if (SETTLED) return SETTLED
   const c = (await cookies()).get('palette')?.value
   if (!c) return DEFAULT
   return (TRIAL_NAMES as string[]).includes(c) ? (c as TrialName) : null

@@ -4,8 +4,7 @@ import { CookieNotice } from '@/components/CookieNotice'
 import { getPage, getSettings, sitePalette } from '@/lib/data'
 import { indexable } from '@/lib/site'
 import { SITE_URL } from '@/lib/seo'
-import { PaletteToggle } from '@/components/PaletteToggle'
-import { trialChrome, trialHero, trialPalette } from '@/lib/trial'
+import { trialChrome, trialPalette } from '@/lib/trial'
 import './styles.css'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -25,7 +24,7 @@ export async function generateViewport(): Promise<Viewport> {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [settings, privacy, trial, hero] = await Promise.all([getSettings(), getPage('privacy-policy'), trialPalette(), trialHero()])
+  const [settings, privacy, trial] = await Promise.all([getSettings(), getPage('privacy-policy'), trialPalette()])
   const site = sitePalette(settings)
   return (
     <html lang="he" dir="rtl" data-trial={trial ?? undefined}>
@@ -53,7 +52,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {settings.cookieText && (
           <CookieNotice text={settings.cookieText} privacyHref={privacy ? '/privacy-policy' : undefined} bg={site.bg} ink={site.ink} acc={site.acc} />
         )}
-        {settings.showTrials && <PaletteToggle current={{ palette: trial ?? 'neon', hero }} />}
+        {/* the design trials are settled (lib/trial.ts SETTLED), so the PaletteToggle switch is no longer rendered */}
       </body>
     </html>
   )
