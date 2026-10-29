@@ -1,9 +1,17 @@
 import Link from 'next/link'
 import type { Setting } from '@/payload-types'
+import { trialPalette } from '@/lib/trial'
 
-export function Footer({ settings, pages }: { settings: Setting; pages: { id: number; title: string; slug: string }[] }) {
+export async function Footer({ settings, pages }: { settings: Setting; pages: { id: number; title: string; slug: string }[] }) {
+  // brand book 2026: the tagline signs off every page
+  const brand = (await trialPalette()) === 'b26'
   return (
     <footer className="foot wrap">
+      {brand && (
+        <p className="b-sign" lang="en">
+          We are all <em>about passion</em>
+        </p>
+      )}
       <span>© MyMuse {new Date().getFullYear()}</span>
       <ul>
         {pages.map((p) => (

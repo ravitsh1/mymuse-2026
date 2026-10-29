@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Footer } from '@/components/Footer'
 import { JsonLd } from '@/components/JsonLd'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
-import { BrandHero } from '@/components/BrandHero'
+import { BrandHero, BrandLabel, LastWordPink } from '@/components/BrandHero'
 import { Header } from '@/components/Header'
 import { HeroCycle } from '@/components/HeroCycle'
 import { CategoryFilter } from '@/components/CategoryFilter'
@@ -43,6 +43,33 @@ export default async function HomePage() {
   const catOf = (p: (typeof projects)[number]) => (p.category && typeof p.category === 'object' ? String(p.category.id) : p.category ? String(p.category) : '')
   // only categories that have a project in the list
   const categories = allCategories.filter((c) => shown.some(({ p }) => catOf(p) === String(c.id)))
+
+  const aboutParas = (home.aboutBody ?? '')
+    .split(/\n\s*\n/)
+    .map((t) => t.trim())
+    .filter(Boolean)
+  // brand book 2026: the about text opens the page, right after the hero, with the four words beside it
+  const brandAbout = home.aboutHeadline ? (
+    <section className="b-about wrap" id="about" aria-labelledby="abh">
+      <div>
+        <BrandLabel n={1}>Who we are</BrandLabel>
+        <h2 id="abh">
+          <LastWordPink text={home.aboutHeadline} words={2} />
+        </h2>
+        {aboutParas.map((t, k) => (
+          <p key={k} className="b-text">
+            {t}
+          </p>
+        ))}
+      </div>
+      <p className="b-words" aria-hidden="true">
+        <span>Ideas</span>
+        <span>Design</span>
+        <span>Development</span>
+        <span>Experience</span>
+      </p>
+    </section>
+  ) : null
 
   return (
     <div className={!brand && hero === 'single' ? 'site top-light' : 'site'} data-site data-bg={site.bg} data-ink={site.ink} data-acc={site.acc} data-acc-sm={accentTones(site).sm} data-acc-lg={accentTones(site).lg} style={paletteVars(site)}>
@@ -145,12 +172,15 @@ export default async function HomePage() {
 
         {/* Slides over the pinned Passion section on desktop (see .after-ph): needs a full-width background. */}
         <div className="after-ph">
-          {home.subtitle && <p className="lede wrap">{home.subtitle}</p>}
+          {brand ? brandAbout : null}
+          {!brand && home.subtitle && <p className="lede wrap">{home.subtitle}</p>}
           {shown.length > 0 && (
             <section className="ix wrap" id="work" data-ix aria-labelledby="ixh">
+              {brand && <BrandLabel n={2}>Selected work</BrandLabel>}
               <div className="ix-head">
                 <h2 id="ixh">{home.workTitle || 'עבודות נבחרות'}</h2>
-                {categories.length > 1 && <CategoryFilter categories={categories.map((c) => ({ id: c.id, title: c.title }))} />}
+                {brand && home.subtitle && <p className="b-text">{home.subtitle}</p>}
+                {categories.length > 1 && <CategoryFilter categories={categories.map((c) => ({ id: c.id, title: c.title }))} all={brand} />}
               </div>
               <ul className="rows" data-rows>
                 {shown.map(({ p, i }) => {
@@ -175,6 +205,7 @@ export default async function HomePage() {
 
         {!!home.services?.length && (
           <section className="svc wrap" id="services" aria-labelledby="svch">
+            {brand && <BrandLabel n={3}>Services</BrandLabel>}
             <h2 id="svch">{home.servicesTitle}</h2>
             <ol className="cards">
               {home.services.map((s, k) => (
@@ -196,7 +227,7 @@ export default async function HomePage() {
           </section>
         )}
 
-        {home.aboutHeadline && (
+        {!brand && home.aboutHeadline && (
           <section className="about wrap" id="about" aria-labelledby="abh">
             <h2 className="kicker" id="abh">
               MyMuse
@@ -206,14 +237,11 @@ export default async function HomePage() {
                 <span key={k}>{w} </span>
               ))}
             </p>
-            {home.aboutBody && (
+            {aboutParas.length > 0 && (
               <div className="about-body">
-                {home.aboutBody
-                  .split(/\n\s*\n/)
-                  .filter((t) => t.trim())
-                  .map((t, k) => (
-                    <p key={k}>{t.trim()}</p>
-                  ))}
+                {aboutParas.map((t, k) => (
+                  <p key={k}>{t}</p>
+                ))}
               </div>
             )}
           </section>
@@ -222,8 +250,14 @@ export default async function HomePage() {
         {!!home.clients?.length && <Marquee names={home.clients.map((c) => c.name)} />}
 
         <section className="contact wrap" id="contact" aria-labelledby="cth">
-          <h2 id="cth">{home.contactTitle || 'נדבר?'}</h2>
+          {brand && <BrandLabel n={4}>Contact</BrandLabel>}
+          <h2 id="cth">{brand ? <LastWordPink text={home.contactTitle || 'נדבר?'} /> : home.contactTitle || 'נדבר?'}</h2>
           {home.contactBody && <p className="ct-body">{home.contactBody}</p>}
+          {brand && settings.email && (
+            <a className="pill" href={`mailto:${settings.email}`}>
+              צרו קשר <span aria-hidden="true">←</span>
+            </a>
+          )}
           <div className="ct">
             {settings.email && <CopyValue value={settings.email} />}
             {settings.phone && <CopyValue value={settings.phone} />}

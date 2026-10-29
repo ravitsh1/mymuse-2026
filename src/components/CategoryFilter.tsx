@@ -11,8 +11,9 @@ const STEP = 10
  * this only hides rows (rows carry data-cat): other categories, and under "all" the rows past the current limit.
  * "All" shows the projects in a random order, new on every visit; a category keeps the admin order (the HTML order).
  * Rendered after mount, so without JS there are no dead buttons — just every project, in the admin order.
+ * `all` (brand book 2026): the button is "all projects" and shows every remaining one at once.
  */
-export function CategoryFilter({ categories }: { categories: { id: number | string; title: string }[] }) {
+export function CategoryFilter({ categories, all }: { categories: { id: number | string; title: string }[]; all?: boolean }) {
   const [on, setOn] = useState<string>('all')
   const [limit, setLimit] = useState(STEP)
   const [more, setMore] = useState(0)
@@ -64,7 +65,7 @@ export function CategoryFilter({ categories }: { categories: { id: number | stri
 
   const showMore = () => {
     const first = rows().filter((li) => !li.hidden).length
-    const next = limit + STEP
+    const next = all ? Infinity : limit + STEP
     setLimit(next)
     setCount(apply('all', next))
     // keyboard and screen-reader users continue from the first project just added
@@ -87,10 +88,16 @@ export function CategoryFilter({ categories }: { categories: { id: number | stri
       {on === 'all' &&
         more > 0 &&
         createPortal(
-          <button type="button" className="go" onClick={showMore}>
-            עוד פרויקטים <span aria-hidden="true">({more})</span>
-            <span className="sr-only">, נותרו {more}</span>
-          </button>,
+          all ? (
+            <button type="button" className="go" onClick={showMore}>
+              לכל הפרויקטים <span aria-hidden="true">({more + limit})</span>
+            </button>
+          ) : (
+            <button type="button" className="go" onClick={showMore}>
+              עוד פרויקטים <span aria-hidden="true">({more})</span>
+              <span className="sr-only">, נותרו {more}</span>
+            </button>
+          ),
           slot,
         )}
     </>

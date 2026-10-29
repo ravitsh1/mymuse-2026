@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(SITE_URL),
     robots: live ? { index: true, follow: true } : { index: false, follow: false },
-    title: { default: 'MyMuse · בניית אתרים בהתאמה אישית', template: '%s · MyMuse' },
+    title: { default: 'MyMuse | עיצוב, בנייה ופיתוח אתרים בהתאמה אישית', template: '%s · MyMuse' },
     description: s.metaDescription ?? undefined,
     openGraph: { siteName: 'MyMuse', locale: 'he_IL', type: 'website' },
   }
