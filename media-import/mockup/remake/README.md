@@ -23,3 +23,11 @@ folder `<slug>/` (not committed).
    site's colour shows through. These are what the projects use since 2026-10-27 (`media-import/transparent/`). In Neon
    the project colour equals the band, so they look like the opaque version.
 
+
+## Brand book 2026 (`mockup26.js`)
+
+`node mockup26.js <slug> [variant 0-3]` → `m26.jpg` (2400×1350), `PORTRAIT=1` → `m26-m.jpg` (1080×1920). Uses the same
+captures (`laptop.png`, else `tab-l.png`/`g1.png`, and `phone.png`). A porcelain room, side sun with leaf shadows, two
+painted slabs in the brand colours (variant = colour pair; give neighbouring projects different variants), the laptop
+and phone in the top ~60% (desktop: phone on the left, the title sits bottom right) and above the bottom 30% (mobile).
+The project heroes since 2026-10-29 (`media-import/brand26/`, migration `projects_2026`).
