@@ -59,7 +59,7 @@ export const Settings: GlobalConfig = {
       label: 'להציג את "ניסיונות עיצוב"',
       type: 'checkbox',
       defaultValue: false,
-      admin: { description: 'הכפתור בפינת האתר שמחליף פלטה ופתיחת דף הבית. כשהוא מוסתר, האתר מוצג בברירת המחדל (בדפדפן שכבר בחר, הבחירה נשמרת).' },
+      admin: { hidden: true, description: 'הכפתור בפינת האתר שמחליף פלטה ופתיחת דף הבית. כשהוא מוסתר, האתר מוצג בברירת המחדל (בדפדפן שכבר בחר, הבחירה נשמרת).' },
     },
     {
       name: 'shareImage',

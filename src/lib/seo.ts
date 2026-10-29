@@ -4,7 +4,8 @@ import { asMedia, mediaUrl } from './media'
 /** The live address. Canonicals, sitemap and share tags always point here (the *.vercel.app copy is noindex). */
 export const SITE_URL = 'https://mymuse.co.il'
 export const SITE_NAME = 'MyMuse'
-export const DEFAULT_DESCRIPTION = 'MyMuse – בניית אתרים בהתאמה אישית: אפיון, הקמה, פיתוח ממשק וליווי מתמשך.'
+export const DEFAULT_DESCRIPTION =
+  'MyMuse הוא סטודיו לתכנון, עיצוב ופיתוח אתרים בהתאמה אישית מאז 2010. עיצוב, פתרונות טכנולוגיים וליווי מתמשך לעסקים, מהתכנון ועד אחרי ההשקה.'
 
 export const abs = (path: string) => new URL(path, SITE_URL).toString()
 
