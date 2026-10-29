@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Footer } from '@/components/Footer'
 import { JsonLd } from '@/components/JsonLd'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
+import { BrandHero } from '@/components/BrandHero'
 import { Header } from '@/components/Header'
 import { HeroCycle } from '@/components/HeroCycle'
 import { CategoryFilter } from '@/components/CategoryFilter'
@@ -12,7 +13,7 @@ import { NextFrame } from '@/components/NextFrame'
 import { MediaEl, Visual } from '@/components/Visual'
 import { accentTones, getCategories, getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
-import { HERO_WORK, trialHero } from '@/lib/trial'
+import { HERO_WORK, trialHero, trialPalette } from '@/lib/trial'
 
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings()
@@ -20,14 +21,17 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [projects, home, settings, pages, allCategories, hero] = await Promise.all([
+  const [projects, home, settings, pages, allCategories, hero, palette] = await Promise.all([
     getProjects(),
     getHome(),
     getSettings(),
     getFooterPages(),
     getCategories(),
     trialHero(),
+    trialPalette(),
   ])
+  // the 2026 brand book brings its own hero (BrandHero) in place of the Passion section and its trials
+  const brand = palette === 'b26'
   const showWork = hero === 'work' || hero === 'both'
   const showStatement = hero === 'statement' || hero === 'both'
   // "work" hero: the project shown with each word (falls back to the projects in order)
@@ -41,99 +45,103 @@ export default async function HomePage() {
   const categories = allCategories.filter((c) => shown.some(({ p }) => catOf(p) === String(c.id)))
 
   return (
-    <div className={hero === 'single' ? 'site top-light' : 'site'} data-site data-bg={site.bg} data-ink={site.ink} data-acc={site.acc} data-acc-sm={accentTones(site).sm} data-acc-lg={accentTones(site).lg} style={paletteVars(site)}>
-      <Header projects={projects} />
+    <div className={!brand && hero === 'single' ? 'site top-light' : 'site'} data-site data-bg={site.bg} data-ink={site.ink} data-acc={site.acc} data-acc-sm={accentTones(site).sm} data-acc-lg={accentTones(site).lg} style={paletteVars(site)}>
+      <Header projects={projects} home />
 
       <main id="content">
-        <section
-          className="ph"
-          data-hero={hero}
-          data-ph
-          data-words={JSON.stringify(words.map((w) => ({ bg: w.bg || site.bg, accent: w.accent || site.acc })))}
-          aria-labelledby="pt"
-        >
-          <div className="ph-sticky" data-phs>
-            {showWork ? (
-              /* One project per word, in the same layers Motion cross-fades (data-phbg); the index below lists them all. */
-              <div className="ph-work" aria-hidden="true">
-                {words.map((w, k) => {
-                  const p = workOf(w, k)
-                  return (
-                    <figure key={w.id ?? k} className={k ? 'ph-bg ph-card' : 'ph-bg ph-card on'} data-phbg>
-                      <div className="ph-shot">{p?.hero && <MediaEl m={p.hero} fill decorative sizes="(max-width: 720px) 92vw, 46vw" eager={k === 0} />}</div>
-                      {p && (
-                        <figcaption>
-                          {p.title}
-                          {p.field && <span> · {p.field}</span>}
-                        </figcaption>
-                      )}
-                    </figure>
-                  )
-                })}
-              </div>
-            ) : words.some((w) => 'image' in w && w.image) ? (
-              /* One layer per word (empty when it has no image) so layer n always belongs to word n. */
-              <div className="ph-bgs" aria-hidden="true">
-                {words.map((w, k) => (
-                  <div key={w.id ?? k} className={k ? 'ph-bg' : 'ph-bg on'} data-phbg>
-                    {'image' in w && w.image && <MediaEl m={w.image} className="ph-media" fill decorative eager={k === 0} />}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="ph-orb" aria-hidden="true" />
-            )}
-            {hero === 'single' ? (
-              <h1 className="ph-title ph-one" id="pt" tabIndex={-1}>
-                <span lang="en">
-                  <LogoStacked className="ph-logo" tight />
-                  <span className="sr-only">MyMuse </span>
-                  <span>inspired by</span>{' '}
-                  <span>
-                    your <em>passion</em>
-                  </span>
-                </span>
-                <span className="sr-only"> · בניית אתרים בהתאמה אישית</span>
-              </h1>
-            ) : showStatement ? (
-              <h1 className="ph-title" id="pt" tabIndex={-1}>
-                <span lang="en">
-                  Inspired by <em>success</em>
-                </span>
-                <span className="sr-only"> · MyMuse, בניית אתרים בהתאמה אישית</span>
-              </h1>
-            ) : (
-              <h1 className="sr-only" id="pt" tabIndex={-1}>
-                MyMuse · בניית אתרים בהתאמה אישית
-              </h1>
-            )}
-            {hero === 'single' ? (
-              <HeroCycle />
-            ) : (
-              <>
-                <p className="passion" aria-label={`Passion & ${words.map((w) => w.word).join(', ')}`}>
-                  <span aria-hidden="true">
-                    Passion
-                    <br />
-                    <span className="amp">&amp;</span>{' '}
-                    <span className="words">
-                      <span data-wcol>
-                        {words.map((w) => (
-                          <span key={w.id ?? w.word}>{w.word}</span>
-                        ))}
-                      </span>
-                    </span>
-                  </span>
-                </p>
-                <div className="ticks" aria-hidden="true">
+        {brand ? (
+          <BrandHero />
+        ) : (
+          <section
+            className="ph"
+            data-hero={hero}
+            data-ph
+            data-words={JSON.stringify(words.map((w) => ({ bg: w.bg || site.bg, accent: w.accent || site.acc })))}
+            aria-labelledby="pt"
+          >
+            <div className="ph-sticky" data-phs>
+              {showWork ? (
+                /* One project per word, in the same layers Motion cross-fades (data-phbg); the index below lists them all. */
+                <div className="ph-work" aria-hidden="true">
+                  {words.map((w, k) => {
+                    const p = workOf(w, k)
+                    return (
+                      <figure key={w.id ?? k} className={k ? 'ph-bg ph-card' : 'ph-bg ph-card on'} data-phbg>
+                        <div className="ph-shot">{p?.hero && <MediaEl m={p.hero} fill decorative sizes="(max-width: 720px) 92vw, 46vw" eager={k === 0} />}</div>
+                        {p && (
+                          <figcaption>
+                            {p.title}
+                            {p.field && <span> · {p.field}</span>}
+                          </figcaption>
+                        )}
+                      </figure>
+                    )
+                  })}
+                </div>
+              ) : words.some((w) => 'image' in w && w.image) ? (
+                /* One layer per word (empty when it has no image) so layer n always belongs to word n. */
+                <div className="ph-bgs" aria-hidden="true">
                   {words.map((w, k) => (
-                    <i key={w.id ?? k} data-tick className={k ? '' : 'on'} />
+                    <div key={w.id ?? k} className={k ? 'ph-bg' : 'ph-bg on'} data-phbg>
+                      {'image' in w && w.image && <MediaEl m={w.image} className="ph-media" fill decorative eager={k === 0} />}
+                    </div>
                   ))}
                 </div>
-              </>
-            )}
-          </div>
-        </section>
+              ) : (
+                <div className="ph-orb" aria-hidden="true" />
+              )}
+              {hero === 'single' ? (
+                <h1 className="ph-title ph-one" id="pt" tabIndex={-1}>
+                  <span lang="en">
+                    <LogoStacked className="ph-logo" tight />
+                    <span className="sr-only">MyMuse </span>
+                    <span>inspired by</span>{' '}
+                    <span>
+                      your <em>passion</em>
+                    </span>
+                  </span>
+                  <span className="sr-only"> · בניית אתרים בהתאמה אישית</span>
+                </h1>
+              ) : showStatement ? (
+                <h1 className="ph-title" id="pt" tabIndex={-1}>
+                  <span lang="en">
+                    Inspired by <em>success</em>
+                  </span>
+                  <span className="sr-only"> · MyMuse, בניית אתרים בהתאמה אישית</span>
+                </h1>
+              ) : (
+                <h1 className="sr-only" id="pt" tabIndex={-1}>
+                  MyMuse · בניית אתרים בהתאמה אישית
+                </h1>
+              )}
+              {hero === 'single' ? (
+                <HeroCycle />
+              ) : (
+                <>
+                  <p className="passion" aria-label={`Passion & ${words.map((w) => w.word).join(', ')}`}>
+                    <span aria-hidden="true">
+                      Passion
+                      <br />
+                      <span className="amp">&amp;</span>{' '}
+                      <span className="words">
+                        <span data-wcol>
+                          {words.map((w) => (
+                            <span key={w.id ?? w.word}>{w.word}</span>
+                          ))}
+                        </span>
+                      </span>
+                    </span>
+                  </p>
+                  <div className="ticks" aria-hidden="true">
+                    {words.map((w, k) => (
+                      <i key={w.id ?? k} data-tick className={k ? '' : 'on'} />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </section>
+        )}
 
         {/* Slides over the pinned Passion section on desktop (see .after-ph): needs a full-width background. */}
         <div className="after-ph">

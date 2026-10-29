@@ -397,6 +397,69 @@ main[tabindex="-1"]:focus { outline: none }
 .go { pointer-events: auto; margin-top: 14px; font: 600 15px var(--f-body); color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 999px; padding: 10px 22px; text-decoration: none }
 .go:hover { background: color-mix(in srgb, currentColor 12%, transparent) }
 
+/* ---------- brand book 2026 (palette trial b26, lib/trial.ts) ----------
+   Porcelain, deep violet ink, burgundy for small labels and links (9:1), laser pink for one word or an indicator
+   (3.3:1: large text and marks only), lemon for the one primary button (violet on it 13:1). No gradients. */
+html[data-trial="b26"] { --chrome-bg: #f8f7f9; --b-deep: #801f48; --b-pink: #ff2d83; --b-pop: #f4e85a }
+html[data-trial="b26"] .site { --p-acc-sm: #801f48 !important }
+html[data-trial="b26"] .after-ph { margin-top: 0; box-shadow: none }
+html[data-trial="b26"] .visual .glow { display: none }
+html[data-trial="b26"] .cookie button { background: #1c0f30; color: #f8f7f9 }
+html[data-trial="b26"] .cookie button:focus-visible, html[data-trial="b26"] .cookie a:focus-visible { outline-color: #1c0f30 }
+/* header: the sections and the intro call on desktop, the menu button below 1024px */
+.top-nav, .top-cta { display: none }
+@media (min-width: 1024px) {
+  html[data-trial="b26"] .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent); backdrop-filter: blur(10px) }
+  html[data-trial="b26"] .top-nav { display: block; margin-inline: auto }
+  html[data-trial="b26"] .top-cta { display: inline-flex }
+  html[data-trial="b26"] .burger { display: none }
+  html[data-trial="b26"] .count { margin-right: 0 }
+}
+.top-nav ul { display: flex; gap: clamp(20px, 2.6vw, 44px); list-style: none; margin: 0; padding: 0 }
+.top-nav a { display: inline-block; padding-block: 8px; font-size: 16px; text-decoration: none; color: inherit }
+.top-nav a:hover { color: var(--b-deep) }
+.top-nav a[aria-current="page"] { box-shadow: inset 0 -2px var(--b-pink) }
+.top-cta { align-items: center; gap: 10px; padding: 9px 20px; border: 1.5px solid currentColor; border-radius: 999px; font-size: 15px; text-decoration: none; color: inherit }
+.top-cta:hover { background: var(--p-ink); color: var(--p-bg) }
+
+/* home hero: copy on the right, the 3D letters on the left */
+.bh { position: relative; min-height: max(100vh, 640px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); grid-template-areas: "copy art";
+  align-items: center; padding: 110px var(--edge-r) 150px var(--edge-l); overflow: hidden }
+.bh-art { position: absolute; inset: 0 auto 0 0; width: 56%;
+  -webkit-mask-image: linear-gradient(to left, transparent, #000 18%), linear-gradient(to top, transparent, #000 14%); -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to left, transparent, #000 18%), linear-gradient(to top, transparent, #000 14%); mask-composite: intersect }
+.bh-art img { width: 100%; height: 100%; object-fit: cover; object-position: 70% 60% }
+.bh-copy { grid-area: copy; position: relative; z-index: 1; display: grid; gap: clamp(18px, 2.4vh, 28px); justify-items: start }
+.bh-tag { margin: 0; font-size: 16px; color: var(--b-deep) }
+.bh h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 7.4vw, 140px); line-height: .88; letter-spacing: -.01em }
+.bh h1:focus { outline: none }
+.bh h1 span, .bh h1 em { display: block }
+.bh h1 em { font-style: normal; color: var(--b-pink) }
+.bh-text { margin: 0; max-width: 44ch; font-size: clamp(18px, 1.4vw, 21px); line-height: 1.6 }
+.bh-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; margin-top: 8px }
+.pill { display: inline-flex; align-items: center; gap: 14px; min-height: 52px; padding: 14px 32px; border-radius: 999px; background: var(--b-pop); color: #1c0f30;
+  font-size: 18px; text-decoration: none; transition: transform .25s cubic-bezier(.2,.8,.2,1) }
+.pill:hover { transform: translateY(-2px) }
+.pill span, .top-cta span { transition: transform .25s }
+.pill:hover span, .top-cta:hover span { transform: translateX(-4px) }
+.bh-link { font-size: 18px; color: inherit; text-decoration: underline 2px var(--b-pink); text-underline-offset: 10px }
+.bh-link:hover { color: var(--b-deep) }
+.bh-side { position: absolute; z-index: 1; margin: 0; width: min-content; display: grid; gap: 14px; font-size: 11px; line-height: 1.9; letter-spacing: .3em;
+  text-transform: uppercase; direction: ltr; text-align: left }
+.bh-side span { font-size: 12px; letter-spacing: .1em }
+.bh-side-b span::before { content: ''; display: block; width: 1px; height: 40px; margin: 0 0 8px; background: currentColor; opacity: .5 }
+.bh-side-b { bottom: 28px; right: var(--edge-r) }
+@media (max-width: 1280px) { .bh-art { width: 50% } }
+@media (max-width: 900px) {
+  .bh { grid-template-columns: 1fr; grid-template-areas: "art" "copy"; align-items: start; padding-top: 70px; padding-bottom: 70px; min-height: 0 }
+  .bh-art { grid-area: art; position: relative; inset: auto; width: auto; height: 46vh; margin-inline: calc(-1 * var(--edge-l)) calc(-1 * var(--edge-r));
+    -webkit-mask-image: linear-gradient(to top, transparent, #000 22%); mask-image: linear-gradient(to top, transparent, #000 22%) }
+  .bh-art img { object-position: 50% 60% }
+  .bh-copy { margin-top: -20px }
+  .bh-side { display: none }
+}
+@media (prefers-reduced-motion: reduce) { .pill, .pill span, .top-cta span { transition: none } }
+
 /* ---------- reduced motion: static layout, no scrubbing, no auto-advance ---------- */
 @media (prefers-reduced-motion: reduce) {
   .site, .top { transition: none }

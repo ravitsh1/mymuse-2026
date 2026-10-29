@@ -5,7 +5,7 @@ import type { Home, Project, Setting } from '@/payload-types'
  * Palette trial (brand book, 2026-10-27): Mist and Viola next to the CMS colours (Neon), for the meeting with the
  * designer. A trial palette replaces the colours read from the CMS instead of changing them, because preview builds
  * share the production database (the light test of 2026-10-26 went live that way).
- * The switch (PaletteToggle) sets the "palette" cookie; without it the site shows Viola.
+ * The switch (PaletteToggle) sets the "palette" cookie; without it the site shows Viola (previews: b26).
  * Remove the switch, or move the chosen palette into the CMS, before launch.
  */
 type Trial = {
@@ -49,13 +49,26 @@ const TRIALS = {
       { bg: '#76129a', ink: '#fff6e8' },
     ],
   },
+  // Brand book 2026, palette A "Electric Contrast": porcelain, deep violet ink, burgundy depth, laser pink for one
+  // word or an indicator, lemon only for the one primary button (styles.css, html[data-trial="b26"]).
+  b26: {
+    site: { bg: '#f8f7f9', ink: '#1c0f30', accent: '#ff2d83' },
+    words: [{ bg: '#f8f7f9', accent: '#ff2d83' }],
+    cards: [
+      { bg: '#1c0f30', ink: '#f8f7f9' },
+      { bg: '#801f48', ink: '#f8f7f9' },
+      { bg: '#ffffff', ink: '#1c0f30' },
+      { bg: '#2e1f45', ink: '#f8f7f9' },
+      { bg: '#efebf1', ink: '#1c0f30' },
+    ],
+  },
 } satisfies Record<string, Trial>
 
 export type TrialName = keyof typeof TRIALS
 export const TRIAL_NAMES = Object.keys(TRIALS) as TrialName[]
 
-// Viola everywhere since 2026-10-28 (Ravit's pick for now); the switch still shows Neon and Mist
-const DEFAULT: TrialName | null = 'viola'
+// Viola on the live site since 2026-10-28 (Ravit's pick for now); previews open on the 2026 brand book (b26)
+const DEFAULT: TrialName | null = process.env.VERCEL_ENV === 'production' ? 'viola' : 'b26'
 
 /** The trial palette in use, or null for the CMS colours (Neon). */
 export const trialPalette = async (): Promise<TrialName | null> => {

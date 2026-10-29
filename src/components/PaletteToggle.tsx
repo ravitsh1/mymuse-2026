@@ -10,6 +10,7 @@ const GROUPS = [
       ['neon', 'Neon'],
       ['mist', 'Mist'],
       ['viola', 'Viola'],
+      ['b26', '2026'],
     ],
   },
   {
