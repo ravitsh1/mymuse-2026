@@ -39,6 +39,7 @@ import * as migration_20261029_180000_home_copy_2026 from './20261029_180000_hom
 import * as migration_20261029_200000_projects_2026 from './20261029_200000_projects_2026';
 import * as migration_20261029_210000_gurgroup_title from './20261029_210000_gurgroup_title';
 import * as migration_20261029_220000_categories_back from './20261029_220000_categories_back';
+import * as migration_20261029_230000_new_projects_2026 from './20261029_230000_new_projects_2026';
 
 export const migrations = [
   {
@@ -245,5 +246,10 @@ export const migrations = [
     up: migration_20261029_220000_categories_back.up,
     down: migration_20261029_220000_categories_back.down,
     name: '20261029_220000_categories_back',
+  },
+  {
+    up: migration_20261029_230000_new_projects_2026.up,
+    down: migration_20261029_230000_new_projects_2026.down,
+    name: '20261029_230000_new_projects_2026',
   },
 ]
