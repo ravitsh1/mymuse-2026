@@ -3,12 +3,20 @@
  * button, and the 3D letters (cut from the designer's hero mockup; a full-size render is
  * still to come). The side label is decoration.
  */
+import type React from 'react'
+
 export function BrandHero() {
   return (
     <section className="bh" aria-labelledby="pt">
+      {/* the 3D letters in three layers of one picture (the room with the M, the yellow sheet, the Y card), each
+          transparent outside its piece: they rise in one after another, then lag behind the scroll together */}
       <div className="bh-art" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element -- a static file in public/, not CMS media */}
-        <img src="/brand/hero-letters.webp" alt="" width={787} height={733} fetchPriority="high" data-speed="-0.25" />
+        <div className="bh-layers" data-speed="-0.25">
+          {['base', 'yellow', 'ycard'].map((l, k) => (
+            // eslint-disable-next-line @next/next/no-img-element -- static files in public/, not CMS media
+            <img key={l} src={`/brand/hero-${l}.webp`} alt="" width={787} height={733} fetchPriority={k ? 'auto' : 'high'} style={{ '--k': k } as React.CSSProperties} />
+          ))}
+        </div>
       </div>
       <div className="bh-copy">
         <p className="bh-tag">סטודיו לעיצוב ופיתוח אתרים</p>

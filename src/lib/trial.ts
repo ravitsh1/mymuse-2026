@@ -59,7 +59,7 @@ const TRIALS = {
       { bg: '#801f48', ink: '#f8f7f9' },
       { bg: '#ffffff', ink: '#1c0f30' },
       { bg: '#2e1f45', ink: '#f8f7f9' },
-      { bg: '#efebf1', ink: '#1c0f30' },
+      { bg: '#f4e85a', ink: '#1c0f30' },
     ],
   },
 } satisfies Record<string, Trial>
