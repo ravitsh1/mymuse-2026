@@ -408,8 +408,9 @@ html[data-trial="b26"] .cookie button { background: #1c0f30; color: #f8f7f9 }
 html[data-trial="b26"] .cookie button:focus-visible, html[data-trial="b26"] .cookie a:focus-visible { outline-color: #1c0f30 }
 /* header: the sections and the intro call on desktop, the menu button below 1024px */
 .top-nav, .top-cta { display: none }
+html[data-trial="b26"] .top { transition: color .6s, background-color .3s }
+html[data-trial="b26"] .site.scrolled .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent); backdrop-filter: blur(10px) }
 @media (min-width: 1024px) {
-  html[data-trial="b26"] .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent); backdrop-filter: blur(10px) }
   html[data-trial="b26"] .top-nav { display: block; margin-inline: auto }
   html[data-trial="b26"] .top-cta { display: inline-flex }
   html[data-trial="b26"] .burger { display: none }
@@ -428,7 +429,9 @@ html[data-trial="b26"] .cookie button:focus-visible, html[data-trial="b26"] .coo
 .bh-art { position: absolute; inset: 0 auto 0 0; width: 56%;
   -webkit-mask-image: linear-gradient(to left, transparent, #000 18%), linear-gradient(to top, transparent, #000 14%); -webkit-mask-composite: source-in;
   mask-image: linear-gradient(to left, transparent, #000 18%), linear-gradient(to top, transparent, #000 14%); mask-composite: intersect }
-.bh-art img { width: 100%; height: 100%; object-fit: cover; object-position: 70% 60% }
+.bh-art { overflow: hidden }
+/* the letters lag behind the scroll (Motion, data-speed): taller than their box so no edge shows */
+.bh-art img { position: relative; top: -12%; width: 100%; height: 124%; object-fit: cover; object-position: 70% 60%; will-change: transform }
 .bh-copy { grid-area: copy; position: relative; z-index: 1; display: grid; gap: clamp(18px, 2.4vh, 28px); justify-items: start }
 .bh-tag { margin: 0; font-size: 16px; color: var(--b-deep) }
 .bh h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 7.4vw, 140px); line-height: .88; letter-spacing: -.01em }
@@ -464,14 +467,19 @@ html[data-trial="b26"] .cookie button:focus-visible, html[data-trial="b26"] .coo
 html[data-trial="b26"] .ix-head h2, html[data-trial="b26"] .svc h2, html[data-trial="b26"] .contact h2, .b-about h2 {
   margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 7vw, 120px); line-height: .88; letter-spacing: -.01em; color: var(--p-ink) }
 html[data-trial="b26"] .contact h2 em, .b-about h2 em { font-style: normal; color: var(--b-pink) }
-.b-text { margin: 18px 0 0; max-width: 52ch; font-size: clamp(18px, 1.4vw, 21px); line-height: 1.6 }
+.b-text { margin: clamp(18px, 2vw, 28px) 0 0; max-width: 52ch; font-size: clamp(18px, 1.4vw, 21px); line-height: 1.6; opacity: 1 }
+html[data-trial="b26"] .ix-head p.b-text { margin-top: clamp(18px, 2vw, 28px); font-size: clamp(18px, 1.4vw, 21px); opacity: 1 }
+html[data-trial="b26"] .ix-head { margin-bottom: clamp(48px, 6vw, 88px) }
+html[data-trial="b26"] .row .rn { font-size: clamp(44px, 5.4vw, 88px) }
+html[data-trial="b26"] .row { padding-block: 14px 8px }
 html[data-trial="b26"] .ix-head { display: grid; justify-content: stretch; gap: 0 }
-html[data-trial="b26"] .ix-head .ix-filter { margin-top: 32px }
+html[data-trial="b26"] .ix-head .ix-filter { margin-top: clamp(28px, 3vw, 44px) }
 html[data-trial="b26"] .svc h2 { margin-bottom: 40px }
 .b-about { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 90px); align-items: center; padding-block: clamp(90px, 12vw, 160px) clamp(20px, 4vw, 40px) }
 .b-about h2 { margin-bottom: 14px }
-.b-words { margin: 0; display: grid; direction: ltr; text-align: left; font-family: var(--f-display); font-weight: 700; font-size: clamp(48px, 6vw, 116px); line-height: .9;
+.b-words { margin: 0; display: grid; direction: ltr; text-align: left; font-family: var(--f-display); font-weight: 700; line-height: .9; container-type: inline-size;
   text-transform: uppercase; padding-left: clamp(24px, 4vw, 70px); border-left: 1px solid var(--p-soft) }
+.b-words span { font-size: min(19cqi, 116px) } /* DEVELOPMENT, the longest, fills about nine tenths of the column */
 .b-words span:nth-child(2) { color: var(--b-deep) }
 .b-words span:nth-child(3) { color: var(--b-pink) }
 html[data-trial="b26"] .contact .pill { justify-self: start; margin-top: 6px }
@@ -482,7 +490,7 @@ html[data-trial="b26"] .track span:nth-child(3n+1) { color: var(--b-deep) }
 .b-sign em { display: block; font-style: normal; color: var(--b-pink) }
 @media (max-width: 900px) {
   .b-about { grid-template-columns: 1fr }
-  .b-words { font-size: clamp(44px, 14vw, 80px); border-left: 0; padding-left: 0; border-top: 1px solid var(--p-soft); padding-top: 24px }
+  .b-words { border-left: 0; padding-left: 0; border-top: 1px solid var(--p-soft); padding-top: 24px }
 }
 @media (prefers-reduced-motion: reduce) { .pill, .pill span, .top-cta span { transition: none } }
 
