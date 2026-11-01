@@ -646,6 +646,10 @@ export interface Setting {
    */
   cookieText?: string | null;
   /**
+   * שלושת ריבועי הצבע (רקע, טקסט, הדגשה) בתחתית כל עמוד פרויקט.
+   */
+  showSwatches?: boolean | null;
+  /**
    * הכפתור בפינת האתר שמחליף פלטה ופתיחת דף הבית. כשהוא מוסתר, האתר מוצג בברירת המחדל (בדפדפן שכבר בחר, הבחירה נשמרת).
    */
   showTrials?: boolean | null;
@@ -715,6 +719,7 @@ export interface SettingsSelect<T extends boolean = true> {
   accent?: T;
   metaDescription?: T;
   cookieText?: T;
+  showSwatches?: T;
   showTrials?: T;
   shareImage?: T;
   updatedAt?: T;

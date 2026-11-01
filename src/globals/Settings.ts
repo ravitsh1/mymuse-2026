@@ -55,6 +55,13 @@ export const Settings: GlobalConfig = {
       },
     },
     {
+      name: 'showSwatches',
+      label: 'להציג את פלטת הצבעים בעמודי הפרויקטים',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: { description: 'שלושת ריבועי הצבע (רקע, טקסט, הדגשה) בתחתית כל עמוד פרויקט.' },
+    },
+    {
       name: 'showTrials',
       label: 'להציג את "ניסיונות עיצוב"',
       type: 'checkbox',

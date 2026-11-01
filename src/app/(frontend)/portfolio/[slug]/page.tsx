@@ -146,16 +146,18 @@ export default async function ProjectPage({ params }: Props) {
           </section>
         )}
 
-        <section className="wrap" aria-label="פלטת הצבעים של הפרויקט">
-          <ul className="swatches">
-            {[c.bg, c.ink, c.acc].map((col) => (
-              <li className="sw" key={col}>
-                <span style={{ background: col }} />
-                <small>{col.toUpperCase()}</small>
-              </li>
-            ))}
-          </ul>
-        </section>
+        {settings.showSwatches && (
+          <section className="wrap" aria-label="פלטת הצבעים של הפרויקט">
+            <ul className="swatches">
+              {[c.bg, c.ink, c.acc].map((col) => (
+                <li className="sw" key={col}>
+                  <span style={{ background: col }} />
+                  <small>{col.toUpperCase()}</small>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <Footer settings={settings} pages={pages} />
 
