@@ -485,6 +485,7 @@ html[data-trial="b26"] .svc h2 { margin-bottom: 40px }
 .b-about { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(20px, 2.5vw, 40px); align-items: start; padding-block: clamp(90px, 12vw, 160px) clamp(20px, 4vw, 40px);
   view-timeline: --about block }
 .b-about .b-text { max-width: none }
+.b-about .b-text + .b-text { margin-top: .6em } /* between paragraphs: closer than after the heading */
 /* the words ride along the bottom of the screen while the text scrolls by, and end level with its last line */
 @media (min-width: 901px) { .b-words { position: sticky; bottom: 12vh; align-self: end } }
 .b-about h2 { margin-bottom: 14px }
