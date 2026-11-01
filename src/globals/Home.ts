@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { SERVICE_TAGS } from '../collections/Projects'
 import { colorField } from '../fields/color'
 import { refresh } from '../hooks/revalidate'
 
@@ -102,6 +103,14 @@ export const Home: GlobalConfig = {
               fields: [
                 { name: 'title', label: 'שם', type: 'text', required: true },
                 { name: 'text', label: 'תיאור', type: 'textarea' },
+                {
+                  name: 'tags',
+                  label: 'תגיות',
+                  type: 'select',
+                  hasMany: true,
+                  options: SERVICE_TAGS,
+                  admin: { description: 'מופיעות בכרטיס. לחיצה על תגית מציגה את הפרויקטים שסומנו בה.' },
+                },
                 { type: 'row', fields: [colorField('bg', 'רקע הכרטיס', '#ffe8c2'), colorField('ink', 'טקסט הכרטיס', '#1b1030')] },
               ],
             },

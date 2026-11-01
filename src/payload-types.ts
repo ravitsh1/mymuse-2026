@@ -600,6 +600,27 @@ export interface Home {
         title: string;
         text?: string | null;
         /**
+         * מופיעות בכרטיס. לחיצה על תגית מציגה את הפרויקטים שסומנו בה.
+         */
+        tags?:
+          | (
+              | 'ux'
+              | 'ui'
+              | 'wordpress'
+              | 'woocommerce'
+              | 'multilingual'
+              | 'content'
+              | 'tickets'
+              | 'delivery'
+              | 'app'
+              | 'system'
+              | 'api'
+              | 'ai'
+              | 'accessibility'
+              | 'support'
+            )[]
+          | null;
+        /**
          * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
          */
         bg?: string | null;
@@ -704,6 +725,7 @@ export interface HomeSelect<T extends boolean = true> {
     | {
         title?: T;
         text?: T;
+        tags?: T;
         bg?: T;
         ink?: T;
         id?: T;

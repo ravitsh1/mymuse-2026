@@ -302,6 +302,14 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
 .card .n { font-family: var(--f-display); font-size: clamp(90px, 14vw, 190px); line-height: .8; font-variant-numeric: tabular-nums }
 .card h3 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(48px, 7vw, 96px); line-height: .9 }
 .card p { margin: 10px 0 0; max-width: 40ch; font-size: clamp(19px, 2vw, 25px) }
+/* service tags: each leads to the projects marked with it (?service=…#work) */
+.card-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 18px 0 0; padding: 0 }
+.card-tags a { display: inline-block; padding: 6px 14px; border: 1px solid currentColor; border-radius: 999px; font-size: 15px; color: inherit; text-decoration: none; transition: background-color .2s, color .2s }
+.card-tags a:hover { background: var(--c-ink); color: var(--c-bg) }
+.card-tags a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px }
+.ix-service { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin: 0 0 24px; font-size: 18px }
+.ix-service strong { font-weight: 600 }
+.ix-service a { color: inherit; text-decoration: underline 2px var(--b-pink, currentColor); text-underline-offset: 6px }
 
 /* ---------- home: about ---------- */
 .about { padding-block: clamp(100px, 14vw, 190px) }
