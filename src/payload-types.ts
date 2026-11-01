@@ -176,6 +176,15 @@ export interface Project {
    * מילה בין כוכביות מקבלת את צבע ההדגשה: חנות שמרגישה כמו *המזקקה* עצמה.
    */
   statement?: string | null;
+  /**
+   * מוצגת בעמוד הפרויקט אחרי המשפט המרכזי. בלי ציטוט: לא מוצגת.
+   */
+  testimonial?: {
+    quote?: string | null;
+    name?: string | null;
+    role?: string | null;
+    company?: string | null;
+  };
   siteUrl?: string | null;
   /**
    * מוצג בפרטי הפרויקט: מה שלפני הנקודתיים הוא הכותרת. ריק = לא מוצג.
@@ -437,6 +446,14 @@ export interface ProjectsSelect<T extends boolean = true> {
   lead?: T;
   services?: T;
   statement?: T;
+  testimonial?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        role?: T;
+        company?: T;
+      };
   siteUrl?: T;
   credit?: T;
   category?: T;
@@ -631,6 +648,23 @@ export interface Home {
         id?: string | null;
       }[]
     | null;
+  testimonialsTitle?: string | null;
+  /**
+   * מוצגות בעמוד הבית אחרי השירותים. בלי המלצות: החלק לא מוצג.
+   */
+  testimonials?:
+    | {
+        quote: string;
+        name: string;
+        role?: string | null;
+        company?: string | null;
+        /**
+         * לא חובה: מוסיף קישור לעמוד הפרויקט מתחת להמלצה.
+         */
+        project?: (number | null) | Project;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * נצבע מילה אחרי מילה בגלילה.
    */
@@ -728,6 +762,17 @@ export interface HomeSelect<T extends boolean = true> {
         tags?: T;
         bg?: T;
         ink?: T;
+        id?: T;
+      };
+  testimonialsTitle?: T;
+  testimonials?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        role?: T;
+        company?: T;
+        project?: T;
         id?: T;
       };
   aboutHeadline?: T;
