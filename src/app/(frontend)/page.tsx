@@ -14,14 +14,15 @@ import { MediaEl, Visual } from '@/components/Visual'
 import { accentTones, getCategories, getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
 import { HERO_WORK, trialHero, trialPalette } from '@/lib/trial'
+import { SERVICE_TAGS } from '@/collections/Projects'
 
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings()
   return pageMetadata({ path: '/', description: s.metaDescription, image: shareImageOf(s.shareImage) })
 }
 
-export default async function HomePage() {
-  const [projects, home, settings, pages, allCategories, hero, palette] = await Promise.all([
+export default async function HomePage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  const [projects, home, settings, pages, allCategories, hero, palette, sp] = await Promise.all([
     getProjects(),
     getHome(),
     getSettings(),
@@ -29,7 +30,11 @@ export default async function HomePage() {
     getCategories(),
     trialHero(),
     trialPalette(),
+    searchParams,
   ])
+  // a service tag on a card links to ?service=<tag>#work: the index then lists only the projects marked with it
+  const service = SERVICE_TAGS.find((t) => t.value === sp.service)
+  const tagLabel = (v: string) => SERVICE_TAGS.find((t) => t.value === v)?.label ?? v
   // the 2026 brand book brings its own hero (BrandHero) in place of the Passion section and its trials
   const brand = palette === 'b26'
   const showWork = hero === 'work' || hero === 'both'
@@ -39,7 +44,10 @@ export default async function HomePage() {
   const site = sitePalette(settings)
   const words = home.words?.length ? home.words : [{ word: 'Expertise', bg: site.bg, accent: site.acc }]
   const featured = projects.map((p, i) => ({ p, i })).filter(({ p }) => p.featured)
-  const shown = featured.length ? featured : projects.map((p, i) => ({ p, i }))
+  const listed = featured.length ? featured : projects.map((p, i) => ({ p, i }))
+  const shown = service ? listed.filter(({ p }) => p.services?.includes(service.value as never)) : listed
+  // a card shows only the tags some listed project carries, so no tag leads to an empty list
+  const usedTags = new Set(listed.flatMap(({ p }) => p.services ?? []))
   const catOf = (p: (typeof projects)[number]) => (p.category && typeof p.category === 'object' ? String(p.category.id) : p.category ? String(p.category) : '')
   // only categories that have a project in the list
   const categories = allCategories.filter((c) => shown.some(({ p }) => catOf(p) === String(c.id)))
@@ -174,7 +182,7 @@ export default async function HomePage() {
         <div className="after-ph">
           {brand ? brandAbout : null}
           {!brand && home.subtitle && <p className="lede wrap">{home.subtitle}</p>}
-          {shown.length > 0 && (
+          {(shown.length > 0 || service) && (
             <section className="ix wrap" id="work" data-ix aria-labelledby="ixh">
               {brand && <BrandLabel n={2}>Selected work</BrandLabel>}
               <div className="ix-head">
@@ -182,6 +190,12 @@ export default async function HomePage() {
                 {brand && home.subtitle && <p className="b-text">{home.subtitle}</p>}
                 {categories.length > 1 && <CategoryFilter categories={categories.map((c) => ({ id: c.id, title: c.title }))} all={brand} />}
               </div>
+              {service && (
+                <p className="ix-service">
+                  {shown.length ? 'פרויקטים עם השירות' : 'עדיין אין פרויקטים עם השירות'} <strong>{service.label}</strong>
+                  <a href="/#work">לכל הפרויקטים</a>
+                </p>
+              )}
               <ul className="rows" data-rows>
                 {shown.map(({ p, i }) => {
                   const c = projectPalette(p)
@@ -220,6 +234,15 @@ export default async function HomePage() {
                   <div>
                     <h3>{s.title}</h3>
                     {s.text && <p>{s.text}</p>}
+                    {!!s.tags?.some((t) => usedTags.has(t)) && (
+                      <ul className="card-tags" aria-label={`פרויקטים לפי ${s.title}`}>
+                        {s.tags.filter((t) => usedTags.has(t)).map((t) => (
+                          <li key={t}>
+                            <a href={`/?service=${t}#work`}>{tagLabel(t)}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </li>
               ))}

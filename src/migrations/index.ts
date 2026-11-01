@@ -42,6 +42,8 @@ import * as migration_20261029_220000_categories_back from './20261029_220000_ca
 import * as migration_20261029_230000_new_projects_2026 from './20261029_230000_new_projects_2026';
 import * as migration_20261030_090000_new_projects_photos from './20261030_090000_new_projects_photos';
 import * as migration_20261101_060825_project_swatches_switch from './20261101_060825_project_swatches_switch';
+import * as migration_20261101_084551_project_services from './20261101_084551_project_services';
+import * as migration_20261101_085245_home_service_tags from './20261101_085245_home_service_tags';
 
 export const migrations = [
   {
@@ -263,5 +265,15 @@ export const migrations = [
     up: migration_20261101_060825_project_swatches_switch.up,
     down: migration_20261101_060825_project_swatches_switch.down,
     name: '20261101_060825_project_swatches_switch',
+  },
+  {
+    up: migration_20261101_084551_project_services.up,
+    down: migration_20261101_084551_project_services.down,
+    name: '20261101_084551_project_services',
+  },
+  {
+    up: migration_20261101_085245_home_service_tags.up,
+    down: migration_20261101_085245_home_service_tags.down,
+    name: '20261101_085245_home_service_tags',
   },
 ]

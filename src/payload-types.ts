@@ -152,6 +152,27 @@ export interface Project {
   platform?: string | null;
   lead?: string | null;
   /**
+   * תגיות שמופיעות בעמוד הפרויקט, מתחת לפרטים. רשימה קבועה, כדי שאותו שירות ייכתב תמיד באותה מילה.
+   */
+  services?:
+    | (
+        | 'ux'
+        | 'ui'
+        | 'wordpress'
+        | 'woocommerce'
+        | 'multilingual'
+        | 'content'
+        | 'tickets'
+        | 'delivery'
+        | 'app'
+        | 'system'
+        | 'api'
+        | 'ai'
+        | 'accessibility'
+        | 'support'
+      )[]
+    | null;
+  /**
    * מילה בין כוכביות מקבלת את צבע ההדגשה: חנות שמרגישה כמו *המזקקה* עצמה.
    */
   statement?: string | null;
@@ -414,6 +435,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   scope?: T;
   platform?: T;
   lead?: T;
+  services?: T;
   statement?: T;
   siteUrl?: T;
   credit?: T;
@@ -578,6 +600,27 @@ export interface Home {
         title: string;
         text?: string | null;
         /**
+         * מופיעות בכרטיס. לחיצה על תגית מציגה את הפרויקטים שסומנו בה.
+         */
+        tags?:
+          | (
+              | 'ux'
+              | 'ui'
+              | 'wordpress'
+              | 'woocommerce'
+              | 'multilingual'
+              | 'content'
+              | 'tickets'
+              | 'delivery'
+              | 'app'
+              | 'system'
+              | 'api'
+              | 'ai'
+              | 'accessibility'
+              | 'support'
+            )[]
+          | null;
+        /**
          * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
          */
         bg?: string | null;
@@ -682,6 +725,7 @@ export interface HomeSelect<T extends boolean = true> {
     | {
         title?: T;
         text?: T;
+        tags?: T;
         bg?: T;
         ink?: T;
         id?: T;
