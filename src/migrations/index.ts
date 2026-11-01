@@ -44,6 +44,7 @@ import * as migration_20261030_090000_new_projects_photos from './20261030_09000
 import * as migration_20261101_060825_project_swatches_switch from './20261101_060825_project_swatches_switch';
 import * as migration_20261101_084551_project_services from './20261101_084551_project_services';
 import * as migration_20261101_085245_home_service_tags from './20261101_085245_home_service_tags';
+import * as migration_20261101_092014_testimonials from './20261101_092014_testimonials';
 
 export const migrations = [
   {
@@ -275,5 +276,10 @@ export const migrations = [
     up: migration_20261101_085245_home_service_tags.up,
     down: migration_20261101_085245_home_service_tags.down,
     name: '20261101_085245_home_service_tags',
+  },
+  {
+    up: migration_20261101_092014_testimonials.up,
+    down: migration_20261101_092014_testimonials.down,
+    name: '20261101_092014_testimonials',
   },
 ]

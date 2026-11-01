@@ -151,6 +151,28 @@ export default async function ProjectPage({ params }: Props) {
           </section>
         )}
 
+        {p.testimonial?.quote && (
+          <section className="p-quote wrap" aria-label="המלצה">
+            <figure className="quote">
+              <blockquote>
+                {p.testimonial.quote
+                  .split(/\n\s*\n/)
+                  .map((t) => t.trim())
+                  .filter(Boolean)
+                  .map((t, j) => (
+                    <p key={j}>{t}</p>
+                  ))}
+              </blockquote>
+              {p.testimonial.name && (
+                <figcaption>
+                  <strong>{p.testimonial.name}</strong>
+                  <span>{[p.testimonial.role, p.testimonial.company || p.title].filter(Boolean).join(', ')}</span>
+                </figcaption>
+              )}
+            </figure>
+          </section>
+        )}
+
         {rest.length > 0 && (
           <section className="gallery wrap" aria-label="גלריה">
             {rest.map((m) => (

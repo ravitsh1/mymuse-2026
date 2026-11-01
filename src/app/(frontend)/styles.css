@@ -554,3 +554,23 @@ html[data-trial="b26"] .track span:nth-child(3n+1) { color: var(--b-deep) }
   .row .rf { display: none }
   .mq-btn { top: auto; bottom: 4px; translate: none }
 }
+
+/* testimonials (Home → המלצות, Projects → המלצה מהלקוח): a quote mark, the words, then who said it */
+.quotes { padding-block: clamp(40px, 8vw, 90px) }
+.quotes h2 { margin: 0 0 clamp(28px, 4vw, 48px); font-size: 15px; letter-spacing: .2em; font-weight: 600; color: var(--p-acc-sm, var(--p-acc)) }
+html[data-trial="b26"] .quotes h2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 7vw, 120px); line-height: .88; letter-spacing: -.01em; color: var(--p-ink) }
+.quote-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(20px, 3vw, 40px); list-style: none; margin: 0; padding: 0 }
+.quote { margin: 0; display: grid; gap: 18px; align-content: start }
+.quote blockquote { margin: 0; font-size: clamp(19px, 1.5vw, 23px); line-height: 1.55 }
+.quote blockquote::before { content: "\201D"; display: block; height: .42em; margin-bottom: .12em; overflow: visible; font-family: Georgia, "Times New Roman", serif; font-weight: 700;
+  font-size: clamp(72px, 7vw, 110px); line-height: .9; color: var(--b-pink, var(--p-acc-lg, var(--p-acc))) }
+.quote blockquote p { margin: 0 }
+.quote blockquote p + p { margin-top: .6em }
+.quote figcaption { display: grid; gap: 2px; font-size: 16px; line-height: 1.5 }
+.quote figcaption strong { font-weight: 600 }
+.quote figcaption a { justify-self: start; margin-top: 6px; color: inherit; text-decoration: underline; text-underline-offset: 3px }
+html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
+/* on a project page: one quote, larger */
+.p-quote { padding-block: clamp(40px, 8vw, 100px) }
+.p-quote .quote { max-width: 46ch }
+.p-quote blockquote { font-size: clamp(22px, 2.2vw, 32px) }

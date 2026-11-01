@@ -117,6 +117,37 @@ export const Home: GlobalConfig = {
           ],
         },
         {
+          label: 'המלצות',
+          fields: [
+            { name: 'testimonialsTitle', label: 'כותרת', type: 'text', defaultValue: 'מה אומרים עלינו' },
+            {
+              name: 'testimonials',
+              label: 'המלצות',
+              type: 'array',
+              labels: { singular: 'המלצה', plural: 'המלצות' },
+              admin: { description: 'מוצגות בעמוד הבית אחרי השירותים. בלי המלצות: החלק לא מוצג.' },
+              fields: [
+                { name: 'quote', label: 'ציטוט', type: 'textarea', required: true },
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'name', label: 'שם', type: 'text', required: true },
+                    { name: 'role', label: 'תפקיד', type: 'text', admin: { placeholder: 'מנכ״לית' } },
+                    { name: 'company', label: 'חברה', type: 'text', admin: { placeholder: 'יקב לוטם' } },
+                  ],
+                },
+                {
+                  name: 'project',
+                  label: 'פרויקט',
+                  type: 'relationship',
+                  relationTo: 'projects',
+                  admin: { description: 'לא חובה: מוסיף קישור לעמוד הפרויקט מתחת להמלצה.' },
+                },
+              ],
+            },
+          ],
+        },
+        {
           label: 'עלינו',
           fields: [
             {

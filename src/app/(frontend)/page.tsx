@@ -52,6 +52,12 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   // only categories that have a project in the list
   const categories = allCategories.filter((c) => shown.some(({ p }) => catOf(p) === String(c.id)))
 
+  // testimonials: a quote may point at a project; it links only while that project is visible
+  const quotes = (home.testimonials ?? []).map((q) => {
+    const id = q.project && typeof q.project === 'object' ? q.project.id : q.project
+    return { ...q, href: projects.find((p) => p.id === id)?.slug }
+  })
+
   const aboutParas = (home.aboutBody ?? '')
     .split(/\n\s*\n/)
     .map((t) => t.trim())
@@ -250,6 +256,35 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           </section>
         )}
 
+        {quotes.length > 0 && (
+          <section className="quotes wrap" id="testimonials" aria-labelledby="qth">
+            {brand && <BrandLabel n={4}>Testimonials</BrandLabel>}
+            <h2 id="qth">{home.testimonialsTitle || 'מה אומרים עלינו'}</h2>
+            <ul className="quote-list">
+              {quotes.map((q, k) => (
+                <li key={q.id ?? k}>
+                  <figure className="quote">
+                    <blockquote>
+                      {q.quote
+                        .split(/\n\s*\n/)
+                        .map((t) => t.trim())
+                        .filter(Boolean)
+                        .map((t, j) => (
+                          <p key={j}>{t}</p>
+                        ))}
+                    </blockquote>
+                    <figcaption>
+                      <strong>{q.name}</strong>
+                      {(q.role || q.company) && <span>{[q.role, q.company].filter(Boolean).join(', ')}</span>}
+                      {q.href && <a href={`/portfolio/${q.href}`}>לפרויקט</a>}
+                    </figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {!brand && home.aboutHeadline && (
           <section className="about wrap" id="about" aria-labelledby="abh">
             <h2 className="kicker" id="abh">
@@ -273,7 +308,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
         {!!home.clients?.length && <Marquee names={home.clients.map((c) => c.name)} />}
 
         <section className="contact wrap" id="contact" aria-labelledby="cth">
-          {brand && <BrandLabel n={4}>Contact</BrandLabel>}
+          {brand && <BrandLabel n={quotes.length ? 5 : 4}>Contact</BrandLabel>}
           <h2 id="cth">{brand ? <LastWordPink text={home.contactTitle || 'נדבר?'} /> : home.contactTitle || 'נדבר?'}</h2>
           {home.contactBody && <p className="ct-body">{home.contactBody}</p>}
           {brand && settings.email && (

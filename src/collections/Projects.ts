@@ -90,6 +90,23 @@ export const Projects: CollectionConfig = {
               type: 'text',
               admin: { description: 'מילה בין כוכביות מקבלת את צבע ההדגשה: חנות שמרגישה כמו *המזקקה* עצמה.' },
             },
+            {
+              name: 'testimonial',
+              label: 'המלצה מהלקוח',
+              type: 'group',
+              admin: { description: 'מוצגת בעמוד הפרויקט אחרי המשפט המרכזי. בלי ציטוט: לא מוצגת.' },
+              fields: [
+                { name: 'quote', label: 'ציטוט', type: 'textarea' },
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'name', label: 'שם', type: 'text' },
+                    { name: 'role', label: 'תפקיד', type: 'text', admin: { placeholder: 'מנכ״לית' } },
+                    { name: 'company', label: 'חברה', type: 'text', admin: { placeholder: 'ריק = שם הפרויקט' } },
+                  ],
+                },
+              ],
+            },
             { name: 'siteUrl', label: 'קישור לאתר', type: 'text', admin: { placeholder: 'https://' } },
             {
               name: 'credit',
