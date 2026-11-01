@@ -422,6 +422,8 @@ html[data-trial="b26"] .cookie button:focus-visible, html[data-trial="b26"] .coo
 .top-nav, .top-cta { display: none }
 html[data-trial="b26"] .top { transition: color .6s, background-color .3s }
 html[data-trial="b26"] .site.scrolled .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent); backdrop-filter: blur(10px) }
+/* the blur makes the header the containing block of its fixed children: the open menu would shrink to the header bar */
+html.menu-open .site.scrolled .top { backdrop-filter: none }
 @media (min-width: 1024px) {
   html[data-trial="b26"] .top-nav { display: block; margin-inline: auto }
   html[data-trial="b26"] .top-cta { display: inline-flex }
