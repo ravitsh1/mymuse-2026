@@ -53,7 +53,8 @@ body { margin: 0; font-family: var(--f-body); font-size: 18px; line-height: 1.6;
 img, video { max-width: 100%; display: block }
 a { color: inherit }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }
-.skip { position: fixed; top: 8px; right: 8px; z-index: 50; padding: 10px 16px; background: var(--p-ink); color: var(--p-bg); border-radius: 8px; transform: translateY(-200%) }
+/* the link sits outside .site, where the palette variables are not set: hence the fallbacks */
+.skip { position: fixed; top: 8px; right: 8px; z-index: 50; padding: 10px 16px; background: var(--p-ink, #1c0f30); color: var(--p-bg, #f8f7f9); border-radius: 8px; text-decoration: none; transform: translateY(-200%) }
 .skip:focus { transform: none }
 :focus-visible { outline: 2px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 3px }
 
