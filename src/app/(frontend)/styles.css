@@ -139,6 +139,9 @@ html.menu-open { overflow: hidden }
 .facts div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--p-soft) }
 .facts dt { font-size: 13px; letter-spacing: .14em; opacity: .85; padding-top: 4px }
 .facts dd { margin: 0; font-size: 17px; font-weight: 600; min-width: 0; overflow-wrap: anywhere }
+/* the services a project used, as small pills */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0 }
+.tags li { padding: 4px 12px; border: 1px solid var(--p-soft); border-radius: 999px; font-size: 14px; font-weight: 400; line-height: 1.5 }
 .band { position: relative; height: clamp(460px, 82vw, 1000px); overflow: hidden }
 /* parallax moves the screens past the band's top and bottom edges; clip only sideways so they are never cut off */
 @supports (overflow: clip) { .band { overflow: visible; overflow-x: clip } }

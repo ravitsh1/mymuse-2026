@@ -7,6 +7,7 @@ import { NextFrame } from '@/components/NextFrame'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { JsonLd } from '@/components/JsonLd'
 import { MediaEl, Visual } from '@/components/Visual'
+import { SERVICE_TAGS } from '@/collections/Projects'
 import { getFooterPages, getProjects, getSettings, nextProject, paletteVars, projectPalette } from '@/lib/data'
 import { asMedia } from '@/lib/media'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
@@ -116,6 +117,18 @@ export default async function ProjectPage({ params }: Props) {
               <div>
                 <dt>{credit.label}</dt>
                 <dd>{credit.value}</dd>
+              </div>
+            )}
+            {!!p.services?.length && (
+              <div>
+                <dt>שירותים</dt>
+                <dd>
+                  <ul className="tags">
+                    {SERVICE_TAGS.filter((t) => p.services?.includes(t.value as never)).map((t) => (
+                      <li key={t.value}>{t.label}</li>
+                    ))}
+                  </ul>
+                </dd>
               </div>
             )}
           </dl>
