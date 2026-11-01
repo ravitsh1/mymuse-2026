@@ -1,21 +1,19 @@
 /**
  * Home hero of the 2026 brand book (palette trial b26): the main slogan with its last line in pink, one yellow
- * button, and the 3D letters (cut from the designer's hero mockup; a full-size render is
- * still to come). The side label is decoration.
+ * button, and the Passion words as painted slabs. The side label is decoration.
  */
-import type React from 'react'
 
 export function BrandHero() {
   return (
     <section className="bh" aria-labelledby="pt">
-      {/* the 3D letters in three layers of one picture (the room with the M, the yellow sheet, the Y card), each
-          transparent outside its piece: they rise in one after another, then lag behind the scroll together */}
+      {/* the four Passion words as painted slabs leaning on each other (brand book, photo brief A): built in CSS, so
+          sharp at any size; they drop in one after another, then lag behind the scroll together */}
       <div className="bh-art" aria-hidden="true">
-        <div className="bh-layers" data-speed="-0.25">
-          {['base', 'yellow', 'ycard'].map((l, k) => (
-            // eslint-disable-next-line @next/next/no-img-element -- static files in public/, not CMS media
-            <img key={l} src={`/brand/hero-${l}.webp`} alt="" width={787} height={733} fetchPriority={k ? 'auto' : 'high'} style={{ '--k': k } as React.CSSProperties} />
-          ))}
+        <div className="bh-slabs" data-speed="-0.2">
+          <span className="slab">Ideas</span>
+          <span className="slab">Design</span>
+          <span className="slab">Develop</span>
+          <span className="slab">XP</span>
         </div>
       </div>
       <div className="bh-copy">

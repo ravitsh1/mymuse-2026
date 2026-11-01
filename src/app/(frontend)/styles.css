@@ -423,22 +423,25 @@ html[data-trial="b26"] .site.scrolled .top { background: color-mix(in srgb, var(
 .top-cta { align-items: center; gap: 10px; padding: 10px 22px; border: 0; border-radius: 999px; font-size: 15px; text-decoration: none; background: var(--b-pop); color: #1c0f30 }
 .top-cta:hover { background: #ebdc3c }
 
-/* home hero: copy on the right, the 3D letters on the left */
+/* home hero: copy on the right, the four Passion words as painted slabs on the left, on the same porcelain */
 .bh { position: relative; min-height: max(100vh, 640px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); grid-template-areas: "copy art";
   align-items: center; padding: 110px var(--edge-r) 150px var(--edge-l); overflow: hidden }
-.bh-art { position: absolute; inset: 0 auto 0 0; width: 56%;
-  -webkit-mask-image: linear-gradient(to left, transparent, #000 18%), linear-gradient(to top, transparent, #000 14%); -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to left, transparent, #000 18%), linear-gradient(to top, transparent, #000 14%); mask-composite: intersect }
-.bh-art { overflow: hidden }
-/* the letters lag behind the scroll (Motion, data-speed): taller than their box so no edge shows */
-.bh-layers { position: absolute; inset: -12% 0; will-change: transform }
-.bh-layers img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 60% }
+.bh-art { position: absolute; inset: 0 auto 0 0; width: 56%; container-type: size }
+/* the slabs lag behind the scroll together (Motion, data-speed) */
+.bh-slabs { position: absolute; inset: 0; will-change: transform }
+/* sizes in container units: the composition scales with its box. Each slab keeps its own tilt (--r) */
+.slab { position: absolute; left: var(--x); top: var(--y); padding: .12em .22em 0; font: 700 var(--s, 18cqi)/.8 var(--f-display); text-transform: uppercase; direction: ltr;
+  white-space: nowrap; transform: rotate(var(--r)); box-shadow: 4cqi 6cqi 5cqi rgba(28,15,48,.22) }
+.slab:nth-child(1) { --x: 8%; --y: 22%; --r: -7deg; background: #1c0f30; color: #f8f7f9 }
+.slab:nth-child(2) { --x: 45%; --y: 29%; --r: 5deg; background: var(--b-deep); color: #f8f7f9 }
+.slab:nth-child(3) { --x: 11%; --y: 50%; --r: -3deg; --s: 17cqi; background: var(--b-pink); color: #1c0f30 }
+.slab:nth-child(4) { --x: 58%; --y: 56%; --r: 9deg; --s: 17cqi; background: var(--b-pop); color: #1c0f30 }
+/* they drop in one after another and settle at their tilt */
 @media (prefers-reduced-motion: no-preference) {
-  .bh-layers img { animation: bh-rise 1.1s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(.15s + var(--k) * .38s) }
+  .slab { animation: slab-in .9s cubic-bezier(.2,.9,.25,1.15) both; animation-delay: calc(.15s + var(--k) * .22s) }
+  .slab:nth-child(2) { --k: 1 } .slab:nth-child(3) { --k: 2 } .slab:nth-child(4) { --k: 3 }
 }
-@keyframes bh-rise { from { opacity: 0; transform: translateY(70px) rotate(var(--r, 0deg)) } to { opacity: 1; transform: none } }
-.bh-layers img:nth-child(2) { --r: 4deg }
-.bh-layers img:nth-child(3) { --r: -3deg }
+@keyframes slab-in { from { opacity: 0; transform: translateY(-14cqi) rotate(calc(var(--r) * -2)) } to { opacity: 1; transform: rotate(var(--r)) } }
 .bh-copy { grid-area: copy; position: relative; z-index: 1; display: grid; gap: clamp(18px, 2.4vh, 28px); justify-items: start }
 .bh-tag { margin: 0; font-size: 16px; color: var(--b-deep) }
 .bh h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 7.4vw, 140px); line-height: .88; letter-spacing: -.01em }
@@ -462,10 +465,7 @@ html[data-trial="b26"] .site.scrolled .top { background: color-mix(in srgb, var(
 @media (max-width: 1280px) { .bh-art { width: 50% } }
 @media (max-width: 900px) {
   .bh { grid-template-columns: 1fr; grid-template-areas: "art" "copy"; align-items: start; padding-top: 70px; padding-bottom: 70px; min-height: 0 }
-  .bh-art { grid-area: art; position: relative; inset: auto; width: auto; height: 46vh; margin-inline: calc(-1 * var(--edge-l)) calc(-1 * var(--edge-r));
-    -webkit-mask-image: linear-gradient(to top, transparent, #000 22%); mask-image: linear-gradient(to top, transparent, #000 22%) }
-  .bh-art img { object-position: 50% 60% }
-  .bh-copy { margin-top: -20px }
+  .bh-art { grid-area: art; position: relative; inset: auto; width: auto; height: min(78vw, 46vh); margin-inline: calc(-1 * var(--edge-l)) calc(-1 * var(--edge-r)) }
   .bh-side { display: none }
 }
 
