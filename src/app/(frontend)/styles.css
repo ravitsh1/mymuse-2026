@@ -1,10 +1,13 @@
 /* Layout: home + one page per project; every page ends in a frame that grows into the next page.
    Colours come from the CMS as --p-* on [data-site]; this file only defines structure and type. */
-/* Body text: Talent FS (purchased licence; it allows embedding but not publishing the files, so the file lives in the
-   project's Blob store, not in this public repo). Only the Regular was bought, so it covers every weight; text set to
-   600 renders regular (font-synthesis: none on body keeps the browser from faking bold). */
-@font-face { font-family: 'Talent'; font-weight: 100 900; font-display: swap;
+/* Body text: Talent FS (purchased licence; it allows embedding but not publishing the files, so the files live in the
+   project's Blob store, not in this public repo). Two web weights were bought: Regular covers up to 500, Demibold
+   everything from 600 up, so bold text (strong = 700) gets the real Demibold; font-synthesis: none on body keeps the
+   browser from faking bold. */
+@font-face { font-family: 'Talent'; font-weight: 100 500; font-display: swap;
   src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/talent-regular.woff2') format('woff2') }
+@font-face { font-family: 'Talent'; font-weight: 600 900; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/talent-demibold.woff2') format('woff2') }
 :root {
   color-scheme: dark;
   --chrome-bg: #1b1030;
