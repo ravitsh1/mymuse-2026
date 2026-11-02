@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { Motion } from '@/components/Motion'
@@ -8,7 +8,7 @@ import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { JsonLd } from '@/components/JsonLd'
 import { MediaEl, Visual } from '@/components/Visual'
 import { SERVICE_TAGS } from '@/collections/Projects'
-import { getFooterPages, getProjects, getSettings, nextProject, paletteVars, projectPalette } from '@/lib/data'
+import { getFooterPages, getProjects, getSettings, isHiddenProject, nextProject, paletteVars, projectPalette } from '@/lib/data'
 import { asMedia } from '@/lib/media'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
 import type { Media } from '@/payload-types'
@@ -56,7 +56,11 @@ export default async function ProjectPage({ params }: Props) {
   const { slug } = await params
   const [projects, settings, pages] = await Promise.all([getProjects(), getSettings(), getFooterPages()])
   const index = projects.findIndex((p) => p.slug === slug)
-  if (index < 0) notFound()
+  if (index < 0) {
+    // a hidden project (old links and Google results point to most of them): to the project list, not a 404
+    if (await isHiddenProject(slug)) permanentRedirect('/#work')
+    notFound()
+  }
   const p = projects[index]
   const c = projectPalette(p)
   const nxt = nextProject(projects, p)!

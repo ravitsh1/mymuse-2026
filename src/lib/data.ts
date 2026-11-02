@@ -19,6 +19,18 @@ export const getProjects = cache(async (): Promise<Project[]> => {
   return res.docs.map((p) => trialProject(p, trial))
 })
 
+/** True for a project that exists but is hidden: its address sends visitors to the list instead of a 404. */
+export const isHiddenProject = cache(async (slug: string): Promise<boolean> => {
+  const res = await (await payload()).find({
+    collection: 'projects',
+    where: { and: [{ slug: { equals: slug } }, { hidden: { equals: true } }] },
+    depth: 0,
+    limit: 1,
+    select: { slug: true },
+  })
+  return res.docs.length > 0
+})
+
 /** Categories in their admin (drag) order: the filter buttons on the home page. */
 export const getCategories = cache(async () => {
   const res = await (await payload()).find({ collection: 'categories', sort: '_order', depth: 0, limit: 50 })
