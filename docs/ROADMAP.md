@@ -42,6 +42,8 @@ Work top to bottom. Each step ends with tsc + build + a check in the browser (39
 - [ ] WebGL image transition between projects (noise/dissolve) — only if it stays light and has a reduced-motion fallback.
 
 ## 6. Launch
-- [ ] Point mymuse.co.il + www to Vercel; confirm robots/noindex flipped by itself.
-- [ ] Spot-check legacy 301s: `/portfolio/<old-hebrew-slug>/`, `/about-us/`, `/הצהרת-נגישות/`, `/privacy-policy/`.
-- [ ] Submit the sitemap (Search Console + Bing). Full accessibility audit of the live site.
+- [x] Pre-launch check (2026-11-02): every URL in the old site's sitemaps (38) answers 200 or a 301/308 chain to a 200. Hidden projects now redirect to `/#work` (was 404); `/cart`, `/checkout`, `/instagram-3` → home. Robots/`X-Robots-Tag`/canonical flip by host (checked locally with `Host: mymuse.co.il`). Apple touch icon added. Accessibility audit (IS 5568 / WCAG AA) done 2026-11-01.
+- [ ] Ravit: VEE accessibility widget snippet → add to the layout; then fix "5688" → 5568 and the update date in the statement (admin).
+- [ ] Ravit: Vercel → Domains: add `mymuse.co.il` (primary) and `www.mymuse.co.il` (redirect to it). Cloudflare: the A/CNAME records Vercel shows, proxy **off** (DNS only); leave MX/TXT (email) untouched.
+- [ ] After DNS: `curl -I https://mymuse.co.il` has no `X-Robots-Tag`, `robots.txt` allows; spot-check 3 old URLs; submit `https://mymuse.co.il/sitemap.xml` in Search Console + Bing.
+- [ ] Later: remove the trial code (`lib/trial.ts`, `PaletteToggle`, unused palettes/heroes); b26 is the only look served (`SETTLED`).

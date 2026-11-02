@@ -12,6 +12,10 @@ const LEGACY: Record<string, string> = {
   '/contact': '/',
   '/portfolio': '/',
   '/הצהרת-נגישות': '/accessibility',
+  // the old site's shop pages and an Instagram feed page: nothing like them here
+  '/cart': '/',
+  '/checkout': '/',
+  '/instagram-3': '/',
 }
 const LEGACY_PROJECTS: Record<string, string> = {
   // all imported by src/import/wordpress.ts (same slug rule: the Latin part of the old slug)
