@@ -62,6 +62,17 @@ export const Settings: GlobalConfig = {
       admin: { description: 'שלושת ריבועי הצבע (רקע, טקסט, הדגשה) בתחתית כל עמוד פרויקט.' },
     },
     {
+      name: 'heroShade',
+      label: 'הצללה מעל תמונות ההירו',
+      type: 'radio',
+      defaultValue: 'none',
+      options: [
+        { label: 'בלי הצללה (התמונה כמו שהיא, הכותרת על רקע אחיד)', value: 'none' },
+        { label: 'עם הצללה (מעבר צבע מעל ומתחת לתמונה)', value: 'gradient' },
+      ],
+      admin: { description: 'בראש עמודי הפרויקטים ובמעבר לפרויקט הבא.' },
+    },
+    {
       name: 'nextMode',
       label: 'סוף עמוד פרויקט',
       type: 'radio',

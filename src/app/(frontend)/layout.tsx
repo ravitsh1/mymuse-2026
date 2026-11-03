@@ -44,7 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&display=swap"
         />
       </head>
-      <body>
+      <body data-shade={settings.heroShade === 'gradient' ? undefined : 'none'}>
         <a className="skip" href="#content">
           דילוג לתוכן
         </a>

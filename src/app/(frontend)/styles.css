@@ -644,3 +644,19 @@ html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
 .nc-all { display: inline-block; margin-top: clamp(24px, 3vw, 40px); color: inherit; font-size: 17px; text-decoration: underline; text-underline-offset: 4px }
 @media (max-width: 760px) { .nc-link { grid-template-columns: 1fr } }
 @media (prefers-reduced-motion: reduce) { .nc-media .visual { transition: none } .nc-link:hover .nc-media .visual { transform: none } }
+
+/* Settings → heroShade = none (the default from 2026-11-03, a trial): the hero pictures and the next-project frame
+   show as they are, no gradient over them. The text that sat on the gradient gets a solid patch of the page colour
+   instead, so it keeps its contrast over any photo, and the header gets its background from the top of the page. */
+body[data-shade="none"] .visual .v-shade, body[data-shade="none"] .next-tint { display: none }
+/* Karantina sits low in its line box: .04em on top and .14em at the foot leave the same .14em above and below the
+   letters (measured on letters with no ascender or descender; ל and ק reach into it) */
+body[data-shade="none"] .hero h1 > span { display: inline-block; line-height: .7; padding: .04em .14em .14em; background: var(--v-bg, var(--p-bg)) }
+body[data-shade="none"] .hero .kicker, body[data-shade="none"] .hint,
+body[data-shade="none"] .next-ui .lbl { display: inline-block; justify-self: end; padding: 6px 12px; background: var(--p-bg); opacity: 1 }
+body[data-shade="none"] .hero .kicker { position: relative; z-index: 1; margin-bottom: 0 }
+body[data-shade="none"] .hint { justify-self: auto }
+body[data-shade="none"] .next-ui .lbl, body[data-shade="none"] .next-ui .nm { justify-self: center; background: var(--n-bg, var(--p-bg)); padding: 6px 14px }
+body[data-shade="none"] .next-ui .nm { padding: .06em .16em 0 }
+body[data-shade="none"] .next-ui .go { background: var(--n-bg, var(--p-bg)) }
+body[data-shade="none"] .site .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent) }
