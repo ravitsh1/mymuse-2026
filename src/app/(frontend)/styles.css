@@ -614,7 +614,8 @@ html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
 .bot .brief .pill { justify-self: stretch; margin-top: 6px }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden }
 .bot-form { display: flex; gap: 10px; padding: 16px 24px 12px; border-top: 1px solid #e7e3ec }
-.bot-form textarea { flex: 1; min-width: 0; min-height: 52px; max-height: 140px; padding: 13px 18px; border: 1px solid #8d849a; border-radius: 26px; font: inherit; font-size: 17px; color: #1c0f30; background: #fff; resize: none }
+.bot-form { align-items: flex-end }
+.bot-form textarea { flex: 1; min-width: 0; height: 52px; min-height: 52px; max-height: 140px; padding: 13px 18px; border: 1px solid #8d849a; border-radius: 22px; font: inherit; font-size: 17px; line-height: 1.5; color: #1c0f30; background: #fff; resize: none; overflow-y: hidden; box-sizing: border-box }
 .bot .pill:disabled { opacity: .55; cursor: default; transform: none }
 .bot-error { margin: 0; padding: 0 24px 8px; font-size: 15px; color: #801f48 }
 .bot-note { margin: 0; padding: 0 24px 18px; font-size: 13px; color: #5c5168 }
