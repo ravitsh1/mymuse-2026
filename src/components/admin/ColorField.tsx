@@ -4,19 +4,15 @@ import type { ChangeEvent } from 'react'
 import type { TextFieldClientComponent } from 'payload'
 import { TextInput, useField } from '@payloadcms/ui'
 
-/** The site palette (Neon Sunset), offered as swatches next to every colour field. */
+/** The site palette (brand book 2026, palette A "Electric Contrast"), offered as swatches next to every colour field. */
 const PALETTE: [string, string][] = [
-  ['#1b1030', 'לילה'],
-  ['#241640', 'משטח'],
-  ['#235c68', 'עומק'],
-  ['#c6f432', 'ליים'],
-  ['#ffe8c2', 'חול (טקסט)'],
-  ['#b6a393', 'טקסט משני'],
-  ['#ff3d7f', 'מגנטה'],
-  ['#ff9f1c', 'כתום'],
-  ['#d1346f', 'פטל'],
-  ['#a42b5f', 'יין'],
-  ['#7b2351', 'שזיף'],
+  ['#f8f7f9', 'פורצלן (רקע)'],
+  ['#1c0f30', 'דיו (טקסט)'],
+  ['#2e1f45', 'סגול עמוק'],
+  ['#801f48', 'בורדו'],
+  ['#ff2d83', 'ורוד'],
+  ['#f4e85a', 'לימון'],
+  ['#ffffff', 'לבן'],
 ]
 
 /**
