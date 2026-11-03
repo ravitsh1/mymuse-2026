@@ -97,7 +97,7 @@ export function BriefAssistant({ privacyHref }: { privacyHref?: string }) {
           M
         </span>
         <div>
-          <h3 id="bot-title">עוזר הבריף של MyMuse</h3>
+          <h3 id="bot-title">העוזר של MyMuse</h3>
           <small>מבוסס AI · לא נותן הצעות מחיר</small>
         </div>
       </div>
