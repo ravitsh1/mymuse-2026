@@ -649,7 +649,8 @@ html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
    show as they are, no gradient over them. The text that sat on the gradient gets a solid patch of the page colour
    instead, so it keeps its contrast over any photo, and the header gets its background from the top of the page. */
 body[data-shade="none"] .visual .v-shade, body[data-shade="none"] .next-tint { display: none }
-body[data-shade="none"] .hero h1 > span { background: var(--v-bg, var(--p-bg)); box-decoration-break: clone; -webkit-box-decoration-break: clone; padding: .06em .14em 0 }
+/* Karantina sits low in its line box: no padding on top and .2em at the foot even out the space around the letters */
+body[data-shade="none"] .hero h1 > span { display: inline-block; line-height: .7; padding: 0 .14em .2em; background: var(--v-bg, var(--p-bg)) }
 body[data-shade="none"] .hero .kicker, body[data-shade="none"] .hint,
 body[data-shade="none"] .next-ui .lbl { display: inline-block; justify-self: end; padding: 6px 12px; background: var(--p-bg); opacity: 1 }
 body[data-shade="none"] .hero .kicker { position: relative; z-index: 1; margin-bottom: 0 }
