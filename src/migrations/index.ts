@@ -46,6 +46,7 @@ import * as migration_20261101_084551_project_services from './20261101_084551_p
 import * as migration_20261101_085245_home_service_tags from './20261101_085245_home_service_tags';
 import * as migration_20261101_092014_testimonials from './20261101_092014_testimonials';
 import * as migration_20261103_100514_brief_assistant from './20261103_100514_brief_assistant';
+import * as migration_20261103_114335_next_mode from './20261103_114335_next_mode';
 
 export const migrations = [
   {
@@ -287,5 +288,10 @@ export const migrations = [
     up: migration_20261103_100514_brief_assistant.up,
     down: migration_20261103_100514_brief_assistant.down,
     name: '20261103_100514_brief_assistant',
+  },
+  {
+    up: migration_20261103_114335_next_mode.up,
+    down: migration_20261103_114335_next_mode.down,
+    name: '20261103_114335_next_mode',
   },
 ]

@@ -624,3 +624,23 @@ html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
 @keyframes bot-blink { 50% { opacity: .25 } }
 @media (prefers-reduced-motion: reduce) { .bot .msg, .bot .typing i { animation: none } }
 @media (max-width: 600px) { .bot-log, .bot-form, .bot-note, .bot-error { padding-inline: 16px } .bot-head { padding-inline: 16px } }
+
+/* end of a project page, the clear version (components/NextCard, Settings → nextMode = card): a card with a button */
+.next-card { padding-block: clamp(60px, 9vw, 120px) clamp(48px, 7vw, 96px); border-top: 1px solid var(--p-soft) }
+.nc-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--p-acc-sm, var(--p-acc)) }
+.nc-link { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; color: inherit; text-decoration: none }
+.nc-media { position: relative; display: block; aspect-ratio: 16 / 10; border-radius: 22px; overflow: hidden; background: var(--n-bg) }
+.nc-media .visual { transition: transform .6s cubic-bezier(.2,.8,.2,1) }
+.nc-media .visual .word { display: none }
+.nc-link:hover .nc-media .visual { transform: scale(1.03) }
+.nc-text { display: grid; justify-items: start; gap: 10px }
+.nc-kicker { font-size: 15px; letter-spacing: .08em; opacity: .85 }
+.nc-name { font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 7vw, 112px); line-height: .9 }
+.nc-field { font-size: clamp(17px, 1.3vw, 20px) }
+.nc-go { margin-top: 14px }
+.nc-link:hover .nc-go span, .nc-link:focus-visible .nc-go span { transform: translateX(-4px) }
+.nc-link:focus-visible { outline: none }
+.nc-link:focus-visible .nc-media { outline: 3px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 4px }
+.nc-all { display: inline-block; margin-top: clamp(24px, 3vw, 40px); color: inherit; font-size: 17px; text-decoration: underline; text-underline-offset: 4px }
+@media (max-width: 760px) { .nc-link { grid-template-columns: 1fr } }
+@media (prefers-reduced-motion: reduce) { .nc-media .visual { transition: none } .nc-link:hover .nc-media .visual { transform: none } }

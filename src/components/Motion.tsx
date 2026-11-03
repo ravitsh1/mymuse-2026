@@ -126,6 +126,28 @@ export function Motion() {
         .finished.then(() => go(href))
     }
 
+    /* ---------- project page: "next project" card (Settings → nextMode = card) ---------- */
+    const card = $('[data-next-card]')
+    if (card) router.prefetch(card.dataset.nextCard!, FULL)
+    const onCardClick = (e: MouseEvent) => {
+      const a = (e.target as Element).closest<HTMLAnchorElement>('[data-fly]')
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return
+      const media = a.querySelector<HTMLElement>('.nc-media')
+      const v = media?.querySelector('.visual')?.cloneNode(true) as HTMLElement | undefined
+      e.preventDefault()
+      if (reduce || !media || !v) return go(a.getAttribute('href')!)
+      const rect = media.getBoundingClientRect()
+      const fly = document.createElement('div')
+      fly.className = 'fly'
+      fly.appendChild(v)
+      document.body.appendChild(fly)
+      const from = `inset(${rect.top}px ${innerWidth - rect.right}px ${innerHeight - rect.bottom}px ${rect.left}px round 22px)`
+      fly
+        .animate([{ clipPath: from }, { clipPath: 'inset(0px 0px 0px 0px round 0px)' }], { duration: 800, easing: 'cubic-bezier(.75,0,.2,1)', fill: 'forwards' })
+        .finished.then(() => go(a.getAttribute('href')!))
+    }
+    card?.addEventListener('click', onCardClick)
+
     let mx = 0, my = 0, px = 0, py = 0, raf = 0
     const peekLoop = () => {
       if (!peek) return
@@ -308,6 +330,7 @@ export function Motion() {
       removeEventListener('scroll', onScroll)
       removeEventListener('resize', update)
       removeEventListener('mm:filter', onFilter)
+      card?.removeEventListener('click', onCardClick)
       if (timer) clearTimeout(timer)
       if (raf) cancelAnimationFrame(raf)
       peek?.classList.remove('show')

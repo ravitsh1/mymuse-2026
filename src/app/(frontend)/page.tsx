@@ -10,7 +10,6 @@ import { CategoryFilter } from '@/components/CategoryFilter'
 import { CopyValue, Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
 import { LogoStacked } from '@/components/Logo'
-import { NextFrame } from '@/components/NextFrame'
 import { MediaEl, Visual } from '@/components/Visual'
 import { accentTones, getCategories, getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
@@ -333,7 +332,6 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
         <Footer settings={settings} pages={pages} />
 
-        {projects[0] && <NextFrame project={projects[0]} index={0} label="הפרויקט הראשון" />}
       </main>
 
       <div className="peek" data-peek aria-hidden="true" />

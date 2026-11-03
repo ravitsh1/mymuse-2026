@@ -3,6 +3,7 @@ import { notFound, permanentRedirect } from 'next/navigation'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { Motion } from '@/components/Motion'
+import { NextCard } from '@/components/NextCard'
 import { NextFrame } from '@/components/NextFrame'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { JsonLd } from '@/components/JsonLd'
@@ -200,7 +201,11 @@ export default async function ProjectPage({ params }: Props) {
 
         <Footer settings={settings} pages={pages} />
 
-        <NextFrame project={nxt} index={projects.indexOf(nxt)} label="הפרויקט הבא" />
+        {settings.nextMode === 'card' ? (
+          <NextCard project={nxt} index={projects.indexOf(nxt)} />
+        ) : (
+          <NextFrame project={nxt} index={projects.indexOf(nxt)} label="הפרויקט הבא" />
+        )}
       </main>
       <Motion />
       <LivePreviewRefresh />

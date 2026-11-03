@@ -780,6 +780,10 @@ export interface Setting {
    */
   showSwatches?: boolean | null;
   /**
+   * איך עוברים מסוף עמוד פרויקט לפרויקט הבא.
+   */
+  nextMode?: ('scroll' | 'card') | null;
+  /**
    * עוזר AI בחלק "יצירת קשר" בעמוד הבית: שואל כמה שאלות, מסכם לבריף ושולח אלייך. דורש מפתח Anthropic בהגדרות של Vercel. כבוי: רק המייל והטלפון.
    */
   briefAssistant?: boolean | null;
@@ -866,6 +870,7 @@ export interface SettingsSelect<T extends boolean = true> {
   metaDescription?: T;
   cookieText?: T;
   showSwatches?: T;
+  nextMode?: T;
   briefAssistant?: T;
   showTrials?: T;
   shareImage?: T;

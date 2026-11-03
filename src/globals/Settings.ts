@@ -62,6 +62,17 @@ export const Settings: GlobalConfig = {
       admin: { description: 'שלושת ריבועי הצבע (רקע, טקסט, הדגשה) בתחתית כל עמוד פרויקט.' },
     },
     {
+      name: 'nextMode',
+      label: 'סוף עמוד פרויקט',
+      type: 'radio',
+      defaultValue: 'scroll',
+      options: [
+        { label: 'גלילה לפרויקט הבא (המסגרת גדלה עם הגלילה ועוברת לבד)', value: 'scroll' },
+        { label: 'כרטיס "הפרויקט הבא" עם כפתור (עוברים רק בלחיצה)', value: 'card' },
+      ],
+      admin: { description: 'איך עוברים מסוף עמוד פרויקט לפרויקט הבא.' },
+    },
+    {
       name: 'briefAssistant',
       label: 'להציג את עוזר הבריף',
       type: 'checkbox',
