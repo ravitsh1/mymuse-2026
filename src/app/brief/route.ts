@@ -42,7 +42,12 @@ function toMessages(turns: Turn[]): Anthropic.Beta.BetaMessageParam[] | null {
   const user = t.filter((x) => x.role === 'user')
   if (user.length > LIMITS.userTurns || user.some((x) => x.text.length > LIMITS.chars)) return null
   if (t.reduce((n, x) => n + x.text.length, 0) > LIMITS.total) return null
-  return t.map((x) => ({ role: x.role, content: x.text }))
+  const out: Anthropic.Beta.BetaMessageParam[] = t.map((x) => ({ role: x.role, content: x.text }))
+  // Ravit wants one or two questions at most: from the visitor's third message on, the brief comes now (the prompt
+  // says so too; this makes it certain). A mid-conversation system message (the operator channel), not text inside
+  // the visitor's message, which the prompt rightly treats as content only.
+  if (user.length >= 3) out.push({ role: 'system', content: 'זו ההודעה האחרונה של הגולש: done=true עם brief מלא, בלי שאלות נוספות.' })
+  return out
 }
 
 async function enabled() {
