@@ -48,6 +48,7 @@ import * as migration_20261101_092014_testimonials from './20261101_092014_testi
 import * as migration_20261103_100514_brief_assistant from './20261103_100514_brief_assistant';
 import * as migration_20261103_114335_next_mode from './20261103_114335_next_mode'
 import * as migration_20261103_190000_moran_gil from './20261103_190000_moran_gil';
+import * as migration_20261103_200000_hero_photos from './20261103_200000_hero_photos';
 
 export const migrations = [
   {
@@ -299,5 +300,10 @@ export const migrations = [
     up: migration_20261103_190000_moran_gil.up,
     down: migration_20261103_190000_moran_gil.down,
     name: '20261103_190000_moran_gil',
+  },
+  {
+    up: migration_20261103_200000_hero_photos.up,
+    down: migration_20261103_200000_hero_photos.down,
+    name: '20261103_200000_hero_photos',
   },
 ]
