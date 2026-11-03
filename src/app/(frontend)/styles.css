@@ -468,7 +468,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .bh-text { margin: 0; max-width: 44ch; font-size: clamp(18px, 1.4vw, 21px); line-height: 1.6 }
 .bh-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; margin-top: 8px }
 .pill { display: inline-flex; align-items: center; gap: 14px; min-height: 52px; padding: 14px 32px; border-radius: 999px; background: var(--b-pop); color: #1c0f30;
-  font-size: 18px; text-decoration: none; transition: transform .25s cubic-bezier(.2,.8,.2,1) }
+  font-family: inherit; font-size: 18px; text-decoration: none; border: 0; cursor: pointer; transition: transform .25s cubic-bezier(.2,.8,.2,1) }
 .pill:hover { transform: translateY(-2px) }
 .pill span, .top-cta span { transition: transform .25s }
 .pill:hover span, .top-cta:hover span { transform: translateX(-4px) }
