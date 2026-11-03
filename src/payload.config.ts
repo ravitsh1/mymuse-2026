@@ -12,6 +12,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Projects } from './collections/Projects'
 import { Categories } from './collections/Categories'
+import { Briefs } from './collections/Briefs'
 import { Pages } from './collections/Pages'
 import { Home } from './globals/Home'
 import { Settings } from './globals/Settings'
@@ -61,7 +62,7 @@ export default buildConfig({
     supportedLanguages: { he },
     fallbackLanguage: 'he',
   },
-  collections: [Projects, Categories, Pages, Media, Users],
+  collections: [Projects, Categories, Pages, Media, Briefs, Users],
   globals: [Home, Settings],
   editor: lexicalEditor(),
   secret: SECRET,

@@ -71,6 +71,7 @@ export interface Config {
     categories: Category;
     pages: Page;
     media: Media;
+    briefs: Brief;
     users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -83,6 +84,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    briefs: BriefsSelect<false> | BriefsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -319,6 +321,35 @@ export interface Page {
   createdAt: string;
 }
 /**
+ * פניות שהגיעו מעוזר הבריף באתר. כל פנייה נשלחת גם למייל שבהגדרות.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "briefs".
+ */
+export interface Brief {
+  id: number;
+  name: string;
+  contact: string;
+  business?: string | null;
+  situation?: string | null;
+  goal?: string | null;
+  systems?: string | null;
+  timeline?: string | null;
+  notes?: string | null;
+  transcript?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  mailed?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -384,6 +415,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'briefs';
+        value: number | Brief;
       } | null)
     | ({
         relationTo: 'users';
@@ -514,6 +549,24 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "briefs_select".
+ */
+export interface BriefsSelect<T extends boolean = true> {
+  name?: T;
+  contact?: T;
+  business?: T;
+  situation?: T;
+  goal?: T;
+  systems?: T;
+  timeline?: T;
+  notes?: T;
+  transcript?: T;
+  mailed?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -727,6 +780,10 @@ export interface Setting {
    */
   showSwatches?: boolean | null;
   /**
+   * עוזר AI בחלק "יצירת קשר" בעמוד הבית: שואל כמה שאלות, מסכם לבריף ושולח אלייך. דורש מפתח Anthropic בהגדרות של Vercel. כבוי: רק המייל והטלפון.
+   */
+  briefAssistant?: boolean | null;
+  /**
    * הכפתור בפינת האתר שמחליף פלטה ופתיחת דף הבית. כשהוא מוסתר, האתר מוצג בברירת המחדל (בדפדפן שכבר בחר, הבחירה נשמרת).
    */
   showTrials?: boolean | null;
@@ -809,6 +866,7 @@ export interface SettingsSelect<T extends boolean = true> {
   metaDescription?: T;
   cookieText?: T;
   showSwatches?: T;
+  briefAssistant?: T;
   showTrials?: T;
   shareImage?: T;
   updatedAt?: T;

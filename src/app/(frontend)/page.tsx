@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Footer } from '@/components/Footer'
 import { JsonLd } from '@/components/JsonLd'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
+import { BriefAssistant } from '@/components/BriefAssistant'
 import { BrandHero, BrandLabel, LastWordPink } from '@/components/BrandHero'
 import { Header } from '@/components/Header'
 import { HeroCycle } from '@/components/HeroCycle'
@@ -51,6 +52,9 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   const catOf = (p: (typeof projects)[number]) => (p.category && typeof p.category === 'object' ? String(p.category.id) : p.category ? String(p.category) : '')
   // only categories that have a project in the list
   const categories = allCategories.filter((c) => shown.some(({ p }) => catOf(p) === String(c.id)))
+
+  // the brief assistant (contact section): only with the 2026 look, the setting on and a Claude key on the server
+  const showBrief = brand && !!settings.briefAssistant && !!process.env.ANTHROPIC_API_KEY
 
   // testimonials: a quote may point at a project; it links only while that project is visible
   const quotes = (home.testimonials ?? []).map((q) => {
@@ -310,15 +314,20 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
         <section className="contact wrap" id="contact" aria-labelledby="cth">
           {brand && <BrandLabel n={quotes.length ? 5 : 4}>Contact</BrandLabel>}
           <h2 id="cth">{brand ? <LastWordPink text={home.contactTitle || 'נדבר?'} /> : home.contactTitle || 'נדבר?'}</h2>
-          {home.contactBody && <p className="ct-body">{home.contactBody}</p>}
-          {brand && settings.email && (
-            <a className="pill" href={`mailto:${settings.email}`}>
-              צרו קשר <span aria-hidden="true">←</span>
-            </a>
-          )}
-          <div className="ct">
-            {settings.email && <CopyValue value={settings.email} />}
-            {settings.phone && <CopyValue value={settings.phone} />}
+          <div className={showBrief ? 'ct-grid' : 'ct-plain'}>
+            <div className="ct-side">
+              {home.contactBody && <p className="ct-body">{home.contactBody}</p>}
+              {brand && settings.email && (
+                <a className="pill" href={`mailto:${settings.email}`}>
+                  צרו קשר <span aria-hidden="true">←</span>
+                </a>
+              )}
+              <div className="ct">
+                {settings.email && <CopyValue value={settings.email} />}
+                {settings.phone && <CopyValue value={settings.phone} />}
+              </div>
+            </div>
+            {showBrief && <BriefAssistant privacyHref={pages.some((x) => x.slug === 'privacy-policy') ? '/privacy-policy' : undefined} />}
           </div>
         </section>
 
