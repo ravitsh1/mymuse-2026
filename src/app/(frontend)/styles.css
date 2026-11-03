@@ -447,7 +447,8 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 /* the slabs lag behind the scroll together (Motion, data-speed) */
 .bh-slabs { position: absolute; inset: 0; will-change: transform }
 /* sizes in container units: the composition scales with its box. Each slab keeps its own tilt (--r) */
-.slab { position: absolute; left: var(--x); top: var(--y); padding: .12em .22em 0; font: 700 var(--s, 18cqi)/.8 var(--f-display); text-transform: uppercase; direction: ltr;
+/* Karantina caps sit low in the line box: .062em on top and .058em at the foot leave about .1em above and below */
+.slab { position: absolute; left: var(--x); top: var(--y); padding: .062em .22em .058em; font: 700 var(--s, 18cqi)/.8 var(--f-display); text-transform: uppercase; direction: ltr;
   white-space: nowrap; transform: rotate(var(--r)); box-shadow: 4cqi 6cqi 5cqi rgba(28,15,48,.22) }
 .slab:nth-child(1) { --x: 8%; --y: 22%; --r: -7deg; background: #1c0f30; color: #f8f7f9 }
 .slab:nth-child(2) { --x: 45%; --y: 29%; --r: 5deg; background: var(--b-deep); color: #f8f7f9 }
