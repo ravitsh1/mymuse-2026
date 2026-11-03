@@ -780,6 +780,10 @@ export interface Setting {
    */
   showSwatches?: boolean | null;
   /**
+   * בראש עמודי הפרויקטים ובמעבר לפרויקט הבא.
+   */
+  heroShade?: ('none' | 'gradient') | null;
+  /**
    * איך עוברים מסוף עמוד פרויקט לפרויקט הבא.
    */
   nextMode?: ('scroll' | 'card') | null;
@@ -870,6 +874,7 @@ export interface SettingsSelect<T extends boolean = true> {
   metaDescription?: T;
   cookieText?: T;
   showSwatches?: T;
+  heroShade?: T;
   nextMode?: T;
   briefAssistant?: T;
   showTrials?: T;

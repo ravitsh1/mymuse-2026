@@ -81,7 +81,7 @@ export default async function ProjectPage({ params }: Props) {
           <div className="hero-copy">
             {p.field && <p className="kicker">{p.field}</p>}
             <h1 id="pt" tabIndex={-1}>
-              {p.title}
+              <span>{p.title}</span>
             </h1>
           </div>
           <div className="hint" aria-hidden="true">
