@@ -7,7 +7,7 @@ export const Logo = () => (
     <span role="img" aria-label="MyMuse" style={{ display: 'block', lineHeight: 0 }}>
       <LogoStacked style={{ width: 140, height: 140 }} />
     </span>
-    <span style={{ fontSize: 15, opacity: 0.6 }}>ניהול האתר</span>
+    <span className="mm-tagline">We are all about passion</span>
   </div>
 )
 

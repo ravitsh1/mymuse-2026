@@ -1,80 +1,117 @@
-// MyMuse look for the Payload admin: the site's night/gold palette and Assistant for Hebrew.
-// Payload's own styles live in @layer payload-default, so these unlayered rules win without !important.
-@import url('https://fonts.googleapis.com/css2?family=Karantina:wght@700&family=Assistant:wght@400;600;700&display=swap');
+// MyMuse look for the Payload admin, from the 2026 brand book (palette A, "Electric Contrast"): porcelain and ink,
+// burgundy, pink for focus and highlights, lemon for the main action; Talent for text, Karantina for big titles.
+// No gradients as graphics (brand book). Payload's own styles live in @layer payload-default, so these unlayered
+// rules win without !important.
+@import url('https://fonts.googleapis.com/css2?family=Karantina:wght@700&display=swap');
+
+// Talent FS: the site's licensed web files in the Blob store (same files as the site, not in this repo)
+@font-face { font-family: 'Talent'; font-weight: 100 500; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/talent-regular.woff2') format('woff2') }
+@font-face { font-family: 'Talent'; font-weight: 600 900; font-display: swap;
+  src: url('https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/talent-demibold.woff2') format('woff2') }
 
 :root {
-  --mm-night: #16141a;
-  --mm-gold: #d6a05b;
-  --mm-wine: #3a0f1c;
-  --mm-cream: #efe8de;
-  --font-body: 'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  --style-radius-s: 6px;
-  --style-radius-m: 10px;
-  --style-radius-l: 16px;
+  --mm-porcelain: #f8f7f9;
+  --mm-ink: #1c0f30;
+  --mm-mauve: #2e1f45;
+  --mm-deep: #801f48;
+  --mm-pink: #ff2d83;
+  --mm-pop: #f4e85a;
+  --font-body: 'Talent', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --mm-display: 'Karantina', 'Talent', 'Arial Narrow', sans-serif;
+  --style-radius-s: 8px;
+  --style-radius-m: 14px;
+  --style-radius-l: 22px;
 }
+html[data-theme='light'] { --theme-bg: var(--mm-porcelain); --theme-text: var(--mm-ink) }
+html[data-theme='dark'] { --theme-bg: #140a24; --theme-text: var(--mm-porcelain) }
 
+// buttons: the main action is the site's lemon pill; the others are outlined pills in ink
+.btn { border-radius: 999px }
 .btn--style-primary {
-  --bg-color: var(--mm-night);
-  --color: var(--mm-gold);
-  --hover-bg: var(--mm-wine);
-  --hover-color: var(--mm-cream);
+  --bg-color: var(--mm-pop);
+  --color: var(--mm-ink);
+  --hover-bg: var(--mm-ink);
+  --hover-color: var(--mm-pop);
 }
-html[data-theme='dark'] .btn--style-primary {
-  --bg-color: var(--mm-gold);
-  --color: var(--mm-night);
-  --hover-bg: var(--mm-cream);
-  --hover-color: var(--mm-night);
+.btn--style-secondary {
+  --color: var(--theme-text);
+  --hover-color: var(--theme-text);
 }
-.nav__link .nav__link-indicator { background: var(--mm-gold) }
-::selection { background: var(--mm-gold); color: var(--mm-night) }
+:focus-visible { outline-color: var(--mm-pink) }
+.nav__link .nav__link-indicator { background: var(--mm-pink) }
+.nav__link--active, .nav__link:hover { color: var(--mm-deep) }
+html[data-theme='dark'] .nav__link--active, html[data-theme='dark'] .nav__link:hover { color: var(--mm-pink) }
+::selection { background: var(--mm-pink); color: #fff }
 
-.template-minimal {
-  background: var(--mm-cream);
-  background-image: radial-gradient(circle at 85% 10%, rgba(214, 160, 91, 0.35), transparent 40%),
-    radial-gradient(circle at 10% 90%, rgba(58, 15, 28, 0.18), transparent 45%);
+// big titles in Karantina, as on the site (list pages, the document being edited)
+.template-default h1,
+.render-title,
+.doc-header__title {
+  font-family: var(--mm-display);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.95;
 }
-html[data-theme='dark'] .template-minimal {
-  background: var(--mm-night);
-  background-image: radial-gradient(circle at 85% 10%, rgba(214, 160, 91, 0.16), transparent 40%),
-    radial-gradient(circle at 10% 90%, rgba(58, 15, 28, 0.5), transparent 45%);
-}
+.list-header h1, .template-default .list-header__title { font-size: clamp(44px, 5vw, 72px) }
+
+// login: plain porcelain (dark: deep ink), the logo in ink
+.template-minimal { background: var(--mm-porcelain); color: var(--mm-ink) }
+html[data-theme='dark'] .template-minimal { background: #140a24; color: var(--mm-porcelain) }
+
+// login tagline under the logo, like the footer sign-off on the site
+.mm-tagline { font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; direction: ltr; color: var(--mm-deep) }
+html[data-theme='dark'] .mm-tagline { color: var(--mm-pink) }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }
 
 // ---- dashboard
 .mm-welcome {
   position: relative;
-  padding: 28px 32px;
+  padding: 32px 36px;
   margin-bottom: 20px;
   border-radius: var(--style-radius-l);
-  background: var(--mm-night);
-  color: var(--mm-cream);
-  h2 { margin: 0 0 6px; color: inherit }
-  p { margin: 0; opacity: 0.8 }
+  background: var(--mm-ink);
+  color: var(--mm-porcelain);
+  h2 { margin: 0 0 10px; color: inherit; font: 700 clamp(48px, 6vw, 84px) / 0.9 var(--mm-display) }
+  h2 em { font-style: normal; color: var(--mm-pink) }
+  p { margin: 0; font-size: 18px; opacity: 0.9 }
 }
-.mm-welcome__links { display: flex; gap: 18px; margin-top: 14px; a { color: var(--mm-gold); font-weight: 600 } }
+.mm-label { margin: 0 0 14px; font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--mm-pop) }
+.mm-welcome__links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px }
+.mm-welcome__links a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 22px; border-radius: 999px;
+  background: var(--mm-pop); color: var(--mm-ink); font-weight: 600; text-decoration: none }
+.mm-welcome__links a + a { background: transparent; color: var(--mm-porcelain); box-shadow: inset 0 0 0 1px currentColor }
+.mm-welcome__links a:focus-visible { outline: 2px solid var(--mm-pink); outline-offset: 3px }
 .mm-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-bottom: 32px }
 .mm-card {
   position: relative;
   display: grid;
+  align-content: start;
   gap: 6px;
-  padding: 18px 20px 40px;
+  padding: 20px 22px 44px;
   border-radius: var(--style-radius-l);
   background: var(--theme-elevation-50);
   color: var(--theme-text);
   text-decoration: none;
   transition: transform 0.2s ease, background-color 0.2s ease;
   &:hover { transform: translateY(-2px); background: var(--theme-elevation-100) }
-  &:focus-visible { outline: 2px solid var(--mm-gold); outline-offset: 2px }
+  &:focus-visible { outline: 2px solid var(--mm-pink); outline-offset: 2px }
 }
-.mm-card__title { font-weight: 700; font-size: 17px }
-.mm-card__desc { font-size: 14px; opacity: 0.75 }
-.mm-card__arrow { position: absolute; bottom: 14px; left: 18px; font-size: 18px }
-.mm-card--gold { background: var(--mm-gold); color: var(--mm-night) }
-.mm-card--wine { background: var(--mm-wine); color: var(--mm-cream) }
-.mm-card--night { background: var(--mm-night); color: var(--mm-cream) }
-.mm-card--gold:hover { background: #e2b273 }
-.mm-card--wine:hover { background: #4a1526 }
-.mm-card--night:hover { background: #24202a }
-.mm-section-title { margin: 0 0 12px }
+.mm-card__title { font: 700 32px / 0.95 var(--mm-display) }
+.mm-card__desc { font-size: 15px; opacity: 0.85 }
+.mm-card__badge { justify-self: start; padding: 2px 10px; border-radius: 999px; background: var(--mm-pink); color: #fff; font-size: 13px; font-weight: 600 }
+.mm-card__arrow { position: absolute; bottom: 14px; left: 20px; font-size: 18px }
+.mm-card--pop { background: var(--mm-pop); color: var(--mm-ink) }
+.mm-card--deep { background: var(--mm-deep); color: var(--mm-porcelain) }
+.mm-card--ink { background: var(--mm-mauve); color: var(--mm-porcelain) }
+.mm-card--pink { background: var(--mm-pink); color: var(--mm-ink) }
+.mm-card--pink .mm-card__badge { background: var(--mm-ink) }
+.mm-card--pop:hover { background: #efe03a }
+.mm-card--deep:hover { background: #6d1a3d }
+.mm-card--ink:hover { background: #3a2956 }
+.mm-card--pink:hover { background: #ff4a95 }
+@media (prefers-reduced-motion: reduce) { .mm-card, .mm-card:hover { transition: none; transform: none } }
+.mm-section-title { margin: 0 0 12px; font: 700 40px / 1 var(--mm-display) }
 
 // Colour fields (components/admin/ColorField): a chip of the current value and the palette swatches under the input
 .mm-color-chip { display: inline-block; flex: 0 0 auto; width: 26px; height: 26px; margin-inline-end: 8px; border-radius: 50%;
@@ -85,4 +122,4 @@ html[data-theme='dark'] .template-minimal {
 .mm-swatch { width: 26px; height: 26px; padding: 0; border-radius: 6px; border: 1px solid var(--theme-elevation-250); cursor: pointer }
 .mm-swatch:hover { transform: scale(1.12) }
 .mm-swatch[aria-pressed='true'] { outline: 2px solid var(--theme-text); outline-offset: 2px }
-.mm-swatch:focus-visible { outline: 3px solid var(--mm-gold); outline-offset: 2px }
+.mm-swatch:focus-visible { outline: 3px solid var(--mm-pink); outline-offset: 2px }
