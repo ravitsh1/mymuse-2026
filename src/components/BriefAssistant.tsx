@@ -33,6 +33,13 @@ export function BriefAssistant({ privacyHref }: { privacyHref?: string }) {
     if (el) el.scrollTop = el.scrollHeight
   }, [turns, chips, brief, busy, sent])
 
+  // the box grows with the text (one line at first), and scrolls only past its max height
+  function grow(el: HTMLTextAreaElement) {
+    el.style.height = 'auto'
+    el.style.height = `${Math.min(el.scrollHeight, 140)}px`
+    el.style.overflowY = el.scrollHeight > 140 ? 'auto' : 'hidden'
+  }
+
   const userTurns = turns.filter((t) => t.role === 'user').length
 
   async function ask(text: string) {
@@ -42,6 +49,7 @@ export function BriefAssistant({ privacyHref }: { privacyHref?: string }) {
     setTurns(next)
     setChips([])
     setDraft('')
+    requestAnimationFrame(() => input.current && grow(input.current))
     setError('')
     setBusy(true)
     try {
@@ -176,8 +184,11 @@ export function BriefAssistant({ privacyHref }: { privacyHref?: string }) {
             value={draft}
             maxLength={LIMITS.chars}
             disabled={over}
-            placeholder={over ? 'הגענו לסוף השיחה' : 'למשל: יש לנו יקב בוטיק ואנחנו רוצים למכור יין אונליין…'}
-            onChange={(e) => setDraft(e.target.value)}
+            placeholder={over ? 'הגענו לסוף השיחה' : userTurns ? 'כתבו תשובה…' : 'ספרו על הפרויקט…'}
+            onChange={(e) => {
+              setDraft(e.target.value)
+              grow(e.target)
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
                 e.preventDefault()
