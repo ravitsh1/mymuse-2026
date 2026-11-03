@@ -90,7 +90,7 @@ export function CategoryFilter({ categories, all }: { categories: { id: number |
         createPortal(
           all ? (
             <button type="button" className="go" onClick={showMore}>
-              לכל הפרויקטים <span aria-hidden="true">({more + limit})</span>
+              לכל הפרויקטים
             </button>
           ) : (
             <button type="button" className="go" onClick={showMore}>
