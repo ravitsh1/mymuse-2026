@@ -62,6 +62,16 @@ export const Settings: GlobalConfig = {
       admin: { description: 'שלושת ריבועי הצבע (רקע, טקסט, הדגשה) בתחתית כל עמוד פרויקט.' },
     },
     {
+      name: 'briefAssistant',
+      label: 'להציג את עוזר הבריף',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        description:
+          'עוזר AI בחלק "יצירת קשר" בעמוד הבית: שואל כמה שאלות, מסכם לבריף ושולח אלייך. דורש מפתח Anthropic בהגדרות של Vercel. כבוי: רק המייל והטלפון.',
+      },
+    },
+    {
       name: 'showTrials',
       label: 'להציג את "ניסיונות עיצוב"',
       type: 'checkbox',

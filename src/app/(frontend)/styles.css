@@ -580,3 +580,46 @@ html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
 .p-quote { padding-block: clamp(40px, 8vw, 100px) }
 .p-quote .quote { max-width: 46ch }
 .p-quote blockquote { font-size: clamp(22px, 2.2vw, 32px) }
+
+/* contact: the side with the email and phone keeps the old rhythm; with the brief assistant on, two columns */
+.ct-plain, .ct-side { display: grid; gap: 22px; align-content: start }
+.ct-side .pill { justify-self: start }
+.ct-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(28px, 4vw, 64px); align-items: start }
+@media (max-width: 860px) { .ct-grid { grid-template-columns: 1fr } }
+
+/* the brief assistant (components/BriefAssistant.tsx) */
+.bot { background: #fff; color: #1c0f30; border: 1px solid #e7e3ec; border-radius: 28px; box-shadow: 0 30px 60px -30px rgba(28, 15, 48, .25); overflow: hidden }
+.bot-head { display: flex; align-items: center; gap: 12px; padding: 18px 24px; border-bottom: 1px solid #e7e3ec }
+.bot-head h3 { margin: 0; font-size: 17px; font-weight: 600 }
+.bot-head small { display: block; font-size: 14px; color: #801f48 }
+.bot-dot { width: 34px; height: 34px; flex: none; border-radius: 50%; background: #1c0f30; color: #f4e85a; display: grid; place-items: center; font: 700 20px var(--f-display) }
+.bot-log { display: grid; gap: 12px; align-content: start; padding: 22px 24px; min-height: 260px; max-height: min(560px, 70vh); overflow: auto; list-style: none; margin: 0 }
+.bot .msg { max-width: 85%; padding: 12px 16px; border-radius: 20px; font-size: 17px; line-height: 1.5; white-space: pre-wrap; animation: bot-in .35s ease both }
+.bot .msg.ai { justify-self: start; background: #f1eef4; border-start-start-radius: 6px }
+.bot .msg.me { justify-self: end; background: #1c0f30; color: #f8f7f9; border-start-end-radius: 6px }
+.bot .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-self: start }
+.bot .chips button { min-height: 40px; padding: 6px 16px; border: 1px solid #1c0f30; border-radius: 999px; background: transparent; color: inherit; font: inherit; font-size: 15px; cursor: pointer }
+.bot .chips button:hover { background: #f4e85a }
+.bot .typing { justify-self: start; display: flex; gap: 4px; padding: 14px 16px; background: #f1eef4; border-radius: 20px }
+.bot .typing i { width: 7px; height: 7px; border-radius: 50%; background: #801f48; animation: bot-blink 1s infinite }
+.bot .typing i:nth-of-type(2) { animation-delay: .15s }
+.bot .typing i:nth-of-type(3) { animation-delay: .3s }
+.bot .brief { border: 2px solid #1c0f30; border-radius: 20px; padding: 18px 20px }
+.bot .brief form { display: grid; gap: 10px }
+.bot .brief h4 { margin: 0; font: 700 34px/1 var(--f-display) }
+.brief-hint { margin: 0; font-size: 14px; color: #5c5168 }
+.brief-row { display: grid; gap: 4px; font-size: 14px }
+.brief-row span { color: #801f48 }
+.brief-row textarea, .brief-row input { width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid #8d849a; border-radius: 12px; font: inherit; font-size: 16px; color: #1c0f30; background: #fff; resize: vertical }
+.bot .brief .pill { justify-self: stretch; margin-top: 6px }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden }
+.bot-form { display: flex; gap: 10px; padding: 16px 24px 12px; border-top: 1px solid #e7e3ec }
+.bot-form textarea { flex: 1; min-width: 0; min-height: 52px; max-height: 140px; padding: 13px 18px; border: 1px solid #8d849a; border-radius: 26px; font: inherit; font-size: 17px; color: #1c0f30; background: #fff; resize: none }
+.bot .pill:disabled { opacity: .55; cursor: default; transform: none }
+.bot-error { margin: 0; padding: 0 24px 8px; font-size: 15px; color: #801f48 }
+.bot-note { margin: 0; padding: 0 24px 18px; font-size: 13px; color: #5c5168 }
+.bot-note a { color: inherit }
+@keyframes bot-in { from { opacity: 0; transform: translateY(8px) } }
+@keyframes bot-blink { 50% { opacity: .25 } }
+@media (prefers-reduced-motion: reduce) { .bot .msg, .bot .typing i { animation: none } }
+@media (max-width: 600px) { .bot-log, .bot-form, .bot-note, .bot-error { padding-inline: 16px } .bot-head { padding-inline: 16px } }
