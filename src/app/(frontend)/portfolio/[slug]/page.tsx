@@ -139,7 +139,7 @@ export default async function ProjectPage({ params }: Props) {
           </dl>
         </section>
 
-        <section className="band" aria-label={g1 ? 'מסכים מהאתר' : undefined} aria-hidden={g1 ? undefined : true}>
+        <section className={`band${g2Wide ? ' band-wide' : ''}`} aria-label={g1 ? 'מסכים מהאתר' : undefined} aria-hidden={g1 ? undefined : true}>
           <div className="par p1" data-speed="0.10">
             {g1 ? <MediaEl m={g1} sizes="(max-width: 720px) 84vw, min(74vw, 1040px)" quality={90} /> : <MockWindow />}
           </div>
@@ -181,7 +181,8 @@ export default async function ProjectPage({ params }: Props) {
         {rest.length > 0 && (
           <section className="gallery wrap" aria-label="גלריה">
             {rest.map((m) => (
-              <MediaEl key={m.id} m={m} sizes="(max-width: 720px) 100vw, 540px" />
+              // a lone image spans the whole row (auto-fit grid, .wrap max 1100px): ask for that width, not a column's
+              <MediaEl key={m.id} m={m} sizes={rest.length === 1 ? '(max-width: 720px) 100vw, min(100vw, 1100px)' : '(max-width: 720px) 100vw, 540px'} quality={90} />
             ))}
           </section>
         )}
