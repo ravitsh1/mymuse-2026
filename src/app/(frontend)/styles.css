@@ -138,7 +138,7 @@ html.menu-open { overflow: hidden }
 .wrap { max-width: 1100px; margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r) }
 .intro { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px, 6vw, 90px); padding-block: clamp(70px, 12vw, 150px) }
 .intro > * { min-width: 0 }
-.lead { margin: 0; font-size: 19px; line-height: 1.5; font-weight: 400; max-width: 45ch; text-wrap: pretty }
+.lead { margin: 0; font-size: 18px; line-height: 1.6; font-weight: 400; max-width: 45ch; text-wrap: pretty }
 .facts { margin: 0; display: grid; gap: 18px; align-content: start }
 .facts div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--p-soft) }
 .facts dt { font-size: 13px; letter-spacing: .14em; opacity: .85; padding-top: 4px }
@@ -661,3 +661,10 @@ body[data-shade="none"] .next-ui .lbl, body[data-shade="none"] .next-ui .nm { ju
 body[data-shade="none"] .next-ui .nm { padding: .06em .16em 0 }
 body[data-shade="none"] .next-ui .go { background: var(--n-bg, var(--p-bg)) }
 body[data-shade="none"] .site .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent) }
+
+/* Designer's review (2026-11-04): running text is 18px at line-height 1.6 everywhere (home and project pages alike), the
+   category buttons are regular weight, and the outlined English names are gone (hero, next-project frame, fly-in) */
+html[data-trial="b26"] :is(.b-text, .bh-text, .card p, .quote blockquote, .about-body, .ct-body, .nf-text, .prose p, .prose li) { font-size: 18px; line-height: 1.6 }
+html[data-trial="b26"] .ix-head p.b-text { font-size: 18px }
+html[data-trial="b26"] .ix-filter button { font-weight: 400 }
+html[data-trial="b26"] .visual .word { display: none }

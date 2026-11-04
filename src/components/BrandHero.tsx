@@ -31,9 +31,6 @@ export function BrandHero() {
           </a>
         </div>
       </div>
-      <p className="bh-side bh-side-b" aria-hidden="true">
-        <span>02</span> Ideas Design Development Experience
-      </p>
     </section>
   )
 }
