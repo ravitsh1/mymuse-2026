@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { blobUploadFix } from './lib/blobUploadFix'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { he } from '@payloadcms/translations/languages/he'
@@ -89,5 +90,6 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN,
       clientUploads: true, // upload straight from the browser — bypasses Vercel's 4.5MB request limit (videos)
     }),
+    blobUploadFix(['media']), // after vercelBlobStorage: a duplicate filename must not become an overwrite (lib/blobUploadFix.ts)
   ],
 })
