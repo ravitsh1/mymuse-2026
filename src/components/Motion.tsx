@@ -169,8 +169,10 @@ export function Motion() {
     }
     const onOver = (e: MouseEvent) => {
       const a = (e.target as Element).closest<HTMLAnchorElement>('.row')
-      if (!a || !peek) return
+      if (!a) return
       const i = Number(a.dataset.i)
+      // the row stays lit and the others dim whether or not the floating name is on the page (b26 has none)
+      if (!peek) return setIx(i)
       // only the English name, outlined: the picture is kept for the fly-in on click
       if (ixOn !== i) peek.textContent = a.dataset.name || ''
       setIx(i)
