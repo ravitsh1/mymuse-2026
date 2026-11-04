@@ -334,7 +334,6 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
       </main>
 
-      <div className="peek" data-peek aria-hidden="true" />
       <Motion />
       <LivePreviewRefresh />
       <JsonLd

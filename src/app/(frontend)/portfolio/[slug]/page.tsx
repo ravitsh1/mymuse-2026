@@ -199,12 +199,18 @@ export default async function ProjectPage({ params }: Props) {
           </section>
         )}
 
-        <Footer settings={settings} pages={pages} />
-
+        {/* the card comes before the footer, which closes the page; the scroll frame stays last, since reaching its end
+            already moves on to the next project (a footer after it could never be scrolled to) */}
         {settings.nextMode === 'card' ? (
-          <NextCard project={nxt} index={projects.indexOf(nxt)} />
+          <>
+            <NextCard project={nxt} index={projects.indexOf(nxt)} />
+            <Footer settings={settings} pages={pages} />
+          </>
         ) : (
-          <NextFrame project={nxt} index={projects.indexOf(nxt)} label="הפרויקט הבא" />
+          <>
+            <Footer settings={settings} pages={pages} />
+            <NextFrame project={nxt} index={projects.indexOf(nxt)} label="הפרויקט הבא" />
+          </>
         )}
       </main>
       <Motion />
