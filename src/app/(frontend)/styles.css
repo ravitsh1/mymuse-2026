@@ -138,7 +138,7 @@ html.menu-open { overflow: hidden }
 .wrap { max-width: 1100px; margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r) }
 .intro { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px, 6vw, 90px); padding-block: clamp(70px, 12vw, 150px) }
 .intro > * { min-width: 0 }
-.lead { margin: 0; font-size: clamp(19px, 2.1vw, 26px); line-height: 1.5; font-weight: 300; max-width: 34ch; text-wrap: pretty }
+.lead { margin: 0; font-size: 19px; line-height: 1.5; font-weight: 400; max-width: 45ch; text-wrap: pretty }
 .facts { margin: 0; display: grid; gap: 18px; align-content: start }
 .facts div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--p-soft) }
 .facts dt { font-size: 13px; letter-spacing: .14em; opacity: .85; padding-top: 4px }
