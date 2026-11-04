@@ -417,7 +417,8 @@ main[tabindex="-1"]:focus { outline: none }
    (3.3:1: large text and marks only), lemon for the one primary button (violet on it 13:1). No gradients. */
 html[data-trial="b26"] { --chrome-bg: #f8f7f9; --b-deep: #801f48; --b-pink: #ff2d83; --b-pop: #f4e85a }
 html[data-trial="b26"] .site { --p-acc-sm: #801f48 !important }
-html[data-trial="b26"] .after-ph { margin-top: 0; box-shadow: none }
+/* nothing slides under it here, so no background: the hero slabs' shadows, lagging behind the scroll, stay whole */
+html[data-trial="b26"] .after-ph { margin-top: 0; box-shadow: none; background: transparent }
 html[data-trial="b26"] .visual .glow { display: none }
 html[data-trial="b26"] .cookie button { background: #1c0f30; color: #f8f7f9 }
 html[data-trial="b26"] .cookie button:focus-visible, html[data-trial="b26"] .cookie a:focus-visible { outline-color: #1c0f30 }
@@ -442,7 +443,8 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 
 /* home hero: copy on the right, the four Passion words as painted slabs on the left, on the same porcelain */
 .bh { position: relative; min-height: max(100vh, 640px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); grid-template-areas: "copy art";
-  align-items: center; padding: 110px var(--edge-r) 150px var(--edge-l); overflow: hidden }
+  align-items: center; padding: 110px var(--edge-r) 150px var(--edge-l); overflow: clip visible }
+/* clip sideways only: the slabs lag behind the scroll, so near the end their shadows run past the bottom edge */
 .bh-art { position: absolute; inset: 0 auto 0 0; width: 56%; container-type: size }
 /* the slabs lag behind the scroll together (Motion, data-speed) */
 .bh-slabs { position: absolute; inset: 0; will-change: transform }
