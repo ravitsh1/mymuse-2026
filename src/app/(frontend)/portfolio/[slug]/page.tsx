@@ -34,12 +34,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   })
 }
 
-/** "עיצוב: סטודיו גור" → label "עיצוב", value "סטודיו גור"; without a colon the whole text is the value. */
-function splitCredit(text: string | null | undefined) {
-  const t = text?.trim()
-  if (!t) return null
-  const i = t.indexOf(':')
-  return i > 0 ? { label: t.slice(0, i).trim(), value: t.slice(i + 1).trim() } : { label: 'קרדיט', value: t }
+/**
+ * "עיצוב: סטודיו רה-לבנט, אדריכל: אסף לרמן" → one row per credit: the comma starts a new one, the text before the
+ * colon is its label. A part without a colon belongs to the previous credit ("צילום: א, ב" keeps both names);
+ * a first part without one gets the label "קרדיט".
+ */
+function splitCredits(text: string | null | undefined) {
+  const out: { label: string; value: string }[] = []
+  for (const part of (text ?? '').split(',')) {
+    const t = part.trim()
+    if (!t) continue
+    const i = t.indexOf(':')
+    if (i > 0) out.push({ label: t.slice(0, i).trim(), value: t.slice(i + 1).trim() })
+    else if (out.length) out[out.length - 1].value += `, ${t}`
+    else out.push({ label: 'קרדיט', value: t })
+  }
+  return out.filter((c) => c.value)
 }
 
 /** "*word*" in the CMS becomes the accent-coloured word. */
@@ -69,7 +79,7 @@ export default async function ProjectPage({ params }: Props) {
   const [g1, g2, ...rest] = gallery
   // a wide second screen gets a wider frame on mobile; a phone screenshot keeps the narrow one
   const g2Wide = !!g2?.width && !!g2?.height && g2.width > g2.height
-  const credit = splitCredit(p.credit)
+  const credits = splitCredits(p.credit)
 
   return (
     <div className="site" data-site data-bg={c.bg} data-ink={c.ink} data-acc={c.acc} style={paletteVars(c)}>
@@ -118,12 +128,12 @@ export default async function ProjectPage({ params }: Props) {
                 <dd>{p.platform}</dd>
               </div>
             )}
-            {credit && (
-              <div>
-                <dt>{credit.label}</dt>
-                <dd>{credit.value}</dd>
+            {credits.map((c, k) => (
+              <div key={k}>
+                <dt>{c.label}</dt>
+                <dd>{c.value}</dd>
               </div>
-            )}
+            ))}
             {!!p.services?.length && (
               <div>
                 <dt>שירותים</dt>
