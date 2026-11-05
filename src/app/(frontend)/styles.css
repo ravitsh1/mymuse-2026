@@ -526,12 +526,9 @@ html[data-trial="b26"] .svc h2 { margin-bottom: 40px }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .b-words span { animation: b-write linear both; animation-timeline: --about; animation-range: cover calc(18% + var(--w, 0) * 9%) cover calc(30% + var(--w, 0) * 9%) }
-    .b-words span:nth-child(2) { --w: 1 } .b-words span:nth-child(3) { --w: 2 } .b-words span:nth-child(4) { --w: 3 }
   }
 }
 @keyframes b-write { from { clip-path: inset(0 100% 0 0); transform: translateX(-12px) } to { clip-path: inset(0 0 0 0); transform: none } } /* DEVELOPMENT, the longest, fills the column: the gap to the text is the grid gap */
-.b-words span:nth-child(2) { color: var(--b-deep) }
-.b-words span:nth-child(3) { color: var(--b-pink) }
 html[data-trial="b26"] .contact .pill { justify-self: start; margin-top: 6px }
 html[data-trial="b26"] .track span:nth-child(3n+1) { color: var(--b-deep) }
 /* footer: the tagline signs off the page */
@@ -570,6 +567,10 @@ html[data-trial="b26"] .track span:nth-child(3n+1) { color: var(--b-deep) }
   .p1 { width: 84%; right: 4%; top: 8% }
   .p2 { width: 44%; left: 4%; bottom: 6% }
   .p2.wide { width: 80%; bottom: 4% }
+  /* phones: the brush words sit closer under the header, and the about words are smaller (DEVELOPMENT filled the column edge to edge) */
+  .bh { padding-top: 40px }
+  .bh-comp { top: calc(42cqb - 28.85cqi) }
+  .b-words span { font-size: 19cqi } /* 20% under the desktop 23.8cqi */
   /* two landscape shots don't fit side by side in a phone-high band: they'd cover each other. Stack them, no drift */
   .band-wide { height: auto; display: grid; gap: 20px; padding-block: 40px }
   .band-wide .par { position: relative; inset: auto; transform: none !important }

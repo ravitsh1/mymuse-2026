@@ -19,6 +19,14 @@ const ABOUT_BODY = [
 ].join('\n\n')
 const CONTACT_BODY = 'יש לכם עסק עם אופי ורעיון לאתר, או אתר קיים שצריך לחשוב עליו מחדש? ספרו לנו במה מדובר ונחזור אליכם.'
 
+/** The about-section words as they were in code until 2026-11-05 (also seeded by migration about_words). */
+export const ABOUT_WORDS = [
+  { word: 'Ideas', color: '#1c0f30' },
+  { word: 'Design', color: '#801f48' },
+  { word: 'Development', color: '#ff2d83' },
+  { word: 'Experience', color: '#1c0f30' },
+]
+
 export const Home: GlobalConfig = {
   slug: 'home',
   label: 'עמוד הבית',
@@ -163,6 +171,23 @@ export const Home: GlobalConfig = {
               type: 'textarea',
               defaultValue: ABOUT_BODY,
               admin: { description: 'שורה ריקה מתחילה פסקה חדשה.' },
+            },
+            {
+              name: 'aboutWords',
+              label: 'מילים גדולות',
+              type: 'array',
+              labels: { singular: 'מילה', plural: 'מילים' },
+              admin: { description: 'נכתבות אחת אחרי השנייה ליד הפסקה, באותיות גדולות. ריק = החלק לא מוצג.' },
+              defaultValue: ABOUT_WORDS,
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'word', label: 'מילה', type: 'text', required: true },
+                    colorField('color', 'צבע', '#1c0f30'),
+                  ],
+                },
+              ],
             },
           ],
         },
