@@ -94,7 +94,7 @@ export function BriefAssistant({ privacyHref }: { privacyHref?: string }) {
     <div className="bot">
       <div className="bot-head">
         <span className="bot-dot" aria-hidden="true">
-          M
+          <img src="/brush/mark-2.svg" alt="" />
         </span>
         <div>
           <h3 id="bot-title">העוזר של MyMuse</h3>

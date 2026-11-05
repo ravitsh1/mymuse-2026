@@ -1,19 +1,25 @@
 /**
  * Home hero of the 2026 brand book (palette trial b26): the main slogan with its last line in pink, one yellow
- * button, and the Passion words as painted slabs. The side label is decoration.
+ * button, and the Passion words on brush strokes.
  */
 
 export function BrandHero() {
   return (
     <section className="bh" aria-labelledby="pt">
-      {/* the four Passion words as painted slabs leaning on each other (brand book, photo brief A): built in CSS, so
-          sharp at any size; they drop in one after another, then lag behind the scroll together */}
+      {/* the four Passion words on the designer's brush strokes (styles.css .bh-comp): they drop in one after another,
+          then lag behind the scroll together */}
       <div className="bh-art" aria-hidden="true">
         <div className="bh-slabs" data-speed="-0.2">
-          <span className="slab">Ideas</span>
-          <span className="slab">Design</span>
-          <span className="slab">Develop</span>
-          <span className="slab">XP</span>
+          <div className="bh-comp">
+            {[1, 2, 3, 4].map((n) => (
+              <i key={n} className={`brush brush-${n}`} />
+            ))}
+            {['Ideas', 'Design', 'Experience', 'Dev'].map((w, k) => (
+              <span key={w} className={`slab slab-${k + 1}`}>
+                {w}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
       <div className="bh-copy">
