@@ -570,6 +570,7 @@ html[data-trial="b26"] .track span:nth-child(3n+1) { color: var(--b-deep) }
   /* phones: the brush words sit closer under the header, and the about words are smaller (DEVELOPMENT filled the column edge to edge) */
   /* project hero: about two thirds of the screen, so the text below is already in view; no "גללו" hint then */
   .hero { height: 68svh; min-height: 440px }
+  .hero-copy { padding-bottom: 24px } /* the title sits low on the picture */
   .hero .hint, body[data-shade] .hero .hint { display: none }
   .bh { padding-top: 40px }
   .bh-comp { top: calc(42cqb - 28.85cqi) }
