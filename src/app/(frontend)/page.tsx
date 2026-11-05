@@ -237,6 +237,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
                   className="card"
                   style={{ top: `calc(84px + ${k * 22}px)`, '--c-bg': s.bg || site.ink, '--c-ink': s.ink || site.bg } as React.CSSProperties}
                 >
+                  {k < 5 && <img className="card-mark" src={`/brush/mark-${k + 1}.svg`} alt="" />}
                   <span className="n" aria-hidden="true">
                     {k + 1}
                   </span>
