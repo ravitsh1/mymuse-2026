@@ -79,12 +79,16 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           </p>
         ))}
       </div>
-      <p className="b-words" aria-hidden="true">
-        <span>Ideas</span>
-        <span>Design</span>
-        <span>Development</span>
-        <span>Experience</span>
-      </p>
+      {!!home.aboutWords?.length && (
+        <p className="b-words" aria-hidden="true">
+          {/* words and colours from Home → עלינו; --w staggers the write-on, one word after another */}
+          {home.aboutWords.map((w, k) => (
+            <span key={w.id ?? k} style={{ color: w.color || undefined, '--w': k } as React.CSSProperties}>
+              {w.word}
+            </span>
+          ))}
+        </p>
+      )}
     </section>
   ) : null
 

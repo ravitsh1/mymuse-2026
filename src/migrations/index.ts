@@ -50,6 +50,7 @@ import * as migration_20261103_114335_next_mode from './20261103_114335_next_mod
 import * as migration_20261103_190000_moran_gil from './20261103_190000_moran_gil';
 import * as migration_20261103_200000_hero_photos from './20261103_200000_hero_photos';
 import * as migration_20261103_210000_hero_shade from './20261103_210000_hero_shade';
+import * as migration_20261105_180855_about_words from './20261105_180855_about_words';
 
 export const migrations = [
   {
@@ -311,5 +312,10 @@ export const migrations = [
     up: migration_20261103_210000_hero_shade.up,
     down: migration_20261103_210000_hero_shade.down,
     name: '20261103_210000_hero_shade',
+  },
+  {
+    up: migration_20261105_180855_about_words.up,
+    down: migration_20261105_180855_about_words.down,
+    name: '20261105_180855_about_words',
   },
 ]

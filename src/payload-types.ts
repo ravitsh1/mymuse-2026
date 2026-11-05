@@ -189,7 +189,7 @@ export interface Project {
   };
   siteUrl?: string | null;
   /**
-   * מוצג בפרטי הפרויקט: מה שלפני הנקודתיים הוא הכותרת. ריק = לא מוצג.
+   * מוצג בפרטי הפרויקט. פסיק מתחיל קרדיט חדש, ומה שלפני הנקודתיים הוא הכותרת שלו. למשל: עיצוב: סטודיו גור, צילום: דנה לוי. ריק = לא מוצג.
    */
   credit?: string | null;
   /**
@@ -726,6 +726,19 @@ export interface Home {
    * שורה ריקה מתחילה פסקה חדשה.
    */
   aboutBody?: string | null;
+  /**
+   * נכתבות אחת אחרי השנייה ליד הפסקה, באותיות גדולות. ריק = החלק לא מוצג.
+   */
+  aboutWords?:
+    | {
+        word: string;
+        /**
+         * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
+         */
+        color?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   clients?:
     | {
         name: string;
@@ -842,6 +855,13 @@ export interface HomeSelect<T extends boolean = true> {
       };
   aboutHeadline?: T;
   aboutBody?: T;
+  aboutWords?:
+    | T
+    | {
+        word?: T;
+        color?: T;
+        id?: T;
+      };
   clients?:
     | T
     | {
