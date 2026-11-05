@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { BRIEF_FIELDS, LIMITS, type Brief, type Turn } from '@/lib/brief-shared'
+import { BRIEF_FIELDS, LIMITS, VISITOR_FIELDS, isUnstated, type Brief, type BriefKey, type Turn } from '@/lib/brief-shared'
 
 const GREETING = 'היי! ספרו לי בכמה מילים על הפרויקט: מה העסק עושה, ומה הייתם רוצים שהאתר יעשה בשבילו?'
 const ERRORS: Record<string, string> = {
@@ -20,6 +20,7 @@ export function BriefAssistant({ privacyHref }: { privacyHref?: string }) {
   const [turns, setTurns] = useState<Turn[]>([{ role: 'assistant', text: GREETING }])
   const [chips, setChips] = useState<string[]>([])
   const [brief, setBrief] = useState<Brief | null>(null)
+  const [shown, setShown] = useState<BriefKey[]>([]) // fixed when the brief arrives, so a row never vanishes mid-edit
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [sent, setSent] = useState(false)
@@ -58,7 +59,10 @@ export function BriefAssistant({ privacyHref }: { privacyHref?: string }) {
       if (!res.ok) throw new Error(data.error)
       setTurns([...next, { role: 'assistant', text: data.reply }])
       setChips(data.chips ?? [])
-      if (data.done && data.brief) setBrief(data.brief)
+      if (data.done && data.brief) {
+        setBrief(data.brief)
+        setShown(VISITOR_FIELDS.filter((k) => !isUnstated(data.brief[k] ?? '')))
+      }
     } catch (e) {
       setError(ERRORS[(e as Error).message] ?? ERRORS.default)
     } finally {
@@ -134,8 +138,8 @@ export function BriefAssistant({ privacyHref }: { privacyHref?: string }) {
               }}
             >
               <h4>הבריף שלכם</h4>
-              <p className="brief-hint">אפשר לתקן כל שורה לפני השליחה.</p>
-              {BRIEF_FIELDS.map(([k, label]) => (
+              {shown.length > 0 && <p className="brief-hint">אפשר לתקן כל שורה לפני השליחה.</p>}
+              {BRIEF_FIELDS.filter(([k]) => shown.includes(k)).map(([k, label]) => (
                 <label key={k} className="brief-row">
                   <span>{label}</span>
                   <textarea rows={2} value={brief[k]} maxLength={600} onChange={(e) => setBrief({ ...brief, [k]: e.target.value })} />
