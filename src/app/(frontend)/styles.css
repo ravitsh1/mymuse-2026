@@ -632,7 +632,9 @@ html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
 .brief-row span { color: #801f48 }
 .brief-row textarea, .brief-row input { width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid #8d849a; border-radius: 12px; font: inherit; font-size: 16px; color: #1c0f30; background: #fff; resize: vertical }
 .bot .brief .pill { justify-self: stretch; margin-top: 6px }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden }
+/* the honeypot stays where it is, clipped to nothing: an offset like left: -9999px makes an RTL page scroll sideways
+   (phones then zoom the whole page out) */
+.hp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; opacity: 0; pointer-events: none }
 .bot-form { display: flex; gap: 10px; padding: 16px 24px 12px; border-top: 1px solid #e7e3ec }
 .bot-form { align-items: flex-end }
 .bot-form textarea { flex: 1; min-width: 0; height: 52px; min-height: 52px; max-height: 140px; padding: 13px 18px; border: 1px solid #8d849a; border-radius: 22px; font: inherit; font-size: 17px; line-height: 1.5; color: #1c0f30; background: #fff; resize: none; overflow-y: hidden; box-sizing: border-box }
