@@ -568,6 +568,10 @@ html[data-trial="b26"] .track span:nth-child(3n+1) { color: var(--b-deep) }
   .p2 { width: 44%; left: 4%; bottom: 6% }
   .p2.wide { width: 80%; bottom: 4% }
   /* phones: the brush words sit closer under the header, and the about words are smaller (DEVELOPMENT filled the column edge to edge) */
+  /* project hero: about two thirds of the screen, so the text below is already in view; no "גללו" hint then */
+  .hero { height: 68svh; min-height: 440px }
+  .hero-copy { padding-bottom: 24px } /* the title sits low on the picture */
+  .hero .hint, body[data-shade] .hero .hint { display: none }
   .bh { padding-top: 40px }
   .bh-comp { top: calc(42cqb - 28.85cqi) }
   .b-words span { font-size: 19cqi } /* 20% under the desktop 23.8cqi */
