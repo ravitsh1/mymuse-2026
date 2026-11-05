@@ -71,7 +71,7 @@ a { color: inherit }
 /* the menu panel lives inside the header: keep the logo, counter and button above it */
 .top > .logo, .top > .count, .top > .burger { position: relative; z-index: 20 }
 .logo { display: block; line-height: 0 }
-.logo svg { display: block; width: auto; height: 34px }
+.logo svg { display: block; width: auto; height: 41px }
 .count { font-size: 14px; letter-spacing: .12em; direction: ltr; font-variant-numeric: tabular-nums }
 /* hamburger: two lines that cross into an X; the panel covers the page under the header */
 .burger { position: relative; width: 44px; height: 44px; margin-right: auto; padding: 0; border: 0; background: none; color: inherit; cursor: pointer }
