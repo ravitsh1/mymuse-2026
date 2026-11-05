@@ -301,11 +301,11 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
 .svc { padding-block: clamp(40px, 8vw, 90px) clamp(60px, 10vw, 120px) }
 .svc h2 { margin-bottom: 24px }
 .cards { display: grid; gap: 24px; list-style: none; margin: 0; padding: 0 }
-.card { position: sticky; min-height: min(62vh, 520px); border-radius: 22px; padding: clamp(24px, 4vw, 48px); display: grid; align-content: space-between; gap: 24px;
+.card { position: sticky; min-height: min(62vh, 520px); border-radius: 22px; padding: clamp(24px, 4vw, 48px); display: grid; align-content: end; gap: 24px;
   background: var(--c-bg); color: var(--c-ink); box-shadow: 0 -20px 60px -30px rgba(0,0,0,.6) }
 /* each card's brush mark (public/brush/mark-N.svg), top left: white on the dark cards, black on the light ones */
 .card-mark { position: absolute; top: clamp(24px, 4vw, 48px); left: clamp(24px, 3.4vw, 40px) } /* its own size, as in Figma (38–57px wide) */
-.card .n { font-family: var(--f-display); font-size: clamp(90px, 14vw, 190px); line-height: .8; font-variant-numeric: tabular-nums }
+.card-n { font-weight: 400; font-variant-numeric: tabular-nums }
 .card h3 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(48px, 7vw, 96px); line-height: .9 }
 .card p { margin: 10px 0 0; max-width: 40ch; font-size: clamp(19px, 2vw, 25px) }
 /* service tags: each leads to the projects marked with it (?service=…#work) */
@@ -453,7 +453,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 /* the Passion words on the designer's brush strokes (Figma "myMuse2026", public/brush), laid out from the 1920 frame:
    one composition box, everything in container units (1cqi = 10.75 frame px at 1920), so it scales with .bh-art.
    Strokes in one layer, the words above all of them (they cross the next stroke's edge). */
-.bh-comp { position: absolute; left: 12.9cqi; top: calc(46cqb - 28.85cqi); width: 76.4cqi; height: 57.7cqi; scale: .88 } /* a touch smaller than the frame */
+.bh-comp { position: absolute; left: 12.9cqi; top: calc(46cqb - 28.85cqi); width: 76.4cqi; height: 57.7cqi; scale: .78 } /* smaller than the frame */
 .brush { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); background: var(--img) center / 100% 100% no-repeat;
   filter: drop-shadow(4cqi 6cqi 5cqi rgba(28,15,48,.22)) } /* the wide soft shadow of the old slabs, following each stroke's edge */
 .brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg) }

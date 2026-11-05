@@ -238,11 +238,14 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
                   style={{ top: `calc(84px + ${k * 22}px)`, '--c-bg': s.bg || site.ink, '--c-ink': s.ink || site.bg } as React.CSSProperties}
                 >
                   {k < 5 && <img className="card-mark" src={`/brush/mark-${k + 1}.svg`} alt="" />}
-                  <span className="n" aria-hidden="true">
-                    {k + 1}
-                  </span>
                   <div>
-                    <h3>{s.title}</h3>
+                    {/* the number sits with the title ("01 איפיון", Figma); the list already numbers the cards for screen readers */}
+                    <h3>
+                      <span className="card-n" aria-hidden="true">
+                        {String(k + 1).padStart(2, '0')}
+                      </span>{' '}
+                      {s.title}
+                    </h3>
                     {s.text && <p>{s.text}</p>}
                     {!!s.tags?.some((t) => usedTags.has(t)) && (
                       <ul className="card-tags" aria-label={`פרויקטים לפי ${s.title}`}>
