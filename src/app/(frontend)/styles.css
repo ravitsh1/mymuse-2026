@@ -68,6 +68,11 @@ a { color: inherit }
   padding-block: calc(14px + env(safe-area-inset-top, 0px)) 14px; padding-left: var(--edge-l); padding-right: var(--edge-r);
   color: var(--p-ink); pointer-events: none; transition: color .6s }
 .top > * { pointer-events: auto }
+/* scrolling down hides the header, scrolling up brings it back (Motion toggles .hide). Never while the menu is open or
+   while focus is inside it. Hidden = a transform; shown = none, because a transform would trap the fixed menu panel */
+.top { transition: color .6s, transform .35s cubic-bezier(.2,.8,.2,1) }
+html:not(.menu-open) .top.hide:not(:focus-within) { transform: translateY(-110%) }
+@media (prefers-reduced-motion: reduce) { .top { transition: color .6s } }
 /* the menu panel lives inside the header: keep the logo, counter and button above it */
 .top > .logo, .top > .count, .top > .burger { position: relative; z-index: 20 }
 .logo { display: block; line-height: 0 }
