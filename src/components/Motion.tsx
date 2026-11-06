@@ -134,6 +134,7 @@ export function Motion() {
       if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return
       const media = a.querySelector<HTMLElement>('.nc-media')
       const v = media?.querySelector('.visual')?.cloneNode(true) as HTMLElement | undefined
+      if (v) v.style.translate = '' // the card's inner drift does not belong on the full-screen picture
       e.preventDefault()
       if (reduce || !media || !v) return go(a.getAttribute('href')!)
       const rect = media.getBoundingClientRect()
@@ -202,6 +203,50 @@ export function Motion() {
         rows.addEventListener('mouseleave', onLeave)
       }
     }
+
+    /* ---------- depth on entry: project mockups, gallery, next-project card (once, when they come into view) ---------- */
+    let io: IntersectionObserver | null = null
+    const ncCard = $('.next-card')
+    if (!reduce && 'IntersectionObserver' in window) {
+      io = new IntersectionObserver(
+        (es) =>
+          es.forEach((en) => {
+            if (!en.isIntersecting) return
+            en.target.classList.add('in')
+            io!.unobserve(en.target)
+          }),
+        { rootMargin: '0px 0px -12% 0px' },
+      )
+      const risers = [...$$('.band .par > *'), ...$$('.gallery > *')]
+      risers.forEach((el, k) => {
+        if (el.closest('.gallery')) el.style.setProperty('--rd', `${(k % 3) * 0.09}s`)
+        el.classList.add('rise')
+        io!.observe(el)
+      })
+      if (ncCard) {
+        ncCard.classList.add('nc-turn')
+        io.observe(ncCard)
+      }
+    }
+    const ncVis = ncCard?.querySelector<HTMLElement>('.nc-media .visual')
+
+    /* ---------- home hero: the brush pairs in depth (scroll in update(), pointer here, fine pointers only) ---------- */
+    const comp = $('.bh-comp')
+    let tmx = 0, tmy = 0, cmx = 0, cmy = 0, praf = 0
+    const pointerLoop = () => {
+      cmx += (tmx - cmx) * 0.08
+      cmy += (tmy - cmy) * 0.08
+      comp!.style.setProperty('--mx', cmx.toFixed(3))
+      comp!.style.setProperty('--my', cmy.toFixed(3))
+      praf = Math.abs(tmx - cmx) + Math.abs(tmy - cmy) > 0.002 ? requestAnimationFrame(pointerLoop) : 0
+    }
+    const onPointer = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse' || scrollY > innerHeight) return
+      tmx = clamp((e.clientX / innerWidth) * 2 - 1, -1, 1)
+      tmy = clamp((e.clientY / innerHeight) * 2 - 1, -1, 1)
+      if (!praf) praf = requestAnimationFrame(pointerLoop)
+    }
+    if (comp && !reduce && hoverable) addEventListener('pointermove', onPointer, { passive: true })
 
     /* ---------- elements for update() ---------- */
     const ph = $('[data-ph]')
@@ -279,7 +324,18 @@ export function Motion() {
       }
       heroMoving.forEach((el) => {
         el.style.transform = `translate3d(0,${(y * Number(el.dataset.h)).toFixed(1)}px,0)`
+        // project hero picture: the camera moves in a little as the page leaves it
+        if (el.classList.contains('v-img')) el.style.scale = (1 + 0.08 * clamp(y / vh, 0, 1)).toFixed(4)
       })
+      if (comp && y < vh * 1.5) comp.style.setProperty('--sy', y.toFixed(0))
+      if (ncVis) {
+        const r = ncVis.parentElement!.getBoundingClientRect()
+        if (r.bottom > 0 && r.top < vh) {
+          // inside its frame the picture drifts against the scroll: a window onto something deeper
+          const o = clamp((r.top + r.height / 2 - vh / 2) / vh, -1, 1)
+          ncVis.style.translate = `0 ${(o * 5).toFixed(2)}%`
+        }
+      }
       par.forEach((el) => {
         const r = el.parentElement!.getBoundingClientRect()
         const off = r.top + r.height / 2 - vh / 2
@@ -333,6 +389,9 @@ export function Motion() {
       removeEventListener('resize', update)
       removeEventListener('mm:filter', onFilter)
       card?.removeEventListener('click', onCardClick)
+      removeEventListener('pointermove', onPointer)
+      if (praf) cancelAnimationFrame(praf)
+      io?.disconnect()
       if (timer) clearTimeout(timer)
       if (raf) cancelAnimationFrame(raf)
       peek?.classList.remove('show')
