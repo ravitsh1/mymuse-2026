@@ -7,7 +7,9 @@ export function BrandHero() {
   return (
     <section className="bh" aria-labelledby="pt">
       {/* the four Passion words on the designer's brush strokes (styles.css .bh-comp): they drop in one after another,
-          then lag behind the scroll together */}
+          then lag behind the scroll together. Each stroke and its word share a depth (--d): nearer pairs drift further
+          with the scroll and the pointer (Motion sets --sy / --mx / --my) and cast a longer shadow, so the depth stays
+          in the still composition too */}
       <div className="bh-art" aria-hidden="true">
         <div className="bh-slabs" data-speed="-0.2">
           <div className="bh-comp">

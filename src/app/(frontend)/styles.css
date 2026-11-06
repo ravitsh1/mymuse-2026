@@ -455,7 +455,15 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
    Strokes in one layer, the words above all of them (they cross the next stroke's edge). */
 .bh-comp { position: absolute; left: 12.9cqi; top: calc(46cqb - 28.85cqi); width: 76.4cqi; height: 57.7cqi; scale: .78 } /* smaller than the frame */
 .brush { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); background: var(--img) center / 100% 100% no-repeat;
-  filter: drop-shadow(4cqi 6cqi 5cqi rgba(28,15,48,.22)) } /* the wide soft shadow of the old slabs, following each stroke's edge */
+  /* the wide soft shadow of the old slabs, following each stroke's edge; nearer strokes (higher --d) cast it longer */
+  filter: drop-shadow(calc(2cqi + 2cqi * var(--d)) calc(3cqi + 3cqi * var(--d)) calc(3cqi + 2cqi * var(--d)) rgba(28,15,48,.22)) }
+/* depth: a pair drifts by its --d with the scroll (--sy, px) and the pointer (--mx/--my, -1..1). The translate property
+   leaves transform free for the drop-in and the tilt */
+.brush, .slab { translate: calc(var(--mx, 0) * var(--d) * 1.1cqi) calc(var(--sy, 0) * var(--d) * -.07px + var(--my, 0) * var(--d) * .7cqi) }
+.brush-1, .slab-1 { --d: .45 }
+.brush-2, .slab-2 { --d: 1 }
+.brush-3, .slab-3 { --d: .75 }
+.brush-4, .slab-4 { --d: 1.35 }
 .brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg) }
 .brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1 }
 .brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2 }
@@ -657,7 +665,7 @@ html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
 .nc-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--p-acc-sm, var(--p-acc)) }
 .nc-link { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; color: inherit; text-decoration: none }
 .nc-media { position: relative; display: block; aspect-ratio: 16 / 10; border-radius: 22px; overflow: hidden; background: var(--n-bg) }
-.nc-media .visual { transition: transform .6s cubic-bezier(.2,.8,.2,1) }
+.nc-media .visual { transition: transform .6s cubic-bezier(.2,.8,.2,1); scale: 1.12 } /* room for the inner drift (Motion: translate) */
 .nc-media .visual .word { display: none }
 .nc-link:hover .nc-media .visual { transform: scale(1.03) }
 .nc-text { display: grid; justify-items: start; gap: 10px }
@@ -694,3 +702,16 @@ html[data-trial="b26"] :is(.b-text, .bh-text, .card p, .quote blockquote, .about
 html[data-trial="b26"] .ix-head p.b-text { font-size: 18px }
 html[data-trial="b26"] .ix-filter button { font-weight: 400 }
 html[data-trial="b26"] .visual .word { display: none }
+
+/* ---------- depth on entry (Motion adds .rise / .nc-turn only with motion allowed; without JS everything is simply there) ---------- */
+/* project mockups and gallery: come forward once, from a little further away */
+.rise { opacity: 0; scale: .94; translate: 0 36px; transition: opacity .9s ease var(--rd, 0s), scale 1.3s cubic-bezier(.2,.8,.2,1) var(--rd, 0s), translate 1.3s cubic-bezier(.2,.8,.2,1) var(--rd, 0s) }
+.rise.in { opacity: 1; scale: 1; translate: 0 0 }
+/* next-project card: the picture opens like a turning page, from the right edge (RTL), its image settling back as it
+   does; then the text block arrives. The one strong move of the page end, before the click's fly-in */
+.nc-turn .nc-media { clip-path: inset(0 0 0 100% round 22px); transition: clip-path 1.1s cubic-bezier(.75,0,.2,1) }
+.nc-turn .nc-media .visual { scale: 1.3; transition: transform .6s cubic-bezier(.2,.8,.2,1), scale 1.6s cubic-bezier(.2,.8,.2,1) }
+.nc-turn .nc-text { opacity: 0; translate: 0 18px; transition: opacity .7s ease .55s, translate .9s cubic-bezier(.2,.8,.2,1) .55s }
+.nc-turn.in .nc-media { clip-path: inset(0 0 0 0 round 22px) }
+.nc-turn.in .nc-media .visual { scale: 1.12 }
+.nc-turn.in .nc-text { opacity: 1; translate: 0 0 }
