@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>קפה נחת · עברנו את כל העולם בשביל הכוס הזאת</title>
+<meta name="description" content="פולי קפה ספשלטי בסחר ישיר, נקלים טרי בבית הקלייה של נחת בפארק התחנה בתל אביב. אתר דוגמה של MyMuse.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23A3271A'/></svg>">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="scrollcraft.css">
+<style>
+  /* ---- tokens: off-black, bone, and the red of Nahat's terrace chairs ---- */
+  :root {
+    --sc-canvas:     #12100E;
+    --sc-surface:    #1C1916;
+    --sc-ink:        #F3EDE5;
+    --sc-ink-soft:   #B9AEA2;
+    --sc-accent:     #F0563C;
+    --sc-accent-ink: #160D0B;
+    --sc-font-display: "Frank Ruhl Libre", "David", serif;
+    --sc-font-text:    "IBM Plex Sans Hebrew", "Arial Hebrew", system-ui, sans-serif;
+    --sc-shadow-color: 20 30% 4%;
+    --r: 3px;
+    --paper: #ECE8E1;
+    --red: #A3271A;
+  }
+
+  /* Each chapter owns its ground and restates color with its tokens (taste.md). */
+  .g-dark  { --sc-ink:#F3EDE5; --sc-ink-soft:#B9AEA2; --sc-accent:#F0563C; --sc-accent-ink:#160D0B; background:var(--sc-canvas); color:var(--sc-ink); }
+  .g-deep  { --sc-ink:#F3EDE5; --sc-ink-soft:#B9AEA2; --sc-accent:#F0563C; --sc-accent-ink:#160D0B; background:#0B0A09; color:var(--sc-ink); }
+  .g-paper { --sc-ink:#1A1512; --sc-ink-soft:#5A5049; --sc-accent:#B32D1B; --sc-accent-ink:#FFF8F2; background:var(--paper); color:var(--sc-ink); }
+  .g-red   { --sc-ink:#F7EFE6; --sc-ink-soft:#F2D9D0; --sc-accent:#F7EFE6; --sc-accent-ink:#8E2115; background:var(--red); color:var(--sc-ink); }
+  .g-paper ::selection { background:#B32D1B; color:#FFF8F2; }
+
+  body { font-weight: 400; }
+  h1, h2, h3 { font-family: var(--sc-font-display); font-weight: 700; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  .lat { font-family: var(--sc-font-text); letter-spacing: var(--sc-track-wide); text-transform: uppercase; font-size: var(--sc-t-xs); font-weight: 500; }
+
+  .skip { position: absolute; inset-inline-start: var(--sc-4); top: -4rem; z-index: 100; background: var(--sc-accent); color: var(--sc-accent-ink); padding: var(--sc-2) var(--sc-4); border-radius: var(--r); }
+  .skip:focus { top: var(--sc-4); }
+
+  .btn {
+    display: inline-flex; align-items: center; min-height: 48px; padding: 0 var(--sc-5);
+    background: var(--sc-accent); color: var(--sc-accent-ink); border-radius: var(--r);
+    font-weight: 600; text-decoration: none;
+    transition: transform var(--sc-d-fast) var(--sc-ease-out), box-shadow var(--sc-d-fast) var(--sc-ease-out);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: var(--sc-e2); }
+  .link { color: var(--sc-ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--sc-accent); text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
+  .link:hover { color: var(--sc-accent); }
+
+  /* ---- folio: the chapter marker in the margin (editorial grammar nav) ---- */
+  .folio {
+    position: fixed; z-index: var(--sc-z-chrome); inset-inline-end: 0; top: 0; bottom: 0;
+    width: clamp(2.4rem, 3.2vw, 3rem);
+    display: flex; align-items: center; justify-content: center; pointer-events: none;
+  }
+  .folio__txt {
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    font-size: var(--sc-t-xs); letter-spacing: 0.06em; white-space: nowrap;
+    color: var(--folio, #B9AEA2); transition: color var(--sc-d-slow) var(--sc-ease-out);
+  }
+  .folio__txt b { font-weight: 600; color: var(--folio-strong, #F3EDE5); transition: color var(--sc-d-slow) var(--sc-ease-out); }
+  body[data-ground="paper"] { --folio:#5A5049; --folio-strong:#1A1512; }
+  body[data-ground="red"]   { --folio:#F2D9D0; --folio-strong:#F7EFE6; }
+
+  /* ================================================== שער · title page == */
+  .title { position: relative; min-height: 100svh; display: grid; grid-template-rows: auto 1fr auto; overflow: clip; }
+  .title__plane { position: absolute; inset-inline: -6vw; bottom: -4vh; opacity: 0.075; pointer-events: none; }
+  .title__plane img { width: 112vw; max-width: none; height: auto; }
+  .title__bar { position: relative; display: flex; align-items: center; justify-content: space-between; gap: var(--sc-5); padding: var(--sc-5) var(--sc-gutter); }
+  .title__bar img { width: 7.5rem; height: auto; }
+  .title__nav ul { display: flex; flex-wrap: wrap; gap: var(--sc-2) var(--sc-5); list-style: none; margin: 0; padding: 0; font-size: var(--sc-t-sm); }
+  .title__nav a { text-decoration: none; color: var(--sc-ink-soft); padding-block: var(--sc-2); }
+  .title__nav a:hover { color: var(--sc-ink); }
+  .title__body { position: relative; align-self: center; padding: var(--sc-8) var(--sc-gutter); max-width: 64rem; }
+  .title__body .lat { color: var(--sc-accent); }
+  .title h1 { font-size: var(--sc-t-4xl); line-height: var(--sc-leading-none); letter-spacing: -0.01em; font-weight: 900; margin-top: var(--sc-5); }
+  .title h1 span { display: block; font-weight: 400; }
+  .title__lede { font-size: var(--sc-t-lg); color: var(--sc-ink-soft); max-width: 38ch; margin-top: var(--sc-6); line-height: 1.55; }
+  .title__links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sc-4) var(--sc-6); margin-top: var(--sc-7); }
+  .title__foot { position: relative; padding: var(--sc-5) var(--sc-gutter); border-top: 1px solid var(--sc-hairline); font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
+
+  /* ================================================= פרק א׳ · המקור == */
+  .origins { position: relative; }
+  .origins__head { padding: var(--sc-9) var(--sc-gutter) var(--sc-6); max-width: 46rem; }
+  .origins__head h2 { font-size: var(--sc-t-3xl); line-height: var(--sc-leading-tight); }
+  .origins__head p { color: var(--sc-ink-soft); margin-top: var(--sc-4); max-width: 44ch; }
+
+  .map { position: relative; margin: 0 var(--sc-gutter); aspect-ratio: 1000 / 479.2; max-height: 60vh; }
+  .map img, .map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .map img { opacity: 0.42; }
+  .arc { fill: none; stroke: var(--sc-accent); stroke-width: 2.2; stroke-linecap: round; vector-effect: non-scaling-stroke; transition: opacity var(--sc-d-slow) var(--sc-ease-out); }
+  .arc.is-past { opacity: 0.38; }
+  .pin { fill: var(--sc-ink); }
+  .pin--home { fill: var(--sc-accent); }
+  .ring { fill: none; stroke: var(--sc-accent); stroke-width: 1.5; opacity: 0; vector-effect: non-scaling-stroke; transition: opacity var(--sc-d-slow) var(--sc-ease-out); }
+  .ring.is-on { opacity: 1; }
+  .home-label { font: 600 13px var(--sc-font-text); fill: var(--sc-ink); }
+
+  .dist { display: none; }
+  .rail { list-style: none; margin: 0; padding: var(--sc-6) var(--sc-gutter) var(--sc-9); display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: var(--sc-6); }
+  .rail__lead, .rail__end { display: none; }
+  .origin { border-top: 1px solid var(--sc-hairline-strong); padding-top: var(--sc-4); }
+  .origin .lat { color: var(--sc-accent); }
+  .origin h3 { font-size: var(--sc-t-xl); margin-top: var(--sc-2); line-height: 1.1; }
+  .origin__region { font-size: var(--sc-t-sm); color: var(--sc-ink-soft); margin-top: var(--sc-1); }
+  .origin__notes { margin-top: var(--sc-4); font-size: var(--sc-t-sm); line-height: 1.6; }
+  .origin__km { margin-top: var(--sc-4); font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
+  .origin__km b { color: var(--sc-ink); font-weight: 600; }
+
+  /* Pan mode: only with JS and motion allowed. */
+  .origins--pan .origins__head { display: none; }
+  .origins--pan .origins__stage { display: block; }
+  .origins--pan .map { position: absolute; top: 7svh; inset-inline: var(--sc-gutter); margin: 0; max-height: none; height: 50svh; aspect-ratio: auto; }
+  .origins--pan .dist {
+    display: block; position: absolute; top: 9svh; inset-inline-start: var(--sc-gutter); z-index: 2;
+    max-width: 22rem; pointer-events: none;
+  }
+  .dist__num { display: block; font-family: var(--sc-font-display); font-weight: 900; font-size: var(--sc-t-3xl); line-height: 1; font-variant-numeric: tabular-nums; }
+  .dist__unit { font-size: 0.42em; font-weight: 500; margin-inline-start: 0.2em; }
+  .dist__from { display: block; margin-top: var(--sc-2); font-size: var(--sc-t-sm); color: var(--sc-ink-soft); min-height: 3.2em; }
+  .origins--pan .rail {
+    position: absolute; bottom: 5svh; inset-inline-start: 0;
+    display: flex; align-items: stretch; gap: clamp(1.5rem, 3vw, 3rem);
+    width: max-content; padding: 0 var(--sc-gutter); will-change: transform;
+  }
+  .origins--pan .rail__lead, .origins--pan .rail__end { display: block; }
+  .rail__lead { width: clamp(17rem, 30vw, 27rem); align-self: end; }
+  .rail__lead h2 { font-size: var(--sc-t-2xl); line-height: var(--sc-leading-tight); }
+  .rail__lead p { color: var(--sc-ink-soft); margin-top: var(--sc-3); font-size: var(--sc-t-sm); }
+  .origins--pan .origin {
+    width: clamp(16rem, 24vw, 22rem); background: color-mix(in oklab, var(--sc-surface) 88%, transparent);
+    border: 1px solid var(--sc-hairline); border-radius: var(--r); padding: var(--sc-5);
+    box-shadow: var(--sc-e2), var(--sc-edge);
+    opacity: 0.6; transition: opacity var(--sc-d-slow) var(--sc-ease-out), border-color var(--sc-d-slow) var(--sc-ease-out);
+  }
+  .origins--pan .origin.is-on { opacity: 1; border-color: color-mix(in oklab, var(--sc-accent) 70%, transparent); }
+  .rail__end { width: clamp(16rem, 26vw, 24rem); align-self: center; }
+  .rail__end p { font-family: var(--sc-font-display); font-size: var(--sc-t-xl); line-height: 1.2; font-weight: 500; }
+
+  /* ================================================ פרק ב׳ · הסיפור == */
+  .story { padding: var(--sc-section) var(--sc-gutter); }
+  .story__grid { max-width: var(--sc-maxw); margin: 0 auto; display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sc-6); align-items: start; }
+  .story__text { grid-column: 1 / span 6; }
+  .story__media { grid-column: 8 / span 5; margin: 0; }
+  .story__media img { width: 100%; height: auto; border-radius: var(--r); }
+  .story__media figcaption, .cap { font-size: var(--sc-t-xs); color: var(--sc-ink-soft); margin-top: var(--sc-3); }
+  .story h2 { font-size: var(--sc-t-3xl); line-height: var(--sc-leading-tight); }
+  .story .sc-body { color: var(--sc-ink); margin-top: var(--sc-5); }
+  .story .sc-body + .sc-body { margin-top: var(--sc-4); }
+  .quote { grid-column: 1 / -1; margin: var(--sc-9) 0 0; padding-top: var(--sc-6); border-top: 2px solid var(--sc-ink); }
+  .quote p { font-family: var(--sc-font-display); font-size: var(--sc-t-3xl); font-weight: 500; line-height: 1.08; max-width: 18ch; }
+  .quote cite { display: block; font-style: normal; margin-top: var(--sc-4); font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
+  .facts { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sc-6); margin: var(--sc-8) 0 0; }
+  .facts > div { border-top: 1px solid color-mix(in oklab, var(--sc-ink) 25%, transparent); padding-top: var(--sc-4); }
+  .facts dt { font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
+  .facts dd { margin: var(--sc-2) 0 0; font-family: var(--sc-font-display); font-size: var(--sc-t-2xl); font-weight: 700; line-height: 1; }
+  .story__pour { grid-column: 1 / span 5; margin: var(--sc-8) 0 0; }
+  .story__pour img { width: 100%; height: auto; border-radius: var(--r); }
+  .story__more { grid-column: 7 / span 6; align-self: end; margin-top: var(--sc-8); }
+
+  /* ================================================== פרק ג׳ · המנוי == */
+  .sub { padding: var(--sc-section) var(--sc-gutter); }
+  .sub__grid { max-width: var(--sc-maxw); margin: 0 auto; display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sc-6); align-items: center; }
+  .sub__text { grid-column: 1 / span 6; }
+  .sub__media { grid-column: 8 / span 5; margin: 0; }
+  .sub__frame { overflow: clip; border-radius: var(--r); aspect-ratio: 4 / 5; }
+  .sub__frame img { width: 100%; height: 124%; object-fit: cover; margin-top: -12%; }
+  .sub__media figcaption { color: var(--sc-ink-soft); font-size: var(--sc-t-xs); margin-top: var(--sc-3); }
+  .sub h2 { font-size: var(--sc-t-3xl); line-height: var(--sc-leading-tight); }
+  .sub__lede { margin-top: var(--sc-5); font-size: var(--sc-t-lg); line-height: 1.5; max-width: 40ch; }
+  .steps { list-style: none; margin: var(--sc-7) 0 0; padding: 0; counter-reset: s; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 2.6rem 1fr; gap: var(--sc-4); padding: var(--sc-4) 0; border-top: 1px solid color-mix(in oklab, var(--sc-ink) 30%, transparent); }
+  .steps li::before { content: counter(s, hebrew) "."; font-family: var(--sc-font-display); font-size: var(--sc-t-xl); font-weight: 700; line-height: 1.1; }
+  .steps h3 { font-family: var(--sc-font-text); font-size: var(--sc-t-base); font-weight: 600; }
+  .steps p { color: var(--sc-ink-soft); font-size: var(--sc-t-sm); margin-top: var(--sc-1); }
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sc-3); margin: var(--sc-6) 0 0; }
+  .tiers > div { border: 1px solid color-mix(in oklab, var(--sc-ink) 40%, transparent); border-radius: var(--r); padding: var(--sc-4); }
+  .tiers dt { font-size: var(--sc-t-sm); }
+  .tiers dd { margin: var(--sc-1) 0 0; font-family: var(--sc-font-display); font-size: var(--sc-t-2xl); font-weight: 900; line-height: 1; }
+  .tiers dd small { font-family: var(--sc-font-text); font-size: var(--sc-t-xs); font-weight: 500; display: block; margin-top: var(--sc-2); color: var(--sc-ink-soft); }
+  .sub__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sc-4) var(--sc-6); margin-top: var(--sc-7); }
+  .sub__cta small { color: var(--sc-ink-soft); font-size: var(--sc-t-xs); }
+
+  /* ================================================== פרק ד׳ · הבתים == */
+  .cafes { padding: var(--sc-section) var(--sc-gutter); }
+  .cafes__grid { max-width: var(--sc-maxw); margin: 0 auto; display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sc-6); }
+  .cafes__text { grid-column: 1 / span 5; }
+  .cafes__text .lat { color: var(--sc-accent); }
+  .cafes h2 { font-size: var(--sc-t-3xl); line-height: var(--sc-leading-tight); margin-top: var(--sc-3); }
+  .places { list-style: none; padding: 0; margin: var(--sc-7) 0 0; }
+  .places li { padding: var(--sc-5) 0; border-top: 1px solid var(--sc-hairline-strong); }
+  .places h3 { font-size: var(--sc-t-xl); line-height: 1.15; }
+  .places p { color: var(--sc-ink-soft); font-size: var(--sc-t-sm); margin-top: var(--sc-1); }
+  .places a { display: inline-block; margin-top: var(--sc-2); font-size: var(--sc-t-sm); padding-block: var(--sc-2); }
+  .cafes__ig { margin-top: var(--sc-6); font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
+  .cafes__photos { grid-column: 7 / span 6; display: grid; grid-template-columns: 1fr 1fr; gap: var(--sc-5); align-content: start; perspective: 900px; }
+  .cafes__photos figure { margin: 0; }
+  .cafes__photos img { width: 100%; height: auto; border-radius: var(--r); box-shadow: var(--sc-e3); }
+  .cafes__photos .wide { grid-column: 1 / -1; }
+  .cafes__photos .low { margin-top: var(--sc-9); }
+
+  /* ======================================================= קולופון == */
+  .colophon { padding: var(--sc-section) var(--sc-gutter) var(--sc-6); }
+  .colophon__grid { max-width: var(--sc-maxw); margin: 0 auto; display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sc-6); }
+  .colophon__media { grid-column: 1 / span 5; margin: 0; }
+  .colophon__media img { width: 100%; height: auto; border-radius: var(--r); }
+  .colophon__text { grid-column: 7 / span 6; align-self: center; }
+  .colophon h2 { font-size: var(--sc-t-3xl); line-height: var(--sc-leading-tight); }
+  .colophon__text > p { margin-top: var(--sc-5); }
+  .offer { list-style: none; padding: 0; margin: var(--sc-5) 0 0; display: flex; flex-wrap: wrap; gap: var(--sc-2) var(--sc-5); color: var(--sc-ink-soft); font-size: var(--sc-t-sm); }
+  .offer li::before { content: ""; display: inline-block; width: 6px; height: 6px; background: var(--sc-accent); margin-inline-end: var(--sc-2); vertical-align: middle; }
+  .ask { font-family: var(--sc-font-display); font-size: var(--sc-t-xl); line-height: 1.3; margin-top: var(--sc-7) !important; }
+  .masthead { max-width: var(--sc-maxw); margin: var(--sc-10) auto 0; padding-top: var(--sc-6); border-top: 1px solid var(--sc-hairline-strong); display: grid; grid-template-columns: auto 1fr 1fr; gap: var(--sc-6); font-size: var(--sc-t-xs); color: var(--sc-ink-soft); }
+  .masthead img { width: 6rem; height: auto; }
+  .masthead ul { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--sc-1); }
+  .masthead a { color: var(--sc-ink-soft); }
+  .masthead a:hover { color: var(--sc-ink); }
+  .masthead__demo { grid-column: 1 / -1; padding-top: var(--sc-4); }
+
+  /* ----------------------------------------------------------- phone -- */
+  @media (max-width: 860px) {
+    .title h1 { font-size: var(--sc-t-3xl); }
+    .title__nav { display: none; }
+    /* A phone has no margin to hold a folio; the chapter heads carry it. */
+    .folio { display: none; }
+    .story__text, .story__media, .story__pour, .story__more, .sub__text, .sub__media, .cafes__text, .cafes__photos, .colophon__media, .colophon__text { grid-column: 1 / -1; }
+    .facts { grid-template-columns: 1fr; gap: var(--sc-4); }
+    .tiers { grid-template-columns: 1fr 1fr 1fr; }
+    .cafes__photos .low { margin-top: var(--sc-7); }
+    .masthead { grid-template-columns: 1fr; }
+    .origins--pan .map { top: 7svh; height: 32svh; inset-inline: var(--sc-4); }
+    .origins--pan .dist { top: 40svh; max-width: none; inset-inline: var(--sc-gutter); }
+    .origins--pan .rail { bottom: 7svh; }
+    .dist__num { font-size: var(--sc-t-2xl); }
+    .dist__from { min-height: 0; }
+    .origins--pan .rail { gap: var(--sc-4); }
+    .origins--pan .origin { width: 78vw; max-height: 42svh; overflow: hidden; padding: var(--sc-4); }
+    .rail__lead { width: 80vw; }
+    .rail__end { width: 74vw; }
+  }
+
+  /* Without JS the engine never runs: everything it would reveal is simply shown. */
+  html:not(.js) [data-sc-in], html:not(.js) [data-sc-stagger] > *, html:not(.js) [data-sc-cue] { opacity: 1 !important; transform: none !important; }
+  /* Reduced motion: the origins act becomes a normal section, all lines drawn. */
+  @media (prefers-reduced-motion: reduce) {
+    .origins { height: auto !important; }
+    .origins .origins__stage { position: static; height: auto; overflow: visible; }
+    .btn, .btn:hover { transform: none; }
+  }
+</style>
+</head>
+<body data-ground="dark">
+
+<a class="skip" href="#ch1">דילוג לתוכן</a>
+<div class="sc-grain" aria-hidden="true"></div>
+<div class="folio" aria-hidden="true"><span class="folio__txt"><b>נחת</b> · <span data-folio>שער</span></span></div>
+
+<main>
+
+  <!-- שער · title page. Editorial grammar: type on the ground, no media above the fold.
+       Depth comes from the logo plane drifting behind the headline. -->
+  <section class="title g-dark" data-sc-act="flow" data-folio-name="שער" data-ground="dark" aria-labelledby="t-h">
+    <div class="title__plane" data-sc-parallax="-1.6" aria-hidden="true"><img src="assets/logo-nahat-white.webp" width="500" height="140" alt=""></div>
+    <header class="title__bar">
+      <a href="#top" aria-label="קפה נחת, לראש העמוד"><img src="assets/logo-nahat-white.webp" width="500" height="140" alt="קפה נחת"></a>
+      <nav class="title__nav" aria-label="ראשי">
+        <ul>
+          <li><a href="https://nahat.check-it.co.il/shop-2/">החנות</a></li>
+          <li><a href="#ch2">הסיפור שלנו</a></li>
+          <li><a href="#ch3">מנוי קפה</a></li>
+          <li><a href="#ch4">בתי הקפה</a></li>
+          <li><a href="#ch5">נחת למשרד</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="title__body" id="top" data-sc-in data-sc-stagger="80">
+      <p class="lat" lang="en">Nahat offerings · 2026</p>
+      <h1 id="t-h">עברנו את כל העולם <span>בשביל הכוס הזאת.</span></h1>
+      <p class="title__lede">פולי קפה ממגדלים שאנחנו מכירים בשם, נקלים טרי בבית הקלייה שלנו בתחנה, וישר אליכם הביתה.</p>
+      <p class="title__links">
+        <a class="btn" href="https://nahat.check-it.co.il/shop-2/">לחנות הקפה</a>
+        <a class="link" href="#ch2">עוד עלינו</a>
+      </p>
+    </div>
+    <p class="title__foot">משלוח חינם בקנייה מעל 150 ש״ח · הנחות קבועות לחברי המועדון</p>
+  </section>
+
+  <!-- פרק א׳ · המקור. The peak and the signature move: each card draws its route
+       to Tel Aviv on the map, and the distances add up. Bespoke pan (RTL) driven off --sc-p. -->
+  <section id="ch1" class="origins g-deep" data-sc-act="pan" data-sc-span="6.5" data-folio-name="פרק א׳ · המקור" data-ground="dark" aria-labelledby="o-h">
+    <div class="origins__stage" data-sc-stage>
+      <div class="origins__head">
+        <h2 id="o-h-static">חמש ארצות. חקלאים שאנחנו מכירים בשם.</h2>
+        <p>כל קו על המפה הוא הדרך של הפולים מהחווה אל בית הקלייה שלנו בפארק התחנה.</p>
+      </div>
+
+      <figure class="map" aria-hidden="true">
+        <img src="assets/map-dots.svg" alt="" width="1000" height="479">
+        <svg viewBox="0 0 1000 479.2" preserveAspectRatio="xMidYMid meet">
+          <path class="arc" id="arc-ethiopia"  d="M720.7 259.8Q741.1 188.1 702 124.7"/>
+          <path class="arc" id="arc-colombia"  d="M124.7 282Q378.7 76.3 702 124.7"/>
+          <path class="arc" id="arc-brazil"    d="M276.1 390.3Q430.6 163.8 702 124.7"/>
+          <path class="arc" id="arc-india"     d="M915.4 222.3Q830.2 126.6 702 124.7"/>
+          <path class="arc" id="arc-guatemala" d="M48.3 215.8Q355.1 26.4 702 124.7"/>
+          <circle class="ring" id="ring-ethiopia"  cx="720.7" cy="259.8" r="11"/>
+          <circle class="ring" id="ring-colombia"  cx="124.7" cy="282"   r="11"/>
+          <circle class="ring" id="ring-brazil"    cx="276.1" cy="390.3" r="11"/>
+          <circle class="ring" id="ring-india"     cx="915.4" cy="222.3" r="11"/>
+          <circle class="ring" id="ring-guatemala" cx="48.3"  cy="215.8" r="11"/>
+          <circle class="pin" cx="720.7" cy="259.8" r="4"/>
+          <circle class="pin" cx="124.7" cy="282"   r="4"/>
+          <circle class="pin" cx="276.1" cy="390.3" r="4"/>
+          <circle class="pin" cx="915.4" cy="222.3" r="4"/>
+          <circle class="pin" cx="48.3"  cy="215.8" r="4"/>
+          <circle class="pin pin--home" cx="702" cy="124.7" r="6"/>
+          <text class="home-label" x="690" y="114" text-anchor="end">תל אביב</text>
+        </svg>
+      </figure>
+
+      <p class="dist" aria-hidden="true">
+        <span class="dist__num"><span data-dist>0</span><span class="dist__unit">ק״מ</span></span>
+        <span class="dist__from" data-dist-from></span>
+      </p>
+
+      <ol class="rail" aria-labelledby="o-h">
+        <li class="rail__lead">
+          <h2 id="o-h">חמש ארצות. חקלאים שאנחנו מכירים בשם.</h2>
+          <p>כל קו על המפה הוא הדרך של הפולים מהחווה אל בית הקלייה שלנו בפארק התחנה.</p>
+        </li>
+        <li class="origin" data-origin="ethiopia" data-km="2900" data-from="מאתיופיה עד בית הקלייה, בקו אוויר">
+          <p class="lat" lang="en">Ethiopia</p>
+          <h3>אתיופיה</h3>
+          <p class="origin__region" lang="en" dir="ltr">Gedeb Woreda</p>
+          <p class="origin__notes">ערש הקפה העולמי. חמיצות פרחונית, יסמין ותה שחור. הזנים שאנחנו הכי אוהבים לקלות בהיר.</p>
+          <p class="origin__km"><b>כ־2,900 ק״מ</b> עד תל אביב</p>
+        </li>
+        <li class="origin" data-origin="colombia" data-km="11800" data-from="מקולומביה עד בית הקלייה, בקו אוויר">
+          <p class="lat" lang="en">Colombia</p>
+          <h3>קולומביה</h3>
+          <p class="origin__region" lang="en" dir="ltr">Huila</p>
+          <p class="origin__notes">חדשנות ומסורת של מאתיים שנות קפה. שוקולד, פירות יער וגוף עגול. הקלאסיקה שתמיד עובדת.</p>
+          <p class="origin__km"><b>כ־11,800 ק״מ</b> עד תל אביב</p>
+        </li>
+        <li class="origin" data-origin="brazil" data-km="10400" data-from="מברזיל עד בית הקלייה, בקו אוויר">
+          <p class="lat" lang="en">Brazil</p>
+          <h3>ברזיל</h3>
+          <p class="origin__region" lang="en" dir="ltr">Daterra</p>
+          <p class="origin__notes">מהחווה שאנחנו גאים לייצג בישראל. אגוזים, קקאו ומתיקות עמוקה. הבסיס המושלם לאספרסו.</p>
+          <p class="origin__km"><b>כ־10,400 ק״מ</b> עד תל אביב</p>
+        </li>
+        <li class="origin" data-origin="india" data-km="4700" data-from="מהודו עד בית הקלייה, בקו אוויר">
+          <p class="lat" lang="en">India</p>
+          <h3>הודו</h3>
+          <p class="origin__region" lang="en" dir="ltr">Sethuraman Estate</p>
+          <p class="origin__notes">רובוסטה ספשלטי מהחווה שאנחנו מייצגים. עוצמה, קקאו מריר וקרמה עשירה שמרימה כל תערובת.</p>
+          <p class="origin__km"><b>כ־4,700 ק״מ</b> עד תל אביב</p>
+        </li>
+        <li class="origin" data-origin="guatemala" data-km="12200" data-from="מגואטמלה עד בית הקלייה, בקו אוויר">
+          <p class="lat" lang="en">Guatemala</p>
+          <h3>גואטמלה</h3>
+          <p class="origin__region" lang="en" dir="ltr">Antigua</p>
+          <p class="origin__notes">אדמה וולקנית וגובה רב. קרמל, תפוח אדום ואיזון מושלם. קלייה בינונית שכולם מתאהבים בה.</p>
+          <p class="origin__km"><b>כ־12,200 ק״מ</b> עד תל אביב</p>
+        </li>
+        <li class="rail__end" data-km="42000" data-from="חמש חוות, בית קלייה אחד. יותר מהיקף כדור הארץ.">
+          <p>ביחד, כ־42,000 ק״מ. יותר מסיבוב שלם סביב כדור הארץ, בשביל כוס אחת.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- פרק ב׳ · הסיפור. Hard cut to paper. Reveal on the photo, real numbers tick once in prose. -->
+  <section id="ch2" class="story g-paper" data-folio-name="פרק ב׳ · הסיפור" data-ground="paper" aria-labelledby="s-h">
+    <div class="story__grid">
+      <div class="story__text sc-stack" data-sc-in data-sc-stagger="70">
+        <h2 id="s-h">אהבה לקפה, מהשדה ועד לכוס.</h2>
+        <p class="sc-body">אחרי למעלה מ־20 שנה בעסקי הקפה, הבנו דבר אחד: אנחנו לא סובלים מהתמכרות לקפה, אנחנו נהנים ממנה. הקמנו את נחת כדי ללוות את הקפה בכל שלב, מתוך אמונה שטריות, טעם וסחר ישיר הם הבסיס לכוס המושלמת.</p>
+        <p class="sc-body">אנחנו רוכשים את הפולים בסחר ישיר (Direct Trade) מהחקלאים הטובים בעולם, מקפידים על פולי ספשלטי בציון 80 ומעלה בלבד, וקולים אותם בבית הקלייה שלנו, כדי שתקבלו קפה עשיר, טרי ומלא בטעם.</p>
+      </div>
+      <div class="story__media" data-sc-act="flow">
+        <figure data-sc-reveal="right" data-sc-reveal-at="0.12 0.5">
+          <img src="assets/steam.webp" width="1600" height="1067" alt="בריסטה מאחורי הבר, ענן אדים עולה ממכונת האספרסו">
+        </figure>
+        <p class="cap">על הבר בנחת, בוקר רגיל.</p>
+      </div>
+
+      <blockquote class="quote" data-sc-in>
+        <p>״משלמים הוגן יותר, מקבלים את הטוב ביותר.״</p>
+        <cite>המוטו של נחת</cite>
+      </blockquote>
+
+      <dl class="facts" data-sc-in data-sc-stagger="80">
+        <div><dt>שנים בעסקי הקפה</dt><dd><span dir="ltr"><span data-sc-count="0 20">20</span>+</span></dd></div>
+        <div><dt>ציון ספשלטי מינימלי</dt><dd><span dir="ltr"><span data-sc-count="0 80">80</span>+</span></dd></div>
+        <div><dt>איך קונים</dt><dd lang="en" dir="ltr" style="text-align:right">Direct Trade</dd></div>
+      </dl>
+
+      <figure class="story__pour" data-sc-in>
+        <img src="assets/pour.webp" width="1400" height="788" alt="אספרסו נמזג מהפורטפילטר לכוס קרח" loading="lazy">
+      </figure>
+      <p class="story__more"><a class="link" href="https://nahat.check-it.co.il/our-story/">בואו להכיר אותנו</a></p>
+    </div>
+  </section>
+
+  <!-- פרק ג׳ · המנוי. Red chapter, all practical. Parallax lives inside the photo frame only. -->
+  <section id="ch3" class="sub g-red" data-sc-act="flow" data-folio-name="פרק ג׳ · המנוי" data-ground="red" aria-labelledby="m-h">
+    <div class="sub__grid">
+      <div class="sub__text" data-sc-in data-sc-stagger="60">
+        <h2 id="m-h">שלא תיתקעו בלי הקפה שלכם בבוקר.</h2>
+        <p class="sub__lede">הצטרפו למנוי של נחת, קבלו את הקפה האהוב עליכם קלוי וטרי ישר לדלת, ותיהנו מהנחה קבועה בכל הזמנה. בלי התחייבות, עם המון נחת.</p>
+        <ol class="steps">
+          <li><div><h3>בחרו את הקפה שלכם</h3><p>הזמנה קבועה שאתם מגדירים, או הזמנה משתנה. למשל קלייה בהירה או מיקס קליות.</p></div></li>
+          <li><div><h3>קבעו קצב והתחייבות</h3><p>כל שבועיים או פעם בחודש.</p></div></li>
+          <li><div><h3>צברו נקודות ודרגות</h3><p>כל תשלום צובר נקודות שמעלות אתכם בדרגות המועדון, עם הטבות.</p></div></li>
+        </ol>
+        <dl class="tiers">
+          <div><dt>3 חודשים</dt><dd>5%<small>הנחה קבועה</small></dd></div>
+          <div><dt>חצי שנה</dt><dd>7%<small>הנחה קבועה</small></dd></div>
+          <div><dt>שנה</dt><dd>10%<small>הנחה קבועה</small></dd></div>
+        </dl>
+        <p class="sub__cta">
+          <a class="btn" href="https://nahat.check-it.co.il/subscription/">להרכבת המנוי שלי</a>
+          <small>ביטול חופשי בסיום ההתחייבות · דילוג על משלוח בכל עת</small>
+        </p>
+      </div>
+      <figure class="sub__media">
+        <div class="sub__frame"><img data-sc-parallax="1.3" src="assets/iced.webp" width="1600" height="899" alt="שתי כוסות קפה קר על שולחן עץ עגול, בצל של עלים" loading="lazy"></div>
+        <figcaption>קולד ברו, אחרי הצהריים.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- פרק ד׳ · הבתים. Warm and present: photos lean toward the pointer. -->
+  <section id="ch4" class="cafes g-dark" data-folio-name="פרק ד׳ · הבתים" data-ground="dark" aria-labelledby="c-h">
+    <div class="cafes__grid">
+      <div class="cafes__text" data-sc-in data-sc-stagger="70">
+        <p class="lat" lang="en">Come visit</p>
+        <h2 id="c-h">בתי הקפה של נחת.</h2>
+        <ul class="places">
+          <li>
+            <h3>ריינס 20</h3>
+            <p>תל אביב · א׳ עד ש׳, 7:30 עד 19:00</p>
+            <a class="link" href="https://waze.com/ul?q=%D7%A8%D7%99%D7%99%D7%A0%D7%A1%2020%20%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91&amp;navigate=yes" aria-label="ניווט בוויז לריינס 20, תל אביב">ניווט בוויז</a>
+          </li>
+          <li>
+            <h3>אשקלון 16 · פארק התחנה</h3>
+            <p>תל אביב · א׳ עד ש׳, 7:30 עד 19:00</p>
+            <a class="link" href="https://waze.com/ul?q=%D7%90%D7%A9%D7%A7%D7%9C%D7%95%D7%9F%2016%20%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91&amp;navigate=yes" aria-label="ניווט בוויז לאשקלון 16, פארק התחנה, תל אביב">ניווט בוויז</a>
+          </li>
+          <li>
+            <h3>זמנהוף 1 · כיכר דיזנגוף</h3>
+            <p>תל אביב · א׳ עד ש׳, 7:30 עד 19:00</p>
+            <a class="link" href="https://waze.com/ul?q=%D7%96%D7%9E%D7%A0%D7%94%D7%95%D7%A3%201%20%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91&amp;navigate=yes" aria-label="ניווט בוויז לזמנהוף 1, כיכר דיזנגוף, תל אביב">ניווט בוויז</a>
+          </li>
+        </ul>
+        <p class="cafes__ig">הצטרפו לקהילה שלנו באינסטגרם: <a class="link" href="https://www.instagram.com/nahat.coffee/" lang="en">@nahat.coffee</a></p>
+      </div>
+      <div class="cafes__photos">
+        <figure class="wide" data-sc-tilt="5"><img src="assets/terrace.webp" width="1600" height="900" alt="כיסאות מתכת אדומים בחצר מוצלת, אור שמש בין העצים" loading="lazy"></figure>
+        <figure data-sc-tilt="6"><img src="assets/guests.webp" width="1000" height="1333" alt="שתי נשים יושבות בחוץ ומחייכות, ליד בית הקפה" loading="lazy"></figure>
+        <figure class="low" data-sc-tilt="6"><img src="assets/barista.webp" width="1000" height="1333" alt="בריסטה עומד ליד הבר, מאחוריו מדפי שקיות קפה" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- קולופון. The close resolves and holds: offices, the one ask as a sentence, the masthead. -->
+  <section id="ch5" class="colophon g-deep" data-folio-name="קולופון · נחת למשרד" data-ground="dark" aria-labelledby="b-h">
+    <div class="colophon__grid">
+      <figure class="colophon__media" data-sc-in>
+        <img src="assets/bar.webp" width="1600" height="1067" alt="מכונת אספרסו על בר עץ, מאחוריה מדפים עם שקיות קפה וכוסות" loading="lazy">
+      </figure>
+      <div class="colophon__text" data-sc-in data-sc-stagger="70">
+        <h2 id="b-h">קפה טוב זה תנאי עבודה.</h2>
+        <p>אנחנו מלווים בתי קפה ומשרדים בכל הארץ: פולים טריים בקלייה שבועית, ציוד מקצועי, הדרכות בריסטה והרצאות קפה לצוות.</p>
+        <ul class="offer">
+          <li>אספקה שבועית קבועה</li>
+          <li>השאלת ציוד ותחזוקה</li>
+          <li>סדנאות והרצאות לצוות</li>
+        </ul>
+        <p class="ask">רוצים את הקפה הזה גם במשרד? <a class="link" href="https://nahat.check-it.co.il/contact/">דברו איתנו על קפה לעסק</a>.</p>
+      </div>
+    </div>
+
+    <footer class="masthead">
+      <img src="assets/logo-nahat-white.webp" width="500" height="140" alt="קפה נחת">
+      <ul>
+        <li>ריינס 20, תל אביב</li>
+        <li>אשקלון 16, פארק התחנה, תל אביב</li>
+        <li>זמנהוף 1, כיכר דיזנגוף, תל אביב</li>
+      </ul>
+      <ul>
+        <li><a href="https://nahat.check-it.co.il/shop-2/">החנות</a></li>
+        <li><a href="https://nahat.check-it.co.il/workshop/">סדנאות</a></li>
+        <li><a href="https://nahat.check-it.co.il/roastery/">בית הקלייה</a></li>
+        <li><a href="https://nahat.check-it.co.il/contact/">צור קשר</a></li>
+      </ul>
+      <p class="masthead__demo">אתר דוגמה שנבנה ב־MyMuse על בסיס התוכן והצילומים של קפה נחת.</p>
+    </footer>
+  </section>
+
+</main>
+
+<script src="scrollcraft.js"></script>
+<script>
+  ScrollCraft.mount(document.body);
+
+  /* ---- folio: names the chapter under the middle of the viewport ---- */
+  (function () {
+    var label = document.querySelector('[data-folio]');
+    var chapters = document.querySelectorAll('[data-folio-name]');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        label.textContent = e.target.getAttribute('data-folio-name');
+        document.body.setAttribute('data-ground', e.target.getAttribute('data-ground'));
+      });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+    chapters.forEach(function (c) { io.observe(c); });
+  })();
+
+  /* ---- signature move: "הקו הביתה" ----
+     A right-to-left pan (the engine's rail assumes LTR, so this one is bespoke and
+     reads the act's --sc-p). As each origin card reaches the middle of the stage its
+     route draws to Tel Aviv and the distance counts to it; the closing card sums them. */
+  (function () {
+    var sec = document.querySelector('.origins');
+    var rail = sec.querySelector('.rail');
+    var stage = sec.querySelector('.origins__stage');
+    var stops = Array.prototype.slice.call(rail.querySelectorAll('[data-km]'));
+    var num = sec.querySelector('[data-dist]');
+    var from = sec.querySelector('[data-dist-from]');
+    var arcs = stops.map(function (s) {
+      var id = s.getAttribute('data-origin');
+      if (!id) return null;
+      var path = document.getElementById('arc-' + id);
+      var len = path.getTotalLength();
+      return { path: path, len: len, ring: document.getElementById('ring-' + id) };
+    });
+    var mq = matchMedia('(prefers-reduced-motion: reduce)');
+    var over = 0, marks = [], active = -2, shown = 0, tween = null, on = false;
+
+    function fmt(n) { return Math.round(n).toLocaleString('en-US'); }
+    function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+    function smooth(t) { t = clamp(t); return t * t * (3 - 2 * t); }
+
+    function countTo(target) {
+      if (tween) cancelAnimationFrame(tween);
+      var start = shown, t0 = performance.now(), dur = 1100;
+      (function step(now) {
+        var k = clamp((now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+        shown = start + (target - start) * e;
+        num.textContent = fmt(shown);
+        if (k < 1) tween = requestAnimationFrame(step);
+      })(t0);
+    }
+
+    function measure() {
+      var sw = stage.clientWidth;
+      rail.style.transform = 'none';
+      over = Math.max(1, rail.offsetWidth - sw);
+      var rr = rail.getBoundingClientRect();
+      marks = stops.map(function (s) {
+        var r = s.getBoundingClientRect();
+        var d = rr.right - (r.left + r.width / 2);
+        return clamp((d - sw * 0.5) / over);
+      });
+    }
+
+    function setActive(i) {
+      if (i === active) return;
+      active = i;
+      stops.forEach(function (s, j) { s.classList.toggle('is-on', j === i); });
+      arcs.forEach(function (a, j) {
+        if (!a) return;
+        a.ring.classList.toggle('is-on', j === i);
+        a.path.classList.toggle('is-past', i >= 0 && j !== i && j < i && i < stops.length - 1);
+      });
+      if (i < 0) { from.textContent = ''; countTo(0); return; }
+      from.textContent = stops[i].getAttribute('data-from');
+      countTo(parseFloat(stops[i].getAttribute('data-km')));
+    }
+
+    function frame() {
+      if (!on) return;
+      var p = parseFloat(sec.style.getPropertyValue('--sc-p')) || 0;
+      rail.style.transform = 'translate3d(' + (over * p).toFixed(2) + 'px,0,0)';
+      sec.setAttribute('data-sc-verify-state', Math.round(over * p) + ':' + active); // lets shoot.mjs see the bespoke pan
+      var cur = -1;
+      for (var i = 0; i < marks.length; i++) {
+        if (p >= marks[i] - 0.04) cur = i;
+        var a = arcs[i];
+        if (a) {
+          var t = smooth((p - (marks[i] - 0.11)) / 0.1);
+          a.path.style.strokeDasharray = a.len;
+          a.path.style.strokeDashoffset = (a.len * (1 - t)).toFixed(1);
+        }
+      }
+      setActive(cur);
+      requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (mq.matches) {
+        on = false;
+        sec.classList.remove('origins--pan');
+        rail.style.transform = '';
+        arcs.forEach(function (a) { if (a) { a.path.style.strokeDasharray = ''; a.path.style.strokeDashoffset = ''; a.path.classList.remove('is-past'); } });
+        return;
+      }
+      sec.classList.add('origins--pan');
+      measure();
+      if (!on) { on = true; requestAnimationFrame(frame); }
+    }
+
+    start();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
+    addEventListener('resize', function () { if (on) measure(); });
+    mq.addEventListener('change', start);
+  })();
+</script>
+</body>
+</html>

@@ -53,3 +53,8 @@ node_modules/
 /.pgdata
 /media
 /.dev-credentials
+
+# scroll-craft demo builds: verification deps and screenshots
+scrollcraft/builds/*/node_modules/
+scrollcraft/builds/*/package*.json
+scrollcraft/builds/*/lab/
