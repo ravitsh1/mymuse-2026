@@ -116,14 +116,33 @@ export function Motion() {
       fly.appendChild(v)
       document.body.appendChild(fly)
       peek?.classList.remove('show')
-      const from = `inset(${rect.top}px ${innerWidth - rect.right}px ${innerHeight - rect.bottom}px ${rect.left}px round 14px)`
-      fly
-        .animate([{ clipPath: from }, { clipPath: 'inset(0px 0px 0px 0px round 0px)' }], {
-          duration: 800,
-          easing: 'cubic-bezier(.75,0,.2,1)',
-          fill: 'forwards',
-        })
-        .finished.then(() => go(href))
+      flyTo(fly, rect, 14).then(() => go(href))
+    }
+
+    /** Where a project page's hero sits, as styles.css draws it: full screen, or 68svh (min 440px) on phones. The fly-in
+     *  lands exactly there, so arriving on the page is not a jump. */
+    const heroBox = () => {
+      if (!matchMedia('(max-width: 720px)').matches) return innerHeight
+      // measure 68svh itself: on phones it differs from innerHeight while the browser bars come and go
+      const probe = document.createElement('div')
+      probe.style.cssText = 'position:absolute;visibility:hidden;height:68svh;min-height:440px'
+      document.body.appendChild(probe)
+      const h = probe.offsetHeight
+      probe.remove()
+      return h
+    }
+    const flyTo = (fly: HTMLElement, rect: DOMRect, radius: number) => {
+      const h = Math.min(heroBox(), innerHeight)
+      // the box starts tall enough to hold the card (it may sit below the hero line) and ends at the hero's height
+      const h0 = Math.max(h, Math.ceil(rect.bottom))
+      fly.style.bottom = 'auto'
+      fly.style.height = `${h}px`
+      const from = `inset(${rect.top}px ${innerWidth - rect.right}px ${h0 - rect.bottom}px ${rect.left}px round ${radius}px)`
+      return fly.animate([{ clipPath: from, height: `${h0}px` }, { clipPath: 'inset(0px 0px 0px 0px round 0px)', height: `${h}px` }], {
+        duration: 800,
+        easing: 'cubic-bezier(.75,0,.2,1)',
+        fill: 'forwards',
+      }).finished
     }
 
     /* ---------- project page: "next project" card (Settings → nextMode = card) ---------- */
@@ -142,10 +161,7 @@ export function Motion() {
       fly.className = 'fly'
       fly.appendChild(v)
       document.body.appendChild(fly)
-      const from = `inset(${rect.top}px ${innerWidth - rect.right}px ${innerHeight - rect.bottom}px ${rect.left}px round 22px)`
-      fly
-        .animate([{ clipPath: from }, { clipPath: 'inset(0px 0px 0px 0px round 0px)' }], { duration: 800, easing: 'cubic-bezier(.75,0,.2,1)', fill: 'forwards' })
-        .finished.then(() => go(a.getAttribute('href')!))
+      flyTo(fly, rect, 22).then(() => go(a.getAttribute('href')!))
     }
     card?.addEventListener('click', onCardClick)
 
@@ -272,6 +288,8 @@ export function Motion() {
     const pct = $('[data-pct]')
     if (next) router.prefetch(next.dataset.next!, FULL)
 
+    const top = $('.top')
+    let lastY = scrollY
     const update = () => {
       const vh = innerHeight
       const y = scrollY
@@ -279,6 +297,12 @@ export function Motion() {
       if (bar) bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`
       // the header is see-through at the top of the page and takes a background once the page moves under it
       site.classList.toggle('scrolled', y > 24)
+      // the header steps out of the way going down and comes back going up (a few px of slack against jitter)
+      if (top) {
+        if (y < 80 || y < lastY - 6) top.classList.remove('hide')
+        else if (y > lastY + 6) top.classList.add('hide')
+        if (Math.abs(y - lastY) > 6 || y < 80) lastY = y
+      }
       if (reduce) return
 
       if (ph && phs && wcol && words.length) {
