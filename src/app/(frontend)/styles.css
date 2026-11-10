@@ -539,7 +539,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 }
 
 /* sections: a numbered label, a Karantina heading with its last words in pink, Talent text */
-.b-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--b-deep) }
+.b-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--p-ink) }
 html[data-trial="b26"] .ix-head h2, html[data-trial="b26"] .svc h2, html[data-trial="b26"] .contact h2, .b-about h2 {
   margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 7vw, 120px); line-height: .88; letter-spacing: -.01em; color: var(--p-ink) }
 html[data-trial="b26"] .contact h2 em, .b-about h2 em { font-style: normal; color: var(--b-pink) }
@@ -692,7 +692,7 @@ html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
 
 /* end of a project page, the clear version (components/NextCard, Settings → nextMode = card): a card with a button */
 .next-card { padding-block: clamp(60px, 9vw, 120px) clamp(48px, 7vw, 96px); border-top: 1px solid var(--p-soft) }
-.nc-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--p-acc-sm, var(--p-acc)) }
+.nc-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--p-ink) }
 .nc-link { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; color: inherit; text-decoration: none }
 .nc-media { position: relative; display: block; aspect-ratio: 16 / 10; border-radius: 22px; overflow: hidden; background: var(--n-bg) }
 .nc-media .visual { transition: transform .6s cubic-bezier(.2,.8,.2,1); scale: 1.12 } /* room for the inner drift (Motion: translate) */
