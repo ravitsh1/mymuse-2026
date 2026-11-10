@@ -492,20 +492,20 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .brush-2, .slab-2 { --d: 1 }
 .brush-3, .slab-3 { --d: .75 }
 .brush-4, .slab-4 { --d: 1.35 }
-/* stacking: strokes 1-2, then yellow + DEV, then pink, then the other three words */
-.brush-1, .brush-2 { z-index: 1 } .brush-4 { z-index: 2 } .slab-4 { z-index: 3 } .brush-3 { z-index: 4 } .slab-1, .slab-2, .slab-3 { z-index: 5 }
+/* stacking as in Figma: the strokes in order (yellow over pink), every word above every stroke */
+.brush { z-index: 1 } .slab { z-index: 2 }
 .brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg) }
 .brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1 }
 .brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2 }
 .brush-4 { --x: 46.07cqi; --y: 38.66cqi; --w: 27.35cqi; --h: 19.02cqi; --img: url(/brush/yellow.svg); --k: 3 }
-/* one size for all four words, a bit smaller than in Figma, each centred where Figma has it.
+/* one size for all four words (close to Figma's), each centred where Figma has it.
    line-height = Karantina's cap height (.71em): the box is exactly the capitals, so top/left place the ink */
-.slab { position: absolute; left: var(--x); top: var(--y); font: 400 18.5cqi/.71 var(--f-display); letter-spacing: -.01em; text-transform: uppercase;
+.slab { position: absolute; left: var(--x); top: var(--y); font: 400 20.5cqi/.71 var(--f-display); letter-spacing: -.01em; text-transform: uppercase;
   direction: ltr; white-space: nowrap; color: #fff; transform: rotate(var(--r, 0deg)) }
-.slab-1 { --x: 7.35cqi; --y: 3.46cqi; --r: -2deg }
-.slab-2 { --x: 40.55cqi; --y: 10.31cqi; --r: 4deg; --k: 1 }
-.slab-3 { --x: 11.27cqi; --y: 27.06cqi; --r: -1.5deg; --k: 2 }
-.slab-4 { --x: 50.93cqi; --y: 41.34cqi; --r: 2deg; --k: 3; color: #1c0f30 }
+.slab-1 { --x: 6.11cqi; --y: 2.75cqi; --r: -2deg }
+.slab-2 { --x: 38.98cqi; --y: 9.6cqi; --r: 4deg; --k: 1 }
+.slab-3 { --x: 8.58cqi; --y: 26.35cqi; --r: -1.5deg; --k: 2 }
+.slab-4 { --x: 50.1cqi; --y: 40.63cqi; --r: 2deg; --k: 3; color: #1c0f30 }
 /* stroke and word drop in together, one pair after another */
 @media (prefers-reduced-motion: no-preference) {
   .brush, .slab { animation: slab-in .9s cubic-bezier(.2,.9,.25,1.15) both; animation-delay: calc(.15s + var(--k, 0) * .22s) }
