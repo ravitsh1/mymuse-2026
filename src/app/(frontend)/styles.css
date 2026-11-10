@@ -492,8 +492,9 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .brush-2, .slab-2 { --d: 1 }
 .brush-3, .slab-3 { --d: .75 }
 .brush-4, .slab-4 { --d: 1.35 }
-/* stacking as in Figma: the strokes in order (yellow over pink), every word above every stroke */
-.brush { z-index: 1 } .slab { z-index: 2 }
+/* stacking as in Figma: pink and EXPERIENCE, then yellow and DEV over them (the yellow covers the end of EXPERIENCE);
+   IDEAS and DESIGN stay on top of everything */
+.brush-1, .brush-2 { z-index: 1 } .brush-3 { z-index: 2 } .slab-3 { z-index: 3 } .brush-4 { z-index: 4 } .slab-4, .slab-1, .slab-2 { z-index: 5 }
 .brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg) }
 .brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1 }
 .brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2 }
