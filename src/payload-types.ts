@@ -766,6 +766,12 @@ export interface Setting {
    * איך עוברים מסוף עמוד פרויקט לפרויקט הבא.
    */
   nextMode?: ('scroll' | 'card') | null;
+  heroTag?: string | null;
+  /**
+   * כל שורה היא שורה בכותרת. מילים בין כוכביות נצבעות בוורוד: *לא חשבתם עליו.*
+   */
+  heroTitle?: string | null;
+  heroText?: string | null;
   /**
    * ברשימת "כל הפרויקטים". סינון לפי קטגוריה תמיד לפי הסדר בניהול.
    */
@@ -875,6 +881,9 @@ export interface SettingsSelect<T extends boolean = true> {
   showSwatches?: T;
   heroShade?: T;
   nextMode?: T;
+  heroTag?: T;
+  heroTitle?: T;
+  heroText?: T;
   projectOrder?: T;
   serviceTags?:
     | T
