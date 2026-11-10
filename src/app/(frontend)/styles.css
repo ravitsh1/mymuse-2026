@@ -452,17 +452,17 @@ html[data-trial="b26"] .after-ph { margin-top: 0; box-shadow: none; background: 
 html[data-trial="b26"] .visual .glow { display: none }
 html[data-trial="b26"] .cookie button { background: #1c0f30; color: #f8f7f9 }
 html[data-trial="b26"] .cookie button:focus-visible, html[data-trial="b26"] .cookie a:focus-visible { outline-color: #1c0f30 }
-/* header: the sections and the intro call on desktop, the menu button below 1024px */
+/* header: the logo, then (desktop) the intro call, and the menu button at every width (the menu holds the sections) */
 .top-nav, .top-cta { display: none }
 html[data-trial="b26"] .top { transition: color .6s, background-color .3s }
 html[data-trial="b26"] .site.scrolled .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent); backdrop-filter: blur(10px) }
 /* the blur makes the header the containing block of its fixed children: the open menu would shrink to the header bar */
 html.menu-open .site.scrolled .top { backdrop-filter: none }
 @media (min-width: 1024px) {
-  html[data-trial="b26"] .top-nav { display: block; margin-inline: auto }
   html[data-trial="b26"] .top-cta { display: inline-flex }
-  html[data-trial="b26"] .burger { display: none }
-  html[data-trial="b26"] .count { margin-right: 0 }
+  /* RTL: the logo alone on the right; counter, intro call and menu button together on the left */
+  html[data-trial="b26"] .top > .logo { margin-left: auto }
+  html[data-trial="b26"] .count, html[data-trial="b26"] .burger { margin-right: 0 }
 }
 .top-nav ul { display: flex; gap: clamp(20px, 2.6vw, 44px); list-style: none; margin: 0; padding: 0 }
 .top-nav a { display: inline-block; padding-block: 8px; font-size: 16px; text-decoration: none; color: inherit }
@@ -492,8 +492,9 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .brush-2, .slab-2 { --d: 1 }
 .brush-3, .slab-3 { --d: .75 }
 .brush-4, .slab-4 { --d: 1.35 }
-/* stacking as in Figma: the strokes in order (yellow over pink), every word above every stroke */
-.brush { z-index: 1 } .slab { z-index: 2 }
+/* stacking as in Figma: pink and EXPERIENCE, then yellow and DEV over them (the yellow covers the end of EXPERIENCE);
+   IDEAS and DESIGN stay on top of everything */
+.brush-1, .brush-2 { z-index: 1 } .brush-3 { z-index: 2 } .slab-3 { z-index: 3 } .brush-4 { z-index: 4 } .slab-4, .slab-1, .slab-2 { z-index: 5 }
 .brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg) }
 .brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1 }
 .brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2 }
@@ -539,7 +540,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 }
 
 /* sections: a numbered label, a Karantina heading with its last words in pink, Talent text */
-.b-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--b-deep) }
+.b-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--p-ink) }
 html[data-trial="b26"] .ix-head h2, html[data-trial="b26"] .svc h2, html[data-trial="b26"] .contact h2, .b-about h2 {
   margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 7vw, 120px); line-height: .88; letter-spacing: -.01em; color: var(--p-ink) }
 html[data-trial="b26"] .contact h2 em, .b-about h2 em { font-style: normal; color: var(--b-pink) }
@@ -692,7 +693,7 @@ html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
 
 /* end of a project page, the clear version (components/NextCard, Settings → nextMode = card): a card with a button */
 .next-card { padding-block: clamp(60px, 9vw, 120px) clamp(48px, 7vw, 96px); border-top: 1px solid var(--p-soft) }
-.nc-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--p-acc-sm, var(--p-acc)) }
+.nc-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--p-ink) }
 .nc-link { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; color: inherit; text-decoration: none }
 .nc-media { position: relative; display: block; aspect-ratio: 16 / 10; border-radius: 22px; overflow: hidden; background: var(--n-bg) }
 .nc-media .visual { transition: transform .6s cubic-bezier(.2,.8,.2,1); scale: 1.12 } /* room for the inner drift (Motion: translate) */
