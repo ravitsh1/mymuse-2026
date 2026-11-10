@@ -12,8 +12,9 @@ const STEP = 10
  * "All" shows the projects in a random order, new on every visit; a category keeps the admin order (the HTML order).
  * Rendered after mount, so without JS there are no dead buttons — just every project, in the admin order.
  * `all` (brand book 2026): the button is "all projects" and shows every remaining one at once.
+ * `shuffle` (Settings → projectOrder): false keeps "all" in the admin order too.
  */
-export function CategoryFilter({ categories, all }: { categories: { id: number | string; title: string }[]; all?: boolean }) {
+export function CategoryFilter({ categories, all, shuffle = true }: { categories: { id: number | string; title: string }[]; all?: boolean; shuffle?: boolean }) {
   const [on, setOn] = useState<string>('all')
   const [limit, setLimit] = useState(STEP)
   const [more, setMore] = useState(0)
@@ -47,14 +48,14 @@ export function CategoryFilter({ categories, all }: { categories: { id: number |
   useEffect(() => {
     const admin = rows()
     const shuffled = [...admin]
-    for (let i = shuffled.length - 1; i > 0; i--) {
+    for (let i = shuffle ? shuffled.length - 1 : 0; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
       ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
     }
     order.current = { admin, shuffled }
     setSlot(document.querySelector<HTMLElement>('[data-more]'))
     apply('all', STEP)
-  }, [])
+  }, [shuffle]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const pick = (id: string) => {
     setOn(id)

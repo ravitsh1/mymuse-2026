@@ -51,6 +51,8 @@ import * as migration_20261103_190000_moran_gil from './20261103_190000_moran_gi
 import * as migration_20261103_200000_hero_photos from './20261103_200000_hero_photos';
 import * as migration_20261103_210000_hero_shade from './20261103_210000_hero_shade';
 import * as migration_20261105_180855_about_words from './20261105_180855_about_words';
+import * as migration_20261110_094142_service_tags_settings from './20261110_094142_service_tags_settings';
+import * as migration_20261110_094627_project_order from './20261110_094627_project_order';
 
 export const migrations = [
   {
@@ -317,5 +319,15 @@ export const migrations = [
     up: migration_20261105_180855_about_words.up,
     down: migration_20261105_180855_about_words.down,
     name: '20261105_180855_about_words',
+  },
+  {
+    up: migration_20261110_094142_service_tags_settings.up,
+    down: migration_20261110_094142_service_tags_settings.down,
+    name: '20261110_094142_service_tags_settings',
+  },
+  {
+    up: migration_20261110_094627_project_order.up,
+    down: migration_20261110_094627_project_order.down,
+    name: '20261110_094627_project_order',
   },
 ]

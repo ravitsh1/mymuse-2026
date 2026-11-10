@@ -154,26 +154,9 @@ export interface Project {
   platform?: string | null;
   lead?: string | null;
   /**
-   * תגיות שמופיעות בעמוד הפרויקט, מתחת לפרטים. רשימה קבועה, כדי שאותו שירות ייכתב תמיד באותה מילה.
+   * תגיות שמופיעות בעמוד הפרויקט, מתחת לפרטים. הרשימה עצמה נערכת בהגדרות האתר ← שירותים.
    */
-  services?:
-    | (
-        | 'ux'
-        | 'ui'
-        | 'wordpress'
-        | 'woocommerce'
-        | 'multilingual'
-        | 'content'
-        | 'tickets'
-        | 'delivery'
-        | 'app'
-        | 'system'
-        | 'api'
-        | 'ai'
-        | 'accessibility'
-        | 'support'
-      )[]
-    | null;
+  services?: string[] | null;
   /**
    * מילה בין כוכביות מקבלת את צבע ההדגשה: חנות שמרגישה כמו *המזקקה* עצמה.
    */
@@ -672,24 +655,7 @@ export interface Home {
         /**
          * מופיעות בכרטיס. לחיצה על תגית מציגה את הפרויקטים שסומנו בה.
          */
-        tags?:
-          | (
-              | 'ux'
-              | 'ui'
-              | 'wordpress'
-              | 'woocommerce'
-              | 'multilingual'
-              | 'content'
-              | 'tickets'
-              | 'delivery'
-              | 'app'
-              | 'system'
-              | 'api'
-              | 'ai'
-              | 'accessibility'
-              | 'support'
-            )[]
-          | null;
+        tags?: string[] | null;
         /**
          * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
          */
@@ -801,6 +767,19 @@ export interface Setting {
    */
   nextMode?: ('scroll' | 'card') | null;
   /**
+   * ברשימת "כל הפרויקטים". סינון לפי קטגוריה תמיד לפי הסדר בניהול.
+   */
+  projectOrder?: ('random' | 'admin') | null;
+  /**
+   * התגיות שאפשר לסמן בפרויקטים ובכרטיסי השירותים בעמוד הבית. שינוי שם מתעדכן בכל מקום; שירות שנמחק יורד מכל הפרויקטים.
+   */
+  serviceTags?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * עוזר AI בחלק "יצירת קשר" בעמוד הבית: שואל כמה שאלות, מסכם לבריף ושולח אלייך. דורש מפתח Anthropic בהגדרות של Vercel. כבוי: רק המייל והטלפון.
    */
   briefAssistant?: boolean | null;
@@ -896,6 +875,13 @@ export interface SettingsSelect<T extends boolean = true> {
   showSwatches?: T;
   heroShade?: T;
   nextMode?: T;
+  projectOrder?: T;
+  serviceTags?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
   briefAssistant?: T;
   showTrials?: T;
   shareImage?: T;
