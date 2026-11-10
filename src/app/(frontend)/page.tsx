@@ -14,7 +14,6 @@ import { MediaEl, Visual } from '@/components/Visual'
 import { accentTones, getCategories, getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
 import { HERO_WORK, trialHero, trialPalette } from '@/lib/trial'
-import { SERVICE_TAGS } from '@/collections/Projects'
 
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings()
@@ -33,8 +32,10 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
     searchParams,
   ])
   // a service tag on a card links to ?service=<tag>#work: the index then lists only the projects marked with it
-  const service = SERVICE_TAGS.find((t) => t.value === sp.service)
-  const tagLabel = (v: string) => SERVICE_TAGS.find((t) => t.value === v)?.label ?? v
+  // the tags themselves are edited in Settings → שירותים; projects and cards store each tag's row id
+  const tags = (settings.serviceTags ?? []).filter((t) => t.id && t.label).map((t) => ({ value: t.id!, label: t.label }))
+  const service = tags.find((t) => t.value === sp.service)
+  const tagLabel = (v: string) => tags.find((t) => t.value === v)?.label ?? v
   // the 2026 brand book brings its own hero (BrandHero) in place of the Passion section and its trials
   const brand = palette === 'b26'
   const showWork = hero === 'work' || hero === 'both'
@@ -45,9 +46,9 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   const words = home.words?.length ? home.words : [{ word: 'Expertise', bg: site.bg, accent: site.acc }]
   const featured = projects.map((p, i) => ({ p, i })).filter(({ p }) => p.featured)
   const listed = featured.length ? featured : projects.map((p, i) => ({ p, i }))
-  const shown = service ? listed.filter(({ p }) => p.services?.includes(service.value as never)) : listed
+  const shown = service ? listed.filter(({ p }) => p.services?.includes(service.value)) : listed
   // a card shows only the tags some listed project carries, so no tag leads to an empty list
-  const usedTags = new Set(listed.flatMap(({ p }) => p.services ?? []))
+  const usedTags = new Set(listed.flatMap(({ p }) => (p.services ?? []).filter((t) => tags.some((x) => x.value === t))))
   const catOf = (p: (typeof projects)[number]) => (p.category && typeof p.category === 'object' ? String(p.category.id) : p.category ? String(p.category) : '')
   // only categories that have a project in the list
   const categories = allCategories.filter((c) => shown.some(({ p }) => catOf(p) === String(c.id)))
@@ -201,7 +202,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
               <div className="ix-head">
                 <h2 id="ixh">{home.workTitle || 'עבודות נבחרות'}</h2>
                 {brand && home.subtitle && <p className="b-text">{home.subtitle}</p>}
-                {categories.length > 1 && <CategoryFilter categories={categories.map((c) => ({ id: c.id, title: c.title }))} all={brand} />}
+                {categories.length > 1 && <CategoryFilter categories={categories.map((c) => ({ id: c.id, title: c.title }))} all={brand} shuffle={settings.projectOrder !== 'admin'} />}
               </div>
               {service && (
                 <p className="ix-service">

@@ -8,7 +8,6 @@ import { NextFrame } from '@/components/NextFrame'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { JsonLd } from '@/components/JsonLd'
 import { MediaEl, Visual } from '@/components/Visual'
-import { SERVICE_TAGS } from '@/collections/Projects'
 import { getFooterPages, getProjects, getSettings, isHiddenProject, nextProject, paletteVars, projectPalette } from '@/lib/data'
 import { asMedia } from '@/lib/media'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
@@ -134,14 +133,16 @@ export default async function ProjectPage({ params }: Props) {
                 <dd>{c.value}</dd>
               </div>
             ))}
-            {!!p.services?.length && (
+            {!!settings.serviceTags?.some((t) => t.id && p.services?.includes(t.id)) && (
               <div>
                 <dt>שירותים</dt>
                 <dd>
                   <ul className="tags">
-                    {SERVICE_TAGS.filter((t) => p.services?.includes(t.value as never)).map((t) => (
-                      <li key={t.value}>{t.label}</li>
-                    ))}
+                    {(settings.serviceTags ?? [])
+                      .filter((t) => t.id && p.services?.includes(t.id))
+                      .map((t) => (
+                        <li key={t.id}>{t.label}</li>
+                      ))}
                   </ul>
                 </dd>
               </div>

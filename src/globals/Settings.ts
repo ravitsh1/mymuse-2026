@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 import { colorField } from '../fields/color'
 import { refreshSite } from '../hooks/revalidate'
+import { DEFAULT_SERVICE_TAGS } from '../fields/serviceTags'
 
 export const Settings: GlobalConfig = {
   slug: 'settings',
@@ -82,6 +83,29 @@ export const Settings: GlobalConfig = {
         { label: 'כרטיס "הפרויקט הבא" עם כפתור (עוברים רק בלחיצה)', value: 'card' },
       ],
       admin: { description: 'איך עוברים מסוף עמוד פרויקט לפרויקט הבא.' },
+    },
+    {
+      name: 'projectOrder',
+      label: 'סדר הפרויקטים בעמוד הבית',
+      type: 'radio',
+      defaultValue: 'random',
+      options: [
+        { label: 'אקראי (סדר חדש בכל כניסה)', value: 'random' },
+        { label: 'לפי הסדר ברשימת הפרויקטים בניהול', value: 'admin' },
+      ],
+      admin: { description: 'ברשימת "כל הפרויקטים". סינון לפי קטגוריה תמיד לפי הסדר בניהול.' },
+    },
+    {
+      name: 'serviceTags',
+      label: 'שירותים (תגיות)',
+      type: 'array',
+      labels: { singular: 'שירות', plural: 'שירותים' },
+      defaultValue: DEFAULT_SERVICE_TAGS,
+      admin: {
+        description:
+          'התגיות שאפשר לסמן בפרויקטים ובכרטיסי השירותים בעמוד הבית. שינוי שם מתעדכן בכל מקום; שירות שנמחק יורד מכל הפרויקטים.',
+      },
+      fields: [{ name: 'label', label: 'שם השירות', type: 'text', required: true }],
     },
     {
       name: 'briefAssistant',

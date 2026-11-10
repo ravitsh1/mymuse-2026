@@ -2,24 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { colorField } from '../fields/color'
 import { metaDescriptionField } from '../fields/seo'
 import { refreshSite } from '../hooks/revalidate'
-
-/** The services a project shows as tags (one fixed list, so a service is always worded the same) */
-export const SERVICE_TAGS = [
-  { value: 'ux', label: 'אפיון UX' },
-  { value: 'ui', label: 'עיצוב UI' },
-  { value: 'wordpress', label: 'וורדפרס' },
-  { value: 'woocommerce', label: 'חנות ווקומרס' },
-  { value: 'multilingual', label: 'אתר רב־לשוני' },
-  { value: 'content', label: 'אתר תוכן' },
-  { value: 'tickets', label: 'מכירת כרטיסים' },
-  { value: 'delivery', label: 'הזמנות ומשלוחים' },
-  { value: 'app', label: 'אפליקציית ווב' },
-  { value: 'system', label: 'מערכת ניהול' },
-  { value: 'api', label: 'אינטגרציות API' },
-  { value: 'ai', label: 'AI' },
-  { value: 'accessibility', label: 'נגישות' },
-  { value: 'support', label: 'ליווי ותחזוקה' },
-]
+import { serviceTagsField } from '../fields/serviceTags'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -76,14 +59,11 @@ export const Projects: CollectionConfig = {
               ],
             },
             { name: 'lead', label: 'פסקת פתיחה', type: 'textarea' },
-            {
-              name: 'services',
-              label: 'שירותים בפרויקט',
-              type: 'select',
-              hasMany: true,
-              options: SERVICE_TAGS,
-              admin: { description: 'תגיות שמופיעות בעמוד הפרויקט, מתחת לפרטים. רשימה קבועה, כדי שאותו שירות ייכתב תמיד באותה מילה.' },
-            },
+            serviceTagsField(
+              'services',
+              'שירותים בפרויקט',
+              'תגיות שמופיעות בעמוד הפרויקט, מתחת לפרטים. הרשימה עצמה נערכת בהגדרות האתר ← שירותים.',
+            ),
             {
               name: 'statement',
               label: 'משפט מרכזי',
