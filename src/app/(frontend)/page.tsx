@@ -99,7 +99,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
       <main id="content">
         {brand ? (
-          <BrandHero />
+          <BrandHero tag={settings.heroTag} title={settings.heroTitle} text={settings.heroText} />
         ) : (
           <section
             className="ph"
@@ -351,6 +351,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
       </main>
 
+      {brand && <div className="peek" data-peek aria-hidden="true" />}
       <Motion />
       <LivePreviewRefresh />
       <JsonLd

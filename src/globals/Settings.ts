@@ -3,6 +3,12 @@ import { colorField } from '../fields/color'
 import { refreshSite } from '../hooks/revalidate'
 import { DEFAULT_SERVICE_TAGS } from '../fields/serviceTags'
 
+/** The home hero texts as they were in BrandHero until 2026-11-10 (the migration hero_texts fills them in). */
+export const HERO_TAG = 'סטודיו לעיצוב ופיתוח אתרים'
+export const HERO_TITLE = 'מה שדמיינתם,\nעם כל מה שעוד\n*לא חשבתם עליו.*'
+export const HERO_TEXT =
+  'ב־MyMuse הופכים רעיונות לאתרים, חוויות דיגיטליות ופתרונות חכמים. משלבים יצירתיות, עיצוב וטכנולוגיה כדי לבנות בדיוק את מה שהעסק שלכם צריך, ולפעמים גם את מה שעוד לא ידעתם שהוא יכול לעשות.'
+
 export const Settings: GlobalConfig = {
   slug: 'settings',
   label: 'הגדרות האתר',
@@ -83,6 +89,22 @@ export const Settings: GlobalConfig = {
         { label: 'כרטיס "הפרויקט הבא" עם כפתור (עוברים רק בלחיצה)', value: 'card' },
       ],
       admin: { description: 'איך עוברים מסוף עמוד פרויקט לפרויקט הבא.' },
+    },
+    {
+      type: 'collapsible',
+      label: 'טקסטים בפתיחת עמוד הבית',
+      admin: { initCollapsed: false },
+      fields: [
+        { name: 'heroTag', label: 'שורה קטנה מעל הכותרת', type: 'text', defaultValue: HERO_TAG },
+        {
+          name: 'heroTitle',
+          label: 'כותרת',
+          type: 'textarea',
+          defaultValue: HERO_TITLE,
+          admin: { description: 'כל שורה היא שורה בכותרת. מילים בין כוכביות נצבעות בוורוד: *לא חשבתם עליו.*', rows: 3 },
+        },
+        { name: 'heroText', label: 'פסקה', type: 'textarea', defaultValue: HERO_TEXT, admin: { rows: 4 } },
+      ],
     },
     {
       name: 'projectOrder',

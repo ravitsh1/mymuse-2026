@@ -1,9 +1,23 @@
+import { HERO_TAG, HERO_TEXT, HERO_TITLE } from '@/globals/Settings'
+
 /**
  * Home hero of the 2026 brand book (palette trial b26): the main slogan with its last line in pink, one yellow
  * button, and the Passion words on brush strokes.
  */
 
-export function BrandHero() {
+/** "*pink*" inside a line becomes the accent; each line of the title is its own block. */
+function Pink({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/(\*[^*]+\*)/).map((part, k) =>
+        part.startsWith('*') && part.endsWith('*') && part.length > 2 ? <em key={k}>{part.slice(1, -1)}</em> : part,
+      )}
+    </>
+  )
+}
+
+export function BrandHero({ tag, title, text }: { tag?: string | null; title?: string | null; text?: string | null }) {
+  const lines = (title || HERO_TITLE).split('\n').map((l) => l.trim()).filter(Boolean)
   return (
     <section className="bh" aria-labelledby="pt">
       {/* the four Passion words on the designer's brush strokes (styles.css .bh-comp): they drop in one after another,
@@ -25,14 +39,15 @@ export function BrandHero() {
         </div>
       </div>
       <div className="bh-copy">
-        <p className="bh-tag">סטודיו לעיצוב ופיתוח אתרים</p>
+        <p className="bh-tag">{tag || HERO_TAG}</p>
         <h1 id="pt" tabIndex={-1}>
-          <span>מה שדמיינתם,</span> <span>עם כל מה שעוד</span> <em>לא חשבתם עליו.</em>
+          {lines.map((l, k) => (
+            <span key={k}>
+              <Pink text={l} />
+            </span>
+          ))}
         </h1>
-        <p className="bh-text">
-          ב־MyMuse הופכים רעיונות לאתרים, חוויות דיגיטליות ופתרונות חכמים. משלבים יצירתיות, עיצוב וטכנולוגיה כדי לבנות
-          בדיוק את מה שהעסק שלכם צריך, ולפעמים גם את מה שעוד לא ידעתם שהוא יכול לעשות.
-        </p>
+        <p className="bh-text">{text || HERO_TEXT}</p>
         <div className="bh-actions">
           <a className="pill" href="#work">
             לצפייה בפרויקטים <span aria-hidden="true">←</span>

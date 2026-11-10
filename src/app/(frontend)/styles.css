@@ -317,12 +317,15 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
 .rows.has-on .row { opacity: .28 }
 .rows.has-on .row.on { opacity: 1 }
 .row.on .rn { transform: translateX(-14px) }
-/* the hovered project's English name, large and outlined like the name behind each hero (no picture: that is the 3 Bears look) */
-.peek { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 15;
-  font-family: var(--f-display); font-weight: 700; font-size: clamp(80px, 8vw, 140px); line-height: .8; white-space: nowrap; direction: ltr;
-  color: transparent; -webkit-text-stroke: 1.5px var(--p-ink);
-  opacity: 0; scale: .6; transition: opacity .3s, scale .4s cubic-bezier(.2,.8,.2,1) }
+/* the hovered project's main picture, floating by the cursor (Motion: soft trail, a slight lean) */
+.peek { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 15; width: clamp(260px, 22vw, 380px); aspect-ratio: 4 / 3;
+  border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px -25px rgba(28,15,48,.45);
+  opacity: 0; scale: .85; transition: opacity .35s ease, scale .5s cubic-bezier(.2,.8,.2,1) }
 .peek.show { opacity: 1; scale: 1 }
+.peek .visual { position: absolute; inset: 0 }
+.peek .visual .word { display: none }
+@media (hover: none) { .peek { display: none } }
+@media (prefers-reduced-motion: reduce) { .peek { display: none } }
 .fly { position: fixed; inset: 0; z-index: 30 }
 
 /* ---------- home: services (a real sequence, so numbered) ---------- */
@@ -520,7 +523,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .bh-tag { margin: 0; font-size: 16px; color: var(--p-ink) }
 .bh h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 7.4vw, 140px); line-height: .88; letter-spacing: -.01em }
 .bh h1:focus { outline: none }
-.bh h1 span, .bh h1 em { display: block }
+.bh h1 > span { display: block }
 .bh h1 em { font-style: normal; color: var(--b-pink) }
 .bh-text { margin: 0; max-width: 44ch; font-size: clamp(18px, 1.4vw, 21px); line-height: 1.6 }
 .bh-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; margin-top: 8px }

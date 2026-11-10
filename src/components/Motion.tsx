@@ -165,13 +165,17 @@ export function Motion() {
     }
     card?.addEventListener('click', onCardClick)
 
-    let mx = 0, my = 0, px = 0, py = 0, raf = 0
+    let mx = 0, my = 0, px = 0, py = 0, rot = 0, raf = 0
+    // the floating picture trails the cursor softly and leans a little into the movement, then settles
     const peekLoop = () => {
       if (!peek) return
-      px += (mx - px) * 0.18
-      py += (my - py) * 0.18
-      peek.style.transform = `translate3d(${px - peek.offsetWidth / 2}px, ${py - peek.offsetHeight / 2}px, 0)`
-      raf = peek.classList.contains('show') ? requestAnimationFrame(peekLoop) : 0
+      const dx = mx - px
+      px += dx * 0.1
+      py += (my - py) * 0.1
+      rot += (clamp(dx * 0.03, -4, 4) - rot) * 0.12
+      peek.style.transform = `translate3d(${px - peek.offsetWidth / 2}px, ${py - peek.offsetHeight / 2}px, 0) rotate(${rot.toFixed(2)}deg)`
+      const moving = Math.abs(dx) + Math.abs(my - py) + Math.abs(rot) > 0.15
+      raf = peek.classList.contains('show') || moving ? requestAnimationFrame(peekLoop) : 0
     }
     const onRowClick = (e: MouseEvent) => {
       const a = (e.target as Element).closest<HTMLAnchorElement>('.row')
@@ -188,10 +192,13 @@ export function Motion() {
       const a = (e.target as Element).closest<HTMLAnchorElement>('.row')
       if (!a) return
       const i = Number(a.dataset.i)
-      // the row stays lit and the others dim whether or not the floating name is on the page (b26 has none)
-      if (!peek) return setIx(i)
-      // only the English name, outlined: the picture is kept for the fly-in on click
-      if (ixOn !== i) peek.textContent = a.dataset.name || ''
+      // the row stays lit and the others dim whether or not the floating picture is on the page
+      if (!peek || !hoverable) return setIx(i)
+      // the project's main picture floats by the cursor (the same Visual the click then grows to full screen)
+      if (ixOn !== i) {
+        const v = visualFor(i)
+        if (v) peek.replaceChildren(v)
+      }
       setIx(i)
       if (!peek.classList.contains('show')) {
         px = mx = e.clientX
