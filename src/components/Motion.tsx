@@ -165,17 +165,25 @@ export function Motion() {
     }
     card?.addEventListener('click', onCardClick)
 
-    let mx = 0, my = 0, px = 0, py = 0, rot = 0, raf = 0
-    // the floating picture trails the cursor softly and leans a little into the movement, then settles
+    let mx = 0, my = 0, px = 0, py = 0, raf = 0
+    /** Where the picture sits for row i: beside the project's name, on its right (RTL: before it), vertically centred
+     *  on the row; where there is no room there, on the name's other side. It does not follow the cursor. */
+    const peekSpot = (i: number) => {
+      const name = rowOf(i).querySelector<HTMLElement>('.rn') ?? rowOf(i)
+      const r = name.getBoundingClientRect()
+      const w = peek!.offsetWidth
+      const gap = 28
+      mx = r.right + gap + w / 2 + w / 2 <= innerWidth - 8 ? r.right + gap + w / 2 : r.left - gap - w / 2
+      my = r.top + r.height / 2
+    }
+    // the picture glides to its spot (from row to row), then rests
     const peekLoop = () => {
       if (!peek) return
-      const dx = mx - px
-      px += dx * 0.1
-      py += (my - py) * 0.1
-      rot += (clamp(dx * 0.03, -4, 4) - rot) * 0.12
-      peek.style.transform = `translate3d(${px - peek.offsetWidth / 2}px, ${py - peek.offsetHeight / 2}px, 0) rotate(${rot.toFixed(2)}deg)`
-      const moving = Math.abs(dx) + Math.abs(my - py) + Math.abs(rot) > 0.15
-      raf = peek.classList.contains('show') || moving ? requestAnimationFrame(peekLoop) : 0
+      px += (mx - px) * 0.16
+      py += (my - py) * 0.16
+      peek.style.transform = `translate3d(${px - peek.offsetWidth / 2}px, ${py - peek.offsetHeight / 2}px, 0)`
+      const moving = Math.abs(mx - px) + Math.abs(my - py) > 0.3
+      raf = moving ? requestAnimationFrame(peekLoop) : 0
     }
     const onRowClick = (e: MouseEvent) => {
       const a = (e.target as Element).closest<HTMLAnchorElement>('.row')
@@ -184,25 +192,24 @@ export function Motion() {
       const usePeek = hoverable && peek?.classList.contains('show')
       expand(Number(a.dataset.i), a.getAttribute('href')!, (usePeek ? peek! : a).getBoundingClientRect())
     }
-    const onMove = (e: MouseEvent) => {
-      mx = e.clientX
-      my = e.clientY
-    }
+    const onMove = () => {}
     const onOver = (e: MouseEvent) => {
       const a = (e.target as Element).closest<HTMLAnchorElement>('.row')
       if (!a) return
       const i = Number(a.dataset.i)
       // the row stays lit and the others dim whether or not the floating picture is on the page
       if (!peek || !hoverable) return setIx(i)
-      // the project's main picture floats by the cursor (the same Visual the click then grows to full screen)
+      // the project's main picture appears beside its name (the same Visual the click then grows to full screen)
       if (ixOn !== i) {
         const v = visualFor(i)
         if (v) peek.replaceChildren(v)
       }
       setIx(i)
+      peekSpot(i)
       if (!peek.classList.contains('show')) {
-        px = mx = e.clientX
-        py = my = e.clientY
+        px = mx
+        py = my
+        peek.style.transform = `translate3d(${px - peek.offsetWidth / 2}px, ${py - peek.offsetHeight / 2}px, 0)`
         peek.classList.add('show')
       }
       if (!raf) raf = requestAnimationFrame(peekLoop)
@@ -330,6 +337,12 @@ export function Motion() {
         }
       }
       if (ixOn === null && rest !== base) paint(ixInView() ? rest : base)
+      if (peek && ixOn !== null && peek.classList.contains('show')) {
+        peekSpot(ixOn)
+        px = mx
+        py = my
+        peek.style.transform = `translate3d(${px - peek.offsetWidth / 2}px, ${py - peek.offsetHeight / 2}px, 0)`
+      }
       if (ix && rows && !hoverable) {
         const ir = ix.getBoundingClientRect()
         if (ir.top < vh * 0.5 && ir.bottom > vh * 0.5) {
