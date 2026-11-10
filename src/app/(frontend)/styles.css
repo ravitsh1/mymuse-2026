@@ -61,7 +61,7 @@ a { color: inherit }
 .skip:focus { transform: none }
 :focus-visible { outline: 2px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 3px }
 
-.site { min-height: 100vh; background: var(--p-bg); color: var(--p-ink); transition: background-color .6s ease, color .6s ease }
+.site { min-height: 100vh; background: var(--p-bg); color: var(--p-ink) }
 
 /* ---------- header ---------- */
 .top { position: fixed; inset: 0 0 auto; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -88,18 +88,40 @@ html:not(.menu-open) .top.hide:not(:focus-within) { transform: translateY(-110%)
 .burger:focus-visible { outline: 2px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 2px; border-radius: 6px }
 .count { margin-right: auto } /* RTL: counter and button together on the left, logo alone on the right */
 .count + .burger { margin-right: 0 }
-.menu { position: fixed; inset: 0; z-index: 19; display: grid; align-content: center; background: var(--p-bg); color: var(--p-ink);
-  padding: 90px var(--edge-r) 40px var(--edge-l); animation: menu-in .45s cubic-bezier(.2,.8,.2,1) both }
-.menu[hidden] { display: none }
-.menu ul { list-style: none; margin: 0; padding: 0 }
-.menu li { animation: rise .7s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(.06s * var(--k) + .1s) }
-.menu a { display: inline-block; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 13vw, 150px); line-height: .95; color: inherit; text-decoration: none; transition: color .3s }
-.menu a:hover, .menu a:focus-visible { color: var(--p-acc-lg, var(--p-acc)) }
-.menu a:focus-visible { outline: 2px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 4px }
+/* ---------- menu: the page shrinks into a card that slides right, the menu waits behind it on the left ----------
+   Menu.tsx puts the panel and a click-catcher on <body>; html.menu-open moves .site. The card is the slice of the page
+   that was on screen (--mo-y = scrollY): clipped to it, then scaled around its middle. Fixed parts of the page (header,
+   progress bar) would lose their place inside a transformed .site, so they sit at the top of the slice instead. */
+:root { --menu-bg: #1c0f30; --menu-ink: #f8f7f9; --menu-acc: #ff2d83; --menu-x: 24vw; --menu-s: .74 }
 html.menu-open { overflow: hidden }
-@keyframes menu-in { from { clip-path: circle(0 at 30px 30px) } to { clip-path: circle(150% at 30px 30px) } }
+html.menu-open body, html.menu-closing body { background: var(--menu-bg) }
+.site { transition: background-color .6s ease, color .6s ease, transform .75s cubic-bezier(.76,0,.2,1), border-radius .75s cubic-bezier(.76,0,.2,1) }
+html.menu-open .site, html.menu-closing .site { position: relative; z-index: 2; transform-origin: 50% calc(var(--mo-y, 0px) + 50vh);
+  clip-path: inset(var(--mo-y, 0px) 0 calc(100% - var(--mo-y, 0px) - 100vh) 0 round 22px) }
+html.menu-open .site { transform: translateX(var(--menu-x)) scale(var(--menu-s)) }
+html.menu-open .site .top, html.menu-closing .site .top { position: absolute; top: var(--mo-y, 0px); transform: none }
+html.menu-open .site .bar, html.menu-closing .site .bar, html.menu-open .cookie, html.menu-closing .cookie { display: none }
+.menu { position: fixed; inset: 0; z-index: 1; display: grid; align-content: center; justify-items: end; background: var(--menu-bg); color: var(--menu-ink);
+  padding-block: 90px 40px; padding-left: max(var(--edge-l), env(safe-area-inset-left, 0px)); padding-right: var(--edge-r) }
+.menu[hidden] { display: none }
+.menu ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; justify-items: end; width: 30vw }
+.menu li { opacity: 0; translate: -40px 0; transition: opacity .5s ease, translate .7s cubic-bezier(.2,.8,.2,1); transition-delay: 0s }
+html.menu-open .menu li { opacity: 1; translate: 0 0; transition-delay: calc(.28s + .07s * var(--k)) }
+.menu a { display: inline-block; font-family: var(--f-display); font-weight: 700; font-size: clamp(44px, 5.4vw, 92px); line-height: .95; color: inherit; text-decoration: none; transition: color .3s }
+.menu a:hover, .menu a:focus-visible { color: var(--menu-acc) }
+.menu a:focus-visible { outline: 2px solid var(--menu-acc); outline-offset: 4px }
+.menu-scrim { position: fixed; inset: 0 0 0 37vw; z-index: 3; cursor: pointer } /* the card's left edge: 13vw (scale) + 24vw (shift) */
+.menu-scrim[hidden] { display: none }
+html.menu-jump .site { transition: none }
+@media (max-width: 720px) {
+  :root { --menu-x: 62vw; --menu-s: .8 }
+  .menu ul { width: 62vw }
+  .menu a { font-size: clamp(40px, 12vw, 60px) }
+  .menu-scrim { inset: 0 0 0 72vw }
+}
 @media (prefers-reduced-motion: reduce) {
-  .menu, .menu li { animation: none }
+  .site, .menu li { transition: none !important }
+  .menu li { opacity: 1; translate: 0 0 }
   .burger span, .burger span::before { transition: none }
 }
 .bar { position: fixed; top: 0; right: 0; left: 0; height: 3px; z-index: 21; transform-origin: right; transform: scaleX(0); background: var(--p-acc) }
