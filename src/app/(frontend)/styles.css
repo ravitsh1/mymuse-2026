@@ -517,7 +517,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 }
 @keyframes slab-in { from { opacity: 0; transform: translateY(-14cqi) rotate(calc(var(--r, 0deg) * -2)) } to { opacity: 1; transform: rotate(var(--r, 0deg)) } }
 .bh-copy { grid-area: copy; position: relative; z-index: 1; display: grid; gap: clamp(18px, 2.4vh, 28px); justify-items: start }
-.bh-tag { margin: 0; font-size: 16px; color: var(--b-deep) }
+.bh-tag { margin: 0; font-size: 16px; color: var(--p-ink) }
 .bh h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 7.4vw, 140px); line-height: .88; letter-spacing: -.01em }
 .bh h1:focus { outline: none }
 .bh h1 span, .bh h1 em { display: block }
