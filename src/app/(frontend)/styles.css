@@ -318,8 +318,8 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
 .rows.has-on .row.on { opacity: 1 }
 .row.on .rn { transform: translateX(-14px) }
 /* the hovered project's main picture, floating by the cursor (Motion: soft trail, a slight lean) */
-.peek { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 15; width: clamp(260px, 22vw, 380px); aspect-ratio: 4 / 3;
-  border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px -25px rgba(28,15,48,.45);
+.peek { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 15; width: clamp(150px, 12vw, 210px); aspect-ratio: 4 / 3;
+  border-radius: 10px; overflow: hidden; box-shadow: 0 18px 36px -16px rgba(28,15,48,.45);
   opacity: 0; scale: .85; transition: opacity .35s ease, scale .5s cubic-bezier(.2,.8,.2,1) }
 .peek.show { opacity: 1; scale: 1 }
 .peek .visual { position: absolute; inset: 0 }
