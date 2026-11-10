@@ -452,17 +452,17 @@ html[data-trial="b26"] .after-ph { margin-top: 0; box-shadow: none; background: 
 html[data-trial="b26"] .visual .glow { display: none }
 html[data-trial="b26"] .cookie button { background: #1c0f30; color: #f8f7f9 }
 html[data-trial="b26"] .cookie button:focus-visible, html[data-trial="b26"] .cookie a:focus-visible { outline-color: #1c0f30 }
-/* header: the sections and the intro call on desktop, the menu button below 1024px */
+/* header: the logo, then (desktop) the intro call, and the menu button at every width (the menu holds the sections) */
 .top-nav, .top-cta { display: none }
 html[data-trial="b26"] .top { transition: color .6s, background-color .3s }
 html[data-trial="b26"] .site.scrolled .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent); backdrop-filter: blur(10px) }
 /* the blur makes the header the containing block of its fixed children: the open menu would shrink to the header bar */
 html.menu-open .site.scrolled .top { backdrop-filter: none }
 @media (min-width: 1024px) {
-  html[data-trial="b26"] .top-nav { display: block; margin-inline: auto }
   html[data-trial="b26"] .top-cta { display: inline-flex }
-  html[data-trial="b26"] .burger { display: none }
-  html[data-trial="b26"] .count { margin-right: 0 }
+  /* RTL: the logo alone on the right; counter, intro call and menu button together on the left */
+  html[data-trial="b26"] .top > .logo { margin-left: auto }
+  html[data-trial="b26"] .count, html[data-trial="b26"] .burger { margin-right: 0 }
 }
 .top-nav ul { display: flex; gap: clamp(20px, 2.6vw, 44px); list-style: none; margin: 0; padding: 0 }
 .top-nav a { display: inline-block; padding-block: 8px; font-size: 16px; text-decoration: none; color: inherit }
