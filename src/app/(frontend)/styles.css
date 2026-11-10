@@ -70,8 +70,8 @@ a { color: inherit }
 .top > * { pointer-events: auto }
 /* scrolling down hides the header, scrolling up brings it back (Motion toggles .hide). Never while the menu is open or
    while focus is inside it. Hidden = a transform; shown = none, because a transform would trap the fixed menu panel */
-.top { transition: color .6s, transform .35s cubic-bezier(.2,.8,.2,1) }
-html:not(.menu-open) .top.hide:not(:focus-within) { transform: translateY(-110%) }
+.top { transition: color .6s, transform .6s cubic-bezier(.22,1,.36,1), opacity .45s ease }
+html:not(.menu-open) .top.hide:not(:focus-within) { transform: translateY(-100%); opacity: 0 }
 @media (prefers-reduced-motion: reduce) { .top { transition: color .6s } }
 /* the menu panel lives inside the header: keep the logo, counter and button above it */
 .top > .logo, .top > .count, .top > .burger { position: relative; z-index: 20 }
@@ -371,7 +371,8 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
 .contact h2 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 11vw, 150px); line-height: .88 }
 .ct-body { margin: 0; max-width: 46ch; font-size: clamp(20px, 2vw, 25px); opacity: .9 }
 .ct { display: flex; flex-wrap: wrap; gap: 12px 28px }
-.ci { display: flex; align-items: center; gap: 12px; font-size: clamp(18px, 1.6vw, 21px); direction: ltr }
+.ci { display: block; width: fit-content; font-size: 18px; line-height: 1.6; direction: ltr; color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; font-variant-numeric: tabular-nums }
+.ci:hover { text-decoration-thickness: 2px }
 .ci .val { user-select: all; font-variant-numeric: tabular-nums }
 .cp { font: 600 13px var(--f-body); color: inherit; background: transparent; border: 1px solid var(--p-soft); border-radius: 999px; padding: 5px 12px; cursor: pointer; direction: rtl }
 
@@ -454,7 +455,10 @@ html[data-trial="b26"] .cookie button { background: #1c0f30; color: #f8f7f9 }
 html[data-trial="b26"] .cookie button:focus-visible, html[data-trial="b26"] .cookie a:focus-visible { outline-color: #1c0f30 }
 /* header: the logo, then (desktop) the intro call, and the menu button at every width (the menu holds the sections) */
 .top-nav, .top-cta { display: none }
-html[data-trial="b26"] .top { transition: color .6s, background-color .3s }
+html[data-trial="b26"] .top { transition: color .6s, background-color .3s, transform .6s cubic-bezier(.22,1,.36,1), opacity .45s ease }
+/* project pages: the header is solid white, at the top of the page and scrolled (no see-through, no blur) */
+html[data-trial="b26"] .site[data-page="project"] .top, html[data-trial="b26"] .site[data-page="project"].scrolled .top { background: #fff; backdrop-filter: none }
+@media (prefers-reduced-motion: reduce) { html[data-trial="b26"] .top { transition: color .6s, background-color .3s } }
 html[data-trial="b26"] .site.scrolled .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent); backdrop-filter: blur(10px) }
 /* the blur makes the header the containing block of its fixed children: the open menu would shrink to the header bar */
 html.menu-open .site.scrolled .top { backdrop-filter: none }
