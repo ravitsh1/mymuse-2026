@@ -9,7 +9,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
 /** Brand book 2026 (palette trial b26): the sections in the header on desktop, with the intro call as an outline pill. */
 const NAV = [
   { href: '/', label: 'דף הבית' },
-  { href: '/#work', label: 'פרויקטים' },
+  { href: '/work', label: 'פרויקטים' },
   { href: '/#services', label: 'השירותים שלנו' },
   { href: '/#about', label: 'קצת עלינו' },
   { href: '/#contact', label: 'צור קשר' },

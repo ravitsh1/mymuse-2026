@@ -8,9 +8,8 @@ import { NextResponse, type NextRequest } from 'next/server'
  */
 const LEGACY: Record<string, string> = {
   '/about-us': '/',
-  '/work': '/',
   '/contact': '/',
-  '/portfolio': '/',
+  '/portfolio': '/work',
   '/הצהרת-נגישות': '/accessibility',
   // the old site's shop pages and an Instagram feed page: nothing like them here
   '/cart': '/',
@@ -48,8 +47,8 @@ const legacyTarget = (path: string): string | null => {
   if (LEGACY[path]) return LEGACY[path]
   const m = path.match(/^\/portfolio\/([^/]+)$/)
   // only old slugs are mapped: new slugs (/portfolio/jullius) must pass through untouched
-  if (m && m[1] in LEGACY_PROJECTS) return LEGACY_PROJECTS[m[1]] ? `/portfolio/${LEGACY_PROJECTS[m[1]]}` : '/'
-  if (/^\/portfolio_(category|tag)(\/|$)/.test(path)) return '/'
+  if (m && m[1] in LEGACY_PROJECTS) return LEGACY_PROJECTS[m[1]] ? `/portfolio/${LEGACY_PROJECTS[m[1]]}` : '/work'
+  if (/^\/portfolio_(category|tag)(\/|$)/.test(path)) return '/work'
   return null
 }
 
@@ -75,7 +74,7 @@ export function proxy(req: NextRequest) {
   }
   // old-site addresses, in a single 301 hop
   const legacy = legacyTarget(decoded)
-  if (legacy) return NextResponse.redirect(to(req, legacy, legacy === '/' && decoded.startsWith('/portfolio') ? 'work' : ''), 301)
+  if (legacy) return NextResponse.redirect(to(req, legacy), 301)
   if (bare !== pathname) return NextResponse.redirect(to(req, bare), 308)
   return NextResponse.next()
 }

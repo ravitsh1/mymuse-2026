@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 import { Footer } from '@/components/Footer'
 import { JsonLd } from '@/components/JsonLd'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
@@ -6,14 +7,17 @@ import { BriefAssistant } from '@/components/BriefAssistant'
 import { BrandHero, BrandLabel, LastWordPink } from '@/components/BrandHero'
 import { Header } from '@/components/Header'
 import { HeroCycle } from '@/components/HeroCycle'
-import { CategoryFilter } from '@/components/CategoryFilter'
+import { WorkIndex } from '@/components/WorkIndex'
 import { Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
 import { LogoStacked } from '@/components/Logo'
-import { MediaEl, Visual } from '@/components/Visual'
-import { accentTones, getCategories, getFooterPages, getHome, getProjects, getSettings, paletteVars, projectPalette, sitePalette } from '@/lib/data'
+import { MediaEl } from '@/components/Visual'
+import { accentTones, getFooterPages, getHome, getProjects, getSettings, paletteVars, sitePalette } from '@/lib/data'
 import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
 import { HERO_WORK, trialHero, trialPalette } from '@/lib/trial'
+
+/** how many selected projects the home page lists before the link to /work */
+const HOME_WORK = 8
 
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings()
@@ -21,20 +25,19 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
-  const [projects, home, settings, pages, allCategories, hero, palette, sp] = await Promise.all([
+  const [projects, home, settings, pages, hero, palette, sp] = await Promise.all([
     getProjects(),
     getHome(),
     getSettings(),
     getFooterPages(),
-    getCategories(),
     trialHero(),
     trialPalette(),
     searchParams,
   ])
-  // a service tag on a card links to ?service=<tag>#work: the index then lists only the projects marked with it
+  // the service filter lives on /work now; old links (/?service=ux#work) go there
+  if (typeof sp.service === 'string') redirect(`/work?service=${encodeURIComponent(sp.service)}`)
   // the tags themselves are edited in Settings → שירותים; projects and cards store each tag's row id
   const tags = (settings.serviceTags ?? []).filter((t) => t.id && t.label).map((t) => ({ value: t.id!, label: t.label }))
-  const service = tags.find((t) => t.value === sp.service)
   const tagLabel = (v: string) => tags.find((t) => t.value === v)?.label ?? v
   // the 2026 brand book brings its own hero (BrandHero) in place of the Passion section and its trials
   const brand = palette === 'b26'
@@ -44,14 +47,11 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   const workOf = (w: { word: string }, k: number) => projects.find((p) => p.slug === HERO_WORK[w.word]) ?? projects[k % projects.length]
   const site = sitePalette(settings)
   const words = home.words?.length ? home.words : [{ word: 'Expertise', bg: site.bg, accent: site.acc }]
+  // the home page shows a few selected projects (marked "featured", in the admin order); /work has them all
   const featured = projects.map((p, i) => ({ p, i })).filter(({ p }) => p.featured)
-  const listed = featured.length ? featured : projects.map((p, i) => ({ p, i }))
-  const shown = service ? listed.filter(({ p }) => p.services?.includes(service.value)) : listed
-  // a card shows only the tags some listed project carries, so no tag leads to an empty list
-  const usedTags = new Set(listed.flatMap(({ p }) => (p.services ?? []).filter((t) => tags.some((x) => x.value === t))))
-  const catOf = (p: (typeof projects)[number]) => (p.category && typeof p.category === 'object' ? String(p.category.id) : p.category ? String(p.category) : '')
-  // only categories that have a project in the list
-  const categories = allCategories.filter((c) => shown.some(({ p }) => catOf(p) === String(c.id)))
+  const selected = (featured.length ? featured : projects.map((p, i) => ({ p, i }))).slice(0, HOME_WORK)
+  // a card shows only the tags some project carries, so no tag leads to an empty list
+  const usedTags = new Set(projects.flatMap((p) => (p.services ?? []).filter((t) => tags.some((x) => x.value === t))))
 
   // the brief assistant (contact section): only with the 2026 look, the setting on and a Claude key on the server
   const showBrief = brand && !!settings.briefAssistant && !!process.env.ANTHROPIC_API_KEY
@@ -196,38 +196,15 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
         <div className="after-ph">
           {brand ? brandAbout : null}
           {!brand && home.subtitle && <p className="lede wrap">{home.subtitle}</p>}
-          {(shown.length > 0 || service) && (
-            <section className="ix wrap" id="work" data-ix aria-labelledby="ixh">
-              {brand && <BrandLabel n={2}>Selected work</BrandLabel>}
-              <div className="ix-head">
-                <h2 id="ixh">{home.workTitle || 'עבודות נבחרות'}</h2>
-                {brand && home.subtitle && <p className="b-text">{home.subtitle}</p>}
-                {categories.length > 1 && <CategoryFilter categories={categories.map((c) => ({ id: c.id, title: c.title }))} all={brand} shuffle={settings.projectOrder !== 'admin'} />}
-              </div>
-              {service && (
-                <p className="ix-service">
-                  {shown.length ? 'פרויקטים עם השירות' : 'עדיין אין פרויקטים עם השירות'} <strong>{service.label}</strong>
-                  <a href="/#work">לכל הפרויקטים</a>
-                </p>
-              )}
-              <ul className="rows" data-rows>
-                {shown.map(({ p, i }) => {
-                  const c = projectPalette(p)
-                  return (
-                    <li key={p.id} data-cat={catOf(p)}>
-                      <a className="row" href={`/portfolio/${p.slug}`} data-i={i} data-name={p.nameEn || p.title} data-bg={c.bg} data-ink={c.ink} data-acc={c.acc} data-acc-sm={accentTones(c).sm} data-acc-lg={accentTones(c).lg}>
-                        <span className="rn">{p.title}</span>
-                        {p.field && <span className="rf">{p.field}</span>}
-                      </a>
-                      <div hidden data-visual-for={i}>
-                        <Visual project={p} index={i} />
-                      </div>
-                    </li>
-                  )
-                })}
-              </ul>
-              <div className="ix-more" data-more />
-            </section>
+          {selected.length > 0 && (
+            <WorkIndex
+              items={selected}
+              brand={brand}
+              label={{ n: 2, text: 'Selected work' }}
+              title={home.workTitle || 'עבודות נבחרות'}
+              subtitle={brand ? home.subtitle : null}
+              allHref="/work"
+            />
           )}
         </div>
 
@@ -256,7 +233,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
                       <ul className="card-tags" aria-label={`פרויקטים לפי ${s.title}`}>
                         {s.tags.filter((t) => usedTags.has(t)).map((t) => (
                           <li key={t}>
-                            <a href={`/?service=${t}#work`}>{tagLabel(t)}</a>
+                            <a href={`/work?service=${t}`}>{tagLabel(t)}</a>
                           </li>
                         ))}
                       </ul>

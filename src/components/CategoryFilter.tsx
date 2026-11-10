@@ -14,9 +14,9 @@ const STEP = 10
  * `all` (brand book 2026): the button is "all projects" and shows every remaining one at once.
  * `shuffle` (Settings → projectOrder): false keeps "all" in the admin order too.
  */
-export function CategoryFilter({ categories, all, shuffle = true }: { categories: { id: number | string; title: string }[]; all?: boolean; shuffle?: boolean }) {
+export function CategoryFilter({ categories, all, shuffle = true, step = STEP }: { categories: { id: number | string; title: string }[]; all?: boolean; shuffle?: boolean; step?: number }) {
   const [on, setOn] = useState<string>('all')
-  const [limit, setLimit] = useState(STEP)
+  const [limit, setLimit] = useState(step)
   const [more, setMore] = useState(0)
   const [slot, setSlot] = useState<HTMLElement | null>(null)
   const [count, setCount] = useState<number | null>(null)
@@ -54,7 +54,7 @@ export function CategoryFilter({ categories, all, shuffle = true }: { categories
     }
     order.current = { admin, shuffled }
     setSlot(document.querySelector<HTMLElement>('[data-more]'))
-    apply('all', STEP)
+    apply('all', step)
   }, [shuffle]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const pick = (id: string) => {

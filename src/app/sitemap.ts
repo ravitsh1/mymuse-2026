@@ -11,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ])
   return [
     { url: abs('/'), priority: 1 },
+    { url: abs('/work'), priority: 0.9 },
     ...projects.docs.map((p) => ({ url: abs(`/portfolio/${p.slug}`), lastModified: p.updatedAt, priority: 0.8 })),
     ...pages.docs.map((p) => ({ url: abs(`/${p.slug}`), lastModified: p.updatedAt, priority: 0.3 })),
   ]
