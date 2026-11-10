@@ -317,7 +317,7 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
 .rows.has-on .row { opacity: .28 }
 .rows.has-on .row.on { opacity: 1 }
 .row.on .rn { transform: translateX(-14px) }
-/* the hovered project's main picture, floating by the cursor (Motion: soft trail, a slight lean) */
+/* the hovered project's main picture, beside its name (Motion places it; it glides from row to row) */
 .peek { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 15; width: clamp(150px, 12vw, 210px); aspect-ratio: 4 / 3;
   border-radius: 10px; overflow: hidden; box-shadow: 0 18px 36px -16px rgba(28,15,48,.45);
   opacity: 0; scale: .85; transition: opacity .35s ease, scale .5s cubic-bezier(.2,.8,.2,1) }
