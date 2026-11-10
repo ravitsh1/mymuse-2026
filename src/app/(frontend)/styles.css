@@ -287,7 +287,8 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
 .ix-filter button[aria-pressed="true"] { background: var(--p-ink); color: var(--p-bg); border-color: var(--p-ink) }
 .rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--p-soft) }
 .ix-more { display: flex; justify-content: center; margin-top: clamp(32px, 4vw, 56px) }
-.ix-more .go { margin: 0; cursor: pointer; font-size: 17px; padding: 12px 28px }
+.ix-more .go { margin: 0; cursor: pointer; font-size: 17px; font-weight: 400; padding: 4px 0; border: 0; border-radius: 0; background: none; text-decoration: underline; text-underline-offset: 4px }
+.ix-more .go:hover { background: none; text-decoration-thickness: 2px }
 .row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding-block: 10px 4px; border-bottom: 1px solid var(--p-soft); text-decoration: none; transition: opacity .35s }
 .row .rn { font-family: var(--f-display); font-weight: 700; font-size: clamp(60px, 11vw, 150px); line-height: .95; transition: transform .45s cubic-bezier(.2,.8,.2,1); min-width: 0 }
 .row .rf { font-size: 15px; opacity: .85; white-space: nowrap }
@@ -310,7 +311,7 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
   background: var(--c-bg); color: var(--c-ink); box-shadow: 0 -20px 60px -30px rgba(0,0,0,.6) }
 /* each card's brush mark (public/brush/mark-N.svg), top left: white on the dark cards, black on the light ones */
 .card-mark { position: absolute; top: clamp(24px, 4vw, 48px); left: clamp(24px, 3.4vw, 40px) } /* its own size, as in Figma (38–57px wide) */
-.card-n { font-weight: 400; font-variant-numeric: tabular-nums }
+.card-n { font-weight: 300; font-variant-numeric: tabular-nums }
 .card h3 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(48px, 7vw, 96px); line-height: .9 }
 .card p { margin: 10px 0 0; max-width: 40ch; font-size: clamp(19px, 2vw, 25px) }
 /* service tags: each leads to the projects marked with it (?service=…#work) */
@@ -348,7 +349,7 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
 .contact h2 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 11vw, 150px); line-height: .88 }
 .ct-body { margin: 0; max-width: 46ch; font-size: clamp(20px, 2vw, 25px); opacity: .9 }
 .ct { display: flex; flex-wrap: wrap; gap: 12px 28px }
-.ci { display: flex; align-items: center; gap: 12px; font-size: clamp(20px, 2.4vw, 28px); direction: ltr }
+.ci { display: flex; align-items: center; gap: 12px; font-size: clamp(18px, 1.6vw, 21px); direction: ltr }
 .ci .val { user-select: all; font-variant-numeric: tabular-nums }
 .cp { font: 600 13px var(--f-body); color: inherit; background: transparent; border: 1px solid var(--p-soft); border-radius: 999px; padding: 5px 12px; cursor: pointer; direction: rtl }
 
@@ -469,6 +470,8 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .brush-2, .slab-2 { --d: 1 }
 .brush-3, .slab-3 { --d: .75 }
 .brush-4, .slab-4 { --d: 1.35 }
+/* stacking: strokes 1-2, then yellow + DEV, then pink, then the other three words */
+.brush-1, .brush-2 { z-index: 1 } .brush-4 { z-index: 2 } .slab-4 { z-index: 3 } .brush-3 { z-index: 4 } .slab-1, .slab-2, .slab-3 { z-index: 5 }
 .brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg) }
 .brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1 }
 .brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2 }
@@ -630,7 +633,7 @@ html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
 .bot-head h3 { margin: 0; font-size: 17px; font-weight: 600 }
 .bot-head small { display: block; font-size: 14px; color: #801f48 }
 .bot-dot { width: 34px; height: 34px; flex: none; border-radius: 50%; background: #1c0f30; color: #f4e85a; display: grid; place-items: center; font: 700 20px var(--f-display) }
-.bot-dot img { width: 16px; height: auto }
+.bot-dot svg { width: 17px; height: auto; display: block }
 .bot-log { display: grid; gap: 12px; align-content: start; padding: 22px 24px; min-height: 260px; max-height: min(560px, 70vh); overflow: auto; list-style: none; margin: 0 }
 .bot .msg { max-width: 85%; padding: 12px 16px; border-radius: 20px; font-size: 17px; line-height: 1.5; white-space: pre-wrap; animation: bot-in .35s ease both }
 .bot .msg.ai { justify-self: start; background: #f1eef4; border-start-start-radius: 6px }

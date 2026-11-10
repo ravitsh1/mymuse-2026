@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&display=swap"
         />
       </head>
       <body data-shade={settings.heroShade === 'gradient' ? undefined : 'none'}>
