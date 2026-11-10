@@ -26,7 +26,7 @@ export default async function NotFound() {
             </Link>
           </li>
           <li>
-            <Link href="/#work">לכל העבודות</Link>
+            <Link href="/work">לכל העבודות</Link>
           </li>
           <li>
             <Link href="/#contact">ליצירת קשר</Link>

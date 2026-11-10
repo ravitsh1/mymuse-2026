@@ -32,7 +32,7 @@ export function NextCard({ project, index }: { project: Project; index: number }
           </span>
         </span>
       </Link>
-      <Link className="nc-all" href="/#work">
+      <Link className="nc-all" href="/work">
         לכל הפרויקטים
       </Link>
     </section>

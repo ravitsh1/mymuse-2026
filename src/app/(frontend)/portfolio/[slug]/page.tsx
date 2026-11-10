@@ -68,7 +68,7 @@ export default async function ProjectPage({ params }: Props) {
   const index = projects.findIndex((p) => p.slug === slug)
   if (index < 0) {
     // a hidden project (old links and Google results point to most of them): to the project list, not a 404
-    if (await isHiddenProject(slug)) permanentRedirect('/#work')
+    if (await isHiddenProject(slug)) permanentRedirect('/work')
     notFound()
   }
   const p = projects[index]

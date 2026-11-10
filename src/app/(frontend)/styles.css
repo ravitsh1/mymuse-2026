@@ -753,3 +753,8 @@ html[data-trial="b26"] .visual .word { display: none }
 .nc-turn.in .nc-media { clip-path: inset(0 0 0 0 round 22px) }
 .nc-turn.in .nc-media .visual { scale: 1.12 }
 .nc-turn.in .nc-text { opacity: 1; translate: 0 0 }
+
+/* ---------- /work: every project ---------- */
+.work-page .ix { padding-top: clamp(120px, 14vw, 180px) }
+.work-page .ix-head h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 7vw, 110px); line-height: .9 }
+.work-page .ix-head h1:focus { outline: none }

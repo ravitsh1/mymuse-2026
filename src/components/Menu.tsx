@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 const LINKS = [
-  { href: '/#work', label: 'עבודות' },
+  { href: '/work', label: 'עבודות' },
   { href: '/#services', label: 'שירותים' },
   { href: '/#about', label: 'עלינו' },
   { href: '/#contact', label: 'צור קשר' },
