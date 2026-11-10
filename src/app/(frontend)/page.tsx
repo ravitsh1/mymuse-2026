@@ -7,7 +7,7 @@ import { BrandHero, BrandLabel, LastWordPink } from '@/components/BrandHero'
 import { Header } from '@/components/Header'
 import { HeroCycle } from '@/components/HeroCycle'
 import { CategoryFilter } from '@/components/CategoryFilter'
-import { CopyValue, Marquee } from '@/components/Interactive'
+import { Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
 import { LogoStacked } from '@/components/Logo'
 import { MediaEl, Visual } from '@/components/Visual'
@@ -331,8 +331,16 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
                 </a>
               )}
               <div className="ct">
-                {settings.email && <CopyValue value={settings.email} />}
-                {settings.phone && <CopyValue value={settings.phone} />}
+                {settings.email && (
+                  <a className="ci" href={`mailto:${settings.email}`}>
+                    {settings.email}
+                  </a>
+                )}
+                {settings.phone && (
+                  <a className="ci" href={`tel:${settings.phone.replace(/[^\d+]/g, '')}`}>
+                    {settings.phone}
+                  </a>
+                )}
               </div>
             </div>
             {showBrief && <BriefAssistant privacyHref={pages.some((x) => x.slug === 'privacy-policy') ? '/privacy-policy' : undefined} />}

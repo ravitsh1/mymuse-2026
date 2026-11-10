@@ -81,7 +81,7 @@ export default async function ProjectPage({ params }: Props) {
   const credits = splitCredits(p.credit)
 
   return (
-    <div className="site" data-site data-bg={c.bg} data-ink={c.ink} data-acc={c.acc} style={paletteVars(c)}>
+    <div className="site" data-site data-page="project" data-bg={c.bg} data-ink={c.ink} data-acc={c.acc} style={paletteVars(c)}>
       <Header projects={projects} current={index} />
 
       <main id="content">
