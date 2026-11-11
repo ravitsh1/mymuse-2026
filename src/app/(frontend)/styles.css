@@ -449,27 +449,27 @@ main[tabindex="-1"]:focus { outline: none }
 /* ---------- brand book 2026 (palette trial b26, lib/trial.ts) ----------
    Porcelain, deep violet ink, burgundy for small labels and links (9:1), laser pink for one word or an indicator
    (3.3:1: large text and marks only), lemon for the one primary button (violet on it 13:1). No gradients. */
-html[data-trial="b26"] { --chrome-bg: #f8f7f9; --b-deep: #801f48; --b-pink: #ff2d83; --b-pop: #f4e85a }
-html[data-trial="b26"] .site { --p-acc-sm: #801f48 !important }
+html[data-brand] { --chrome-bg: #f8f7f9; --b-deep: #801f48; --b-pink: #ff2d83; --b-pop: #f4e85a }
+html[data-brand] .site { --p-acc-sm: #801f48 !important }
 /* nothing slides under it here, so no background: the hero slabs' shadows, lagging behind the scroll, stay whole */
-html[data-trial="b26"] .after-ph { margin-top: 0; box-shadow: none; background: transparent }
-html[data-trial="b26"] .visual .glow { display: none }
-html[data-trial="b26"] .cookie button { background: #1c0f30; color: #f8f7f9 }
-html[data-trial="b26"] .cookie button:focus-visible, html[data-trial="b26"] .cookie a:focus-visible { outline-color: #1c0f30 }
+html[data-brand] .after-ph { margin-top: 0; box-shadow: none; background: transparent }
+html[data-brand] .visual .glow { display: none }
+html[data-brand] .cookie button { background: #1c0f30; color: #f8f7f9 }
+html[data-brand] .cookie button:focus-visible, html[data-brand] .cookie a:focus-visible { outline-color: #1c0f30 }
 /* header: the logo, then (desktop) the intro call, and the menu button at every width (the menu holds the sections) */
 .top-nav, .top-cta { display: none }
-html[data-trial="b26"] .top { transition: color .6s, background-color .3s, transform .6s cubic-bezier(.22,1,.36,1), opacity .45s ease }
+html[data-brand] .top { transition: color .6s, background-color .3s, transform .6s cubic-bezier(.22,1,.36,1), opacity .45s ease }
 /* project pages: the header is solid white, at the top of the page and scrolled (no see-through, no blur) */
-html[data-trial="b26"] .site[data-page="project"] .top, html[data-trial="b26"] .site[data-page="project"].scrolled .top { background: #fff; backdrop-filter: none }
-@media (prefers-reduced-motion: reduce) { html[data-trial="b26"] .top { transition: color .6s, background-color .3s } }
-html[data-trial="b26"] .site.scrolled .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent); backdrop-filter: blur(10px) }
+html[data-brand] .site[data-page="project"] .top, html[data-brand] .site[data-page="project"].scrolled .top { background: #fff; backdrop-filter: none }
+@media (prefers-reduced-motion: reduce) { html[data-brand] .top { transition: color .6s, background-color .3s } }
+html[data-brand] .site.scrolled .top { background: color-mix(in srgb, var(--p-bg) 94%, transparent); backdrop-filter: blur(10px) }
 /* the blur makes the header the containing block of its fixed children: the open menu would shrink to the header bar */
 html.menu-open .site.scrolled .top { backdrop-filter: none }
 @media (min-width: 1024px) {
-  html[data-trial="b26"] .top-cta { display: inline-flex }
+  html[data-brand] .top-cta { display: inline-flex }
   /* RTL: the logo alone on the right; counter, intro call and menu button together on the left */
-  html[data-trial="b26"] .top > .logo { margin-left: auto }
-  html[data-trial="b26"] .count, html[data-trial="b26"] .burger { margin-right: 0 }
+  html[data-brand] .top > .logo { margin-left: auto }
+  html[data-brand] .count, html[data-brand] .burger { margin-right: 0 }
 }
 .top-nav ul { display: flex; gap: clamp(20px, 2.6vw, 44px); list-style: none; margin: 0; padding: 0 }
 .top-nav a { display: inline-block; padding-block: 8px; font-size: 16px; text-decoration: none; color: inherit }
@@ -548,17 +548,17 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 
 /* sections: a numbered label, a Karantina heading with its last words in pink, Talent text */
 .b-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--p-ink) }
-html[data-trial="b26"] .ix-head h2, html[data-trial="b26"] .svc h2, html[data-trial="b26"] .contact h2, .b-about h2 {
+html[data-brand] .ix-head h2, html[data-brand] .svc h2, html[data-brand] .contact h2, .b-about h2 {
   margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 7vw, 120px); line-height: .88; letter-spacing: -.01em; color: var(--p-ink) }
-html[data-trial="b26"] .contact h2 em, .b-about h2 em { font-style: normal; color: var(--b-pink) }
+html[data-brand] .contact h2 em, .b-about h2 em { font-style: normal; color: var(--b-pink) }
 .b-text { margin: clamp(18px, 2vw, 28px) 0 0; max-width: 52ch; font-size: clamp(18px, 1.4vw, 21px); line-height: 1.6; opacity: 1 }
-html[data-trial="b26"] .ix-head p.b-text { margin-top: clamp(18px, 2vw, 28px); font-size: clamp(18px, 1.4vw, 21px); opacity: 1 }
-html[data-trial="b26"] .ix-head { margin-bottom: clamp(48px, 6vw, 88px) }
-html[data-trial="b26"] .row .rn { font-size: clamp(44px, 5.4vw, 88px) }
-html[data-trial="b26"] .row { padding-block: 14px 8px }
-html[data-trial="b26"] .ix-head { display: grid; justify-content: stretch; gap: 0 }
-html[data-trial="b26"] .ix-head .ix-filter { margin-top: clamp(28px, 3vw, 44px) }
-html[data-trial="b26"] .svc h2 { margin-bottom: 40px }
+html[data-brand] .ix-head p.b-text { margin-top: clamp(18px, 2vw, 28px); font-size: clamp(18px, 1.4vw, 21px); opacity: 1 }
+html[data-brand] .ix-head { margin-bottom: clamp(48px, 6vw, 88px) }
+html[data-brand] .row .rn { font-size: clamp(44px, 5.4vw, 88px) }
+html[data-brand] .row { padding-block: 14px 8px }
+html[data-brand] .ix-head { display: grid; justify-content: stretch; gap: 0 }
+html[data-brand] .ix-head .ix-filter { margin-top: clamp(28px, 3vw, 44px) }
+html[data-brand] .svc h2 { margin-bottom: 40px }
 .b-about { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(20px, 2.5vw, 40px); align-items: start; padding-block: clamp(90px, 12vw, 160px) clamp(20px, 4vw, 40px);
   view-timeline: --about block }
 .b-about .b-text { max-width: none }
@@ -575,8 +575,8 @@ html[data-trial="b26"] .svc h2 { margin-bottom: 40px }
   }
 }
 @keyframes b-write { from { clip-path: inset(0 100% 0 0); transform: translateX(-12px) } to { clip-path: inset(0 0 0 0); transform: none } } /* DEVELOPMENT, the longest, fills the column: the gap to the text is the grid gap */
-html[data-trial="b26"] .contact .pill { justify-self: start; margin-top: 6px }
-html[data-trial="b26"] .track span:nth-child(3n+1) { color: var(--b-deep) }
+html[data-brand] .contact .pill { justify-self: start; margin-top: 6px }
+html[data-brand] .track span:nth-child(3n+1) { color: var(--b-deep) }
 /* footer: the tagline signs off the page */
 .b-sign { flex-basis: 100%; margin: 0 0 clamp(20px, 3vw, 36px); font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 9vw, 150px); line-height: .86;
   text-transform: uppercase; direction: ltr; text-align: left }
@@ -634,7 +634,7 @@ html[data-trial="b26"] .track span:nth-child(3n+1) { color: var(--b-deep) }
 /* testimonials (Home → המלצות, Projects → המלצה מהלקוח): a quote mark, the words, then who said it */
 .quotes { padding-block: clamp(40px, 8vw, 90px) }
 .quotes h2 { margin: 0 0 clamp(28px, 4vw, 48px); font-size: 15px; letter-spacing: .2em; font-weight: 600; color: var(--p-acc-sm, var(--p-acc)) }
-html[data-trial="b26"] .quotes h2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 7vw, 120px); line-height: .88; letter-spacing: -.01em; color: var(--p-ink) }
+html[data-brand] .quotes h2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 7vw, 120px); line-height: .88; letter-spacing: -.01em; color: var(--p-ink) }
 .quote-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(20px, 3vw, 40px); list-style: none; margin: 0; padding: 0 }
 .quote { margin: 0; display: grid; gap: 18px; align-content: start }
 .quote blockquote { margin: 0; font-size: clamp(19px, 1.5vw, 23px); line-height: 1.55 }
@@ -645,7 +645,7 @@ html[data-trial="b26"] .quotes h2 { font-family: var(--f-display); font-weight: 
 .quote figcaption { display: grid; gap: 2px; font-size: 16px; line-height: 1.5 }
 .quote figcaption strong { font-weight: 600 }
 .quote figcaption a { justify-self: start; margin-top: 6px; color: inherit; text-decoration: underline; text-underline-offset: 3px }
-html[data-trial="b26"] .quote figcaption span { color: var(--b-deep) }
+html[data-brand] .quote figcaption span { color: var(--b-deep) }
 /* on a project page: one quote, larger */
 .p-quote { padding-block: clamp(40px, 8vw, 100px) }
 .p-quote .quote { max-width: 46ch }
@@ -736,10 +736,10 @@ body[data-shade="none"] .site .top { background: color-mix(in srgb, var(--p-bg) 
 
 /* Designer's review (2026-11-04): running text is 18px at line-height 1.6 everywhere (home and project pages alike), the
    category buttons are regular weight, and the outlined English names are gone (hero, next-project frame, fly-in) */
-html[data-trial="b26"] :is(.b-text, .bh-text, .card p, .quote blockquote, .about-body, .ct-body, .nf-text, .prose p, .prose li) { font-size: 18px; line-height: 1.6 }
-html[data-trial="b26"] .ix-head p.b-text { font-size: 18px }
-html[data-trial="b26"] .ix-filter button { font-weight: 400 }
-html[data-trial="b26"] .visual .word { display: none }
+html[data-brand] :is(.b-text, .bh-text, .card p, .quote blockquote, .about-body, .ct-body, .nf-text, .prose p, .prose li) { font-size: 18px; line-height: 1.6 }
+html[data-brand] .ix-head p.b-text { font-size: 18px }
+html[data-brand] .ix-filter button { font-weight: 400 }
+html[data-brand] .visual .word { display: none }
 
 /* ---------- depth on entry (Motion adds .rise / .nc-turn only with motion allowed; without JS everything is simply there) ---------- */
 /* project mockups and gallery: come forward once, from a little further away */

@@ -7,7 +7,7 @@ import { Visual } from './Visual'
  * End of a project page, the clear version (Settings → nextMode = "card"): a card for the next project with a
  * button, and a link back to the list. Nothing happens by scrolling. A click grows the card's picture to full screen
  * (Motion, [data-fly]) and the next page opens on the same picture, so the hand-over stays seamless.
- * The alternative is NextFrame (scroll to enter), kept as the default.
+ * The only way on since 2026-11-11 (NextFrame, scroll to enter, is no longer rendered).
  */
 export function NextCard({ project, index }: { project: Project; index: number }) {
   const p = projectPalette(project)

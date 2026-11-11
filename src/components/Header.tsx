@@ -1,12 +1,11 @@
 import Link from 'next/link'
 import type { Project } from '@/payload-types'
-import { trialPalette } from '@/lib/trial'
 import { LogoWide } from './Logo'
 import { Menu } from './Menu'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
-/** Brand book 2026 (palette trial b26): the sections in the header on desktop, with the intro call as an outline pill. */
+/** Brand book 2026: the sections (kept for the hidden desktop nav) and the intro call as a pill. */
 const NAV = [
   { href: '/', label: 'דף הבית' },
   { href: '/work', label: 'פרויקטים' },
@@ -16,7 +15,7 @@ const NAV = [
 ]
 
 export async function Header({ projects, current, home }: { projects: Project[]; current?: number; home?: boolean }) {
-  const brand = (await trialPalette()) === 'b26'
+  const brand = true // the 2026 look (lib/brand.ts)
   return (
     <>
       <div className="bar" data-bar aria-hidden="true" />

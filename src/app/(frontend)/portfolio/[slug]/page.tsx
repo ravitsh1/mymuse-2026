@@ -4,7 +4,6 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { Motion } from '@/components/Motion'
 import { NextCard } from '@/components/NextCard'
-import { NextFrame } from '@/components/NextFrame'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { JsonLd } from '@/components/JsonLd'
 import { MediaEl, Visual } from '@/components/Visual'
@@ -198,32 +197,9 @@ export default async function ProjectPage({ params }: Props) {
           </section>
         )}
 
-        {settings.showSwatches && (
-          <section className="wrap" aria-label="פלטת הצבעים של הפרויקט">
-            <ul className="swatches">
-              {[c.bg, c.ink, c.acc].map((col) => (
-                <li className="sw" key={col}>
-                  <span style={{ background: col }} />
-                  <small>{col.toUpperCase()}</small>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {/* the card comes before the footer, which closes the page; the scroll frame stays last, since reaching its end
-            already moves on to the next project (a footer after it could never be scrolled to) */}
-        {settings.nextMode === 'card' ? (
-          <>
-            <NextCard project={nxt} index={projects.indexOf(nxt)} />
-            <Footer settings={settings} pages={pages} />
-          </>
-        ) : (
-          <>
-            <Footer settings={settings} pages={pages} />
-            <NextFrame project={nxt} index={projects.indexOf(nxt)} label="הפרויקט הבא" />
-          </>
-        )}
+        {/* the card for the next project comes before the footer, which closes the page */}
+        <NextCard project={nxt} index={projects.indexOf(nxt)} />
+        <Footer settings={settings} pages={pages} />
       </main>
       <Motion />
       <LivePreviewRefresh />

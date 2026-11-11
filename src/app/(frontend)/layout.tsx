@@ -5,7 +5,7 @@ import { VeeWidget } from '@/components/VeeWidget'
 import { getPage, getSettings, sitePalette } from '@/lib/data'
 import { indexable } from '@/lib/site'
 import { SITE_URL } from '@/lib/seo'
-import { trialChrome, trialPalette } from '@/lib/trial'
+import { THEME_COLOR } from '@/lib/brand'
 import './styles.css'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -21,14 +21,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // No maximum-scale / user-scalable=no: visitors must be able to zoom.
 export async function generateViewport(): Promise<Viewport> {
-  return { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: trialChrome(await trialPalette()) }
+  return { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: THEME_COLOR }
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [settings, privacy, trial] = await Promise.all([getSettings(), getPage('privacy-policy'), trialPalette()])
+  const [settings, privacy] = await Promise.all([getSettings(), getPage('privacy-policy')])
   const site = sitePalette(settings)
   return (
-    <html lang="he" dir="rtl" data-trial={trial ?? undefined}>
+    <html lang="he" dir="rtl" data-brand="2026">
       <head>
         <link
           rel="preload"
@@ -45,7 +45,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&display=swap"
         />
       </head>
-      <body data-shade={settings.heroShade === 'gradient' ? undefined : 'none'}>
+      <body data-shade="none">
         <a className="skip" href="#content">
           דילוג לתוכן
         </a>
@@ -53,7 +53,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {settings.cookieText && (
           <CookieNotice text={settings.cookieText} privacyHref={privacy ? '/privacy-policy' : undefined} bg={site.bg} ink={site.ink} acc={site.acc} />
         )}
-        {/* the design trials are settled (lib/trial.ts SETTLED), so the PaletteToggle switch is no longer rendered */}
         <VeeWidget />
       </body>
     </html>

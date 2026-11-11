@@ -208,18 +208,6 @@ export interface Project {
    */
   gallery?: (number | Media)[] | null;
   /**
-   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
-   */
-  bg?: string | null;
-  /**
-   * ניגודיות של 4.5:1 לפחות מול הרקע
-   */
-  ink?: string | null;
-  /**
-   * משמש גם לטקסט קטן (תחום, כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע
-   */
-  accent?: string | null;
-  /**
    * ריק = שם הפרויקט.
    */
   metaTitle?: string | null;
@@ -227,6 +215,18 @@ export interface Project {
    * מה שמופיע מתחת לקישור בגוגל ובשיתוף. 120–160 תווים: מה יש בעמוד ולמי. ריק = פסקת הפתיחה של הפרויקט.
    */
   metaDescription?: string | null;
+  /**
+   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
+   */
+  bg?: string | null;
+  /**
+   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
+   */
+  ink?: string | null;
+  /**
+   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
+   */
+  accent?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -482,11 +482,11 @@ export interface ProjectsSelect<T extends boolean = true> {
   heroFitPortrait?: T;
   heroVideo?: T;
   gallery?: T;
+  metaTitle?: T;
+  metaDescription?: T;
   bg?: T;
   ink?: T;
   accent?: T;
-  metaTitle?: T;
-  metaDescription?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -622,31 +622,10 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Home {
   id: number;
   /**
-   * המילה מתחלפת בגלילה, ואיתה הרקע, תמונת הרקע וצבע ההדגשה.
-   */
-  words?:
-    | {
-        word: string;
-        /**
-         * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
-         */
-        bg?: string | null;
-        /**
-         * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
-         */
-        accent?: string | null;
-        /**
-         * תמונה או וידאו מאחורי הסלוגן, מוחשכים כדי שהטקסט ייקרא. בלי תמונה: רקע בצבע שנבחר.
-         */
-        image?: (number | null) | Media;
-        id?: string | null;
-      }[]
-    | null;
-  subtitle?: string | null;
-  /**
    * הפרויקטים שמסומנים "להציג בעמוד הבית" מוצגים כאן לפי הסדר ברשימת הפרויקטים.
    */
   workTitle?: string | null;
+  subtitle?: string | null;
   servicesTitle?: string | null;
   services?:
     | {
@@ -716,6 +695,24 @@ export interface Home {
    * ריק: רק הכותרת, המייל והטלפון.
    */
   contactBody?: string | null;
+  words?:
+    | {
+        word: string;
+        /**
+         * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
+         */
+        bg?: string | null;
+        /**
+         * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
+         */
+        accent?: string | null;
+        /**
+         * תמונה או וידאו מאחורי הסלוגן, מוחשכים כדי שהטקסט ייקרא. בלי תמונה: רקע בצבע שנבחר.
+         */
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -734,38 +731,6 @@ export interface Setting {
         id?: string | null;
       }[]
     | null;
-  /**
-   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
-   */
-  bg?: string | null;
-  /**
-   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
-   */
-  ink?: string | null;
-  /**
-   * משמש גם לטקסט קטן (כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע
-   */
-  accent?: string | null;
-  /**
-   * משמש בכל עמוד שאין לו תיאור משלו.
-   */
-  metaDescription?: string | null;
-  /**
-   * מוצגת בתחתית המסך עד שהגולש לוחץ "אישור", עם קישור למדיניות הפרטיות (העמוד privacy-policy). ריק = בלי הודעה.
-   */
-  cookieText?: string | null;
-  /**
-   * שלושת ריבועי הצבע (רקע, טקסט, הדגשה) בתחתית כל עמוד פרויקט.
-   */
-  showSwatches?: boolean | null;
-  /**
-   * בראש עמודי הפרויקטים ובמעבר לפרויקט הבא.
-   */
-  heroShade?: ('none' | 'gradient') | null;
-  /**
-   * איך עוברים מסוף עמוד פרויקט לפרויקט הבא.
-   */
-  nextMode?: ('scroll' | 'card') | null;
   heroTag?: string | null;
   /**
    * כל שורה היא שורה בכותרת. מילים בין כוכביות נצבעות בוורוד: *לא חשבתם עליו.*
@@ -790,13 +755,45 @@ export interface Setting {
    */
   briefAssistant?: boolean | null;
   /**
-   * הכפתור בפינת האתר שמחליף פלטה ופתיחת דף הבית. כשהוא מוסתר, האתר מוצג בברירת המחדל (בדפדפן שכבר בחר, הבחירה נשמרת).
+   * משמש בכל עמוד שאין לו תיאור משלו.
    */
-  showTrials?: boolean | null;
+  metaDescription?: string | null;
   /**
    * מה שמופיע כששולחים קישור בוואטסאפ או בפייסבוק. 1200×630. בעמוד פרויקט משמשת התמונה הראשית שלו.
    */
   shareImage?: (number | null) | Media;
+  /**
+   * מוצגת בתחתית המסך עד שהגולש לוחץ "אישור", עם קישור למדיניות הפרטיות (העמוד privacy-policy). ריק = בלי הודעה.
+   */
+  cookieText?: string | null;
+  /**
+   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
+   */
+  bg?: string | null;
+  /**
+   * בחרו מהפלטה או הקלידו קוד צבע, למשל #1b2a24
+   */
+  ink?: string | null;
+  /**
+   * משמש גם לטקסט קטן (כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע
+   */
+  accent?: string | null;
+  /**
+   * שלושת ריבועי הצבע (רקע, טקסט, הדגשה) בתחתית כל עמוד פרויקט.
+   */
+  showSwatches?: boolean | null;
+  /**
+   * בראש עמודי הפרויקטים ובמעבר לפרויקט הבא.
+   */
+  heroShade?: ('none' | 'gradient') | null;
+  /**
+   * איך עוברים מסוף עמוד פרויקט לפרויקט הבא.
+   */
+  nextMode?: ('scroll' | 'card') | null;
+  /**
+   * הכפתור בפינת האתר שמחליף פלטה ופתיחת דף הבית. כשהוא מוסתר, האתר מוצג בברירת המחדל (בדפדפן שכבר בחר, הבחירה נשמרת).
+   */
+  showTrials?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -805,17 +802,8 @@ export interface Setting {
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
-  words?:
-    | T
-    | {
-        word?: T;
-        bg?: T;
-        accent?: T;
-        image?: T;
-        id?: T;
-      };
-  subtitle?: T;
   workTitle?: T;
+  subtitle?: T;
   servicesTitle?: T;
   services?:
     | T
@@ -855,6 +843,15 @@ export interface HomeSelect<T extends boolean = true> {
       };
   contactTitle?: T;
   contactBody?: T;
+  words?:
+    | T
+    | {
+        word?: T;
+        bg?: T;
+        accent?: T;
+        image?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -873,14 +870,6 @@ export interface SettingsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
-  bg?: T;
-  ink?: T;
-  accent?: T;
-  metaDescription?: T;
-  cookieText?: T;
-  showSwatches?: T;
-  heroShade?: T;
-  nextMode?: T;
   heroTag?: T;
   heroTitle?: T;
   heroText?: T;
@@ -892,8 +881,16 @@ export interface SettingsSelect<T extends boolean = true> {
         id?: T;
       };
   briefAssistant?: T;
-  showTrials?: T;
+  metaDescription?: T;
   shareImage?: T;
+  cookieText?: T;
+  bg?: T;
+  ink?: T;
+  accent?: T;
+  showSwatches?: T;
+  heroShade?: T;
+  nextMode?: T;
+  showTrials?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

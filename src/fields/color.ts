@@ -3,7 +3,12 @@ import type { TextField } from 'payload'
 const HEX = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i
 
 /** A hex colour as a text field with validation (e.g. #1b2a24), edited with palette swatches in the admin. */
-export const colorField = (name: string, label: string, defaultValue: string, description?: string): TextField => ({
+export const colorField = (
+  name: string,
+  label: string,
+  defaultValue: string,
+  description?: string,
+): TextField => ({
   name,
   label,
   type: 'text',
@@ -17,3 +22,9 @@ export const colorField = (name: string, label: string, defaultValue: string, de
   validate: (value: string | null | undefined) =>
     !value || HEX.test(value) ? true : 'צריך קוד צבע בפורמט #RRGGBB',
 })
+
+/** A colour column the site no longer reads (the 2026 brand colours are fixed in lib/brand.ts): kept, not shown. */
+export const hiddenColorField = (name: string, label: string, defaultValue: string): TextField => {
+  const f = colorField(name, label, defaultValue)
+  return { ...f, admin: { ...f.admin, hidden: true } }
+}

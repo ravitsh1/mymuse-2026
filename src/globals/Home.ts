@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { serviceTagsField } from '../fields/serviceTags'
-import { colorField } from '../fields/color'
+import { colorField, hiddenColorField } from '../fields/color'
 import { refresh } from '../hooks/revalidate'
 
 // Default wording (kept out of the field list so the schema stays readable).
@@ -11,13 +11,15 @@ const SERVICE_TEXTS = [
   'כשגיליון וקבוצת וואטסאפ כבר לא מספיקים: מערכות ניהול ואפליקציות שנבנות סביב הדרך שבה העסק עובד באמת, מהזמנות ומשלוחים ועד משימות ועדכונים מול לקוחות, עם AI במקומות שבהם הוא באמת חוסך עבודה.',
   'אחסון, גיבויים, עדכוני אבטחה ושיפורים שוטפים. האתר גדל יחד עם העסק, ויש לכם כתובת אחת לכל שאלה, גם שנים אחרי ההשקה.',
 ]
-const ABOUT_HEADLINE = 'מאז 2010 בנינו מאות אתרים, וכל אחד מהם נראה כמו העסק שמאחוריו, לא כמו תבנית.'
+const ABOUT_HEADLINE =
+  'מאז 2010 בנינו מאות אתרים, וכל אחד מהם נראה כמו העסק שמאחוריו, לא כמו תבנית.'
 const ABOUT_BODY = [
   'MyMuse הוקמה ב־2010 על ידי רוית שליוינסקי, מפתחת אתרים, בעשר אצבעות ועם שפע של מקורות השראה. מאז בנינו, בשיתוף פעולה מלא עם הלקוחות, מאות אתרים: ליקבים ולמותגי יין, לחברות טכנולוגיה וביטוח, למרכזי קהילה ותרבות ולמותגי לייף־סטייל. לצד האתרים אנחנו בונות גם אפליקציות ומערכות ניהול, כשהעבודה של העסק צריכה כלי משלה.',
   'אנחנו מאמינות שלכל עסק יש אופי משלו, ולכן אין אצלנו אתרים מתבנית: כל לקוח מקבל יחס אישי, תשובות ישירות ואתר שנבנה סביב המטרות שלו.',
   'ההשראה שלנו היא ההצלחה שלכם.',
 ].join('\n\n')
-const CONTACT_BODY = 'יש לכם עסק עם אופי ורעיון לאתר, או אתר קיים שצריך לחשוב עליו מחדש? ספרו לנו במה מדובר ונחזור אליכם.'
+const CONTACT_BODY =
+  'יש לכם עסק עם אופי ורעיון לאתר, או אתר קיים שצריך לחשוב עליו מחדש? ספרו לנו במה מדובר ונחזור אליכם.'
 
 /** The about-section words as they were in code until 2026-11-05 (also seeded by migration about_words). */
 export const ABOUT_WORDS = [
@@ -38,49 +40,6 @@ export const Home: GlobalConfig = {
       type: 'tabs',
       tabs: [
         {
-          label: 'פתיחה',
-          fields: [
-            {
-              name: 'words',
-              label: 'מילים אחרי Passion &',
-              type: 'array',
-              minRows: 1,
-              maxRows: 6,
-              labels: { singular: 'מילה', plural: 'מילים' },
-              admin: { description: 'המילה מתחלפת בגלילה, ואיתה הרקע, תמונת הרקע וצבע ההדגשה.' },
-              defaultValue: [
-                { word: 'Expertise', bg: '#1b1030', accent: '#ff3d7f' },
-                { word: 'Culture', bg: '#235c68', accent: '#ffe8c2' },
-                { word: 'Flavor', bg: '#a42b5f', accent: '#ff9f1c' },
-                { word: 'Lifestyle', bg: '#7b2351', accent: '#ff9f1c' },
-              ],
-              fields: [
-                {
-                  type: 'row',
-                  fields: [
-                    { name: 'word', label: 'מילה', type: 'text', required: true },
-                    colorField('bg', 'רקע', '#1b1030'),
-                    colorField('accent', 'הדגשה', '#ff3d7f'),
-                  ],
-                },
-                {
-                  name: 'image',
-                  label: 'תמונת רקע',
-                  type: 'upload',
-                  relationTo: 'media',
-                  admin: { description: 'תמונה או וידאו מאחורי הסלוגן, מוחשכים כדי שהטקסט ייקרא. בלי תמונה: רקע בצבע שנבחר.' },
-                },
-              ],
-            },
-            {
-              name: 'subtitle',
-              label: 'משפט מתחת',
-              type: 'text',
-              defaultValue: 'אתרים, אפליקציות ומערכות בהתאמה אישית, מהאפיון ועד הליווי שאחרי ההשקה.',
-            },
-          ],
-        },
-        {
           label: 'עבודות',
           fields: [
             {
@@ -88,14 +47,29 @@ export const Home: GlobalConfig = {
               label: 'כותרת',
               type: 'text',
               defaultValue: 'עבודות נבחרות',
-              admin: { description: 'הפרויקטים שמסומנים "להציג בעמוד הבית" מוצגים כאן לפי הסדר ברשימת הפרויקטים.' },
+              admin: {
+                description:
+                  'הפרויקטים שמסומנים "להציג בעמוד הבית" מוצגים כאן לפי הסדר ברשימת הפרויקטים.',
+              },
+            },
+            {
+              name: 'subtitle',
+              label: 'משפט מתחת לכותרת',
+              type: 'text',
+              defaultValue:
+                'אתרים, אפליקציות ומערכות בהתאמה אישית, מהאפיון ועד הליווי שאחרי ההשקה.',
             },
           ],
         },
         {
           label: 'שירותים',
           fields: [
-            { name: 'servicesTitle', label: 'כותרת', type: 'text', defaultValue: 'הכל תחת קורת גג אחת' },
+            {
+              name: 'servicesTitle',
+              label: 'כותרת',
+              type: 'text',
+              defaultValue: 'הכל תחת קורת גג אחת',
+            },
             {
               name: 'services',
               label: 'כרטיסים',
@@ -104,15 +78,31 @@ export const Home: GlobalConfig = {
               defaultValue: [
                 { title: 'אפיון', text: SERVICE_TEXTS[0], bg: '#ffe8c2', ink: '#1b1030' },
                 { title: 'הקמת האתר', text: SERVICE_TEXTS[1], bg: '#c6f432', ink: '#1b1030' },
-                { title: 'פיתוח, API ואינטגרציות', text: SERVICE_TEXTS[2], bg: '#ff9f1c', ink: '#1b1030' },
-                { title: 'אפליקציות ומערכות', text: SERVICE_TEXTS[3], bg: '#a42b5f', ink: '#ffe8c2' },
+                {
+                  title: 'פיתוח, API ואינטגרציות',
+                  text: SERVICE_TEXTS[2],
+                  bg: '#ff9f1c',
+                  ink: '#1b1030',
+                },
+                {
+                  title: 'אפליקציות ומערכות',
+                  text: SERVICE_TEXTS[3],
+                  bg: '#a42b5f',
+                  ink: '#ffe8c2',
+                },
                 { title: 'ליווי מתמשך', text: SERVICE_TEXTS[4], bg: '#235c68', ink: '#ffe8c2' },
               ],
               fields: [
                 { name: 'title', label: 'שם', type: 'text', required: true },
                 { name: 'text', label: 'תיאור', type: 'textarea' },
-                serviceTagsField('tags', 'תגיות', 'מופיעות בכרטיס. לחיצה על תגית מציגה את הפרויקטים שסומנו בה.'),
-                { type: 'row', fields: [colorField('bg', 'רקע הכרטיס', '#ffe8c2'), colorField('ink', 'טקסט הכרטיס', '#1b1030')] },
+                serviceTagsField(
+                  'tags',
+                  'תגיות',
+                  'מופיעות בכרטיס. לחיצה על תגית מציגה את הפרויקטים שסומנו בה.',
+                ),
+                // the card colours come from the brand palette (lib/brand.ts)
+                hiddenColorField('bg', 'רקע הכרטיס', '#ffe8c2'),
+                hiddenColorField('ink', 'טקסט הכרטיס', '#1b1030'),
               ],
             },
           ],
@@ -120,7 +110,12 @@ export const Home: GlobalConfig = {
         {
           label: 'המלצות',
           fields: [
-            { name: 'testimonialsTitle', label: 'כותרת', type: 'text', defaultValue: 'מה אומרים עלינו' },
+            {
+              name: 'testimonialsTitle',
+              label: 'כותרת',
+              type: 'text',
+              defaultValue: 'מה אומרים עלינו',
+            },
             {
               name: 'testimonials',
               label: 'המלצות',
@@ -133,8 +128,18 @@ export const Home: GlobalConfig = {
                   type: 'row',
                   fields: [
                     { name: 'name', label: 'שם', type: 'text', required: true },
-                    { name: 'role', label: 'תפקיד', type: 'text', admin: { placeholder: 'מנכ״לית' } },
-                    { name: 'company', label: 'חברה', type: 'text', admin: { placeholder: 'יקב לוטם' } },
+                    {
+                      name: 'role',
+                      label: 'תפקיד',
+                      type: 'text',
+                      admin: { placeholder: 'מנכ״לית' },
+                    },
+                    {
+                      name: 'company',
+                      label: 'חברה',
+                      type: 'text',
+                      admin: { placeholder: 'יקב לוטם' },
+                    },
                   ],
                 },
                 {
@@ -170,7 +175,10 @@ export const Home: GlobalConfig = {
               label: 'מילים גדולות',
               type: 'array',
               labels: { singular: 'מילה', plural: 'מילים' },
-              admin: { description: 'נכתבות אחת אחרי השנייה ליד הפסקה, באותיות גדולות. ריק = החלק לא מוצג.' },
+              admin: {
+                description:
+                  'נכתבות אחת אחרי השנייה ליד הפסקה, באותיות גדולות. ריק = החלק לא מוצג.',
+              },
               defaultValue: ABOUT_WORDS,
               fields: [
                 {
@@ -192,7 +200,30 @@ export const Home: GlobalConfig = {
               label: 'שמות לקוחות',
               type: 'array',
               labels: { singular: 'לקוח', plural: 'לקוחות' },
-              defaultValue: ['HELIOS', 'GurGroup', 'Meteor Center', 'TEO', 'Jullius', 'Mosessco', 'Barantech', 'Benny Goren', 'Enosh', 'Little Fences', 'Samurai', 'Recanati', 'Margalit', 'WINECASE', 'Netofa', '3 Bears', 'Studio Gur', 'Agur', 'MOA Winery', 'Vinspiration', 'Firon', 'Gordon Pool'].map((name) => ({ name })),
+              defaultValue: [
+                'HELIOS',
+                'GurGroup',
+                'Meteor Center',
+                'TEO',
+                'Jullius',
+                'Mosessco',
+                'Barantech',
+                'Benny Goren',
+                'Enosh',
+                'Little Fences',
+                'Samurai',
+                'Recanati',
+                'Margalit',
+                'WINECASE',
+                'Netofa',
+                '3 Bears',
+                'Studio Gur',
+                'Agur',
+                'MOA Winery',
+                'Vinspiration',
+                'Firon',
+                'Gordon Pool',
+              ].map((name) => ({ name })),
               fields: [{ name: 'name', label: 'שם', type: 'text', required: true }],
             },
           ],
@@ -209,6 +240,42 @@ export const Home: GlobalConfig = {
               admin: { description: 'ריק: רק הכותרת, המייל והטלפון.' },
             },
           ],
+        },
+      ],
+    },
+    {
+      name: 'words',
+      label: 'מילים אחרי Passion &',
+      type: 'array',
+      minRows: 1,
+      maxRows: 6,
+      labels: { singular: 'מילה', plural: 'מילים' },
+      // the Passion & hero of the first design, replaced by BrandHero (2026): kept, not shown
+      admin: { hidden: true },
+      defaultValue: [
+        { word: 'Expertise', bg: '#1b1030', accent: '#ff3d7f' },
+        { word: 'Culture', bg: '#235c68', accent: '#ffe8c2' },
+        { word: 'Flavor', bg: '#a42b5f', accent: '#ff9f1c' },
+        { word: 'Lifestyle', bg: '#7b2351', accent: '#ff9f1c' },
+      ],
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'word', label: 'מילה', type: 'text', required: true },
+            colorField('bg', 'רקע', '#1b1030'),
+            colorField('accent', 'הדגשה', '#ff3d7f'),
+          ],
+        },
+        {
+          name: 'image',
+          label: 'תמונת רקע',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description:
+              'תמונה או וידאו מאחורי הסלוגן, מוחשכים כדי שהטקסט ייקרא. בלי תמונה: רקע בצבע שנבחר.',
+          },
         },
       ],
     },
