@@ -54,6 +54,8 @@ import * as migration_20261105_180855_about_words from './20261105_180855_about_
 import * as migration_20261110_094142_service_tags_settings from './20261110_094142_service_tags_settings';
 import * as migration_20261110_094627_project_order from './20261110_094627_project_order';
 import * as migration_20261110_151426_hero_texts from './20261110_151426_hero_texts';
+import * as migration_20261111_090000_privacy_ai from './20261111_090000_privacy_ai';
+import * as migration_20261111_100000_ga_id from './20261111_100000_ga_id';
 
 export const migrations = [
   {
@@ -335,5 +337,15 @@ export const migrations = [
     up: migration_20261110_151426_hero_texts.up,
     down: migration_20261110_151426_hero_texts.down,
     name: '20261110_151426_hero_texts',
+  },
+  {
+    up: migration_20261111_090000_privacy_ai.up,
+    down: migration_20261111_090000_privacy_ai.down,
+    name: '20261111_090000_privacy_ai',
+  },
+  {
+    up: migration_20261111_100000_ga_id.up,
+    down: migration_20261111_100000_ga_id.down,
+    name: '20261111_100000_ga_id',
   },
 ]

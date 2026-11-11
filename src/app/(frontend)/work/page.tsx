@@ -6,7 +6,6 @@ import { Motion } from '@/components/Motion'
 import { WorkIndex } from '@/components/WorkIndex'
 import { accentTones, getCategories, getFooterPages, getHome, getProjects, getSettings, paletteVars, sitePalette } from '@/lib/data'
 import { pageMetadata, shareImageOf } from '@/lib/seo'
-import { trialPalette } from '@/lib/trial'
 
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings()
@@ -23,16 +22,15 @@ export async function generateMetadata(): Promise<Metadata> {
  * The home page shows only a few selected projects and links here.
  */
 export default async function WorkPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
-  const [projects, home, settings, pages, categories, palette, sp] = await Promise.all([
+  const [projects, home, settings, pages, categories, sp] = await Promise.all([
     getProjects(),
     getHome(),
     getSettings(),
     getFooterPages(),
     getCategories(),
-    trialPalette(),
     searchParams,
   ])
-  const brand = palette === 'b26'
+  const brand = true
   const site = sitePalette(settings)
   const tags = (settings.serviceTags ?? []).filter((t) => t.id && t.label).map((t) => ({ value: t.id!, label: t.label }))
   const service = tags.find((t) => t.value === sp.service)

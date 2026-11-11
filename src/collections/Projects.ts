@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { colorField } from '../fields/color'
+import { hiddenColorField } from '../fields/color'
 import { metaDescriptionField } from '../fields/seo'
 import { refreshSite } from '../hooks/revalidate'
 import { serviceTagsField } from '../fields/serviceTags'
@@ -54,8 +54,18 @@ export const Projects: CollectionConfig = {
               type: 'row',
               fields: [
                 { name: 'field', label: 'תחום', type: 'text', admin: { placeholder: 'יקב' } },
-                { name: 'scope', label: 'היקף העבודה', type: 'text', admin: { placeholder: 'אתר תדמית וחנות מקוונת' } },
-                { name: 'platform', label: 'פלטפורמה', type: 'text', admin: { placeholder: 'WordPress · WooCommerce' } },
+                {
+                  name: 'scope',
+                  label: 'היקף העבודה',
+                  type: 'text',
+                  admin: { placeholder: 'אתר תדמית וחנות מקוונת' },
+                },
+                {
+                  name: 'platform',
+                  label: 'פלטפורמה',
+                  type: 'text',
+                  admin: { placeholder: 'WordPress · WooCommerce' },
+                },
               ],
             },
             { name: 'lead', label: 'פסקת פתיחה', type: 'textarea' },
@@ -68,7 +78,10 @@ export const Projects: CollectionConfig = {
               name: 'statement',
               label: 'משפט מרכזי',
               type: 'text',
-              admin: { description: 'מילה בין כוכביות מקבלת את צבע ההדגשה: חנות שמרגישה כמו *המזקקה* עצמה.' },
+              admin: {
+                description:
+                  'מילה בין כוכביות מקבלת את צבע ההדגשה: חנות שמרגישה כמו *המזקקה* עצמה.',
+              },
             },
             {
               name: 'testimonial',
@@ -81,20 +94,36 @@ export const Projects: CollectionConfig = {
                   type: 'row',
                   fields: [
                     { name: 'name', label: 'שם', type: 'text' },
-                    { name: 'role', label: 'תפקיד', type: 'text', admin: { placeholder: 'מנכ״לית' } },
-                    { name: 'company', label: 'חברה', type: 'text', admin: { placeholder: 'ריק = שם הפרויקט' } },
+                    {
+                      name: 'role',
+                      label: 'תפקיד',
+                      type: 'text',
+                      admin: { placeholder: 'מנכ״לית' },
+                    },
+                    {
+                      name: 'company',
+                      label: 'חברה',
+                      type: 'text',
+                      admin: { placeholder: 'ריק = שם הפרויקט' },
+                    },
                   ],
                 },
               ],
             },
-            { name: 'siteUrl', label: 'קישור לאתר', type: 'text', admin: { placeholder: 'https://' } },
+            {
+              name: 'siteUrl',
+              label: 'קישור לאתר',
+              type: 'text',
+              admin: { placeholder: 'https://' },
+            },
             {
               name: 'credit',
               label: 'קרדיט',
               type: 'text',
               admin: {
                 placeholder: 'עיצוב: סטודיו גור',
-                description: 'מוצג בפרטי הפרויקט. פסיק מתחיל קרדיט חדש, ומה שלפני הנקודתיים הוא הכותרת שלו. למשל: עיצוב: סטודיו גור, צילום: דנה לוי. ריק = לא מוצג.',
+                description:
+                  'מוצג בפרטי הפרויקט. פסיק מתחיל קרדיט חדש, ומה שלפני הנקודתיים הוא הכותרת שלו. למשל: עיצוב: סטודיו גור, צילום: דנה לוי. ריק = לא מוצג.',
               },
             },
             {
@@ -102,7 +131,10 @@ export const Projects: CollectionConfig = {
               label: 'קטגוריה',
               type: 'relationship',
               relationTo: 'categories',
-              admin: { position: 'sidebar', description: 'לסינון בעמוד הבית. ריק = מופיע רק תחת "הכל".' },
+              admin: {
+                position: 'sidebar',
+                description: 'לסינון בעמוד הבית. ריק = מופיע רק תחת "הכל".',
+              },
             },
             {
               name: 'featured',
@@ -116,7 +148,10 @@ export const Projects: CollectionConfig = {
               label: 'מוסתר באתר',
               type: 'checkbox',
               defaultValue: false,
-              admin: { position: 'sidebar', description: 'לא מופיע באתר ולא ברצף "הפרויקט הבא". טוב לפרויקט שעוד בעבודה.' },
+              admin: {
+                position: 'sidebar',
+                description: 'לא מופיע באתר ולא ברצף "הפרויקט הבא". טוב לפרויקט שעוד בעבודה.',
+              },
             },
           ],
         },
@@ -168,27 +203,22 @@ export const Projects: CollectionConfig = {
           ],
         },
         {
-          label: 'צבעים',
-          description: 'הצבעים צובעים את כל עמוד הפרויקט ואת הרקע בעמוד הבית כשמרחפים על השם.',
-          fields: [
-            {
-              type: 'row',
-              fields: [
-                colorField('bg', 'רקע', '#1b2a24'),
-                colorField('ink', 'טקסט', '#ffe8c2', 'ניגודיות של 4.5:1 לפחות מול הרקע'),
-                colorField('accent', 'הדגשה', '#ff3d7f', 'משמש גם לטקסט קטן (תחום, כותרות משנה): ניגודיות של 4.5:1 לפחות מול הרקע'),
-              ],
-            },
-          ],
-        },
-        {
           label: 'קידום',
           fields: [
-            { name: 'metaTitle', label: 'כותרת לגוגל', type: 'text', admin: { description: 'ריק = שם הפרויקט.' } },
+            {
+              name: 'metaTitle',
+              label: 'כותרת לגוגל',
+              type: 'text',
+              admin: { description: 'ריק = שם הפרויקט.' },
+            },
             metaDescriptionField('פסקת הפתיחה של הפרויקט'),
           ],
         },
       ],
     },
+    // every project page uses the brand colours (lib/brand.ts brandProject); the columns stay, not shown
+    hiddenColorField('bg', 'רקע', '#1b2a24'),
+    hiddenColorField('ink', 'טקסט', '#ffe8c2'),
+    hiddenColorField('accent', 'הדגשה', '#ff3d7f'),
   ],
 }

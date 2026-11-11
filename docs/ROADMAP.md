@@ -46,4 +46,4 @@ Work top to bottom. Each step ends with tsc + build + a check in the browser (39
 - [ ] Ravit: VEE accessibility widget snippet → add to the layout; then fix "5688" → 5568 and the update date in the statement (admin).
 - [ ] Ravit: Vercel → Domains: add `mymuse.co.il` (primary) and `www.mymuse.co.il` (redirect to it). Cloudflare: the A/CNAME records Vercel shows, proxy **off** (DNS only); leave MX/TXT (email) untouched.
 - [ ] After DNS: `curl -I https://mymuse.co.il` has no `X-Robots-Tag`, `robots.txt` allows; spot-check 3 old URLs; submit `https://mymuse.co.il/sitemap.xml` in Search Console + Bing.
-- [ ] Later: remove the trial code (`lib/trial.ts`, `PaletteToggle`, unused palettes/heroes); b26 is the only look served (`SETTLED`).
+- [x] Trial code removed (2026-11-11): `lib/brand.ts` is the only look; Settings screen in tabs.

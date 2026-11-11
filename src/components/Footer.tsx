@@ -1,10 +1,9 @@
 import Link from 'next/link'
 import type { Setting } from '@/payload-types'
-import { trialPalette } from '@/lib/trial'
 
 export async function Footer({ settings, pages }: { settings: Setting; pages: { id: number; title: string; slug: string }[] }) {
   // brand book 2026: the tagline signs off every page
-  const brand = (await trialPalette()) === 'b26'
+  const brand = true // the 2026 look (lib/brand.ts)
   return (
     <footer className="foot wrap">
       {brand && (

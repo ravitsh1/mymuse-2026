@@ -2,7 +2,7 @@ import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Home, Project, Setting } from '@/payload-types'
-import { trialHome, trialPalette, trialProject, trialSettings } from '@/lib/trial'
+import { brandHome, brandProject, brandSettings } from '@/lib/brand'
 
 export const payload = cache(() => getPayload({ config }))
 
@@ -15,8 +15,7 @@ export const getProjects = cache(async (): Promise<Project[]> => {
     depth: 1,
     limit: 200,
   })
-  const trial = await trialPalette()
-  return res.docs.map((p) => trialProject(p, trial))
+  return res.docs.map(brandProject)
 })
 
 /** True for a project that exists but is hidden: its address sends visitors to the list instead of a 404. */
@@ -37,9 +36,9 @@ export const getCategories = cache(async () => {
   return res.docs
 })
 
-export const getHome = cache(async (): Promise<Home> => trialHome(await (await payload()).findGlobal({ slug: 'home', depth: 1 }), await trialPalette()))
+export const getHome = cache(async (): Promise<Home> => brandHome(await (await payload()).findGlobal({ slug: 'home', depth: 1 })))
 export const getSettings = cache(async (): Promise<Setting> =>
-  trialSettings(await (await payload()).findGlobal({ slug: 'settings', depth: 1 }), await trialPalette()),
+  brandSettings(await (await payload()).findGlobal({ slug: 'settings', depth: 1 })),
 )
 
 export const getFooterPages = cache(async () => {

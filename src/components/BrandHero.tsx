@@ -1,7 +1,7 @@
 import { HERO_TAG, HERO_TEXT, HERO_TITLE } from '@/globals/Settings'
 
 /**
- * Home hero of the 2026 brand book (palette trial b26): the main slogan with its last line in pink, one yellow
+ * Home hero of the 2026 brand book: the main slogan with its last line in pink, one yellow
  * button, and the Passion words on brush strokes.
  */
 
