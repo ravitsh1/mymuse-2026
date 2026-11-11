@@ -135,6 +135,14 @@ export const Settings: GlobalConfig = {
           label: 'גוגל ושיתוף',
           fields: [
             {
+              name: 'gaId',
+              label: 'Google Analytics (מזהה מדידה)',
+              type: 'text',
+              defaultValue: 'G-4HWM6WRFMX',
+              validate: (v: string | null | undefined) => (!v || /^G-[A-Z0-9]{4,}$/.test(v.trim()) ? true : 'מזהה GA4 מתחיל ב־G-, למשל G-AB12CD34EF'),
+              admin: { description: 'נמצא ב־Analytics: ניהול ← זרמי נתונים ← האתר. ריק = בלי אנליטיקס. נטען רק באתר החי, לא בתצוגות מקדימות.' },
+            },
+            {
               name: 'metaDescription',
               label: 'תיאור ברירת מחדל לגוגל',
               type: 'textarea',

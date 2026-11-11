@@ -755,6 +755,10 @@ export interface Setting {
    */
   briefAssistant?: boolean | null;
   /**
+   * נמצא ב־Analytics: ניהול ← זרמי נתונים ← האתר. ריק = בלי אנליטיקס. נטען רק באתר החי, לא בתצוגות מקדימות.
+   */
+  gaId?: string | null;
+  /**
    * משמש בכל עמוד שאין לו תיאור משלו.
    */
   metaDescription?: string | null;
@@ -881,6 +885,7 @@ export interface SettingsSelect<T extends boolean = true> {
         id?: T;
       };
   briefAssistant?: T;
+  gaId?: T;
   metaDescription?: T;
   shareImage?: T;
   cookieText?: T;

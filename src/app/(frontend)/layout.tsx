@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import React from 'react'
+import { Analytics } from '@/components/Analytics'
 import { CookieNotice } from '@/components/CookieNotice'
 import { VeeWidget } from '@/components/VeeWidget'
 import { getPage, getSettings, sitePalette } from '@/lib/data'
@@ -54,6 +55,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <CookieNotice text={settings.cookieText} privacyHref={privacy ? '/privacy-policy' : undefined} bg={site.bg} ink={site.ink} acc={site.acc} />
         )}
         <VeeWidget />
+        <Analytics id={settings.gaId} />
       </body>
     </html>
   )
