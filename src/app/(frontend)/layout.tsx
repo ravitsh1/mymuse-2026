@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import React from 'react'
 import { CookieNotice } from '@/components/CookieNotice'
+import { VeeWidget } from '@/components/VeeWidget'
 import { getPage, getSettings, sitePalette } from '@/lib/data'
 import { indexable } from '@/lib/site'
 import { SITE_URL } from '@/lib/seo'
@@ -53,6 +54,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <CookieNotice text={settings.cookieText} privacyHref={privacy ? '/privacy-policy' : undefined} bg={site.bg} ink={site.ink} acc={site.acc} />
         )}
         {/* the design trials are settled (lib/trial.ts SETTLED), so the PaletteToggle switch is no longer rendered */}
+        <VeeWidget />
       </body>
     </html>
   )
