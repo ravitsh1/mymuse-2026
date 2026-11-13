@@ -59,6 +59,7 @@ import * as migration_20261111_100000_ga_id from './20261111_100000_ga_id';
 import * as migration_20261113_090000_media_alts from './20261113_090000_media_alts';
 import * as migration_20261113_100000_media_cleanup from './20261113_100000_media_cleanup';
 import * as migration_20261113_110000_accessibility_statement from './20261113_110000_accessibility_statement';
+import * as migration_20261113_120000_accessibility_meetings from './20261113_120000_accessibility_meetings';
 
 export const migrations = [
   {
@@ -365,5 +366,10 @@ export const migrations = [
     up: migration_20261113_110000_accessibility_statement.up,
     down: migration_20261113_110000_accessibility_statement.down,
     name: '20261113_110000_accessibility_statement',
+  },
+  {
+    up: migration_20261113_120000_accessibility_meetings.up,
+    down: migration_20261113_120000_accessibility_meetings.down,
+    name: '20261113_120000_accessibility_meetings',
   },
 ]
