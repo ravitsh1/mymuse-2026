@@ -11,7 +11,7 @@
 :root {
   color-scheme: dark;
   --chrome-bg: #1b1030;
-  --f-display: 'Karantina', 'Talent', 'Arial Narrow', sans-serif;
+  --f-display: var(--font-karantina, 'Karantina'), 'Talent', 'Arial Narrow', sans-serif;
   --f-body: 'Talent', 'Arial', sans-serif;
   --gutter-l: max(16px, env(safe-area-inset-left, 0px));
   --gutter-r: max(16px, env(safe-area-inset-right, 0px));

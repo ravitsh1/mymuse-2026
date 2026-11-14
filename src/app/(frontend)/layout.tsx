@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { Karantina } from 'next/font/google'
 import React from 'react'
 import { Analytics } from '@/components/Analytics'
 import { CookieNotice } from '@/components/CookieNotice'
@@ -8,6 +9,9 @@ import { indexable } from '@/lib/site'
 import { SITE_URL } from '@/lib/seo'
 import { THEME_COLOR } from '@/lib/brand'
 import './styles.css'
+
+// Karantina (display titles) self-hosted by next/font: same origin, no render-blocking Google Fonts stylesheet.
+const karantina = Karantina({ weight: ['300', '400', '700'], subsets: ['hebrew', 'latin'], display: 'swap', variable: '--font-karantina' })
 
 export async function generateMetadata(): Promise<Metadata> {
   const [s, live] = await Promise.all([getSettings(), indexable()])
@@ -29,7 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const [settings, privacy] = await Promise.all([getSettings(), getPage('privacy-policy')])
   const site = sitePalette(settings)
   return (
-    <html lang="he" dir="rtl" data-brand="2026">
+    <html lang="he" dir="rtl" data-brand="2026" className={karantina.variable}>
       <head>
         <link
           rel="preload"
@@ -37,13 +41,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           type="font/woff2"
           crossOrigin=""
           href="https://vwqslahndspan0rp.public.blob.vercel-storage.com/fonts/talent-regular.woff2"
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&display=swap"
         />
       </head>
       <body data-shade="none">

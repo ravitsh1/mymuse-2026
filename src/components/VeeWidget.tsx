@@ -2,7 +2,7 @@ import Script from 'next/script'
 
 /**
  * The VEE accessibility widget (vee-crm.com), as Ravit received it (2026-11-11). The settings go on window.args
- * before the loader runs; afterInteractive keeps both off the critical path. The policy link points at our
+ * before the loader runs; lazyOnload keeps both off the critical path. The policy link points at our
  * accessibility statement.
  */
 const ARGS = {
@@ -54,11 +54,16 @@ const ARGS = {
   exclude: [],
 }
 
+/** The widget adds its "skip to accessibility tools" links with tabindex="1", which jumps the page's natural tab
+ *  order (WCAG 2.4.3; Lighthouse flags it). They sit at the top of <body>, so tabindex="0" keeps them first anyway.
+ *  The site itself never uses a positive tabindex, so the selector can be page-wide. */
+const FIX_TABINDEX = `new MutationObserver(function(){document.querySelectorAll('[tabindex]:not([tabindex="0"]):not([tabindex^="-"])').forEach(function(e){e.setAttribute('tabindex','0')})}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['tabindex']});`
+
 export function VeeWidget() {
   return (
     <>
-      <Script id="vee-args" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: `window.args = ${JSON.stringify(ARGS)};` }} />
-      <Script id="vee-loader" strategy="afterInteractive" src={`${ARGS.access}/js/`} crossOrigin="anonymous" data-cfasync="true" />
+      <Script id="vee-args" strategy="lazyOnload" dangerouslySetInnerHTML={{ __html: `window.args = ${JSON.stringify(ARGS)};${FIX_TABINDEX}` }} />
+      <Script id="vee-loader" strategy="lazyOnload" src={`${ARGS.access}/js/`} crossOrigin="anonymous" data-cfasync="true" />
     </>
   )
 }
