@@ -8,7 +8,7 @@ const KEY = 'mm-cookies-ok'
 /**
  * Cookie notice at the bottom of the screen until the visitor presses "אישור".
  * Not a dialog: it never takes focus or blocks the page. While it shows, the page gets a bottom scroll padding
- * of its height so the element in focus is never hidden behind it (WCAG 2.4.11).
+ * of its height (and the body the same space at its foot) so the element in focus is never hidden behind it (WCAG 2.4.11).
  * Rendered only after mount, so it never flashes for a visitor who already confirmed.
  */
 export function CookieNotice({ text, privacyHref, bg, ink, acc }: { text: string; privacyHref?: string; bg: string; ink: string; acc: string }) {
@@ -27,13 +27,20 @@ export function CookieNotice({ text, privacyHref, bg, ink, acc }: { text: string
     const el = box.current
     if (!show || !el) return
     const root = document.documentElement
-    const pad = () => root.style.setProperty('scroll-padding-bottom', `${el.offsetHeight + 24}px`)
+    // scroll padding moves a focused element above the notice; the same space under the page lets the last footer
+    // links scroll up that far too (without it they stay fully hidden behind the notice)
+    const pad = () => {
+      const h = `${el.offsetHeight + 24}px`
+      root.style.setProperty('scroll-padding-bottom', h)
+      document.body.style.paddingBottom = h
+    }
     pad()
     const ro = new ResizeObserver(pad)
     ro.observe(el)
     return () => {
       ro.disconnect()
       root.style.removeProperty('scroll-padding-bottom')
+      document.body.style.removeProperty('padding-bottom')
     }
   }, [show])
 

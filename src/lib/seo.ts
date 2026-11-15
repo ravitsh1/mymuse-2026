@@ -55,3 +55,54 @@ export function pageMetadata({
 
 /** A JSON-LD block, ready for <script type="application/ld+json">. `<` is escaped so text can't close the tag. */
 export const jsonLd = (data: unknown) => ({ __html: JSON.stringify(data).replace(/</g, '\\u003c') })
+
+/** The studio as one schema.org entity; every page points to it by @id, the home page carries it in full. */
+export const ORG_ID = `${SITE_URL}/#org`
+
+/** Where clients meet the studio (the same address as in the accessibility statement). */
+export const STUDIO_ADDRESS = { streetAddress: 'הסדנאות 8', addressLocality: 'הרצליה', addressCountry: 'IL' }
+
+export function orgLd({
+  email,
+  phone,
+  sameAs,
+  description,
+  logo,
+  services,
+}: {
+  email?: string | null
+  phone?: string | null
+  sameAs?: string[]
+  description?: string | null
+  logo?: string | null
+  services?: { title: string; text?: string | null }[]
+}) {
+  return {
+    '@type': 'ProfessionalService',
+    '@id': ORG_ID,
+    name: SITE_NAME,
+    url: abs('/'),
+    description: (description || '').trim() || DEFAULT_DESCRIPTION,
+    ...(logo ? { logo, image: logo } : {}),
+    email: email || undefined,
+    telephone: phone || undefined,
+    address: { '@type': 'PostalAddress', ...STUDIO_ADDRESS },
+    areaServed: { '@type': 'Country', name: 'ישראל' },
+    founder: { '@type': 'Person', name: 'רוית שליוינסקי' },
+    foundingDate: '2010',
+    knowsLanguage: ['he', 'en'],
+    sameAs: sameAs?.length ? sameAs : undefined,
+    ...(services?.length
+      ? {
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: 'שירותים',
+            itemListElement: services.map((s) => ({
+              '@type': 'Offer',
+              itemOffered: { '@type': 'Service', name: s.title, ...(s.text ? { description: s.text } : {}) },
+            })),
+          },
+        }
+      : {}),
+  }
+}

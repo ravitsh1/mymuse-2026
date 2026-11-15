@@ -1,3 +1,4 @@
+import React from 'react'
 import { HERO_TAG, HERO_TEXT, HERO_TITLE } from '@/globals/Settings'
 
 /**
@@ -41,10 +42,14 @@ export function BrandHero({ tag, title, text }: { tag?: string | null; title?: s
       <div className="bh-copy">
         <p className="bh-tag">{tag || HERO_TAG}</p>
         <h1 id="pt" tabIndex={-1}>
+          {/* the space between the blocks is invisible, but keeps the words apart in the text (Google, screen readers) */}
           {lines.map((l, k) => (
-            <span key={k}>
-              <Pink text={l} />
-            </span>
+            <React.Fragment key={k}>
+              {k > 0 && ' '}
+              <span>
+                <Pink text={l} />
+              </span>
+            </React.Fragment>
           ))}
         </h1>
         <p className="bh-text">{text || HERO_TEXT}</p>

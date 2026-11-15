@@ -5,7 +5,7 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { getFooterPages, getPage, getProjects, getSettings, paletteVars, sitePalette } from '@/lib/data'
-import { pageMetadata } from '@/lib/seo'
+import { pageMetadata, shareImageOf } from '@/lib/seo'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = await getPage((await params).slug)
   if (!page) return {}
   const s = await getSettings()
-  return pageMetadata({ path: `/${page.slug}`, title: page.title, description: page.metaDescription || s.metaDescription })
+  return pageMetadata({ path: `/${page.slug}`, title: page.title, description: page.metaDescription || s.metaDescription, image: shareImageOf(s.shareImage) })
 }
 
 export default async function TextPage({ params }: Props) {

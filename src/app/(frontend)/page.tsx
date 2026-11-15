@@ -10,7 +10,7 @@ import { WorkIndex } from '@/components/WorkIndex'
 import { Marquee } from '@/components/Interactive'
 import { Motion } from '@/components/Motion'
 import { accentTones, getFooterPages, getHome, getProjects, getSettings, paletteVars, sitePalette } from '@/lib/data'
-import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
+import { abs, ORG_ID, orgLd, pageMetadata, shareImageOf } from '@/lib/seo'
 
 /** how many selected projects the home page lists before the link to /work */
 const HOME_WORK = 8
@@ -210,14 +210,17 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
       <JsonLd
         data={{
           '@context': 'https://schema.org',
-          '@type': 'Organization',
-          name: 'MyMuse',
-          url: abs('/'),
-          email: settings.email || undefined,
-          telephone: settings.phone || undefined,
-          founder: { '@type': 'Person', name: 'רוית שליוינסקי' },
-          foundingDate: '2010',
-          sameAs: (settings.social ?? []).map((x) => x.url),
+          '@graph': [
+            orgLd({
+              email: settings.email,
+              phone: settings.phone,
+              sameAs: (settings.social ?? []).map((x) => x.url),
+              description: settings.metaDescription,
+              logo: shareImageOf(settings.shareImage)?.url,
+              services: (home.services ?? []).map((x) => ({ title: x.title, text: x.text })),
+            }),
+            { '@type': 'WebSite', '@id': `${abs('/')}#site`, name: 'MyMuse', url: abs('/'), inLanguage: 'he', publisher: { '@id': ORG_ID } },
+          ],
         }}
       />
     </div>

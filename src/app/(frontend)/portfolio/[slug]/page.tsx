@@ -9,7 +9,7 @@ import { JsonLd } from '@/components/JsonLd'
 import { MediaEl, Visual } from '@/components/Visual'
 import { getFooterPages, getProjects, getSettings, isHiddenProject, nextProject, paletteVars, projectPalette } from '@/lib/data'
 import { asMedia } from '@/lib/media'
-import { abs, pageMetadata, shareImageOf } from '@/lib/seo'
+import { abs, ORG_ID, pageMetadata, shareImageOf } from '@/lib/seo'
 import type { Media } from '@/payload-types'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -211,7 +211,9 @@ export default async function ProjectPage({ params }: Props) {
             name: p.title,
             description: p.lead || undefined,
             url: abs(`/portfolio/${p.slug}`),
-            creator: { '@type': 'Organization', name: 'MyMuse', url: abs('/') },
+            inLanguage: 'he',
+            creator: { '@type': 'ProfessionalService', '@id': ORG_ID, name: 'MyMuse', url: abs('/') },
+            ...(shareImageOf(p.hero) ? { image: shareImageOf(p.hero)!.url } : {}),
             ...(p.siteUrl ? { sameAs: p.siteUrl } : {}),
           },
           {
@@ -219,7 +221,8 @@ export default async function ProjectPage({ params }: Props) {
             '@type': 'BreadcrumbList',
             itemListElement: [
               { '@type': 'ListItem', position: 1, name: 'MyMuse', item: abs('/') },
-              { '@type': 'ListItem', position: 2, name: p.title, item: abs(`/portfolio/${p.slug}`) },
+              { '@type': 'ListItem', position: 2, name: 'כל הפרויקטים', item: abs('/work') },
+              { '@type': 'ListItem', position: 3, name: p.title, item: abs(`/portfolio/${p.slug}`) },
             ],
           },
         ]}
