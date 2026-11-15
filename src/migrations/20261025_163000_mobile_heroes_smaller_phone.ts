@@ -1,12 +1,14 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Ravit asked for a smaller phone in the portrait mobile heroes (more room above the title). Swaps in the v2 images,
 // only where the project still shows the first version (`<slug>-00-mobile.jpg`); a mobile hero picked in the admin
 // stays. The first versions remain in the media library.
 const DIR = path.resolve(process.cwd(), 'media-import/remake')
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'mobile_heroes_smaller_phone')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('mobile heroes v2: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
   const { docs } = await payload.find({ collection: 'projects', depth: 1, limit: 200, pagination: false, req })

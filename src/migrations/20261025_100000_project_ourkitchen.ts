@@ -1,12 +1,14 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // New project: ourkitchen.co.il, the Shalivinsky family recipe site. Images follow Ravit's rule (see the skill): a main
 // mockup in the project's own brand language (media-import/mockup/mockup-ourkitchen.html) and two landscape screens.
 // Created once; skipped if the slug already exists. Same Blob-token guard as the other media imports.
 const DIR = path.resolve(process.cwd(), 'media-import/ourkitchen')
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'project_ourkitchen')) return
   const exists = await payload.find({ collection: 'projects', where: { slug: { equals: 'our-kitchen' } }, limit: 1, depth: 0, req })
   if (exists.docs.length) return payload.logger.info('ourkitchen: project already exists')
 

@@ -1,5 +1,6 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // The light, playful laptop + phone mockup of the 3 Bears site as the first gallery image (the large parallax
 // screen). Ravit has already rearranged the other images in the admin, so this only adds it in front of whatever is
@@ -7,7 +8,8 @@ import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
 const FILE = path.resolve(process.cwd(), 'media-import/3bears/3bears-09-mockup-playful.jpg')
 const ALT = 'האתר של שלושת הדובים על מסך לפטופ ועל טלפון'
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, '3bears_mockup')) return
   const found = await payload.find({ collection: 'projects', where: { slug: { equals: '3-bears' } }, depth: 1, limit: 1, req })
   const project = found.docs[0]
   if (!project) return payload.logger.info('3bears mockup: no 3-bears project, nothing to do')

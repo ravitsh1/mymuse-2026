@@ -1,5 +1,6 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // The playful 3 Bears mockup with the composition scaled to 72% and centred (media-import/mockup/mockup-3bears-playful.html):
 // as the hero, a wide screen crops it top and bottom and the parallax moves it, so the edge-to-edge version lost its
@@ -8,7 +9,8 @@ const FILE = path.resolve(process.cwd(), 'media-import/3bears/3bears-10-mockup-p
 const ALT = 'האתר של שלושת הדובים על מסך לפטופ ועל טלפון'
 const OLD = /^3bears-09-mockup-playful(-\d+)?\.jpg$/
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, '3bears_mockup_inset')) return
   const found = await payload.find({ collection: 'projects', where: { slug: { equals: '3-bears' } }, depth: 1, limit: 1, req })
   const project = found.docs[0]
   if (!project) return payload.logger.info('3bears inset mockup: no 3-bears project')

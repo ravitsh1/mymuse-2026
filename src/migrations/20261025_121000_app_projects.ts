@@ -1,5 +1,6 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // The apps Ravit built and approved for public display (2026-10-25): MyBase, the delivery-management system and the
 // MyMuse client portal, under a new "אפליקציות ומערכות" category (last in the filter row). Screenshots are Ravit's own
@@ -88,7 +89,8 @@ const APPS: App[] = [
   },
 ]
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'app_projects')) return
   const existing = await payload.find({
     collection: 'projects',
     where: { slug: { in: APPS.map((a) => a.slug) } },

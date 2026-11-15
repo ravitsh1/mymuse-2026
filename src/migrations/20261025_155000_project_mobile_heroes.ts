@@ -1,5 +1,6 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Portrait heroes for mobile (Ravit, 2026-10-25): every project gets a 1080×1920 mockup in its brand colours with the
 // phone in the middle, clear of the title at the bottom (generator: media-import/mockup/remake/, PORTRAIT=1). Set only
@@ -116,7 +117,8 @@ const ITEMS: { slug: string; alt: string }[] = [
   }
 ]
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'project_mobile_heroes')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('mobile heroes: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
   for (const it of ITEMS) {

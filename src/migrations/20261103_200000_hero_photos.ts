@@ -1,6 +1,7 @@
 import path from 'path'
 import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
 import type { Media } from '@/payload-types'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Ravit (2026-11-03): a scene of its own for every project's hero, from her licensed stock photos with the site's own
 // screens put in (composed in the scratchpad with photo/compose.js, cropped around the devices: desktop 16:9 and
@@ -36,7 +37,8 @@ const SCENES: Record<string, string> = {
 
 const fileOf = (m: unknown) => (m && typeof m === 'object' ? (m as Media).filename : null)
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'hero_photos')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('hero photos: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
   for (const [slug, scene] of Object.entries(SCENES)) {

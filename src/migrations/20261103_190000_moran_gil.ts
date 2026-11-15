@@ -1,6 +1,7 @@
 import path from 'path'
 import { sql } from '@payloadcms/db-postgres'
 import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Ravit (2026-11-03): add Moran Gil's cakery site (the new version on her check-it server, which is also the link
 // until it moves to its own address). Same recipe as new_projects_2026: brand-book mockups from mockup26.js
@@ -13,6 +14,7 @@ const SLUG = 'moran-gil'
 const TITLE = 'מורן גיל'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'moran_gil')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('moran gil: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
   const taken = await payload.find({ collection: 'projects', where: { slug: { equals: SLUG } }, limit: 1, req })

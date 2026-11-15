@@ -1,5 +1,6 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Laptop + phone mockup of gderotktanot.co.il (made with media-import/mockup) as the first gallery image of the
 // Little Fences project, so it is the large parallax screen. Only while the gallery is still exactly what
@@ -8,7 +9,8 @@ const FILE = path.resolve(process.cwd(), 'media-import/gderot/gderot-08-mockup.j
 const ALT = 'האתר "גדרות קטנות" על מסך לפטופ ועל טלפון'
 const EXPECTED = ['02-book', '03-home-mobile', '04-spreads', '05-story', '06-story-dark', '07-story-mobile']
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'gderot_mockup')) return
   const found = await payload.find({ collection: 'projects', where: { slug: { equals: 'little-fences' } }, depth: 1, limit: 1, req })
   const project = found.docs[0]
   if (!project) return payload.logger.info('gderot mockup: no little-fences project, nothing to do')

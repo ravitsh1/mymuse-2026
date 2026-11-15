@@ -1,6 +1,7 @@
 import path from 'path'
 import { sql } from '@payloadcms/db-postgres'
 import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Ravit (2026-10-29): the nine new sites on her list, each with its brand-book mockups (media-import/new26, made by
 // mockup26.js from fresh captures), three screenshots for the gallery, a category and its place in her order (the
@@ -143,6 +144,7 @@ const ROWS: Row[] = [
 ]
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'new_projects_2026')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('new projects 2026: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
 

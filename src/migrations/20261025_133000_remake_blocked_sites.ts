@@ -1,5 +1,6 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // The last four projects on old-site imports (their sites block automated capture): Ravit took the screenshots, the
 // mockups are in each brand's colours (media-import/mockup/remake/). Same guard as remake_project_images: a project
@@ -67,7 +68,8 @@ const ITEMS: { slug: string; hero: string; alts: string[]; heroAlt: string; gall
   }
 ]
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'remake_blocked_sites')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('remake: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
   for (const it of ITEMS) {

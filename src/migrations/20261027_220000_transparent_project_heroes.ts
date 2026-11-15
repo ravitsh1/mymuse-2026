@@ -1,6 +1,7 @@
 import path from 'path'
 import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
 import type { Media } from '@/payload-types'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Ravit (2026-10-27): the hero mockups are re-rendered with the client's brand-colour area left transparent, so the
 // page colour shows through. In Neon the project colour is that same brand colour (project_bg_from_images), so the
@@ -43,7 +44,8 @@ const ROWS: { slug: string; hero: string | null; mobile: string | null }[] = [
 
 const fileOf = (m: unknown) => (m && typeof m === 'object' ? (m as Media).filename : null)
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'transparent_project_heroes')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('transparent heroes: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
 

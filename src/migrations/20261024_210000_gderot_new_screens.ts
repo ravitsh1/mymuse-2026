@@ -1,5 +1,6 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // New screens of gderotktanot.co.il, shot for Ravit, replacing the WordPress-import images on the Little Fences
 // project. Same rules as 3bears_new_screens: runs only while the project still holds exactly the import's media
@@ -17,7 +18,8 @@ const GALLERY = [
 ]
 const IMPORTED_ALTS = [1, 2, 3].map((n) => `מסך ${n} מתוך האתר של גדרות קטנות`)
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'gderot_new_screens')) return
   const found = await payload.find({ collection: 'projects', where: { slug: { equals: 'little-fences' } }, depth: 1, limit: 1, req })
   const project = found.docs[0]
   if (!project) return payload.logger.info('gderot screens: no little-fences project, nothing to do')

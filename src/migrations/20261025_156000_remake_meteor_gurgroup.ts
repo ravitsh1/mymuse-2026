@@ -1,5 +1,6 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Meteor Center and GurGroup had Ravit's earlier mockups; she asked for new ones under the image rule too (brand-colour
 // mockup + two landscape screens). Same guard as remake_project_images: only while hero and gallery are unchanged.
@@ -36,7 +37,8 @@ const ITEMS: { slug: string; hero: string; alts: string[]; heroAlt: string; gall
   }
 ]
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'remake_meteor_gurgroup')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('remake: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
   for (const it of ITEMS) {

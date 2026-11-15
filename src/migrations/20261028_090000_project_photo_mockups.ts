@@ -1,6 +1,7 @@
 import path from 'path'
 import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
 import type { Media } from '@/payload-types'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Ravit (2026-10-28): every project gets a photo mockup as its second image (first in the gallery, the large one in the
 // band): one of her licensed stock photos (Envato Elements) with the site on the device's screen. Made by
@@ -44,7 +45,8 @@ const ROWS: { slug: string; first: string | null; alt: string }[] = [
 const idOf = (m: unknown) => (m && typeof m === 'object' ? (m as Media).id : (m as number))
 const fileOf = (m: unknown) => (m && typeof m === 'object' ? (m as Media).filename : null)
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'project_photo_mockups')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('photo mockups: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
 

@@ -1,5 +1,6 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Ravit's image rule (see the skill) for the 15 projects still showing the old-site import: a main mockup in the
 // project's own brand colours (generator in media-import/mockup/remake/) and two landscape screens of the live site.
@@ -220,7 +221,8 @@ const ITEMS: { slug: string; hero: string; alts: string[]; heroAlt: string; gall
   }
 ]
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'remake_project_images')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('remake: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
   for (const it of ITEMS) {

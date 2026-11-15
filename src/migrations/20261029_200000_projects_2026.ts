@@ -2,6 +2,7 @@ import path from 'path'
 import { sql } from '@payloadcms/db-postgres'
 import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
 import type { Media } from '@/payload-types'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Ravit (2026-10-29), with the 2026 brand book:
 // 1. Her updated list of projects: 19 sites and 3 apps, in her order. Projects not on it are hidden (not deleted);
@@ -56,6 +57,7 @@ const idOf = (m: unknown) => (m && typeof m === 'object' ? (m as Media).id : (m 
 const fileOf = (m: unknown) => (m && typeof m === 'object' ? (m as Media).filename : null)
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'projects_2026')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('projects 2026: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
 

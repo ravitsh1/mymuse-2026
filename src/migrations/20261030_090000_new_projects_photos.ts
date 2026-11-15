@@ -1,6 +1,7 @@
 import path from 'path'
 import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
 import type { Media } from '@/payload-types'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // Ravit (2026-10-29): the nine new sites also get a photo mockup (her licensed stock photos, composed by
 // media-import/mockup/photo) as the first gallery image, like the other projects. Only while the gallery still starts
@@ -22,7 +23,8 @@ const ROWS: { slug: string; alt: string }[] = [
 const idOf = (m: unknown) => (m && typeof m === 'object' ? (m as Media).id : (m as number))
 const fileOf = (m: unknown) => (m && typeof m === 'object' ? (m as Media).filename : null)
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, 'new_projects_photos')) return
   if (process.env.LOCAL_PGLITE !== '1' && !process.env.BLOB_READ_WRITE_TOKEN)
     throw new Error('new projects photos: BLOB_READ_WRITE_TOKEN is not set, refusing to store media on local disk')
   for (const row of ROWS) {

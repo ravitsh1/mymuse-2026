@@ -1,5 +1,6 @@
 import path from 'path'
 import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { isFreshDatabase } from '../lib/freshDb'
 
 // New screens of the 3 Bears site (threebears-2026), shot for Ravit: they replace the old WordPress screenshots on
 // the 3 Bears project. Runs once, in the build that holds the Blob token, and only while the project still shows
@@ -17,7 +18,8 @@ const GALLERY = [
 ]
 const IMPORTED_ALTS = [1, 2, 3].map((n) => `מסך ${n} מתוך האתר של שלושת הדובים`)
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (await isFreshDatabase({ db, payload }, '3bears_new_screens')) return
   const found = await payload.find({ collection: 'projects', where: { slug: { equals: '3-bears' } }, depth: 1, limit: 1, req })
   const project = found.docs[0]
   if (!project) return payload.logger.info('3bears screens: no 3-bears project, nothing to do')
