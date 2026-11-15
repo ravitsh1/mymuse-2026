@@ -5,7 +5,8 @@ import { LivePreviewRefresh } from '@/components/LivePreviewRefresh'
 import { Motion } from '@/components/Motion'
 import { WorkIndex } from '@/components/WorkIndex'
 import { accentTones, getCategories, getFooterPages, getHome, getProjects, getSettings, paletteVars, sitePalette } from '@/lib/data'
-import { pageMetadata, shareImageOf } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
+import { abs, ORG_ID, pageMetadata, shareImageOf } from '@/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings()
@@ -59,6 +60,21 @@ export default async function WorkPage({ searchParams }: { searchParams: Promise
       {brand && <div className="peek" data-peek aria-hidden="true" />}
       <Motion />
       <LivePreviewRefresh />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'כל הפרויקטים',
+          url: abs('/work'),
+          inLanguage: 'he',
+          isPartOf: { '@id': `${abs('/')}#site` },
+          about: { '@id': ORG_ID },
+          mainEntity: {
+            '@type': 'ItemList',
+            itemListElement: projects.map((p, k) => ({ '@type': 'ListItem', position: k + 1, name: p.title, url: abs(`/portfolio/${p.slug}`) })),
+          },
+        }}
+      />
     </div>
   )
 }
