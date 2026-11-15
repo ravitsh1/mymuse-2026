@@ -712,8 +712,8 @@ html[data-brand] .quote figcaption span { color: var(--b-deep) }
 .nc-field { font-size: clamp(17px, 1.3vw, 20px) }
 .nc-go { margin-top: 14px }
 .nc-link:hover .nc-go span, .nc-link:focus-visible .nc-go span { transform: translateX(-4px) }
-.nc-link:focus-visible { outline: none }
-.nc-link:focus-visible .nc-media { outline: 3px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 4px }
+.nc-link:focus-visible { outline: 3px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 10px; border-radius: 28px }
+/* (the ring sits on the whole card: .nc-media clips with clip-path, which would cut an outline drawn on it) */
 .nc-all { display: inline-block; margin-top: clamp(24px, 3vw, 40px); color: inherit; font-size: 17px; text-decoration: underline; text-underline-offset: 4px }
 @media (max-width: 760px) { .nc-link { grid-template-columns: 1fr } }
 @media (prefers-reduced-motion: reduce) { .nc-media .visual { transition: none } .nc-link:hover .nc-media .visual { transform: none } }
