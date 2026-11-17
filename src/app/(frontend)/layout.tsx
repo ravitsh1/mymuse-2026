@@ -21,6 +21,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: 'MyMuse | עיצוב, בנייה ופיתוח אתרים בהתאמה אישית', template: '%s · MyMuse' },
     description: s.metaDescription ?? undefined,
     openGraph: { siteName: 'MyMuse', locale: 'he_IL', type: 'website' },
+    // Google Search Console ownership (property https://mymuse.co.il/, HTML-tag method): keep it, or the property unverifies
+    verification: { google: 'snVOgo4nNVKU4Uq4czkL_48YyydinPUzN4SIvv6e0GU' },
   }
 }
 
