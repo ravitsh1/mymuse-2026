@@ -62,6 +62,7 @@ import * as migration_20261113_110000_accessibility_statement from './20261113_1
 import * as migration_20261113_120000_accessibility_meetings from './20261113_120000_accessibility_meetings';
 import * as migration_20261115_090000_share_image from './20261115_090000_share_image';
 
+import * as migration_20261117_120000_cookies_text from './20261117_120000_cookies_text';
 export const migrations = [
   {
     up: migration_20261024_070442_initial.up,
@@ -378,4 +379,9 @@ export const migrations = [
     down: migration_20261115_090000_share_image.down,
     name: '20261115_090000_share_image',
   },
-]
+  {
+    up: migration_20261117_120000_cookies_text.up,
+    down: migration_20261117_120000_cookies_text.down,
+    name: '20261117_120000_cookies_text',
+  },
+];
