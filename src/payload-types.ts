@@ -742,6 +742,26 @@ export interface Setting {
    */
   projectOrder?: ('random' | 'admin') | null;
   /**
+   * המילים המודגשות בכותרות: בפתיחה, ב"עלינו", ב"צור קשר", בסוף העמוד ובמשפט המרכזי בעמודי הפרויקטים. צבע בהיר מדי יוכהה אוטומטית עד ניגודיות קריאה (3:1).
+   */
+  accentWord?: string | null;
+  /**
+   * ברירת מחדל: שחור #000000
+   */
+  brushIdeas?: string | null;
+  /**
+   * ברירת מחדל: בורדו בהיר #9e3a64
+   */
+  brushDesign?: string | null;
+  /**
+   * ברירת מחדל: ורוד #dc3180
+   */
+  brushExperience?: string | null;
+  /**
+   * ברירת מחדל: צהוב #f0e765
+   */
+  brushDev?: string | null;
+  /**
    * התגיות שאפשר לסמן בפרויקטים ובכרטיסי השירותים בעמוד הבית. שינוי שם מתעדכן בכל מקום; שירות שנמחק יורד מכל הפרויקטים.
    */
   serviceTags?:
@@ -758,6 +778,10 @@ export interface Setting {
    * נמצא ב־Analytics: ניהול ← זרמי נתונים ← האתר. ריק = בלי אנליטיקס. נטען רק באתר החי, לא בתצוגות מקדימות.
    */
   gaId?: string | null;
+  /**
+   * הערך של content בתגית google-site-verification (Search Console ← הגדרות ← אימות בעלות ← תג HTML). למחוק אותו = גוגל יבטל את האימות.
+   */
+  googleVerification?: string | null;
   /**
    * משמש בכל עמוד שאין לו תיאור משלו.
    */
@@ -878,6 +902,11 @@ export interface SettingsSelect<T extends boolean = true> {
   heroTitle?: T;
   heroText?: T;
   projectOrder?: T;
+  accentWord?: T;
+  brushIdeas?: T;
+  brushDesign?: T;
+  brushExperience?: T;
+  brushDev?: T;
   serviceTags?:
     | T
     | {
@@ -886,6 +915,7 @@ export interface SettingsSelect<T extends boolean = true> {
       };
   briefAssistant?: T;
   gaId?: T;
+  googleVerification?: T;
   metaDescription?: T;
   shareImage?: T;
   cookieText?: T;

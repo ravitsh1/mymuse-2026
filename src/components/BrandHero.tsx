@@ -29,7 +29,10 @@ export function BrandHero({ tag, title, text }: { tag?: string | null; title?: s
         <div className="bh-slabs" data-speed="-0.2">
           <div className="bh-comp">
             {[1, 2, 3, 4].map((n) => (
-              <i key={n} className={`brush brush-${n}`} />
+              // the stroke's shape is a mask over its colour (Settings → צבעים); the shadow sits on the wrapper
+              <i key={n} className={`brush brush-${n}`}>
+                <b />
+              </i>
             ))}
             {['Ideas', 'Design', 'Experience', 'Dev'].map((w, k) => (
               <span key={w} className={`slab slab-${k + 1}`}>

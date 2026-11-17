@@ -4,7 +4,7 @@ import React from 'react'
 import { Analytics } from '@/components/Analytics'
 import { CookieNotice } from '@/components/CookieNotice'
 import { VeeWidget } from '@/components/VeeWidget'
-import { getPage, getSettings, sitePalette } from '@/lib/data'
+import { brandColorVars, getPage, getSettings, sitePalette } from '@/lib/data'
 import { indexable } from '@/lib/site'
 import { SITE_URL } from '@/lib/seo'
 import { THEME_COLOR } from '@/lib/brand'
@@ -21,8 +21,9 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: 'MyMuse | עיצוב, בנייה ופיתוח אתרים בהתאמה אישית', template: '%s · MyMuse' },
     description: s.metaDescription ?? undefined,
     openGraph: { siteName: 'MyMuse', locale: 'he_IL', type: 'website' },
-    // Google Search Console ownership (property https://mymuse.co.il/, HTML-tag method): keep it, or the property unverifies
-    verification: { google: 'snVOgo4nNVKU4Uq4czkL_48YyydinPUzN4SIvv6e0GU' },
+    // Google Search Console ownership (property https://mymuse.co.il/, HTML-tag method; Settings → גוגל ושיתוף):
+    // keep it, or the property unverifies
+    verification: s.googleVerification?.trim() ? { google: s.googleVerification.trim() } : undefined,
   }
 }
 
@@ -35,7 +36,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const [settings, privacy] = await Promise.all([getSettings(), getPage('privacy-policy')])
   const site = sitePalette(settings)
   return (
-    <html lang="he" dir="rtl" data-brand="2026" className={karantina.variable}>
+    <html lang="he" dir="rtl" data-brand="2026" className={karantina.variable} style={brandColorVars(settings)}>
       <head>
         <link
           rel="preload"
