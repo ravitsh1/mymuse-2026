@@ -451,6 +451,7 @@ main[tabindex="-1"]:focus { outline: none }
    (3.3:1: large text and marks only), lemon for the one primary button (violet on it 13:1). No gradients. */
 html[data-brand] { --chrome-bg: #f8f7f9; --b-deep: #801f48; --b-pink: #ff2d83; --b-pop: #f4e85a }
 html[data-brand] .site { --p-acc-sm: #801f48 !important }
+html[data-brand] .statement em { color: var(--b-deep) }
 /* nothing slides under it here, so no background: the hero slabs' shadows, lagging behind the scroll, stay whole */
 html[data-brand] .after-ph { margin-top: 0; box-shadow: none; background: transparent }
 html[data-brand] .visual .glow { display: none }
