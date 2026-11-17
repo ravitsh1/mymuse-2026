@@ -490,9 +490,11 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
    one composition box, everything in container units (1cqi = 10.75 frame px at 1920), so it scales with .bh-art.
    Strokes in one layer, the words above all of them (they cross the next stroke's edge). */
 .bh-comp { position: absolute; left: 12.9cqi; top: calc(46cqb - 28.85cqi); width: 76.4cqi; height: 57.7cqi; scale: .78 } /* smaller than the frame */
-.brush { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); background: var(--img) center / 100% 100% no-repeat;
+.brush { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h);
   /* the wide soft shadow of the old slabs, following each stroke's edge; nearer strokes (higher --d) cast it longer */
   filter: drop-shadow(calc(2cqi + 2cqi * var(--d)) calc(3cqi + 3cqi * var(--d)) calc(3cqi + 2cqi * var(--d)) rgba(28,15,48,.22)) }
+/* the stroke: its SVG shape as a mask over the colour from Settings → צבעים (--brush-N on <html>, layout.tsx) */
+.brush > b { position: absolute; inset: 0; background: var(--c); -webkit-mask: var(--img) center / 100% 100% no-repeat; mask: var(--img) center / 100% 100% no-repeat }
 /* depth: a pair drifts by its --d with the scroll (--sy, px) and the pointer (--mx/--my, -1..1). The translate property
    leaves transform free for the drop-in and the tilt */
 .brush, .slab { translate: calc(var(--mx, 0) * var(--d) * 1.1cqi) calc(var(--sy, 0) * var(--d) * -.07px + var(--my, 0) * var(--d) * .7cqi) }
@@ -503,18 +505,18 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 /* stacking as in Figma: pink and EXPERIENCE, then yellow and DEV over them (the yellow covers the end of EXPERIENCE);
    IDEAS and DESIGN stay on top of everything */
 .brush-1, .brush-2 { z-index: 1 } .brush-3 { z-index: 2 } .slab-3 { z-index: 3 } .brush-4 { z-index: 4 } .slab-4, .slab-1, .slab-2 { z-index: 5 }
-.brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg) }
-.brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1 }
-.brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2 }
-.brush-4 { --x: 46.07cqi; --y: 38.66cqi; --w: 27.35cqi; --h: 19.02cqi; --img: url(/brush/yellow.svg); --k: 3 }
+.brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg); --c: var(--brush-1, #000) }
+.brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1; --c: var(--brush-2, #9e3a64) }
+.brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2; --c: var(--brush-3, #dc3180) }
+.brush-4 { --x: 46.07cqi; --y: 38.66cqi; --w: 27.35cqi; --h: 19.02cqi; --img: url(/brush/yellow.svg); --k: 3; --c: var(--brush-4, #f0e765) }
 /* one size for all four words (close to Figma's), each centred where Figma has it.
    line-height = Karantina's cap height (.71em): the box is exactly the capitals, so top/left place the ink */
 .slab { position: absolute; left: var(--x); top: var(--y); font: 400 20.5cqi/.71 var(--f-display); letter-spacing: -.01em; text-transform: uppercase;
-  direction: ltr; white-space: nowrap; color: #fff; transform: rotate(var(--r, 0deg)) }
-.slab-1 { --x: 6.11cqi; --y: 2.75cqi; --r: -2deg }
-.slab-2 { --x: 38.98cqi; --y: 9.6cqi; --r: 4deg; --k: 1 }
-.slab-3 { --x: 8.58cqi; --y: 26.35cqi; --r: -1.5deg; --k: 2 }
-.slab-4 { --x: 50.1cqi; --y: 40.63cqi; --r: 2deg; --k: 3; color: #1c0f30 }
+  direction: ltr; white-space: nowrap; color: var(--ink, #fff); transform: rotate(var(--r, 0deg)) }
+.slab-1 { --x: 6.11cqi; --y: 2.75cqi; --r: -2deg; --ink: var(--slab-1-ink, #fff) }
+.slab-2 { --x: 38.98cqi; --y: 9.6cqi; --r: 4deg; --k: 1; --ink: var(--slab-2-ink, #fff) }
+.slab-3 { --x: 8.58cqi; --y: 26.35cqi; --r: -1.5deg; --k: 2; --ink: var(--slab-3-ink, #fff) }
+.slab-4 { --x: 50.1cqi; --y: 40.63cqi; --r: 2deg; --k: 3; --ink: var(--slab-4-ink, #1c0f30) }
 /* stroke and word drop in together, one pair after another */
 @media (prefers-reduced-motion: no-preference) {
   .brush, .slab { animation: slab-in .9s cubic-bezier(.2,.9,.25,1.15) both; animation-delay: calc(.15s + var(--k, 0) * .22s) }

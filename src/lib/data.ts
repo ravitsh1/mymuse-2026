@@ -2,7 +2,7 @@ import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Home, Project, Setting } from '@/payload-types'
-import { brandHome, brandProject, brandSettings } from '@/lib/brand'
+import { BRAND, brandHome, brandProject, brandSettings } from '@/lib/brand'
 
 export const payload = cache(() => getPayload({ config }))
 
@@ -100,6 +100,31 @@ export const accentText = (p: Palette, min: number) => {
     if (contrast(c, bg) >= min) return hex(c)
   }
   return p.ink
+}
+
+const HEX6 = /^#[0-9a-f]{6}$/i
+const hex6 = (v: string | null | undefined, fallback: string) => {
+  const t = (v ?? '').trim()
+  if (/^#[0-9a-f]{3}$/i.test(t)) return '#' + [...t.slice(1)].map((c) => c + c).join('')
+  return HEX6.test(t) ? t : fallback
+}
+/** White or the brand ink, whichever reads better on this background (the hero words on their brush strokes). */
+const textOn = (bg: string) => (contrast(rgb(bg), [255, 255, 255]) >= contrast(rgb(bg), rgb(BRAND.site.ink)) ? '#ffffff' : BRAND.site.ink)
+
+/**
+ * The colours Ravit sets in Settings → צבעים, as custom properties on <html> (styles.css reads them): the accent word
+ * (darkened toward the ink just enough for 3:1 on the porcelain if she picks a light one) and the four hero brush
+ * strokes, each with its word in white or ink. Empty or invalid → today's look.
+ */
+export const brandColorVars = (s: Setting): React.CSSProperties => {
+  const word = hex6(s.accentWord, '#9e3a64')
+  const brushes = [hex6(s.brushIdeas, '#000000'), hex6(s.brushDesign, '#9e3a64'), hex6(s.brushExperience, '#dc3180'), hex6(s.brushDev, '#f0e765')]
+  const vars: Record<string, string> = { '--b-word': accentText({ bg: BRAND.site.bg, ink: BRAND.site.ink, acc: word }, 3) }
+  brushes.forEach((c, i) => {
+    vars[`--brush-${i + 1}`] = c
+    vars[`--slab-${i + 1}-ink`] = textOn(c)
+  })
+  return vars as React.CSSProperties
 }
 
 /** --p-acc-sm: accent for small text (4.5:1); --p-acc-lg: for large text (3:1). */

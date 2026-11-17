@@ -61,9 +61,10 @@ import * as migration_20261113_100000_media_cleanup from './20261113_100000_medi
 import * as migration_20261113_110000_accessibility_statement from './20261113_110000_accessibility_statement';
 import * as migration_20261113_120000_accessibility_meetings from './20261113_120000_accessibility_meetings';
 import * as migration_20261115_090000_share_image from './20261115_090000_share_image';
-
 import * as migration_20261117_120000_cookies_text from './20261117_120000_cookies_text';
 import * as migration_20261117_160000_share_image_v2 from './20261117_160000_share_image_v2';
+import * as migration_20261117_171506_settings_colors from './20261117_171506_settings_colors';
+
 export const migrations = [
   {
     up: migration_20261024_070442_initial.up,
@@ -389,5 +390,10 @@ export const migrations = [
     up: migration_20261117_160000_share_image_v2.up,
     down: migration_20261117_160000_share_image_v2.down,
     name: '20261117_160000_share_image_v2',
+  },
+  {
+    up: migration_20261117_171506_settings_colors.up,
+    down: migration_20261117_171506_settings_colors.down,
+    name: '20261117_171506_settings_colors'
   },
 ];

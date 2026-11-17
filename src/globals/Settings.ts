@@ -100,6 +100,38 @@ export const Settings: GlobalConfig = {
           ],
         },
         {
+          label: 'צבעים',
+          description:
+            'הצבעים שאפשר לשנות בלי קוד. ריק = צבע ברירת המחדל שמופיע בשדה. שאר הצבעים (רקע, טקסט, כפתור צהוב) קבועים לפי שפת המותג.',
+          fields: [
+            colorField(
+              'accentWord',
+              'המילה המודגשת בכותרות',
+              '#9e3a64',
+              'המילים המודגשות בכותרות: בפתיחה, ב"עלינו", ב"צור קשר", בסוף העמוד ובמשפט המרכזי בעמודי הפרויקטים. צבע בהיר מדי יוכהה אוטומטית עד ניגודיות קריאה (3:1).',
+            ),
+            {
+              type: 'collapsible',
+              label: 'רקעי המילים בפתיחת עמוד הבית',
+              admin: {
+                initCollapsed: false,
+                description: 'משיכות המכחול מאחורי IDEAS, DESIGN, EXPERIENCE, DEV. צבע הכיתוב (לבן או כהה) נבחר לבד לפי הרקע.',
+              },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    colorField('brushIdeas', 'IDEAS', '#000000', 'ברירת מחדל: שחור #000000'),
+                    colorField('brushDesign', 'DESIGN', '#9e3a64', 'ברירת מחדל: בורדו בהיר #9e3a64'),
+                    colorField('brushExperience', 'EXPERIENCE', '#dc3180', 'ברירת מחדל: ורוד #dc3180'),
+                    colorField('brushDev', 'DEV', '#f0e765', 'ברירת מחדל: צהוב #f0e765'),
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
           label: 'שירותים',
           fields: [
             {
@@ -141,6 +173,18 @@ export const Settings: GlobalConfig = {
               defaultValue: 'G-4HWM6WRFMX',
               validate: (v: string | null | undefined) => (!v || /^G-[A-Z0-9]{4,}$/.test(v.trim()) ? true : 'מזהה GA4 מתחיל ב־G-, למשל G-AB12CD34EF'),
               admin: { description: 'נמצא ב־Analytics: ניהול ← זרמי נתונים ← האתר. ריק = בלי אנליטיקס. נטען רק באתר החי, לא בתצוגות מקדימות.' },
+            },
+            {
+              name: 'googleVerification',
+              label: 'Google Search Console (קוד אימות)',
+              type: 'text',
+              defaultValue: 'snVOgo4nNVKU4Uq4czkL_48YyydinPUzN4SIvv6e0GU',
+              validate: (v: string | null | undefined) =>
+                !v || /^[\w-]{20,100}$/.test(v.trim()) ? true : 'רק הערך שבתוך content="…" בתגית שגוגל נותן, בלי התגית עצמה',
+              admin: {
+                description:
+                  'הערך של content בתגית google-site-verification (Search Console ← הגדרות ← אימות בעלות ← תג HTML). למחוק אותו = גוגל יבטל את האימות.',
+              },
             },
             {
               name: 'metaDescription',
