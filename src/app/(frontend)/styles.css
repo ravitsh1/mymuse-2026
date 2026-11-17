@@ -447,11 +447,11 @@ main[tabindex="-1"]:focus { outline: none }
 .go:hover { background: color-mix(in srgb, currentColor 12%, transparent) }
 
 /* ---------- brand book 2026 (palette trial b26, lib/trial.ts) ----------
-   Porcelain, deep violet ink, burgundy for small labels and links (9:1), burgundy also for the accent word in big headings, laser pink for an indicator
+   Porcelain, deep violet ink, burgundy for small labels and links (9:1), --b-word (#9e3a64, 6:1) for the accent word in big headings and project statements, laser pink for an indicator
    (3.3:1: large text and marks only), lemon for the one primary button (violet on it 13:1). No gradients. */
-html[data-brand] { --chrome-bg: #f8f7f9; --b-deep: #801f48; --b-pink: #ff2d83; --b-pop: #f4e85a }
+html[data-brand] { --chrome-bg: #f8f7f9; --b-deep: #801f48; --b-word: #9e3a64; --b-pink: #ff2d83; --b-pop: #f4e85a }
 html[data-brand] .site { --p-acc-sm: #801f48 !important }
-html[data-brand] .statement em { color: var(--b-deep) }
+html[data-brand] .statement em { color: var(--b-word) }
 /* nothing slides under it here, so no background: the hero slabs' shadows, lagging behind the scroll, stay whole */
 html[data-brand] .after-ph { margin-top: 0; box-shadow: none; background: transparent }
 html[data-brand] .visual .glow { display: none }
@@ -525,7 +525,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .bh h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(64px, 7.4vw, 140px); line-height: .88; letter-spacing: -.01em }
 .bh h1:focus { outline: none }
 .bh h1 > span { display: block }
-.bh h1 em { font-style: normal; color: var(--b-deep) }
+.bh h1 em { font-style: normal; color: var(--b-word) }
 .bh-text { margin: 0; max-width: 44ch; font-size: clamp(18px, 1.4vw, 21px); line-height: 1.6 }
 .bh-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; margin-top: 8px }
 .pill { display: inline-flex; align-items: center; gap: 14px; min-height: 52px; padding: 14px 32px; border-radius: 999px; background: var(--b-pop); color: #1c0f30;
@@ -551,7 +551,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .b-label { margin: 0 0 18px; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; direction: ltr; text-align: right; color: var(--p-ink) }
 html[data-brand] .ix-head h2, html[data-brand] .svc h2, html[data-brand] .contact h2, .b-about h2 {
   margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 7vw, 120px); line-height: .88; letter-spacing: -.01em; color: var(--p-ink) }
-html[data-brand] .contact h2 em, .b-about h2 em { font-style: normal; color: var(--b-deep) }
+html[data-brand] .contact h2 em, .b-about h2 em { font-style: normal; color: var(--b-word) }
 .b-text { margin: clamp(18px, 2vw, 28px) 0 0; max-width: 52ch; font-size: clamp(18px, 1.4vw, 21px); line-height: 1.6; opacity: 1 }
 html[data-brand] .ix-head p.b-text { margin-top: clamp(18px, 2vw, 28px); font-size: clamp(18px, 1.4vw, 21px); opacity: 1 }
 html[data-brand] .ix-head { margin-bottom: clamp(48px, 6vw, 88px) }
@@ -581,7 +581,7 @@ html[data-brand] .track span:nth-child(3n+1) { color: var(--b-deep) }
 /* footer: the tagline signs off the page */
 .b-sign { flex-basis: 100%; margin: 0 0 clamp(20px, 3vw, 36px); font-family: var(--f-display); font-weight: 700; font-size: clamp(56px, 9vw, 150px); line-height: .86;
   text-transform: uppercase; direction: ltr; text-align: left }
-.b-sign em { display: block; font-style: normal; color: var(--b-deep) }
+.b-sign em { display: block; font-style: normal; color: var(--b-word) }
 @media (max-width: 900px) {
   .b-about { grid-template-columns: 1fr }
   .b-words { padding-top: 24px }
