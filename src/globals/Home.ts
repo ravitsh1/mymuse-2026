@@ -2,6 +2,7 @@ import type { GlobalConfig } from 'payload'
 import { serviceTagsField } from '../fields/serviceTags'
 import { colorField, hiddenColorField } from '../fields/color'
 import { refresh } from '../hooks/revalidate'
+import { cardTextContrast } from '../lib/brand'
 
 // Default wording (kept out of the field list so the schema stays readable).
 const SERVICE_TEXTS = [
@@ -100,8 +101,17 @@ export const Home: GlobalConfig = {
                   'תגיות',
                   'מופיעות בכרטיס. לחיצה על תגית מציגה את הפרויקטים שסומנו בה.',
                 ),
-                // the card colours come from the brand palette (lib/brand.ts)
-                hiddenColorField('bg', 'רקע הכרטיס', '#ffe8c2'),
+                colorField(
+                  'bg',
+                  'רקע הכרטיס',
+                  '#1b0d2d',
+                  'צבע הטקסט, התגיות והסימן בפינה (בהיר או כהה) נבחר לבד לפי הרקע. ריק = לפי סדר הפלטה. צבע בינוני (כמו הוורוד) לא יתקבל: הטקסט עליו לא קריא מספיק.',
+                  (hex) =>
+                    hex.length !== 7 || cardTextContrast(hex) >= 4.5
+                      ? true
+                      : `על הצבע הזה הטקסט בכרטיס לא יהיה קריא מספיק (${cardTextContrast(hex).toFixed(1)}:1, צריך 4.5:1). בחרו צבע כהה יותר או בהיר יותר.`,
+                ),
+                // the text colour is worked out from the background (lib/brand.ts); the column stays
                 hiddenColorField('ink', 'טקסט הכרטיס', '#1b1030'),
               ],
             },
