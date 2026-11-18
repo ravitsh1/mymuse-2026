@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MyBase showcase</title>
+<style>
+  :root { --aubergine:#1B0D2D; --ink:#17283F; --pink:#C94F86; --lime:#D8F450; --off:#F8F6F3 }
+  * { box-sizing: border-box }
+  html, body { margin: 0; background: var(--off) }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--off); font-family: 'Inter Display', 'Inter', sans-serif }
+  .blob { position: absolute; border-radius: 50%; filter: blur(90px) }
+  #b1 { width: 620px; height: 620px; background: var(--pink); opacity: .16; left: -140px; top: 560px }
+  #b2 { width: 560px; height: 560px; background: var(--lime); opacity: .34; left: 1500px; top: -180px }
+  #b3 { width: 380px; height: 380px; background: var(--ink); opacity: .08; left: 1560px; top: 760px }
+  #world, #bg { position: absolute; inset: 0; transform-origin: 0 0 }
+  #win { position: absolute; left: 280px; top: 92px; width: 1360px; height: 896px; border-radius: 14px; background: #fff; overflow: hidden;
+    box-shadow: 0 50px 90px -30px rgba(27,13,45,.30), 0 18px 36px -18px rgba(27,13,45,.18), 0 0 0 1px rgba(27,13,45,.08) }
+  #bar { height: 46px; background: #fff; border-bottom: 1px solid rgba(27,13,45,.08); display: flex; align-items: center; padding: 0 18px; gap: 8px }
+  #bar i { width: 12px; height: 12px; border-radius: 50% }
+  #addr { margin: 0 auto; transform: translateX(-34px); width: 420px; height: 28px; border-radius: 14px; background: #F3F0EC; color: #17283F; font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center; gap: 7px; letter-spacing: .01em }
+  #view { position: relative; width: 1360px; height: 850px; overflow: hidden; background: #fff }
+  #view img { position: absolute; left: 0; top: 0; width: 1360px; height: 850px; display: block }
+  #ring { position: absolute; border: 3px solid var(--pink); border-radius: 16px; opacity: 0; box-shadow: 0 0 0 6px rgba(201,79,134,.14) }
+  #ripple { position: absolute; width: 0; height: 0; border-radius: 50%; border: 2px solid var(--pink); background: rgba(201,79,134,.16); opacity: 0; transform: translate(-50%,-50%) }
+  #cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; transform-origin: 0 0; opacity: 0; filter: drop-shadow(0 2px 3px rgba(0,0,0,.35)) }
+  #end { position: absolute; left: 0; right: 0; top: 812px; text-align: center; color: var(--aubergine); opacity: 0 }
+  #end h1 { margin: 0; font-size: 104px; line-height: 1; font-weight: 700; letter-spacing: -.035em }
+  #end h1 span { display: inline-block; width: 18px; height: 18px; border-radius: 50%; background: var(--pink); margin-left: 10px }
+  #end p { margin: 26px 0 0; font-size: 22px; font-weight: 500; color: var(--ink); display: flex; align-items: center; justify-content: center; gap: 12px; letter-spacing: .02em }
+  #end svg { height: 32px; width: auto; color: var(--aubergine); transform: translateY(-1px) }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bg"><div class="blob" id="b1"></div><div class="blob" id="b2"></div><div class="blob" id="b3"></div></div>
+  <div id="world">
+    <div id="win">
+      <div id="bar">
+        <i style="background:#C94F86"></i><i style="background:#D8F450"></i><i style="background:#17283F"></i>
+        <div id="addr">
+          <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><rect x="1" y="5.5" width="9" height="6.5" rx="1.6" fill="#17283F"/><path d="M3 5.5V4a2.5 2.5 0 0 1 5 0v1.5" stroke="#17283F" stroke-width="1.4"/></svg>
+          MyBase
+        </div>
+      </div>
+      <div id="view">
+        <img id="s1" src="calendar.jpg" alt="">
+        <img id="s2" src="finance.jpg" alt="">
+        <div id="ring"></div>
+      </div>
+    </div>
+    <div id="ripple"></div>
+    <svg id="cursor" viewBox="0 0 26 26"><path d="M3 2 L3 21 L8.2 16.4 L11.6 24 L14.8 22.6 L11.5 15.2 L18.4 15.2 Z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  </div>
+  <div id="end">
+    <h1>MyBase<span></span></h1>
+    <p>Designed &amp; Developed by <svg id="logo" viewBox="0 0 500 159"><path fill="currentColor" fill-rule="evenodd"/></svg></p>
+  </div>
+</div>
+<script src="logo.js"></script>
+<script>
+document.querySelector('#logo path').setAttribute('d', window.LOGO_WIDE)
+const $ = (id) => document.getElementById(id)
+const K = 1360 / 1920, OX = 280, OY = 138
+const P = (sx, sy) => [OX + sx * K, OY + sy * K]
+const ease = (p) => (p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2)
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v))
+const ramp = (t, a, b) => ease(clamp((t - a) / (b - a)))
+// keyframes: [t, ...values]; eased between neighbours
+function track(keys, t) {
+  if (t <= keys[0][0]) return keys[0].slice(1)
+  for (let i = 1; i < keys.length; i++) {
+    if (t <= keys[i][0]) {
+      const a = keys[i - 1], b = keys[i], p = ease((t - a[0]) / (b[0] - a[0]))
+      return a.slice(1).map((v, j) => v + (b[j + 1] - v) * p)
+    }
+  }
+  return keys[keys.length - 1].slice(1)
+}
+const C = (t, sx, sy, s) => [t, ...P(sx, sy), s]
+const CAM = [
+  [0, 960, 540, 1], [3.2, 960, 540, 1],
+  C(5.2, 1060, 770, 1.22), C(8.0, 960, 780, 1.22),
+  [9.6, 990, 530, 1.05], [10.4, 990, 530, 1.05],
+  [13.0, 960, 540, 1.03],
+  C(14.8, 760, 730, 1.36), C(18.2, 760, 800, 1.36),
+  C(20.0, 1010, 350, 1.25), C(23.6, 900, 440, 1.25),
+  [25.8, 960, 679.5, .8], [28, 960, 679.5, .8],
+]
+const CUR = [
+  [0, 900, 700], [3.0, 900, 700],
+  [4.6, 1410, 930], [5.9, 1075, 892], [7.2, 790, 930], [8.1, 790, 930],
+  [9.6, 1830, 351], [11.2, 1830, 351],
+  [12.8, 1300, 355], [13.4, 1300, 355],
+  [14.9, 400, 606], [15.5, 400, 606], [16.2, 400, 664], [16.7, 400, 664], [17.3, 400, 740], [18.2, 400, 842],
+  [20.0, 1300, 356], [20.7, 1300, 356], [22.2, 650, 622], [22.6, 650, 622], [23.6, 280, 160], [28, 280, 160],
+]
+const CLICK = 9.9
+
+function apply(cam, bgK = .25) {
+  const [cx, cy, s] = cam
+  $('world').style.transform = `translate(${960 - cx * s}px,${540 - cy * s}px) scale(${s})`
+  const bs = 1 + (s - 1) * bgK
+  $('bg').style.transform = `translate(${960 - (960 + (cx - 960) * bgK) * bs}px,${540 - (540 + (cy - 540) * bgK) * bs}px) scale(${bs})`
+}
+
+window.render = (t) => {
+  const cam = track(CAM, t)
+  apply(cam)
+  // window entrance: fade + gentle scale
+  const inP = ramp(t, .35, 1.7)
+  $('win').style.opacity = inP
+  $('win').style.transform = `translateY(${(1 - inP) * 26}px) scale(${.955 + .045 * inP})`
+  // screen change on the nav click
+  $('s2').style.opacity = ramp(t, CLICK + .12, CLICK + .62)
+  // highlight ring around the monthly budget panel
+  const [rx, ry] = P(50, 532), ring = $('ring')
+  ring.style.left = rx - OX + 'px'; ring.style.top = ry - OY + 'px'
+  ring.style.width = 415 * K + 'px'; ring.style.height = 410 * K + 'px'
+  ring.style.opacity = ramp(t, 14.7, 15.3) * (1 - ramp(t, 17.9, 18.4))
+  // cursor
+  const [sx, sy] = track(CUR, t), [x, y] = P(sx, sy)
+  const press = t >= CLICK && t < CLICK + .22 ? .86 : 1
+  const cur = $('cursor')
+  cur.style.transform = `translate(${x}px,${y}px) scale(${press / cam[2]})`
+  cur.style.opacity = ramp(t, 2.3, 2.8) * (1 - ramp(t, 23.9, 24.4))
+  const rp = clamp((t - CLICK) / .6), rip = $('ripple')
+  const [cxk, cyk] = P(1830, 351)
+  rip.style.left = cxk + 'px'; rip.style.top = cyk + 'px'
+  rip.style.width = rip.style.height = 10 + 54 * ease(rp) + 'px'
+  rip.style.opacity = t >= CLICK && rp < 1 ? 1 - rp : 0
+  // end card
+  const e = ramp(t, 25.5, 26.5)
+  $('end').style.opacity = e
+  $('end').style.transform = `translateY(${(1 - e) * 22}px)`
+}
+
+// seamless 7s loop: no cursor, slow drift, calendar <-> finance
+window.renderLoop = (t) => {
+  const w = (t / 7) * Math.PI * 2
+  apply([960 + 46 * Math.sin(w), 540 + 22 * Math.sin(w * 2), 1.1 + .04 * Math.cos(w)])
+  $('win').style.opacity = 1; $('win').style.transform = 'none'
+  $('s2').style.opacity = ramp(t, 3.0, 3.6) * (1 - ramp(t, 6.4, 7.0))
+  $('ring').style.opacity = 0; $('cursor').style.opacity = 0; $('ripple').style.opacity = 0; $('end').style.opacity = 0
+}
+window.render(0)
+</script>
+</body>
+</html>
