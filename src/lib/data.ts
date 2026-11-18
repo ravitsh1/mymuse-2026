@@ -108,8 +108,11 @@ const hex6 = (v: string | null | undefined, fallback: string) => {
   if (/^#[0-9a-f]{3}$/i.test(t)) return '#' + [...t.slice(1)].map((c) => c + c).join('')
   return HEX6.test(t) ? t : fallback
 }
-/** White or the brand ink, whichever reads better on this background (the hero words on their brush strokes). */
-const textOn = (bg: string) => (contrast(rgb(bg), [255, 255, 255]) >= contrast(rgb(bg), rgb(BRAND.site.ink)) ? '#ffffff' : BRAND.site.ink)
+/**
+ * The hero word on its brush stroke: white wherever it reads (3:1 is enough for words this size; white is the look),
+ * otherwise the brand ink (a light stroke such as the lime).
+ */
+const textOn = (bg: string) => (contrast(rgb(bg), [255, 255, 255]) >= 3 ? '#ffffff' : BRAND.site.ink)
 
 /**
  * The colours Ravit sets in Settings → צבעים, as custom properties on <html> (styles.css reads them): the accent word
@@ -117,8 +120,8 @@ const textOn = (bg: string) => (contrast(rgb(bg), [255, 255, 255]) >= contrast(r
  * strokes, each with its word in white or ink. Empty or invalid → today's look.
  */
 export const brandColorVars = (s: Setting): React.CSSProperties => {
-  const word = hex6(s.accentWord, '#9e3a64')
-  const brushes = [hex6(s.brushIdeas, '#000000'), hex6(s.brushDesign, '#9e3a64'), hex6(s.brushExperience, '#dc3180'), hex6(s.brushDev, '#f0e765')]
+  const word = hex6(s.accentWord, '#c94f86')
+  const brushes = [hex6(s.brushIdeas, '#1b0d2d'), hex6(s.brushDesign, '#c94f86'), hex6(s.brushExperience, '#17283f'), hex6(s.brushDev, '#d8f450')]
   const vars: Record<string, string> = { '--b-word': accentText({ bg: BRAND.site.bg, ink: BRAND.site.ink, acc: word }, 3) }
   brushes.forEach((c, i) => {
     vars[`--brush-${i + 1}`] = c

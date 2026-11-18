@@ -4,16 +4,14 @@ import type { ChangeEvent } from 'react'
 import type { TextFieldClientComponent } from 'payload'
 import { TextInput, useField } from '@payloadcms/ui'
 
-/** The site palette (brand book 2026, palette A "Electric Contrast"), offered as swatches next to every colour field. */
+/** The site palette (2026-11-18), offered as swatches next to every colour field. */
 const PALETTE: [string, string][] = [
-  ['#f8f7f9', 'פורצלן (רקע)'],
-  ['#1c0f30', 'דיו (טקסט)'],
-  ['#2e1f45', 'סגול עמוק'],
-  ['#801f48', 'בורדו'],
-  ['#9e3a64', 'בורדו בהיר'],
-  ['#dc3180', 'ורוד מכחול'],
-  ['#ff2d83', 'ורוד'],
-  ['#f4e85a', 'לימון'],
+  ['#f8f6f3', 'אוף־ווייט (רקע)'],
+  ['#1b0d2d', 'סגול חציל (טקסט)'],
+  ['#17283f', 'כחול דיו'],
+  ['#9e3a64', 'בורדו'],
+  ['#c94f86', 'ורוד'],
+  ['#d8f450', 'ליים'],
   ['#ffffff', 'לבן'],
 ]
 
