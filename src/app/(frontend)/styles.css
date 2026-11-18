@@ -57,7 +57,7 @@ img, video { max-width: 100%; display: block }
 a { color: inherit }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }
 /* the link sits outside .site, where the palette variables are not set: hence the fallbacks */
-.skip { position: fixed; top: 8px; right: 8px; z-index: 50; padding: 10px 16px; background: var(--p-ink, #1c0f30); color: var(--p-bg, #f8f7f9); border-radius: 8px; text-decoration: none; transform: translateY(-200%) }
+.skip { position: fixed; top: 8px; right: 8px; z-index: 50; padding: 10px 16px; background: var(--p-ink, #1b0d2d); color: var(--p-bg, #f8f6f3); border-radius: 8px; text-decoration: none; transform: translateY(-200%) }
 .skip:focus { transform: none }
 :focus-visible { outline: 2px solid var(--p-acc-lg, var(--p-acc)); outline-offset: 3px }
 
@@ -92,7 +92,7 @@ html:not(.menu-open) .top.hide:not(:focus-within) { transform: translateY(-100%)
    Menu.tsx puts the panel and a click-catcher on <body>; html.menu-open moves .site. The card is the slice of the page
    that was on screen (--mo-y = scrollY): clipped to it, then scaled around its middle. Fixed parts of the page (header,
    progress bar) would lose their place inside a transformed .site, so they sit at the top of the slice instead. */
-:root { --menu-bg: #1c0f30; --menu-ink: #f8f7f9; --menu-acc: #ff2d83; --menu-x: 24vw; --menu-s: .74 }
+:root { --menu-bg: #17283f; --menu-ink: #f8f6f3; --menu-acc: #d8f450; --menu-x: 24vw; --menu-s: .74 }
 html.menu-open { overflow: hidden }
 html.menu-open body, html.menu-closing body { background: var(--menu-bg) }
 .site { transition: background-color .6s ease, color .6s ease, transform .75s cubic-bezier(.76,0,.2,1), border-radius .75s cubic-bezier(.76,0,.2,1) }
@@ -319,7 +319,7 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
 .row.on .rn { transform: translateX(-14px) }
 /* the hovered project's main picture, beside its name (Motion places it; it glides from row to row) */
 .peek { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 15; width: clamp(150px, 12vw, 210px); aspect-ratio: 4 / 3;
-  border-radius: 10px; overflow: hidden; box-shadow: 0 18px 36px -16px rgba(28,15,48,.45);
+  border-radius: 10px; overflow: hidden; box-shadow: 0 18px 36px -16px rgba(27,13,45,.45);
   opacity: 0; scale: .85; transition: opacity .35s ease, scale .5s cubic-bezier(.2,.8,.2,1) }
 .peek.show { opacity: 1; scale: 1 }
 .peek .visual { position: absolute; inset: 0 }
@@ -447,16 +447,18 @@ main[tabindex="-1"]:focus { outline: none }
 .go:hover { background: color-mix(in srgb, currentColor 12%, transparent) }
 
 /* ---------- brand book 2026 (palette trial b26, lib/trial.ts) ----------
-   Porcelain, deep violet ink, burgundy for small labels and links (9:1), --b-word (#9e3a64, 6:1) for the accent word in big headings and project statements, laser pink for an indicator
-   (3.3:1: large text and marks only), lemon for the one primary button (violet on it 13:1). No gradients. */
-html[data-brand] { --chrome-bg: #f8f7f9; --b-deep: #801f48; --b-word: #9e3a64; --b-pink: #ff2d83; --b-pop: #f4e85a }
-html[data-brand] .site { --p-acc-sm: #801f48 !important }
+   Palette 2026-11-18: off-white #f8f6f3, eggplant ink #1b0d2d, ink blue #17283f for dark areas (menu, a card), burgundy
+   #9e3a64 for small labels and links (6:1), calm pink #c94f86 (3.9:1: large text and marks only) for the accent word,
+   lime #d8f450 for the primary button and DEV (on dark or with ink text only: 1.15:1 on the off-white)
+   No gradients. */
+html[data-brand] { --chrome-bg: #f8f6f3; --b-deep: #9e3a64; --b-word: #c94f86; --b-pink: #c94f86; --b-pop: #d8f450 }
+html[data-brand] .site { --p-acc-sm: #9e3a64 !important }
 html[data-brand] .statement em { color: var(--b-word) }
 /* nothing slides under it here, so no background: the hero slabs' shadows, lagging behind the scroll, stay whole */
 html[data-brand] .after-ph { margin-top: 0; box-shadow: none; background: transparent }
 html[data-brand] .visual .glow { display: none }
-html[data-brand] .cookie button { background: #1c0f30; color: #f8f7f9 }
-html[data-brand] .cookie button:focus-visible, html[data-brand] .cookie a:focus-visible { outline-color: #1c0f30 }
+html[data-brand] .cookie button { background: #1b0d2d; color: #f8f6f3 }
+html[data-brand] .cookie button:focus-visible, html[data-brand] .cookie a:focus-visible { outline-color: #1b0d2d }
 /* header: the logo, then (desktop) the intro call, and the menu button at every width (the menu holds the sections) */
 .top-nav, .top-cta { display: none }
 html[data-brand] .top { transition: color .6s, background-color .3s, transform .6s cubic-bezier(.22,1,.36,1), opacity .45s ease }
@@ -476,7 +478,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .top-nav a { display: inline-block; padding-block: 8px; font-size: 16px; text-decoration: none; color: inherit }
 .top-nav a:hover { color: var(--b-deep) }
 .top-nav a[aria-current="page"] { box-shadow: inset 0 -2px var(--b-pink) }
-.top-cta { align-items: center; gap: 10px; padding: 10px 22px; border: 0; border-radius: 999px; font-size: 15px; text-decoration: none; background: var(--b-pop); color: #1c0f30 }
+.top-cta { align-items: center; gap: 10px; padding: 10px 22px; border: 0; border-radius: 999px; font-size: 15px; text-decoration: none; background: var(--b-pop); color: #1b0d2d }
 .top-cta:hover { background: #ebdc3c }
 
 /* home hero: copy on the right, the four Passion words on brush strokes on the left, on the same porcelain */
@@ -492,7 +494,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .bh-comp { position: absolute; left: 12.9cqi; top: calc(46cqb - 28.85cqi); width: 76.4cqi; height: 57.7cqi; scale: .78 } /* smaller than the frame */
 .brush { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h);
   /* the wide soft shadow of the old slabs, following each stroke's edge; nearer strokes (higher --d) cast it longer */
-  filter: drop-shadow(calc(2cqi + 2cqi * var(--d)) calc(3cqi + 3cqi * var(--d)) calc(3cqi + 2cqi * var(--d)) rgba(28,15,48,.22)) }
+  filter: drop-shadow(calc(2cqi + 2cqi * var(--d)) calc(3cqi + 3cqi * var(--d)) calc(3cqi + 2cqi * var(--d)) rgba(27,13,45,.22)) }
 /* the stroke: its SVG shape as a mask over the colour from Settings → צבעים (--brush-N on <html>, layout.tsx) */
 .brush > b { position: absolute; inset: 0; background: var(--c); -webkit-mask: var(--img) center / 100% 100% no-repeat; mask: var(--img) center / 100% 100% no-repeat }
 /* depth: a pair drifts by its --d with the scroll (--sy, px) and the pointer (--mx/--my, -1..1). The translate property
@@ -505,10 +507,10 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 /* stacking as in Figma: pink and EXPERIENCE, then yellow and DEV over them (the yellow covers the end of EXPERIENCE);
    IDEAS and DESIGN stay on top of everything */
 .brush-1, .brush-2 { z-index: 1 } .brush-3 { z-index: 2 } .slab-3 { z-index: 3 } .brush-4 { z-index: 4 } .slab-4, .slab-1, .slab-2 { z-index: 5 }
-.brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg); --c: var(--brush-1, #000) }
-.brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1; --c: var(--brush-2, #9e3a64) }
-.brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2; --c: var(--brush-3, #dc3180) }
-.brush-4 { --x: 46.07cqi; --y: 38.66cqi; --w: 27.35cqi; --h: 19.02cqi; --img: url(/brush/yellow.svg); --k: 3; --c: var(--brush-4, #f0e765) }
+.brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg); --c: var(--brush-1, #1b0d2d) }
+.brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1; --c: var(--brush-2, #c94f86) }
+.brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2; --c: var(--brush-3, #17283f) }
+.brush-4 { --x: 46.07cqi; --y: 38.66cqi; --w: 27.35cqi; --h: 19.02cqi; --img: url(/brush/yellow.svg); --k: 3; --c: var(--brush-4, #d8f450) }
 /* one size for all four words (close to Figma's), each centred where Figma has it.
    line-height = Karantina's cap height (.71em): the box is exactly the capitals, so top/left place the ink */
 .slab { position: absolute; left: var(--x); top: var(--y); font: 400 20.5cqi/.71 var(--f-display); letter-spacing: -.01em; text-transform: uppercase;
@@ -516,7 +518,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .slab-1 { --x: 6.11cqi; --y: 2.75cqi; --r: -2deg; --ink: var(--slab-1-ink, #fff) }
 .slab-2 { --x: 38.98cqi; --y: 9.6cqi; --r: 4deg; --k: 1; --ink: var(--slab-2-ink, #fff) }
 .slab-3 { --x: 8.58cqi; --y: 26.35cqi; --r: -1.5deg; --k: 2; --ink: var(--slab-3-ink, #fff) }
-.slab-4 { --x: 50.1cqi; --y: 40.63cqi; --r: 2deg; --k: 3; --ink: var(--slab-4-ink, #1c0f30) }
+.slab-4 { --x: 50.1cqi; --y: 40.63cqi; --r: 2deg; --k: 3; --ink: var(--slab-4-ink, #1b0d2d) }
 /* stroke and word drop in together, one pair after another */
 @media (prefers-reduced-motion: no-preference) {
   .brush, .slab { animation: slab-in .9s cubic-bezier(.2,.9,.25,1.15) both; animation-delay: calc(.15s + var(--k, 0) * .22s) }
@@ -530,7 +532,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .bh h1 em { font-style: normal; color: var(--b-word) }
 .bh-text { margin: 0; max-width: 44ch; font-size: clamp(18px, 1.4vw, 21px); line-height: 1.6 }
 .bh-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; margin-top: 8px }
-.pill { display: inline-flex; align-items: center; gap: 14px; min-height: 52px; padding: 14px 32px; border-radius: 999px; background: var(--b-pop); color: #1c0f30;
+.pill { display: inline-flex; align-items: center; gap: 14px; min-height: 52px; padding: 14px 32px; border-radius: 999px; background: var(--b-pop); color: #1b0d2d;
   font-family: inherit; font-size: 18px; text-decoration: none; border: 0; cursor: pointer; transition: transform .25s cubic-bezier(.2,.8,.2,1) }
 .pill:hover { transform: translateY(-2px) }
 .pill span, .top-cta span { transition: transform .25s }
@@ -661,39 +663,39 @@ html[data-brand] .quote figcaption span { color: var(--b-deep) }
 @media (max-width: 860px) { .ct-grid { grid-template-columns: 1fr } }
 
 /* the brief assistant (components/BriefAssistant.tsx) */
-.bot { background: #fff; color: #1c0f30; border: 1px solid #e7e3ec; border-radius: 28px; box-shadow: 0 30px 60px -30px rgba(28, 15, 48, .25); overflow: hidden }
+.bot { background: #fff; color: #1b0d2d; border: 1px solid #e7e3ec; border-radius: 28px; box-shadow: 0 30px 60px -30px rgba(27, 13, 45, .25); overflow: hidden }
 .bot-head { display: flex; align-items: center; gap: 12px; padding: 18px 24px; border-bottom: 1px solid #e7e3ec }
 .bot-head h3 { margin: 0; font-size: 17px; font-weight: 600 }
-.bot-head small { display: block; font-size: 14px; color: #801f48 }
-.bot-dot { width: 34px; height: 34px; flex: none; border-radius: 50%; background: #1c0f30; color: #f4e85a; display: grid; place-items: center; font: 700 20px var(--f-display) }
+.bot-head small { display: block; font-size: 14px; color: #9e3a64 }
+.bot-dot { width: 34px; height: 34px; flex: none; border-radius: 50%; background: #1b0d2d; color: #d8f450; display: grid; place-items: center; font: 700 20px var(--f-display) }
 .bot-dot svg { width: 17px; height: auto; display: block }
 .bot-log { display: grid; gap: 12px; align-content: start; padding: 22px 24px; min-height: 260px; max-height: min(560px, 70vh); overflow: auto; list-style: none; margin: 0 }
 .bot .msg { max-width: 85%; padding: 12px 16px; border-radius: 20px; font-size: 17px; line-height: 1.5; white-space: pre-wrap; animation: bot-in .35s ease both }
 .bot .msg.ai { justify-self: start; background: #f1eef4; border-start-start-radius: 6px }
-.bot .msg.me { justify-self: end; background: #1c0f30; color: #f8f7f9; border-start-end-radius: 6px }
+.bot .msg.me { justify-self: end; background: #1b0d2d; color: #f8f6f3; border-start-end-radius: 6px }
 .bot .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-self: start }
-.bot .chips button { min-height: 40px; padding: 6px 16px; border: 1px solid #1c0f30; border-radius: 999px; background: transparent; color: inherit; font: inherit; font-size: 15px; cursor: pointer }
-.bot .chips button:hover { background: #f4e85a }
+.bot .chips button { min-height: 40px; padding: 6px 16px; border: 1px solid #1b0d2d; border-radius: 999px; background: transparent; color: inherit; font: inherit; font-size: 15px; cursor: pointer }
+.bot .chips button:hover { background: #d8f450 }
 .bot .typing { justify-self: start; display: flex; gap: 4px; padding: 14px 16px; background: #f1eef4; border-radius: 20px }
-.bot .typing i { width: 7px; height: 7px; border-radius: 50%; background: #801f48; animation: bot-blink 1s infinite }
+.bot .typing i { width: 7px; height: 7px; border-radius: 50%; background: #9e3a64; animation: bot-blink 1s infinite }
 .bot .typing i:nth-of-type(2) { animation-delay: .15s }
 .bot .typing i:nth-of-type(3) { animation-delay: .3s }
-.bot .brief { border: 2px solid #1c0f30; border-radius: 20px; padding: 18px 20px }
+.bot .brief { border: 2px solid #1b0d2d; border-radius: 20px; padding: 18px 20px }
 .bot .brief form { display: grid; gap: 10px }
 .bot .brief h4 { margin: 0; font: 700 34px/1 var(--f-display) }
 .brief-hint { margin: 0; font-size: 14px; color: #5c5168 }
 .brief-row { display: grid; gap: 4px; font-size: 14px }
-.brief-row span { color: #801f48 }
-.brief-row textarea, .brief-row input { width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid #8d849a; border-radius: 12px; font: inherit; font-size: 16px; color: #1c0f30; background: #fff; resize: vertical }
+.brief-row span { color: #9e3a64 }
+.brief-row textarea, .brief-row input { width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid #8d849a; border-radius: 12px; font: inherit; font-size: 16px; color: #1b0d2d; background: #fff; resize: vertical }
 .bot .brief .pill { justify-self: stretch; margin-top: 6px }
 /* the honeypot stays where it is, clipped to nothing: an offset like left: -9999px makes an RTL page scroll sideways
    (phones then zoom the whole page out) */
 .hp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; opacity: 0; pointer-events: none }
 .bot-form { display: flex; gap: 10px; padding: 16px 24px 12px; border-top: 1px solid #e7e3ec }
 .bot-form { align-items: flex-end }
-.bot-form textarea { flex: 1; min-width: 0; height: 52px; min-height: 52px; max-height: 140px; padding: 13px 18px; border: 1px solid #8d849a; border-radius: 22px; font: inherit; font-size: 17px; line-height: 1.5; color: #1c0f30; background: #fff; resize: none; overflow-y: hidden; box-sizing: border-box }
+.bot-form textarea { flex: 1; min-width: 0; height: 52px; min-height: 52px; max-height: 140px; padding: 13px 18px; border: 1px solid #8d849a; border-radius: 22px; font: inherit; font-size: 17px; line-height: 1.5; color: #1b0d2d; background: #fff; resize: none; overflow-y: hidden; box-sizing: border-box }
 .bot .pill:disabled { opacity: .55; cursor: default; transform: none }
-.bot-error { margin: 0; padding: 0 24px 8px; font-size: 15px; color: #801f48 }
+.bot-error { margin: 0; padding: 0 24px 8px; font-size: 15px; color: #9e3a64 }
 .bot-note { margin: 0; padding: 0 24px 18px; font-size: 13px; color: #5c5168 }
 .bot-note a { color: inherit }
 @keyframes bot-in { from { opacity: 0; transform: translateY(8px) } }

@@ -1,19 +1,19 @@
 import type { Home, Project, Setting } from '@/payload-types'
 
 /**
- * The 2026 brand book (palette A "Electric Contrast"), settled on 2026-10-29 and the only look since the design
- * trials were removed (2026-11-11): porcelain, deep violet ink, laser pink for one word or an indicator, lemon only
- * for the one primary button. The colours come from here, not from the colour fields in the CMS (hidden in the admin).
+ * The 2026 brand book, settled on 2026-10-29; palette changed 2026-11-18: off-white, eggplant ink, ink blue for dark
+ * areas, calm pink for the accent word, burgundy for small accent text, lime only for the primary button and DEV.
+ * The base colours come from here; the accent word and the hero strokes from Settings → צבעים (lib/data.ts).
  */
 export const BRAND = {
-  site: { bg: '#f8f7f9', ink: '#1c0f30', accent: '#ff2d83' },
+  site: { bg: '#f8f6f3', ink: '#1b0d2d', accent: '#c94f86' },
   /** service cards, in order: background + text, 5:1 or more */
   cards: [
-    { bg: '#1c0f30', ink: '#f8f7f9' },
-    { bg: '#801f48', ink: '#f8f7f9' },
-    { bg: '#ffffff', ink: '#1c0f30' },
-    { bg: '#2e1f45', ink: '#f8f7f9' },
-    { bg: '#f4e85a', ink: '#1c0f30' },
+    { bg: '#1b0d2d', ink: '#f8f6f3' },
+    { bg: '#9e3a64', ink: '#f8f6f3' },
+    { bg: '#ffffff', ink: '#1b0d2d' },
+    { bg: '#17283f', ink: '#f8f6f3' },
+    { bg: '#d8f450', ink: '#1b0d2d' },
   ],
 }
 
