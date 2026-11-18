@@ -26,7 +26,7 @@ Work top to bottom. Each step ends with tsc + build + a check in the browser (39
 ## 3. Brand
 - [x] Logo in the header and admin (`components/Logo.tsx`, `components/admin/Brand.tsx`); `app/icon.svg` + `app/apple-icon.png`.
 - [x] Fonts: Karantina self-hosted by `next/font` (#107), Talent from Blob (preloaded); no Google Fonts link.
-- [x] Palette: the 2026 brand book in `lib/brand.ts` (CMS colour fields hidden). Accent word in big headings and in the project statement is burgundy `#801f48` (#112, #113); laser pink only for indicators.
+- [x] Palette 2026-11-18 (#122–#124): off-white, eggplant, slate blue #3f546e, burgundy #9e3a64, pink #c94f86, lime #e1f450. Accent word, hero strokes and about-word colours editable in Settings → צבעים / Home (#121).
 
 ## 4. Real content
 - [x] All 23 projects of the old portfolio: `npm run import:wp` (`src/import/wordpress.ts`, see `docs/IMPORT.md`) — tested on an empty database: 23 projects, 72 screenshots, 80 s; re-run skips everything.
