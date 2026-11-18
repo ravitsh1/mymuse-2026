@@ -92,7 +92,7 @@ html:not(.menu-open) .top.hide:not(:focus-within) { transform: translateY(-100%)
    Menu.tsx puts the panel and a click-catcher on <body>; html.menu-open moves .site. The card is the slice of the page
    that was on screen (--mo-y = scrollY): clipped to it, then scaled around its middle. Fixed parts of the page (header,
    progress bar) would lose their place inside a transformed .site, so they sit at the top of the slice instead. */
-:root { --menu-bg: #17283f; --menu-ink: #f8f6f3; --menu-acc: #e1f450; --menu-x: 24vw; --menu-s: .74 }
+:root { --menu-bg: #3f546e; --menu-ink: #f8f6f3; --menu-acc: #e1f450; --menu-x: 24vw; --menu-s: .74 }
 html.menu-open { overflow: hidden }
 html.menu-open body, html.menu-closing body { background: var(--menu-bg) }
 .site { transition: background-color .6s ease, color .6s ease, transform .75s cubic-bezier(.76,0,.2,1), border-radius .75s cubic-bezier(.76,0,.2,1) }
@@ -447,7 +447,7 @@ main[tabindex="-1"]:focus { outline: none }
 .go:hover { background: color-mix(in srgb, currentColor 12%, transparent) }
 
 /* ---------- brand book 2026 (palette trial b26, lib/trial.ts) ----------
-   Palette 2026-11-18: off-white #f8f6f3, eggplant ink #1b0d2d, ink blue #17283f for dark areas (menu, a card), burgundy
+   Palette 2026-11-18: off-white #f8f6f3, eggplant ink #1b0d2d, slate blue #3f546e for dark areas (menu, a card; 7:1 with the off-white), burgundy
    #9e3a64 for small labels and links (6:1), calm pink #c94f86 (3.9:1: large text and marks only) for the accent word,
    lime #e1f450 for the primary button and DEV (on dark or with ink text only: 1.2:1 on the off-white)
    No gradients. */
@@ -509,7 +509,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .brush-1, .brush-2 { z-index: 1 } .brush-3 { z-index: 2 } .slab-3 { z-index: 3 } .brush-4 { z-index: 4 } .slab-4, .slab-1, .slab-2 { z-index: 5 }
 .brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg); --c: var(--brush-1, #1b0d2d) }
 .brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1; --c: var(--brush-2, #c94f86) }
-.brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2; --c: var(--brush-3, #17283f) }
+.brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2; --c: var(--brush-3, #3f546e) }
 .brush-4 { --x: 46.07cqi; --y: 38.66cqi; --w: 27.35cqi; --h: 19.02cqi; --img: url(/brush/yellow.svg); --k: 3; --c: var(--brush-4, #e1f450) }
 /* one size for all four words (close to Figma's), each centred where Figma has it.
    line-height = Karantina's cap height (.71em): the box is exactly the capitals, so top/left place the ink */

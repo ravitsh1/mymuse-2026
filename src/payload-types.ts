@@ -754,7 +754,7 @@ export interface Setting {
    */
   brushDesign?: string | null;
   /**
-   * ברירת מחדל: כחול דיו #17283f
+   * ברירת מחדל: כחול #3f546e
    */
   brushExperience?: string | null;
   /**

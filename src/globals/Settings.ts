@@ -123,7 +123,7 @@ export const Settings: GlobalConfig = {
                   fields: [
                     colorField('brushIdeas', 'IDEAS', '#1b0d2d', 'ברירת מחדל: סגול חציל #1b0d2d'),
                     colorField('brushDesign', 'DESIGN', '#c94f86', 'ברירת מחדל: ורוד #c94f86'),
-                    colorField('brushExperience', 'EXPERIENCE', '#17283f', 'ברירת מחדל: כחול דיו #17283f'),
+                    colorField('brushExperience', 'EXPERIENCE', '#3f546e', 'ברירת מחדל: כחול #3f546e'),
                     colorField('brushDev', 'DEV', '#e1f450', 'ברירת מחדל: ליים #e1f450'),
                   ],
                 },

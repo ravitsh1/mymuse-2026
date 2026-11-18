@@ -8,7 +8,7 @@ import { TextInput, useField } from '@payloadcms/ui'
 const PALETTE: [string, string][] = [
   ['#f8f6f3', 'אוף־ווייט (רקע)'],
   ['#1b0d2d', 'סגול חציל (טקסט)'],
-  ['#17283f', 'כחול דיו'],
+  ['#3f546e', 'כחול'],
   ['#9e3a64', 'בורדו'],
   ['#c94f86', 'ורוד'],
   ['#e1f450', 'ליים'],
