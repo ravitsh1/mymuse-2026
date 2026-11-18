@@ -758,7 +758,7 @@ export interface Setting {
    */
   brushExperience?: string | null;
   /**
-   * ברירת מחדל: ליים #d8f450
+   * ברירת מחדל: ליים #e1f450
    */
   brushDev?: string | null;
   /**
