@@ -92,7 +92,7 @@ html:not(.menu-open) .top.hide:not(:focus-within) { transform: translateY(-100%)
    Menu.tsx puts the panel and a click-catcher on <body>; html.menu-open moves .site. The card is the slice of the page
    that was on screen (--mo-y = scrollY): clipped to it, then scaled around its middle. Fixed parts of the page (header,
    progress bar) would lose their place inside a transformed .site, so they sit at the top of the slice instead. */
-:root { --menu-bg: #17283f; --menu-ink: #f8f6f3; --menu-acc: #d8f450; --menu-x: 24vw; --menu-s: .74 }
+:root { --menu-bg: #17283f; --menu-ink: #f8f6f3; --menu-acc: #e1f450; --menu-x: 24vw; --menu-s: .74 }
 html.menu-open { overflow: hidden }
 html.menu-open body, html.menu-closing body { background: var(--menu-bg) }
 .site { transition: background-color .6s ease, color .6s ease, transform .75s cubic-bezier(.76,0,.2,1), border-radius .75s cubic-bezier(.76,0,.2,1) }
@@ -449,9 +449,9 @@ main[tabindex="-1"]:focus { outline: none }
 /* ---------- brand book 2026 (palette trial b26, lib/trial.ts) ----------
    Palette 2026-11-18: off-white #f8f6f3, eggplant ink #1b0d2d, ink blue #17283f for dark areas (menu, a card), burgundy
    #9e3a64 for small labels and links (6:1), calm pink #c94f86 (3.9:1: large text and marks only) for the accent word,
-   lime #d8f450 for the primary button and DEV (on dark or with ink text only: 1.15:1 on the off-white)
+   lime #e1f450 for the primary button and DEV (on dark or with ink text only: 1.2:1 on the off-white)
    No gradients. */
-html[data-brand] { --chrome-bg: #f8f6f3; --b-deep: #9e3a64; --b-word: #c94f86; --b-pink: #c94f86; --b-pop: #d8f450 }
+html[data-brand] { --chrome-bg: #f8f6f3; --b-deep: #9e3a64; --b-word: #c94f86; --b-pink: #c94f86; --b-pop: #e1f450 }
 html[data-brand] .site { --p-acc-sm: #9e3a64 !important }
 html[data-brand] .statement em { color: var(--b-word) }
 /* nothing slides under it here, so no background: the hero slabs' shadows, lagging behind the scroll, stay whole */
@@ -510,7 +510,7 @@ html.menu-open .site.scrolled .top { backdrop-filter: none }
 .brush-1 { --x: 0cqi; --y: 0cqi; --w: 43.87cqi; --h: 19.52cqi; --img: url(/brush/black.svg); --c: var(--brush-1, #1b0d2d) }
 .brush-2 { --x: 31.91cqi; --y: 4.28cqi; --w: 45.4cqi; --h: 24.37cqi; --img: url(/brush/purple.svg); --k: 1; --c: var(--brush-2, #c94f86) }
 .brush-3 { --x: 2.14cqi; --y: 23.91cqi; --w: 63.72cqi; --h: 20.37cqi; --img: url(/brush/pink.svg); --k: 2; --c: var(--brush-3, #17283f) }
-.brush-4 { --x: 46.07cqi; --y: 38.66cqi; --w: 27.35cqi; --h: 19.02cqi; --img: url(/brush/yellow.svg); --k: 3; --c: var(--brush-4, #d8f450) }
+.brush-4 { --x: 46.07cqi; --y: 38.66cqi; --w: 27.35cqi; --h: 19.02cqi; --img: url(/brush/yellow.svg); --k: 3; --c: var(--brush-4, #e1f450) }
 /* one size for all four words (close to Figma's), each centred where Figma has it.
    line-height = Karantina's cap height (.71em): the box is exactly the capitals, so top/left place the ink */
 .slab { position: absolute; left: var(--x); top: var(--y); font: 400 20.5cqi/.71 var(--f-display); letter-spacing: -.01em; text-transform: uppercase;
@@ -667,7 +667,7 @@ html[data-brand] .quote figcaption span { color: var(--b-deep) }
 .bot-head { display: flex; align-items: center; gap: 12px; padding: 18px 24px; border-bottom: 1px solid #e7e3ec }
 .bot-head h3 { margin: 0; font-size: 17px; font-weight: 600 }
 .bot-head small { display: block; font-size: 14px; color: #9e3a64 }
-.bot-dot { width: 34px; height: 34px; flex: none; border-radius: 50%; background: #1b0d2d; color: #d8f450; display: grid; place-items: center; font: 700 20px var(--f-display) }
+.bot-dot { width: 34px; height: 34px; flex: none; border-radius: 50%; background: #1b0d2d; color: #e1f450; display: grid; place-items: center; font: 700 20px var(--f-display) }
 .bot-dot svg { width: 17px; height: auto; display: block }
 .bot-log { display: grid; gap: 12px; align-content: start; padding: 22px 24px; min-height: 260px; max-height: min(560px, 70vh); overflow: auto; list-style: none; margin: 0 }
 .bot .msg { max-width: 85%; padding: 12px 16px; border-radius: 20px; font-size: 17px; line-height: 1.5; white-space: pre-wrap; animation: bot-in .35s ease both }
@@ -675,7 +675,7 @@ html[data-brand] .quote figcaption span { color: var(--b-deep) }
 .bot .msg.me { justify-self: end; background: #1b0d2d; color: #f8f6f3; border-start-end-radius: 6px }
 .bot .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-self: start }
 .bot .chips button { min-height: 40px; padding: 6px 16px; border: 1px solid #1b0d2d; border-radius: 999px; background: transparent; color: inherit; font: inherit; font-size: 15px; cursor: pointer }
-.bot .chips button:hover { background: #d8f450 }
+.bot .chips button:hover { background: #e1f450 }
 .bot .typing { justify-self: start; display: flex; gap: 4px; padding: 14px 16px; background: #f1eef4; border-radius: 20px }
 .bot .typing i { width: 7px; height: 7px; border-radius: 50%; background: #9e3a64; animation: bot-blink 1s infinite }
 .bot .typing i:nth-of-type(2) { animation-delay: .15s }

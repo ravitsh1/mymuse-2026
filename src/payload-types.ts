@@ -746,19 +746,19 @@ export interface Setting {
    */
   accentWord?: string | null;
   /**
-   * ברירת מחדל: שחור #000000
+   * ברירת מחדל: סגול חציל #1b0d2d
    */
   brushIdeas?: string | null;
   /**
-   * ברירת מחדל: בורדו בהיר #9e3a64
+   * ברירת מחדל: ורוד #c94f86
    */
   brushDesign?: string | null;
   /**
-   * ברירת מחדל: ורוד #dc3180
+   * ברירת מחדל: כחול דיו #17283f
    */
   brushExperience?: string | null;
   /**
-   * ברירת מחדל: צהוב #f0e765
+   * ברירת מחדל: ליים #e1f450
    */
   brushDev?: string | null;
   /**
