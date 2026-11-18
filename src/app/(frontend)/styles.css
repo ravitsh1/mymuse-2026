@@ -334,8 +334,15 @@ html:not(.menu-open) .site.top-light .top { color: var(--ph-light) }
 .cards { display: grid; gap: 24px; list-style: none; margin: 0; padding: 0 }
 .card { position: sticky; min-height: min(62vh, 520px); border-radius: 22px; padding: clamp(24px, 4vw, 48px); display: grid; align-content: end; gap: 24px;
   background: var(--c-bg); color: var(--c-ink); box-shadow: 0 -20px 60px -30px rgba(0,0,0,.6) }
-/* each card's brush mark (public/brush/mark-N.svg), top left: white on the dark cards, black on the light ones */
-.card-mark { position: absolute; top: clamp(24px, 4vw, 48px); left: clamp(24px, 3.4vw, 40px) } /* its own size, as in Figma (38–57px wide) */
+/* each card's brush mark (public/brush/mark-N.svg), top left, in the card's text colour (the SVG is a mask), so it
+   follows the background Ravit picks; its own size, as in Figma (38–57px wide) */
+.card-mark { position: absolute; top: clamp(24px, 4vw, 48px); left: clamp(24px, 3.4vw, 40px); width: var(--w); height: var(--h);
+  background: currentColor; -webkit-mask: var(--img) center / 100% 100% no-repeat; mask: var(--img) center / 100% 100% no-repeat }
+.card-mark-1 { --w: 38px; --h: 15px; --img: url(/brush/mark-1.svg) }
+.card-mark-2 { --w: 38px; --h: 45px; --img: url(/brush/mark-2.svg) }
+.card-mark-3 { --w: 47px; --h: 53px; --img: url(/brush/mark-3.svg) }
+.card-mark-4 { --w: 57px; --h: 38px; --img: url(/brush/mark-4.svg) }
+.card-mark-5 { --w: 50px; --h: 44px; --img: url(/brush/mark-5.svg) }
 .card-n { font-weight: 300; font-variant-numeric: tabular-nums }
 .card h3 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: clamp(48px, 7vw, 96px); line-height: .9 }
 .card p { margin: 10px 0 0; max-width: 40ch; font-size: clamp(19px, 2vw, 25px) }
