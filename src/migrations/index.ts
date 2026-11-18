@@ -67,6 +67,7 @@ import * as migration_20261117_171506_settings_colors from './20261117_171506_se
 import * as migration_20261118_131535_palette_defaults from './20261118_131535_palette_defaults';
 import * as migration_20261118_131600_palette_values from './20261118_131600_palette_values';
 import * as migration_20261118_131831_lime_default from './20261118_131831_lime_default';
+import * as migration_20261118_133449_blue_default from './20261118_133449_blue_default';
 
 export const migrations = [
   {
@@ -412,6 +413,11 @@ export const migrations = [
   {
     up: migration_20261118_131831_lime_default.up,
     down: migration_20261118_131831_lime_default.down,
-    name: '20261118_131831_lime_default'
+    name: '20261118_131831_lime_default',
+  },
+  {
+    up: migration_20261118_133449_blue_default.up,
+    down: migration_20261118_133449_blue_default.down,
+    name: '20261118_133449_blue_default'
   },
 ];

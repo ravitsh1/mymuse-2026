@@ -121,7 +121,7 @@ const textOn = (bg: string) => (contrast(rgb(bg), [255, 255, 255]) >= 3 ? '#ffff
  */
 export const brandColorVars = (s: Setting): React.CSSProperties => {
   const word = hex6(s.accentWord, '#c94f86')
-  const brushes = [hex6(s.brushIdeas, '#1b0d2d'), hex6(s.brushDesign, '#c94f86'), hex6(s.brushExperience, '#17283f'), hex6(s.brushDev, '#e1f450')]
+  const brushes = [hex6(s.brushIdeas, '#1b0d2d'), hex6(s.brushDesign, '#c94f86'), hex6(s.brushExperience, '#3f546e'), hex6(s.brushDev, '#e1f450')]
   const vars: Record<string, string> = { '--b-word': accentText({ bg: BRAND.site.bg, ink: BRAND.site.ink, acc: word }, 3) }
   brushes.forEach((c, i) => {
     vars[`--brush-${i + 1}`] = c

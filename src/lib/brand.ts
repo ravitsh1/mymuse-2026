@@ -12,7 +12,7 @@ export const BRAND = {
     { bg: '#1b0d2d', ink: '#f8f6f3' },
     { bg: '#9e3a64', ink: '#f8f6f3' },
     { bg: '#ffffff', ink: '#1b0d2d' },
-    { bg: '#17283f', ink: '#f8f6f3' },
+    { bg: '#3f546e', ink: '#f8f6f3' },
     { bg: '#e1f450', ink: '#1b0d2d' },
   ],
 }
