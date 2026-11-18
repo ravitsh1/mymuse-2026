@@ -7,8 +7,9 @@ import { NextResponse, type NextRequest } from 'next/server'
  * for a project removed from the new site.
  */
 const LEGACY: Record<string, string> = {
-  '/about-us': '/',
-  '/contact': '/',
+  // straight to the section that replaced the page (the menu links there too)
+  '/about-us': '/#about',
+  '/contact': '/#contact',
   '/portfolio': '/work',
   '/הצהרת-נגישות': '/accessibility',
   // the old site's shop pages and an Instagram feed page: nothing like them here
@@ -43,7 +44,9 @@ const LEGACY_PROJECTS: Record<string, string> = {
   'gordon-pool-בריכת-גורדון': 'gordon-pool',
 }
 
-const legacyTarget = (path: string): string | null => {
+const legacyTarget = (raw: string): string | null => {
+  // WordPress matched its slugs in any letter case (/About-Us/ worked), so the old links may too
+  const path = raw.toLowerCase()
   if (LEGACY[path]) return LEGACY[path]
   const m = path.match(/^\/portfolio\/([^/]+)$/)
   // only old slugs are mapped: new slugs (/portfolio/jullius) must pass through untouched
@@ -74,7 +77,10 @@ export function proxy(req: NextRequest) {
   }
   // old-site addresses, in a single 301 hop
   const legacy = legacyTarget(decoded)
-  if (legacy) return NextResponse.redirect(to(req, legacy), 301)
+  if (legacy) {
+    const [path, hash = ''] = legacy.split('#')
+    return NextResponse.redirect(to(req, path, hash && `#${hash}`), 301)
+  }
   if (bare !== pathname) return NextResponse.redirect(to(req, bare), 308)
   return NextResponse.next()
 }
