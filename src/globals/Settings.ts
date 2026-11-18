@@ -107,7 +107,7 @@ export const Settings: GlobalConfig = {
             colorField(
               'accentWord',
               'המילה המודגשת בכותרות',
-              '#9e3a64',
+              '#c94f86',
               'המילים המודגשות בכותרות: בפתיחה, ב"עלינו", ב"צור קשר", בסוף העמוד ובמשפט המרכזי בעמודי הפרויקטים. צבע בהיר מדי יוכהה אוטומטית עד ניגודיות קריאה (3:1).',
             ),
             {
@@ -121,10 +121,10 @@ export const Settings: GlobalConfig = {
                 {
                   type: 'row',
                   fields: [
-                    colorField('brushIdeas', 'IDEAS', '#000000', 'ברירת מחדל: שחור #000000'),
-                    colorField('brushDesign', 'DESIGN', '#9e3a64', 'ברירת מחדל: בורדו בהיר #9e3a64'),
-                    colorField('brushExperience', 'EXPERIENCE', '#dc3180', 'ברירת מחדל: ורוד #dc3180'),
-                    colorField('brushDev', 'DEV', '#f0e765', 'ברירת מחדל: צהוב #f0e765'),
+                    colorField('brushIdeas', 'IDEAS', '#1b0d2d', 'ברירת מחדל: סגול חציל #1b0d2d'),
+                    colorField('brushDesign', 'DESIGN', '#c94f86', 'ברירת מחדל: ורוד #c94f86'),
+                    colorField('brushExperience', 'EXPERIENCE', '#17283f', 'ברירת מחדל: כחול דיו #17283f'),
+                    colorField('brushDev', 'DEV', '#d8f450', 'ברירת מחדל: ליים #d8f450'),
                   ],
                 },
               ],

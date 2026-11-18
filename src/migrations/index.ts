@@ -64,7 +64,9 @@ import * as migration_20261115_090000_share_image from './20261115_090000_share_
 import * as migration_20261117_120000_cookies_text from './20261117_120000_cookies_text';
 import * as migration_20261117_160000_share_image_v2 from './20261117_160000_share_image_v2';
 import * as migration_20261117_171506_settings_colors from './20261117_171506_settings_colors';
+import * as migration_20261118_131535_palette_defaults from './20261118_131535_palette_defaults';
 
+import * as migration_20261118_131600_palette_values from './20261118_131600_palette_values';
 export const migrations = [
   {
     up: migration_20261024_070442_initial.up,
@@ -394,6 +396,16 @@ export const migrations = [
   {
     up: migration_20261117_171506_settings_colors.up,
     down: migration_20261117_171506_settings_colors.down,
-    name: '20261117_171506_settings_colors'
+    name: '20261117_171506_settings_colors',
+  },
+  {
+    up: migration_20261118_131535_palette_defaults.up,
+    down: migration_20261118_131535_palette_defaults.down,
+    name: '20261118_131535_palette_defaults'
+  },
+  {
+    up: migration_20261118_131600_palette_values.up,
+    down: migration_20261118_131600_palette_values.down,
+    name: '20261118_131600_palette_values',
   },
 ];
