@@ -20,8 +20,7 @@
   #addr { margin: 0 auto; transform: translateX(-34px); width: 420px; height: 28px; border-radius: 14px; background: #F3F0EC; color: #17283F; font-size: 13px; font-weight: 500;
     display: flex; align-items: center; justify-content: center; gap: 7px; letter-spacing: .01em }
   #view { position: relative; width: 1360px; height: 850px; overflow: hidden; background: #fff }
-  #view img { position: absolute; left: 0; top: 0; width: 1360px; height: 850px; display: block }
-  #ring { position: absolute; border: 3px solid var(--pink); border-radius: 16px; opacity: 0; box-shadow: 0 0 0 6px rgba(201,79,134,.14) }
+  #view img { position: absolute; opacity: 0; left: 0; top: 0; width: 1360px; height: 850px; display: block }
   #ripple { position: absolute; width: 0; height: 0; border-radius: 50%; border: 2px solid var(--pink); background: rgba(201,79,134,.16); opacity: 0; transform: translate(-50%,-50%) }
   #cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; transform-origin: 0 0; opacity: 0; filter: drop-shadow(0 2px 3px rgba(0,0,0,.35)) }
   #end { position: absolute; left: 0; right: 0; top: 812px; text-align: center; color: var(--aubergine); opacity: 0 }
@@ -44,9 +43,11 @@
         </div>
       </div>
       <div id="view">
-        <img id="s1" src="calendar.jpg" alt="">
-        <img id="s2" src="finance.jpg" alt="">
-        <div id="ring"></div>
+        <img id="s1" src="home.webp" alt="" style="opacity:1">
+        <img id="s2" src="tasks.webp" alt="">
+        <img id="s3" src="finance.webp" alt="">
+        <img id="s4" src="reports.webp" alt="">
+        <img id="s5" src="calendar.webp" alt="">
       </div>
     </div>
     <div id="ripple"></div>
@@ -61,7 +62,7 @@
 <script>
 document.querySelector('#logo path').setAttribute('d', window.LOGO_WIDE)
 const $ = (id) => document.getElementById(id)
-const K = 1360 / 1920, OX = 280, OY = 138
+const K = 1360 / 2000, OX = 280, OY = 138
 const P = (sx, sy) => [OX + sx * K, OY + sy * K]
 const ease = (p) => (p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2)
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v))
@@ -78,24 +79,33 @@ function track(keys, t) {
   return keys[keys.length - 1].slice(1)
 }
 const C = (t, sx, sy, s) => [t, ...P(sx, sy), s]
+// real click targets (source px): sidebar "משימות", sidebar "כספים", finance toolbar "דוחות"
+const CLICKS = [
+  { t: 9.5, at: [1900, 216], show: 's2' },
+  { t: 14.4, at: [1905, 366], show: 's3' },
+  { t: 17.0, at: [680, 491], show: 's4' },
+]
 const CAM = [
   [0, 960, 540, 1], [3.2, 960, 540, 1],
-  C(5.2, 1060, 770, 1.22), C(8.0, 960, 780, 1.22),
-  [9.6, 990, 530, 1.05], [10.4, 990, 530, 1.05],
-  [13.0, 960, 540, 1.03],
-  C(14.8, 760, 730, 1.36), C(18.2, 760, 800, 1.36),
-  C(20.0, 1010, 350, 1.25), C(23.6, 900, 440, 1.25),
+  C(4.8, 1080, 470, 1.18), C(6.6, 1040, 760, 1.25), C(8.0, 1000, 800, 1.25),
+  [9.3, 990, 530, 1.05], [9.9, 990, 530, 1.05],
+  C(11.4, 1120, 520, 1.22), C(13.0, 1100, 640, 1.22),
+  [14.2, 990, 530, 1.05], [14.8, 990, 530, 1.05],
+  C(16.2, 1000, 500, 1.3), C(17.3, 1000, 500, 1.3),
+  [19.0, 960, 540, 1.04],
+  C(20.6, 900, 590, 1.3), C(21.8, 840, 620, 1.3), C(23.8, 960, 960, 1.3),
   [25.8, 960, 679.5, .8], [28, 960, 679.5, .8],
 ]
 const CUR = [
-  [0, 900, 700], [3.0, 900, 700],
-  [4.6, 1410, 930], [5.9, 1075, 892], [7.2, 790, 930], [8.1, 790, 930],
-  [9.6, 1830, 351], [11.2, 1830, 351],
-  [12.8, 1300, 355], [13.4, 1300, 355],
-  [14.9, 400, 606], [15.5, 400, 606], [16.2, 400, 664], [16.7, 400, 664], [17.3, 400, 740], [18.2, 400, 842],
-  [20.0, 1300, 356], [20.7, 1300, 356], [22.2, 650, 622], [22.6, 650, 622], [23.6, 280, 160], [28, 280, 160],
+  [0, 1000, 640], [3.0, 1000, 640],
+  [4.4, 1420, 318], [5.0, 1420, 318], [6.2, 1500, 716], [6.8, 1500, 716], [7.8, 1350, 908], [8.2, 1350, 908],
+  [9.3, 1900, 216], [10.2, 1900, 216],
+  [11.3, 1400, 243], [11.8, 1400, 243], [12.6, 1350, 470], [13.0, 1350, 580], [13.2, 1350, 580],
+  [14.25, 1905, 366], [15.0, 1905, 366],
+  [16.5, 680, 491], [17.6, 680, 491],
+  [19.4, 1350, 300], [19.8, 1350, 300], [21.0, 606, 560], [21.4, 606, 560], [22.2, 938, 560], [22.6, 938, 560],
+  [23.8, 610, 1078], [28, 610, 1078],
 ]
-const CLICK = 9.9
 
 function apply(cam, bgK = .25) {
   const [cx, cy, s] = cam
@@ -111,37 +121,40 @@ window.render = (t) => {
   const inP = ramp(t, .35, 1.7)
   $('win').style.opacity = inP
   $('win').style.transform = `translateY(${(1 - inP) * 26}px) scale(${.955 + .045 * inP})`
-  // screen change on the nav click
-  $('s2').style.opacity = ramp(t, CLICK + .12, CLICK + .62)
-  // highlight ring around the monthly budget panel
-  const [rx, ry] = P(50, 532), ring = $('ring')
-  ring.style.left = rx - OX + 'px'; ring.style.top = ry - OY + 'px'
-  ring.style.width = 415 * K + 'px'; ring.style.height = 410 * K + 'px'
-  ring.style.opacity = ramp(t, 14.7, 15.3) * (1 - ramp(t, 17.9, 18.4))
+  // screen changes follow the clicks
+  $('s5').style.opacity = 0
+  let press = 1, rip = $('ripple')
+  rip.style.opacity = 0
+  for (const c of CLICKS) {
+    $(c.show).style.opacity = ramp(t, c.t + .12, c.t + .62)
+    if (t >= c.t && t < c.t + .22) press = .86
+    const rp = (t - c.t) / .6
+    if (rp >= 0 && rp < 1) {
+      const [x, y] = P(...c.at)
+      rip.style.left = x + 'px'; rip.style.top = y + 'px'
+      rip.style.width = rip.style.height = 10 + 54 * ease(rp) + 'px'
+      rip.style.opacity = 1 - rp
+    }
+  }
   // cursor
   const [sx, sy] = track(CUR, t), [x, y] = P(sx, sy)
-  const press = t >= CLICK && t < CLICK + .22 ? .86 : 1
   const cur = $('cursor')
   cur.style.transform = `translate(${x}px,${y}px) scale(${press / cam[2]})`
-  cur.style.opacity = ramp(t, 2.3, 2.8) * (1 - ramp(t, 23.9, 24.4))
-  const rp = clamp((t - CLICK) / .6), rip = $('ripple')
-  const [cxk, cyk] = P(1830, 351)
-  rip.style.left = cxk + 'px'; rip.style.top = cyk + 'px'
-  rip.style.width = rip.style.height = 10 + 54 * ease(rp) + 'px'
-  rip.style.opacity = t >= CLICK && rp < 1 ? 1 - rp : 0
+  cur.style.opacity = ramp(t, 2.3, 2.8) * (1 - ramp(t, 24.0, 24.5))
   // end card
   const e = ramp(t, 25.5, 26.5)
   $('end').style.opacity = e
   $('end').style.transform = `translateY(${(1 - e) * 22}px)`
 }
 
-// seamless 7s loop: no cursor, slow drift, calendar <-> finance
+// seamless 7s loop: no cursor, slow drift, home <-> calendar
 window.renderLoop = (t) => {
   const w = (t / 7) * Math.PI * 2
   apply([960 + 46 * Math.sin(w), 540 + 22 * Math.sin(w * 2), 1.1 + .04 * Math.cos(w)])
   $('win').style.opacity = 1; $('win').style.transform = 'none'
-  $('s2').style.opacity = ramp(t, 3.0, 3.6) * (1 - ramp(t, 6.4, 7.0))
-  $('ring').style.opacity = 0; $('cursor').style.opacity = 0; $('ripple').style.opacity = 0; $('end').style.opacity = 0
+  for (const id of ['s2', 's3', 's4']) $(id).style.opacity = 0
+  $('s5').style.opacity = ramp(t, 3.0, 3.6) * (1 - ramp(t, 6.4, 7.0))
+  $('cursor').style.opacity = 0; $('ripple').style.opacity = 0; $('end').style.opacity = 0
 }
 window.render(0)
 </script>
