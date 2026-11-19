@@ -36,7 +36,7 @@ const ARGS = {
     hide_tablet: false,
     hide_mobile: false,
     button_size_tablet: 30,
-    button_size_mobile: 20,
+    button_size_mobile: 28, // 40% over the original 20 (Ravit, 2026-11-19); also clears the 24px target size (WCAG 2.5.8)
     position_tablet: 'Left',
     position_mobile: 'Left',
     icon_vertical_position_tablet: 'bottom',
