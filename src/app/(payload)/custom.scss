@@ -129,3 +129,21 @@ html[data-theme='dark'] .mm-tagline { color: var(--mm-pink) }
   font-family: var(--font-body);
   letter-spacing: 0;
 }
+
+/* phones (RTL): nothing may widen the page sideways. Lexical parks its floating link editor far off to the side,
+   which in RTL made the whole edit screen scroll horizontally; the document meta row (created / updated) also
+   ran past the edge. */
+html {
+  overflow-x: clip;
+}
+.doc-controls__meta {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+/* tab buttons (תוכן / מדיה / קידום): in RTL two of them touched ("מדיהקידום"); an even gap instead of side margins */
+.tabs-field__tabs {
+  gap: 20px;
+}
+.tabs-field__tab-button {
+  margin-inline: 0;
+}
