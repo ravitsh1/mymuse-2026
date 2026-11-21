@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound, permanentRedirect } from 'next/navigation'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { Motion } from '@/components/Motion'
@@ -26,7 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata({
     path: `/portfolio/${p.slug}`,
     title: p.metaTitle || p.title,
-    description: p.metaDescription || p.lead,
+    // no description of its own: the first paragraph of the opening text
+    description: p.metaDescription || p.lead?.split(/\n\s*\n/)[0],
     image: shareImageOf(p.hero) || shareImageOf(settings.shareImage),
     type: 'article',
   })
@@ -99,7 +101,18 @@ export default async function ProjectPage({ params }: Props) {
 
         <section className="intro wrap" aria-label="על הפרויקט">
           <div>
-            {p.lead && <p className="lead">{p.lead}</p>}
+            {p.body ? (
+              <RichText data={p.body} className="lead" />
+            ) : (
+              p.lead && (
+                // not converted yet (e.g. a fresh import): the plain text, one paragraph per blank line
+                <div className="lead">
+                  {p.lead.split(/\n\s*\n/).map((t, k) => (
+                    <p key={k}>{t}</p>
+                  ))}
+                </div>
+              )
+            )}
             {p.siteUrl && (
               <a className="visit" href={p.siteUrl} target="_blank" rel="noopener noreferrer">
                 לאתר של {p.title}
@@ -209,7 +222,7 @@ export default async function ProjectPage({ params }: Props) {
             '@context': 'https://schema.org',
             '@type': 'CreativeWork',
             name: p.title,
-            description: p.lead || undefined,
+            description: p.lead?.split(/\n\s*\n/)[0] || undefined,
             url: abs(`/portfolio/${p.slug}`),
             inLanguage: 'he',
             creator: { '@type': 'ProfessionalService', '@id': ORG_ID, name: 'MyMuse', url: abs('/') },

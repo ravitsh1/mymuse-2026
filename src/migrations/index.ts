@@ -70,6 +70,7 @@ import * as migration_20261118_131831_lime_default from './20261118_131831_lime_
 import * as migration_20261118_133449_blue_default from './20261118_133449_blue_default';
 import * as migration_20261118_140000_share_image_v3 from './20261118_140000_share_image_v3';
 import * as migration_20261118_154023_card_colors from './20261118_154023_card_colors';
+import * as migration_20261121_084537_project_body from './20261121_084537_project_body';
 
 export const migrations = [
   {
@@ -430,6 +431,11 @@ export const migrations = [
   {
     up: migration_20261118_154023_card_colors.up,
     down: migration_20261118_154023_card_colors.down,
-    name: '20261118_154023_card_colors'
+    name: '20261118_154023_card_colors',
+  },
+  {
+    up: migration_20261121_084537_project_body.up,
+    down: migration_20261121_084537_project_body.down,
+    name: '20261121_084537_project_body'
   },
 ];
