@@ -152,6 +152,24 @@ export interface Project {
   field?: string | null;
   scope?: string | null;
   platform?: string | null;
+  /**
+   * Enter = פסקה חדשה, Shift+Enter = שורה חדשה באותה פסקה. סרגל הכלים: מודגש, נטוי, רשימות וקישורים.
+   */
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   lead?: string | null;
   /**
    * תגיות שמופיעות בעמוד הפרויקט, מתחת לפרטים. הרשימה עצמה נערכת בהגדרות האתר ← שירותים.
@@ -461,6 +479,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   field?: T;
   scope?: T;
   platform?: T;
+  body?: T;
   lead?: T;
   services?: T;
   statement?: T;

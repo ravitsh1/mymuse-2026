@@ -123,3 +123,9 @@ html[data-theme='dark'] .mm-tagline { color: var(--mm-pink) }
 .mm-swatch:hover { transform: scale(1.12) }
 .mm-swatch[aria-pressed='true'] { outline: 2px solid var(--theme-text); outline-offset: 2px }
 .mm-swatch:focus-visible { outline: 3px solid var(--mm-pink); outline-offset: 2px }
+
+/* rich text (e.g. a project's opening text) in the admin's own font, not the editor's default serif */
+.rich-text-lexical .editor-container {
+  font-family: var(--font-body);
+  letter-spacing: 0;
+}

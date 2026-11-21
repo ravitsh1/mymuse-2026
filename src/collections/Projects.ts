@@ -3,6 +3,8 @@ import { hiddenColorField } from '../fields/color'
 import { metaDescriptionField } from '../fields/seo'
 import { refreshSite } from '../hooks/revalidate'
 import { serviceTagsField } from '../fields/serviceTags'
+import { FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { lexicalToText } from '../lib/richtext'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -17,6 +19,13 @@ export const Projects: CollectionConfig = {
   },
   access: { read: () => true },
   hooks: {
+    // keep the plain copy in step with the rich opening text
+    beforeChange: [
+      ({ data }) => {
+        if (data && 'body' in data) data.lead = data.body ? lexicalToText(data.body) || null : null
+        return data
+      },
+    ],
     afterChange: [() => refreshSite()],
     afterDelete: [() => refreshSite()],
   },
@@ -68,7 +77,40 @@ export const Projects: CollectionConfig = {
                 },
               ],
             },
-            { name: 'lead', label: 'פסקת פתיחה', type: 'textarea' },
+            {
+              name: 'body',
+              label: 'פסקת פתיחה',
+              type: 'richText',
+              // what an opening text needs: paragraphs, line breaks (Shift+Enter), bold, italic, underline, lists, links
+              editor: lexicalEditor({
+                features: ({ defaultFeatures }) => [
+                  ...defaultFeatures.filter(
+                    (f) =>
+                      ![
+                        'upload',
+                        'relationship',
+                        'heading',
+                        'blockquote',
+                        'horizontalRule',
+                        'indent',
+                        'align',
+                        'superscript',
+                        'subscript',
+                        'strikethrough',
+                        'inlineCode',
+                        'checklist',
+                      ].includes(f.key),
+                  ),
+                  FixedToolbarFeature(),
+                ],
+              }),
+              admin: {
+                description:
+                  'Enter = פסקה חדשה, Shift+Enter = שורה חדשה באותה פסקה. סרגל הכלים: מודגש, נטוי, רשימות וקישורים.',
+              },
+            },
+            // the plain copy of the opening text (meta description, JSON-LD, llms.txt), filled from it on save
+            { name: 'lead', label: 'פסקת פתיחה (טקסט פשוט)', type: 'textarea', admin: { hidden: true } },
             serviceTagsField(
               'services',
               'שירותים בפרויקט',
